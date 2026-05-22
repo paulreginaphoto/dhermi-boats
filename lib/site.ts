@@ -7,6 +7,7 @@ export const instagramUrl = "https://www.instagram.com/dhermi.boat/";
 export const tiktokHandle = "@dhermi.boat";
 export const tiktokUrl = "https://www.tiktok.com/@dhermi.boat";
 export const googleMapsUrl = "https://maps.app.goo.gl/NRsVPEKAqkKfoHmn6";
+export const getYourGuideUrl = "https://www.getyourguide.com/dhermi-boat-s720012/";
 
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");

@@ -13,6 +13,7 @@
 - [x] Add persistent EN / FR / AL language selector for key booking UI.
 - [x] Add official Instagram and TikTok links.
 - [x] Add the official Google Maps link.
+- [x] Add the official GetYourGuide supplier link as a low-emphasis contact/footer link.
 - [x] Restore the customer review excerpts from the current Dhermi Boat site.
 - [x] Add real public TikTok thumbnail media from `@dhermi.boat`.
 - [x] Add GitHub Pages workflow.

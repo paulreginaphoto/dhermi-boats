@@ -25,6 +25,7 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Added a clear EN / FR / AL language selector for the main conversion interface.
 - Added official Instagram and TikTok paths, using real public TikTok media thumbnails and no invented production imagery.
 - Added the official Google Maps path and restored the customer review excerpts from the current Dhermi Boat site.
+- Added GetYourGuide as a low-emphasis external link for trust without promoting it over direct WhatsApp booking.
 - Added `llms.txt` and explicit crawler guidance for better AI/search understanding.
 - Replaced upscale wording with a more open, practical tone: clear prices, shared trips and private boats for normal groups.
 - Replaced the incomplete previous icon assets with Microsoft Fluent Emoji 3D icons so every practical cue uses a matching, colorful icon instead of an approximate substitute.

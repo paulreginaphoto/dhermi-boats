@@ -17,6 +17,7 @@
 - [x] Explicit AI crawler allowances for useful indexing agents.
 - [x] Official Instagram and TikTok profile links.
 - [x] Official Google Maps profile link.
+- [x] Official GetYourGuide supplier link added as a secondary trust/contact link.
 - [x] Persistent language selector updates the document language for EN / FR / AL users.
 - [x] Language switcher remains visible on mobile and desktop, and updates the `dlang` URL parameter.
 
@@ -25,7 +26,7 @@
 - [x] `LocalBusiness` on home.
 - [x] `TouristTrip` for main tours.
 - [x] `FAQPage` on home and FAQ.
-- [x] `sameAs` includes official Instagram, TikTok and Google Maps profiles.
+- [x] `sameAs` includes official Instagram, TikTok, Google Maps and GetYourGuide profiles.
 - [x] `LocalBusiness` includes Google Maps `hasMap`; review cards show the source review excerpts without invented rating copy.
 
 ## Keyword Coverage

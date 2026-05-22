@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone, Ticket } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { emailAddress, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 
 const navKeyByLabel: Record<string, string> = {
@@ -69,6 +69,10 @@ export function Footer() {
             <a className="flex items-center gap-3 transition hover:text-white" href={tiktokUrl} rel="noreferrer" target="_blank">
               <Music2 className="h-4 w-4 text-turquoise" />
               {tiktokHandle}
+            </a>
+            <a className="flex items-center gap-3 transition hover:text-white" href={getYourGuideUrl} rel="noreferrer" target="_blank">
+              <Ticket className="h-4 w-4 text-turquoise" />
+              <LocalizedText id="footer.getyourguide">GetYourGuide</LocalizedText>
             </a>
             <p className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-turquoise" />

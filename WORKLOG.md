@@ -15,6 +15,7 @@
 - Added a persistent language selector for the main booking interface: English, French and Albanian.
 - Added the official TikTok profile link and real public TikTok thumbnail media from `@dhermi.boat`.
 - Added the official Google Maps profile link and restored the customer review excerpts from the current Dhermi Boat site.
+- Added the official GetYourGuide supplier page as a secondary link only, keeping WhatsApp as the primary booking path.
 - Kept the official Instagram profile link and avoided fake Instagram media because the public profile did not expose downloadable posts without a logged-in/session source.
 - Ran typecheck, lint, production build, npm audit and static export checks.
 - Created GitHub repository `paulreginaphoto/dhermi-boats`, pushed `main`, enabled GitHub Pages and confirmed the Pages deployment workflow passes.

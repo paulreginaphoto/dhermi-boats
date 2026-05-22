@@ -16,7 +16,7 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, primaryWhatsappHref, reviews, tours, usefulInformation, whyChooseUs } from "@/data/content";
-import { canonical, emailAddress, googleMapsUrl, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
+import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
@@ -39,7 +39,7 @@ const localBusinessSchema = {
     addressCountry: "AL"
   },
   areaServed: ["Dhërmi", "Albanian Riviera", "Gjipe", "Grama Bay", "Karaburun"],
-  sameAs: [instagramUrl, tiktokUrl, googleMapsUrl],
+  sameAs: [instagramUrl, tiktokUrl, googleMapsUrl, getYourGuideUrl],
   hasMap: googleMapsUrl,
   priceRange: "35 € - 200 € / hour"
 };
