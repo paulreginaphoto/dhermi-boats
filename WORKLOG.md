@@ -22,7 +22,11 @@
   - gallery grid rows could collapse to zero height on desktop
 - Switched the immediate deployment target to the GitHub Pages project URL while the domain is being recovered: `https://regina.photo/dhermi-boats/`.
 - Removed `public/CNAME` for now and configured the workflow for the `/dhermi-boats` base path. DNS for `dhermi.boats` can be connected later.
+- Reworked the tone away from upscale positioning toward clear, friendly boat trips for families, friends and everyday travelers.
+- Replaced the incomplete previous icon set with local Microsoft Fluent Emoji 3D MIT icons, covering boat, contact, booking, price, people, location and social cues.
+- Extended the active-language behavior on the contact page, booking CTA and footer so the FR/AL selection stays consistent through the main booking path.
+- Re-ran typecheck, lint, static build, npm audit and local GitHub Pages-style browser QA after the icon and language changes.
 
 ## Current Result
 
-The site is a static, premium, image-led booking website with direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, AI-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.
+The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, AI-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.

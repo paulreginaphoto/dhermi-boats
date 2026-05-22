@@ -7,10 +7,10 @@ export function PageHero({
   image,
   label
 }: {
-  title: string;
+  title: ReactNode;
   children: ReactNode;
   image: string;
-  label?: string;
+  label?: ReactNode;
 }) {
   return (
     <section className="relative overflow-hidden bg-navy text-pearl">
@@ -28,4 +28,3 @@ export function PageHero({
     </section>
   );
 }
-

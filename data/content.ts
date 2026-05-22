@@ -80,7 +80,7 @@ export const tours: Tour[] = [
     id: "private",
     title: "Private Boat Tour Albania",
     shortTitle: "Private Tour",
-    subtitle: "A flexible private charter where your group chooses the timing, stops and atmosphere.",
+    subtitle: "A flexible private boat trip where your group chooses the timing, stops and atmosphere.",
     type: "private",
     duration: "Minimum 2 hours",
     price: "200 € / hour per group",
@@ -90,7 +90,7 @@ export const tours: Tour[] = [
     href: "/tours/private/",
     legacyHref: "/private-boat-tour-albania/",
     whatsappText: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
-    highlights: ["Custom duration", "Custom itinerary", "Swimming stops", "One drink included per person", "Ideal for families and special occasions"],
+    highlights: ["Custom duration", "Custom itinerary", "Swimming stops", "One drink included per person", "Good for families and small celebrations"],
     included: ["Private skipper", "Flexible route", "One drink per guest", "WhatsApp planning"]
   },
   {
@@ -234,4 +234,3 @@ export const trustBadges = [
 ];
 
 export const primaryWhatsappHref = whatsappUrl(defaultBookingMessage);
-

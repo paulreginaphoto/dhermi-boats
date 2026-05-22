@@ -8,11 +8,10 @@ const tour = tours.find((item) => item.id === "private")!;
 export const metadata: Metadata = {
   title: "Private Boat Tour Albania",
   description:
-    "Private boat charter from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations.",
+    "Private boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations.",
   alternates: { canonical: canonical("/tours/private/") }
 };
 
 export default function PrivateLegacyPage() {
   return <TourDetailPage tour={tour} />;
 }
-

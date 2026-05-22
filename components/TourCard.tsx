@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
+import { Icon3D } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
 
 export function TourCard({ tour, priority = false }: { tour: Tour; priority?: boolean }) {
@@ -39,11 +40,11 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
 
         <div className="mt-5 grid gap-2 text-sm font-semibold text-ink">
           <p className="flex items-center gap-2">
-            <Clock className="h-4 w-4 text-turquoise" aria-hidden />
+            <Icon3D name="clock" alt="" size={28} />
             {tour.duration}
           </p>
           <p className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-turquoise" aria-hidden />
+            <Icon3D name="group" alt="" size={28} />
             {tour.capacity}
           </p>
         </div>

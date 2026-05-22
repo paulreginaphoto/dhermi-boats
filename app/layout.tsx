@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     template: "%s | Dhermi Boat"
   },
   description:
-    "Premium boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Private charters and small-group trips with WhatsApp booking.",
+    "Friendly boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Shared trips, private boats and WhatsApp booking.",
   keywords: [
     "Dhermi boat tours",
     "Dhërmi boat tours",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Dhermi Boat Tours",
-    description: "Premium boat tours from Dhërmi, Albania."
+    description: "Friendly boat tours from Dhërmi, Albania."
   },
   icons: {
     icon: [

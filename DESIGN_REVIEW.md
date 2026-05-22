@@ -2,13 +2,13 @@
 
 ## Direction
 
-Premium Mediterranean boat-tour brand: cinematic coastline, editorial typography, limestone/sand background, deep navy, restrained turquoise accents, large real photography and direct WhatsApp booking.
+Mediterranean boat-tour brand for everyone: cinematic coastline, readable typography, limestone/sand background, deep navy, turquoise accents, large real photography, friendly 3D icons and direct WhatsApp booking.
 
 ## Audit Findings From Old Site
 
 - WordPress/WooCommerce clutter reduced trust and performance.
 - Navigation mixed useful tours with plugin/cart residue.
-- Hero and cards were functional but did not feel premium.
+- Hero and cards were functional but did not feel warm or distinctive enough.
 - Booking path was present but not persistent enough on mobile.
 - SEO had useful content but also weak sitemap hygiene and legacy noise.
 - Reviews, FAQ, practical info and prices were valuable and preserved.
@@ -25,6 +25,9 @@ Premium Mediterranean boat-tour brand: cinematic coastline, editorial typography
 - Added a clear EN / FR / AL language selector for the main conversion interface.
 - Added official Instagram and TikTok paths, using real public TikTok media thumbnails and no invented production imagery.
 - Added `llms.txt` and explicit crawler guidance for better AI/search understanding.
+- Replaced upscale wording with a more open, practical tone: clear prices, shared trips and private boats for normal groups.
+- Replaced the incomplete previous icon assets with Microsoft Fluent Emoji 3D icons so every practical cue uses a matching, colorful icon instead of an approximate substitute.
+- Extended FR/AL language handling on the contact page, booking CTA and footer to avoid mixed-language booking screens.
 
 ## QA Scores
 
@@ -45,6 +48,8 @@ Fixes applied:
 - Rechecked mobile menu, FAQ accordion and WhatsApp link generation.
 - Removed animation-dependent reveal wrappers so cards and social proof are visible in static captures, crawlers and no-motion environments.
 - Added accessible language-switch labels.
+- Replaced mismatched 3D icons with a better-covered local MIT icon pack and verified the contact/social icons in the browser.
+- Rechecked the French contact path so the language selector, booking CTA, footer and social links stay coherent.
 
 Final self-review:
 
@@ -58,5 +63,5 @@ Final self-review:
 ## Remaining Intentional Tradeoffs
 
 - One existing video is preserved, but it is not autoplayed and only preloads metadata to protect mobile performance.
-- The existing logo is preserved, but a future vector mark would make the brand feel even more refined.
+- The existing logo is preserved, but a future vector mark would make the brand feel cleaner.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.

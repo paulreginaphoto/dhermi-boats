@@ -1,17 +1,18 @@
-import { Anchor, Clock, MapPin, MessageCircle, Users } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { PageHero } from "@/components/PageHero";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
-  const facts = [
-    { label: "Duration", value: tour.duration, icon: Clock },
-    { label: "Price", value: tour.price, icon: Anchor },
-    { label: "Capacity", value: tour.capacity, icon: Users },
-    { label: "Departure", value: tour.departure, icon: MapPin }
+  const facts: Array<{ label: string; value: string; icon: Icon3DName }> = [
+    { label: "Duration", value: tour.duration, icon: "clock" },
+    { label: "Price", value: tour.price, icon: "euro" },
+    { label: "Capacity", value: tour.capacity, icon: "group" },
+    { label: "Departure", value: tour.departure, icon: "pin" }
   ];
 
   return (
@@ -28,16 +29,13 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
       <section className="bg-limestone py-14">
         <div className="site-band">
           <div className="grid gap-3 md:grid-cols-4">
-            {facts.map((fact) => {
-              const Icon = fact.icon;
-              return (
-                <div key={fact.label} className="rounded-md border border-ink/10 bg-pearl p-5">
-                  <Icon className="h-5 w-5 text-turquoise" aria-hidden />
-                  <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">{fact.label}</p>
-                  <p className="mt-2 text-base font-semibold text-ink">{fact.value}</p>
-                </div>
-              );
-            })}
+            {facts.map((fact) => (
+              <div key={fact.label} className="rounded-md border border-ink/10 bg-pearl p-5">
+                <Icon3D name={fact.icon} alt="" size={48} />
+                <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">{fact.label}</p>
+                <p className="mt-2 text-base font-semibold text-ink">{fact.value}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -77,7 +75,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
               {tour.included.map((item) => (
                 <li key={item} className="flex gap-3">
-                  <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-turquoise" />
+                  <Icon3D name="check" alt="" size={28} />
                   <span>{item}</span>
                 </li>
               ))}
@@ -97,4 +95,3 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
     </>
   );
 }
-

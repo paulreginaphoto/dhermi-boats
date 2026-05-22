@@ -1,6 +1,6 @@
 # Dhermi Boat
 
-Premium static website for Dhermi Boat, built with Next.js, TypeScript and Tailwind, exported as static files for GitHub Pages.
+Static website for Dhermi Boat, built with Next.js, TypeScript and Tailwind, exported as static files for GitHub Pages.
 
 ## Local Development
 
@@ -78,6 +78,8 @@ Contact and booking constants live in `lib/site.ts`:
 - `tiktokUrl`
 
 Images are in `public/images/`. The sea clip is in `public/videos/`.
+
+3D interface icons are stored in `public/icons/fluent-emoji-3d/`. They come from Microsoft Fluent Emoji (`https://github.com/microsoft/fluentui-emoji`, MIT license) and are used for friendly visual cues in badges, tour facts and contact cards.
 
 Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector for the main booking interface.
 

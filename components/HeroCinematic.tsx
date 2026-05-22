@@ -2,7 +2,14 @@ import Image from "next/image";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { heroImage, primaryWhatsappHref } from "@/data/content";
 import { ButtonLink } from "@/components/ButtonLink";
+import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
+
+const heroFacts: Array<[Icon3DName, string, string, string, string, string]> = [
+  ["euro", "hero.fact.from", "From", "35 €", "hero.fact.gjipeShared", "shared Gjipe tour"],
+  ["boat", "hero.fact.privateBoat", "Private boat", "200 € / hour", "hero.fact.minimum", "minimum 2 hours"],
+  ["group", "hero.fact.groups", "Groups", "15 guests", "hero.fact.capacity", "small-boat capacity"]
+];
 
 export function HeroCinematic() {
   return (
@@ -29,8 +36,8 @@ export function HeroCinematic() {
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/90 drop-shadow-[0_3px_16px_rgba(0,0,0,0.55)] md:text-xl">
             <LocalizedText id="hero.text">
-              Discover the Albanian Riviera from the sea with private and small-group tours to Gjipe,
-              Grama Bay, Blue Cave and the Karaburun coastline.
+              Discover the Albanian Riviera from the sea with clear prices, shared trips and private boat tours
+              to Gjipe, Grama Bay, Blue Cave and Karaburun.
             </LocalizedText>
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -45,15 +52,22 @@ export function HeroCinematic() {
 
         <aside className="hidden self-end rounded-md border border-white/16 bg-white/10 p-5 backdrop-blur-md lg:block">
           <div className="grid gap-4">
-            {[
-              ["From", "35 €", "shared Gjipe tour"],
-              ["Private", "200 € / hour", "minimum 2 hours"],
-              ["Groups", "15 guests", "small-boat capacity"]
-            ].map(([label, value, note]) => (
-              <div key={label} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">{label}</p>
-                <p className="mt-1 font-serif text-3xl font-medium">{value}</p>
-                <p className="mt-1 text-sm text-pearl/65">{note}</p>
+            {heroFacts.map(([icon, labelKey, label, value, noteKey, note]) => (
+              <div key={labelKey} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
+                <div className="flex items-center gap-4">
+                  <span className="rounded-md bg-white/84 p-1">
+                    <Icon3D name={icon} alt="" size={46} />
+                  </span>
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">
+                      <LocalizedText id={labelKey}>{label}</LocalizedText>
+                    </p>
+                    <p className="mt-1 font-serif text-3xl font-medium">{value}</p>
+                    <p className="mt-1 text-sm text-pearl/65">
+                      <LocalizedText id={noteKey}>{note}</LocalizedText>
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>

@@ -21,7 +21,7 @@ import { canonical, emailAddress, instagramUrl, phoneDisplay, siteUrl, tiktokUrl
 export const metadata: Metadata = {
   title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
   description:
-    "Book premium boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Private charters, small groups and WhatsApp booking.",
+    "Book friendly boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Clear prices, shared trips, private boats and WhatsApp booking.",
   alternates: { canonical: canonical("/") }
 };
 
@@ -49,7 +49,7 @@ const touristTripSchema = tours.slice(0, 3).map((tour) => ({
   name: tour.title,
   description: tour.subtitle,
   image: canonical(tour.image.replace(/^.*\/images\//, "/images/")),
-  touristType: tour.type === "private" ? "Private boat charter" : "Small-group boat tour",
+  touristType: tour.type === "private" ? "Private boat tour" : "Small-group boat tour",
   itinerary: tour.highlights.join(", "),
   offers: {
     "@type": "Offer",
@@ -120,10 +120,10 @@ export default function HomePage() {
       <section className="bg-limestone py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <SectionHeading label="Private charters" title="Your own boat, your own timing.">
+            <SectionHeading label="Private boats" title="Your own boat, your own timing.">
               <p>
-                Choose the duration, swimming stops and destinations. Private tours work especially well for families,
-                couples, groups of friends and special occasions.
+                Choose the duration, swimming stops and destinations. Private tours work well for families,
+                couples, groups of friends and anyone who wants a quieter day on the water.
               </p>
             </SectionHeading>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">

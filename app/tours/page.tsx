@@ -10,7 +10,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Boat Tours in Dhërmi",
   description:
-    "Compare Dhermi Boat tours: Gjipe, Grama Bay, private charters, sunset private trips and morning fishing tours.",
+    "Compare Dhermi Boat tours: Gjipe, Grama Bay, private boat trips, sunset trips and morning fishing tours.",
   alternates: { canonical: canonical("/tours/") }
 };
 
@@ -33,7 +33,7 @@ export default function ToursPage() {
       <SEOJsonLd data={schema} />
       <PageHero title="Boat tours from Dhërmi" image={tours[1].image} label="Tours">
         <p>
-          Choose the quick Gjipe escape, the longer Grama Bay route, or a private charter built around your group.
+          Choose the quick Gjipe escape, the longer Grama Bay route, or a private boat trip built around your group.
           Every booking starts with a simple WhatsApp message.
         </p>
       </PageHero>
@@ -85,4 +85,3 @@ export default function ToursPage() {
     </>
   );
 }
-
