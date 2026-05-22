@@ -16,6 +16,7 @@
 - [x] Add GitHub Pages workflow.
 - [x] Add README and deployment docs.
 - [x] Run lint, typecheck, build, audit and static export verification.
+- [x] Deploy temporarily on the default GitHub Pages project URL without custom domain.
 
 ## Optional Future Improvements
 
@@ -24,3 +25,4 @@
 - [ ] Add real Google review links if the final Google Business profile URL is available.
 - [ ] Add static localized routes with hreflang if multilingual SEO becomes a priority.
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
+- [ ] Reconnect `dhermi.boats` when the domain is recovered.

@@ -10,7 +10,7 @@
 - Built a new static Next.js + TypeScript + Tailwind site.
 - Added pages for home, tours, private tour, shared tours, destinations, Gjipe, Grama Bay, Blue Cave, FAQ and contact.
 - Added legacy route pages for old useful URLs: `/gjipe-boat-tour/`, `/grama-bay-boat-tour/`, `/private-boat-tour-albania/`, `/sunset-boat-tour/`, `/morning-fishing-tour/`.
-- Added GitHub Pages deployment workflow, `CNAME`, `robots.txt`, `sitemap.xml` and SEO JSON-LD.
+- Added GitHub Pages deployment workflow, domain-ready config, `robots.txt`, `sitemap.xml` and SEO JSON-LD.
 - Added `llms.txt` and explicit AI crawler guidance in `robots.txt`.
 - Added a persistent language selector for the main booking interface: English, French and Albanian.
 - Added the official TikTok profile link and real public TikTok thumbnail media from `@dhermi.boat`.
@@ -20,7 +20,8 @@
 - Browser QA found and fixed two issues:
   - hero text needed stronger contrast and a shorter first viewport on mobile
   - gallery grid rows could collapse to zero height on desktop
-- Custom domain is configured in GitHub Pages and `public/CNAME`; DNS still needs to be moved away from the old WordPress.com IPs at the domain provider.
+- Switched the immediate deployment target to the GitHub Pages project URL while the domain is being recovered: `https://regina.photo/dhermi-boats/`.
+- Removed `public/CNAME` for now and configured the workflow for the `/dhermi-boats` base path. DNS for `dhermi.boats` can be connected later.
 
 ## Current Result
 

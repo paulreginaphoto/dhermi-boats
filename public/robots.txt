@@ -16,5 +16,4 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
-Sitemap: https://dhermi.boats/sitemap.xml
-Host: https://dhermi.boats
+Sitemap: https://regina.photo/dhermi-boats/sitemap.xml

@@ -10,7 +10,7 @@
 - [x] `robots.txt`.
 - [x] `llms.txt`.
 - [x] `sitemap.xml`.
-- [x] `CNAME` for `dhermi.boats`.
+- [x] No `CNAME` while the site uses the default GitHub Pages URL.
 - [x] Optimized local WebP images with descriptive alt text.
 - [x] No WordPress, WooCommerce or plugin bloat.
 - [x] Explicit AI crawler allowances for useful indexing agents.

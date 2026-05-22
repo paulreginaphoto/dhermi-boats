@@ -13,11 +13,27 @@ On every push to `main`, GitHub Actions:
 5. Uploads the static `out/` directory.
 6. Deploys it to GitHub Pages.
 
-## Required GitHub Settings
+## Current GitHub Pages URL
 
 - Repository settings > Pages > Source: `GitHub Actions`.
-- Custom domain: `dhermi.boats`.
-- DNS should point to GitHub Pages according to GitHub's domain instructions.
+- No custom domain is active yet.
+- Current live URL: `https://regina.photo/dhermi-boats/`.
+- The workflow currently builds with `NEXT_PUBLIC_BASE_PATH=/dhermi-boats`.
+
+## Custom Domain Later
+
+When the domain is recovered, add `public/CNAME` with:
+
+```txt
+dhermi.boats
+```
+
+Then update `.github/workflows/deploy.yml`:
+
+```txt
+NEXT_PUBLIC_BASE_PATH=
+NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
+```
 
 ## DNS Records For `dhermi.boats`
 
@@ -39,12 +55,18 @@ After DNS propagates, return to GitHub Pages settings and enable HTTPS enforceme
 
 ## Base Path
 
-For `https://dhermi.boats/`, leave `NEXT_PUBLIC_BASE_PATH` blank.
-
-For a repository subpath such as `https://owner.github.io/repo/`, add a repository variable:
+For the current GitHub Pages project URL, use:
 
 ```txt
-NEXT_PUBLIC_BASE_PATH=/repo
+NEXT_PUBLIC_BASE_PATH=/dhermi-boats
+NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
+```
+
+For `https://dhermi.boats/`, use:
+
+```txt
+NEXT_PUBLIC_BASE_PATH=
+NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
 ```
 
 Then rebuild through the workflow.
@@ -63,4 +85,4 @@ Useful static files to spot-check after a build:
 - `http://127.0.0.1:4302/robots.txt`
 - `http://127.0.0.1:4302/llms.txt`
 - `http://127.0.0.1:4302/sitemap.xml`
-- `http://127.0.0.1:4302/CNAME`
+When testing the GitHub Pages subpath locally, use a static server that maps `/dhermi-boats/` to the `out/` directory.

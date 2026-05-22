@@ -1,4 +1,3 @@
-export const siteUrl = "https://dhermi.boats";
 export const brandName = "Dhermi Boat";
 export const whatsappNumber = "355693921356";
 export const phoneDisplay = "+355 69 392 1356";
@@ -10,6 +9,8 @@ export const tiktokUrl = "https://www.tiktok.com/@dhermi.boat";
 
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");
+export const siteOrigin = (process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://regina.photo").replace(/\/$/, "");
+export const siteUrl = `${siteOrigin}${basePath}`;
 
 export function assetPath(path: string) {
   const normalized = path.startsWith("/") ? path : `/${path}`;

@@ -6,10 +6,10 @@ import { Header } from "@/components/Header";
 import { LanguageProvider } from "@/components/LanguageProvider";
 import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
-import { assetPath, brandName, canonical, siteUrl } from "@/lib/site";
+import { assetPath, brandName, canonical, siteOrigin, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteOrigin),
   title: {
     default: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi, Albania",
     template: "%s | Dhermi Boat"

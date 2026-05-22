@@ -30,17 +30,30 @@ Deployment is handled by `.github/workflows/deploy.yml` on every push to `main`.
 2. Push to `main`.
 3. The workflow installs dependencies, builds the static export, uploads `out/`, and deploys it with GitHub Pages.
 
-## Custom Domain
+## GitHub Pages URL
 
-The custom domain is stored in `public/CNAME`:
+The site currently deploys to the default GitHub Pages project URL:
+
+https://regina.photo/dhermi-boats/
+
+The workflow sets:
+
+```txt
+NEXT_PUBLIC_BASE_PATH=/dhermi-boats
+NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
+```
+
+There is no `public/CNAME` while the custom domain is not connected.
+
+## Custom Domain Later
+
+When `dhermi.boats` is ready, restore a `public/CNAME` file containing:
 
 ```txt
 dhermi.boats
 ```
 
-If the site is deployed without a custom domain, remove or edit `public/CNAME`.
-
-For a project subpath such as `https://owner.github.io/repo/`, set the repository variable `NEXT_PUBLIC_BASE_PATH` to `/repo` before deployment. Leave it blank for `https://dhermi.boats/`.
+Then set `NEXT_PUBLIC_BASE_PATH` to an empty value and `NEXT_PUBLIC_SITE_ORIGIN` to `https://dhermi.boats` in `.github/workflows/deploy.yml`.
 
 DNS details for moving `dhermi.boats` from the old WordPress host to GitHub Pages are in `DEPLOYMENT.md`.
 
