@@ -1,8 +1,9 @@
+import { Anchor, CalendarDays, MessageCircle, Users } from "lucide-react";
 import { trustBadges } from "@/data/content";
-import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
+import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 
-const icons: Icon3DName[] = ["calendar", "group", "chat", "boat"];
+const icons: OutlineIconComponent[] = [CalendarDays, Users, MessageCircle, Anchor];
 const keys = ["badge.daily", "badge.guests", "badge.whatsapp", "badge.private"];
 
 export function TrustBadges() {
@@ -13,9 +14,9 @@ export function TrustBadges() {
         return (
           <li
             key={badge}
-            className="flex min-h-20 items-center gap-3 rounded-md border border-ink/10 bg-pearl px-4 text-sm font-semibold text-ink shadow-sm"
+            className="flex min-h-20 items-center gap-3 rounded-lg border border-ink/8 bg-pearl/86 px-4 text-sm font-semibold text-ink shadow-sm transition hover:-translate-y-0.5 hover:bg-white"
           >
-            <Icon3D name={icon} alt="" size={42} />
+            <IconFrame icon={icon} variant="soft" />
             <LocalizedText id={keys[index] ?? badge}>{badge}</LocalizedText>
           </li>
         );

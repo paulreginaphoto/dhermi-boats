@@ -21,7 +21,7 @@
 - [x] Run lint, typecheck, build, audit and static export verification.
 - [x] Deploy temporarily on the default GitHub Pages project URL without custom domain.
 - [x] Replace upscale wording with friendly, clear, everyone-welcome copy.
-- [x] Add a complete local 3D icon set for the practical cues used on the site.
+- [x] Replace the local 3D icon set with Lucide outline icons across the visible UI.
 - [x] Keep the selected language visible through the contact page, booking CTA and footer.
 - [x] Restore the current `dhermi.boats` base text for excursions, inclusions, FAQ and reviews.
 - [x] Apply the restored source text through EN / FR / AL selected-language states.
@@ -34,6 +34,7 @@
 - [x] Sort the Google Drive folder `Photo & Videos Bateau` into usable photo/video candidates.
 - [x] Replace the site hero, tour, destination, gallery and video media with optimized real Drive assets.
 - [x] Recheck mobile after the media pass so long French hero text and the language selector stay visible without horizontal overflow.
+- [x] Apply a cleaner Lucide-only visual pass with softer outline icons, warmer sand palette and subtle photo glass overlays.
 
 ## Optional Future Improvements
 

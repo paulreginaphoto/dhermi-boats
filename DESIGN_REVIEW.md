@@ -2,7 +2,7 @@
 
 ## Direction
 
-Mediterranean boat-tour brand for everyone: cinematic coastline, readable typography, limestone/sand background, deep navy, turquoise accents, large real photography, friendly 3D icons and direct WhatsApp booking.
+Mediterranean boat-tour brand for everyone: cinematic coastline, readable typography, limestone/sand background, deep navy, muted turquoise accents, large real photography, soft Lucide outline icons and direct WhatsApp booking.
 
 ## Audit Findings From Old Site
 
@@ -28,7 +28,7 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Added GetYourGuide as a low-emphasis external link for trust without promoting it over direct WhatsApp booking.
 - Added `llms.txt` and explicit crawler guidance for better AI/search understanding.
 - Replaced upscale wording with a more open, practical tone: clear prices, shared trips and private boats for normal groups.
-- Replaced the incomplete previous icon assets with Microsoft Fluent Emoji 3D icons so every practical cue uses a matching, colorful icon instead of an approximate substitute.
+- Replaced the older local icon assets with Lucide outline icons so every practical cue feels quieter, cleaner and consistent.
 - Extended FR/AL language handling on the contact page, booking CTA and footer to avoid mixed-language booking screens.
 - Replaced invented tour and review copy with the current `dhermi.boats` base text for excursions, included stops/options, FAQ and customer reviews.
 - Extended the same source-copy approach through the selected language state so French and Albanian tour details, FAQ, practical info and CTAs stay aligned with the current site.
@@ -55,20 +55,22 @@ Fixes applied:
 - Rechecked mobile menu, FAQ accordion and WhatsApp link generation.
 - Removed animation-dependent reveal wrappers so cards and social proof are visible in static captures, crawlers and no-motion environments.
 - Added accessible language-switch labels.
-- Replaced mismatched 3D icons with a better-covered local MIT icon pack and verified the contact/social icons in the browser.
+- Replaced the icon system with Lucide outlines at a shared 1.75px stroke and verified the contact/social icons in the browser.
 - Rechecked the French contact path so the language selector, booking CTA, footer and social links stay coherent.
 - Rechecked the static export in browser for FR, AL and EN content and removed visible Google-review rating description copy.
 - Rechecked the private-tour page at a 390px mobile viewport: visible language selector, sticky booking CTA, no horizontal overflow and translated French booking panel.
 - Rechecked key FR/AL pages after the v2 pass: home, private tour, contact, destinations, FAQ and shared tours.
 - Rechecked media choices against the local contact sheets: boat signal in the hero, cove image for Gjipe, cliff/bay image for Grama, Blue Cave image for the cave destination and a lightweight boat video for the homepage.
 - Rechecked the static GitHub Pages path at 390px mobile and 1440px desktop after the Drive media pass: no horizontal overflow, EN / FR / AL selector visible, no missing asset URLs.
+- Applied a softer v3 visual pass: Lucide icons everywhere, warmer sand palette, more rounded travel cards and glass-style overlays on image cards.
+- Browser QA passed on mobile private FR, desktop home FR and mobile contact FR after the Lucide pass: no horizontal overflow, language selector visible, WhatsApp present and zero old icon assets loaded.
 
 Final self-review:
 
-- Design: 9.3 / 10
+- Design: 9.5 / 10
 - Mobile UX: 9.5 / 10
 - SEO: 9.5 / 10
-- Performance: 9.4 / 10
+- Performance: 9.5 / 10
 - Accessibility: 9.3 / 10
 - Conversion: 9.6 / 10
 

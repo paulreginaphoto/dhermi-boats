@@ -1,9 +1,9 @@
-import { MessageCircle } from "lucide-react";
+import { CheckCircle2, Clock3, Euro, MapPin, MessageCircle, Users } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { GalleryGrid } from "@/components/GalleryGrid";
-import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
+import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
@@ -13,11 +13,11 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
   const bookKey =
     tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
   const facts = ([
-    { label: "Duration", labelKey: "tour.durationLabel", value: tour.duration, valueKey: `${translationBase}.duration`, icon: "clock" },
-    { label: "Price", labelKey: "tour.priceLabel", value: tour.price, valueKey: `${translationBase}.price`, icon: "euro" },
-    { label: "Capacity", labelKey: "tour.capacityLabel", value: tour.capacity, valueKey: `${translationBase}.capacity`, icon: "group" },
-    { label: "Departure", labelKey: "tour.departureLabel", value: tour.departure, valueKey: `${translationBase}.departure`, icon: "pin" }
-  ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: Icon3DName }>).filter((fact) => fact.value);
+    { label: "Duration", labelKey: "tour.durationLabel", value: tour.duration, valueKey: `${translationBase}.duration`, icon: Clock3 },
+    { label: "Price", labelKey: "tour.priceLabel", value: tour.price, valueKey: `${translationBase}.price`, icon: Euro },
+    { label: "Capacity", labelKey: "tour.capacityLabel", value: tour.capacity, valueKey: `${translationBase}.capacity`, icon: Users },
+    { label: "Departure", labelKey: "tour.departureLabel", value: tour.departure, valueKey: `${translationBase}.departure`, icon: MapPin }
+  ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
 
   return (
     <>
@@ -38,12 +38,12 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         </div>
       </PageHero>
 
-      <section className="bg-limestone py-14">
+      <section className="bg-limestone py-16">
         <div className="site-band">
           <div className="grid gap-3 md:grid-cols-4">
             {facts.map((fact) => (
-              <div key={fact.label} className="rounded-md border border-ink/10 bg-pearl p-5">
-                <Icon3D name={fact.icon} alt="" size={48} />
+              <div key={fact.label} className="rounded-lg border border-ink/8 bg-pearl/88 p-5 shadow-sm">
+                <IconFrame icon={fact.icon} variant="soft" size="lg" />
                 <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">
                   <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
                 </p>
@@ -58,14 +58,14 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-8 lg:grid-cols-[0.92fr_0.56fr] lg:items-start">
-          <div className="rounded-md border border-ink/10 bg-limestone p-6 md:p-8">
+          <div className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
             <h2 className="font-serif text-3xl font-medium text-ink">
               <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
             </h2>
             <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
               {tour.included.map((item, index) => (
                 <li key={item} className="flex gap-3">
-                  <Icon3D name="check" alt="" size={28} />
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                   <span>
                     <LocalizedText id={`${translationBase}.included.${index}`}>{item}</LocalizedText>
                   </span>
@@ -73,7 +73,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               ))}
             </ul>
           </div>
-          <aside className="rounded-md bg-ink p-6 text-pearl shadow-image lg:sticky lg:top-28">
+          <aside className="rounded-lg border border-white/10 bg-ink p-6 text-pearl shadow-image lg:sticky lg:top-28">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
               <LocalizedText id="booking.panel.label">WhatsApp booking</LocalizedText>
             </p>

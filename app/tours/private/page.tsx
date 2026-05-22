@@ -21,7 +21,7 @@ export default function PrivateTourPage() {
       <section id="sunset" className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">
           {tours.filter((tour) => tour.id === "sunset" || tour.id === "fishing").map((tour) => (
-            <article key={tour.id} className="rounded-md border border-ink/10 bg-limestone p-6 md:p-8">
+            <article key={tour.id} className="rounded-lg border border-ink/10 bg-limestone/70 p-6 shadow-sm md:p-8">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
                 <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
               </p>

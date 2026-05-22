@@ -10,7 +10,7 @@ export function GalleryGrid({ limit = gallery.length }: { limit?: number }) {
         <figure
           key={item.src}
           className={[
-            "relative min-h-72 overflow-hidden rounded-md bg-sand md:min-h-0",
+            "relative min-h-72 overflow-hidden rounded-lg bg-sand shadow-sm md:min-h-0",
             index === 0 ? "md:col-span-2 md:row-span-2" : "",
             index === 5 ? "md:col-span-2" : ""
           ].join(" ")}

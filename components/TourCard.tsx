@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, MessageCircle } from "lucide-react";
+import { ArrowRight, Clock3, MessageCircle, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
-import { Icon3D } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
+import { IconFrame, iconStrokeWidth } from "@/components/OutlineIcon";
 
 export function TourCard({ tour, priority = false }: { tour: Tour; priority?: boolean }) {
   const translationBase = `tour.${tour.id}`;
@@ -12,7 +12,7 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
     tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
 
   return (
-    <article className="group overflow-hidden rounded-md border border-ink/10 bg-pearl shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
+    <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink/8 bg-pearl/92 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
       <Link className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
         <div className="relative aspect-[4/3] overflow-hidden bg-sand">
           <Image
@@ -23,9 +23,10 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition duration-700 group-hover:scale-105"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-navy/28 via-transparent to-white/5 opacity-80" />
         </div>
       </Link>
-      <div className="p-5 md:p-6">
+      <div className="flex flex-1 flex-col p-5 md:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
@@ -36,11 +37,11 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             </h3>
           </div>
           <Link
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
             href={tour.href}
             aria-label={`View details for ${tour.shortTitle}`}
           >
-            <ArrowRight className="h-4 w-4" />
+            <ArrowRight className="h-4 w-4" strokeWidth={iconStrokeWidth} />
           </Link>
         </div>
 
@@ -53,19 +54,19 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
         <div className="mt-5 grid gap-2 text-sm font-semibold text-ink">
           {tour.duration ? (
             <p className="flex items-center gap-2">
-              <Icon3D name="clock" alt="" size={28} />
+              <IconFrame icon={Clock3} variant="soft" size="sm" />
               <LocalizedText id={`${translationBase}.durationDisplay`}>Duration • {tour.duration}</LocalizedText>
             </p>
           ) : null}
           {tour.capacity ? (
             <p className="flex items-center gap-2">
-              <Icon3D name="group" alt="" size={28} />
+              <IconFrame icon={Users} variant="soft" size="sm" />
               (<LocalizedText id={`${translationBase}.capacity`}>{tour.capacity}</LocalizedText>)
             </p>
           ) : null}
         </div>
 
-        <ul className="mt-5 grid gap-2 text-sm leading-6 text-ink-soft">
+        <ul className="mt-5 grid flex-1 gap-2 text-sm leading-6 text-ink-soft">
           {tour.included.map((item, index) => (
             <li key={item} className="flex gap-2">
               <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
@@ -83,7 +84,7 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             rel="noreferrer"
             target="_blank"
           >
-            <MessageCircle className="h-4 w-4" aria-hidden />
+            <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />
             <LocalizedText id={bookKey}>Book</LocalizedText>
           </a>
           <Link

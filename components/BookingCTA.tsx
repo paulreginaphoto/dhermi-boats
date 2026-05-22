@@ -1,7 +1,7 @@
-import { MessageCircle, Phone } from "lucide-react";
+import { MessageCircle, Phone, Ticket } from "lucide-react";
 import type { ReactNode } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
-import { Icon3D } from "@/components/Icon3D";
+import { IconFrame } from "@/components/OutlineIcon";
 import { primaryWhatsappHref } from "@/data/content";
 import { phoneDisplay } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -17,9 +17,7 @@ export function BookingCTA({
     <section className="bg-ink text-pearl">
       <div className="mx-auto grid max-w-site gap-8 px-5 py-14 md:grid-cols-[1fr_auto] md:items-center md:px-8">
         <div>
-          <div className="mb-5 inline-flex h-16 w-16 items-center justify-center rounded-md bg-white/90 shadow-sm">
-            <Icon3D name="ticket" alt="" size={54} />
-          </div>
+          <IconFrame icon={Ticket} variant="dark" size="xl" className="mb-5" />
           <h2 className="font-serif text-4xl font-medium leading-tight md:text-5xl">
             {title ?? <LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>}
           </h2>

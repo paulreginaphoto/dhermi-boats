@@ -25,7 +25,8 @@
 - Switched the immediate deployment target to the GitHub Pages project URL while the domain is being recovered: `https://regina.photo/dhermi-boats/`.
 - Removed `public/CNAME` for now and configured the workflow for the `/dhermi-boats` base path. DNS for `dhermi.boats` can be connected later.
 - Reworked the tone away from upscale positioning toward clear, friendly boat trips for families, friends and everyday travelers.
-- Replaced the incomplete previous icon set with local Microsoft Fluent Emoji 3D MIT icons, covering boat, contact, booking, price, people, location and social cues.
+- Replaced the local 3D icon system with Lucide outline icons across practical cues, contact cards, tour facts and booking elements.
+- Applied a cleaner Lucide-only design pass with 1.75px outline icons, warmer sand/limestone tones, softer card radii and glass-style photo overlays.
 - Extended the active-language behavior on the contact page, booking CTA and footer so the FR/AL selection stays consistent through the main booking path.
 - Re-ran typecheck, lint, static build, npm audit and local GitHub Pages-style browser QA after the icon and language changes.
 - Revisited the current `https://dhermi.boats` site and restored the base tour text, prices, durations, included stops/options, FAQ wording, "Why choose us", "Useful information" and customer review excerpts from that source.
@@ -38,6 +39,7 @@
 - Replaced the hero, tour cards, destination images, gallery images and the homepage sea video with optimized Drive media only.
 - Kept the Drive intake folder local and out of git; committed only lightweight WebP/MP4 assets needed by the static site.
 - Fixed the French mobile hero and compact header after browser QA so long translated titles do not create horizontal overflow and the EN / FR / AL selector remains visible.
+- Browser QA passed after the Lucide pass on mobile private FR, desktop home FR and mobile contact FR: no horizontal overflow, language selector visible, WhatsApp present and no old icon assets loaded.
 
 ## Current Result
 

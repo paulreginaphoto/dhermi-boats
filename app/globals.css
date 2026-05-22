@@ -18,7 +18,7 @@ html {
 
 body {
   margin: 0;
-  background: #f4efe7;
+  background: #f6f0e6;
   color: #10222d;
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
@@ -47,6 +47,10 @@ video {
   @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2;
 }
 
+.lucide {
+  stroke-width: 1.75;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -57,4 +61,3 @@ video {
     transition-duration: 0.01ms !important;
   }
 }
-

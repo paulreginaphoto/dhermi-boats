@@ -81,7 +81,7 @@ Contact and booking constants live in `lib/site.ts`:
 
 Images are in `public/images/`. The sea clip is in `public/videos/`. The current hero, tour, destination and gallery media were selected from the Google Drive folder `Photo & Videos Bateau`, then cropped and compressed for GitHub Pages.
 
-3D interface icons are stored in `public/icons/fluent-emoji-3d/`. They come from Microsoft Fluent Emoji (`https://github.com/microsoft/fluentui-emoji`, MIT license) and are used for friendly visual cues in badges, tour facts and contact cards.
+Interface icons use `lucide-react` outline icons with a shared 1.75px stroke. The old local 3D icon assets were removed so the visual system stays cleaner and more elegant.
 
 Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector in the header; changing language also updates the `dlang` URL parameter.
 

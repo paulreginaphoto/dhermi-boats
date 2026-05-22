@@ -12,21 +12,21 @@ const config: Config = {
       colors: {
         ink: "#10222D",
         "ink-soft": "#405766",
-        limestone: "#F4EFE7",
-        sand: "#E8D8C3",
-        pearl: "#FFFCF6",
-        navy: "#071923",
-        turquoise: "#2A9DA1",
+        limestone: "#F6F0E6",
+        sand: "#E6D2B8",
+        pearl: "#FFF9EF",
+        navy: "#071B26",
+        turquoise: "#1F7C86",
         "turquoise-soft": "#D9EFEC",
-        bronze: "#B88955"
+        bronze: "#A87847"
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)", "Georgia", "serif"]
       },
       boxShadow: {
-        soft: "0 18px 45px rgba(16, 34, 45, 0.12)",
-        image: "0 28px 80px rgba(7, 25, 35, 0.22)"
+        soft: "0 20px 54px rgba(16, 34, 45, 0.10)",
+        image: "0 32px 90px rgba(7, 27, 38, 0.20)"
       },
       maxWidth: {
         site: "1180px"

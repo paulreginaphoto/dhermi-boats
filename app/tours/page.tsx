@@ -54,7 +54,7 @@ export default function ToursPage() {
 
       <section className="bg-limestone py-16 md:py-24">
         <div className="site-band overflow-x-auto">
-          <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-md bg-pearl text-left text-sm shadow-sm">
+          <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-lg bg-pearl text-left text-sm shadow-sm">
             <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
               <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
             </caption>

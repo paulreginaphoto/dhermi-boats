@@ -102,9 +102,9 @@ export default function HomePage() {
               <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
             </ButtonLink>
           </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="mt-12 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
             {tours.slice(0, 3).map((tour, index) => (
-              <MotionReveal key={tour.id} delay={index * 90}>
+              <MotionReveal key={tour.id} delay={index * 90} className={index === 0 ? "lg:row-span-2" : ""}>
                 <TourCard tour={tour} priority={index === 0} />
               </MotionReveal>
             ))}
