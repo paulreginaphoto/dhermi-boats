@@ -39,7 +39,9 @@ NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
 
 At the moment of setup, `dhermi.boats` still resolved to WordPress.com IPs (`192.0.78.153` and `192.0.78.206`). To make the new GitHub Pages site live on the custom domain, update DNS at the domain provider:
 
-A ready-to-share BIND zone file is available in `DNS_DHERMI_BOATS_BIND.zone`.
+A ready-to-share import file is available in `DNS_DHERMI_BOATS_BIND.zone`. It intentionally contains only simple DNS records because some DNS panels reject full BIND zone files with `SOA`, `NS`, `$ORIGIN` or comments.
+
+If import still fails, use `DNS_DHERMI_BOATS_MANUAL_RECORDS.md` and add the records manually.
 
 ```txt
 A     @     185.199.108.153
