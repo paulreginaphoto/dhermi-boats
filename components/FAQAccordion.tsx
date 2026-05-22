@@ -2,6 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function FAQAccordion({ items }: { items: { question: string; answer: string }[] }) {
   const [openIndex, setOpenIndex] = useState(0);
@@ -18,7 +19,9 @@ export function FAQAccordion({ items }: { items: { question: string; answer: str
               type="button"
               onClick={() => setOpenIndex(open ? -1 : index)}
             >
-              <span>{item.question}</span>
+              <span>
+                <LocalizedText id={`faq.${index}.question`}>{item.question}</LocalizedText>
+              </span>
               <ChevronDown
                 className={`h-5 w-5 shrink-0 text-turquoise transition ${open ? "rotate-180" : ""}`}
                 aria-hidden
@@ -26,7 +29,7 @@ export function FAQAccordion({ items }: { items: { question: string; answer: str
             </button>
             {open ? (
               <div className="px-5 pb-6 text-sm leading-7 text-ink-soft md:px-7 md:text-base">
-                {item.answer}
+                <LocalizedText id={`faq.${index}.answer`}>{item.answer}</LocalizedText>
               </div>
             ) : null}
           </div>
@@ -35,4 +38,3 @@ export function FAQAccordion({ items }: { items: { question: string; answer: str
     </div>
   );
 }
-

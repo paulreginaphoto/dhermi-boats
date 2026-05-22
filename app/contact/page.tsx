@@ -19,7 +19,7 @@ const contacts = [
   { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: "chat" },
   { label: "Phone", labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: "phone" },
   { label: "Email", labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: "email" },
-  { label: "Google Maps", labelKey: "contact.google.label", value: "5.0 · 7 Google reviews", valueKey: "contact.google.value", href: googleMapsUrl, icon: "pin" },
+  { label: "Google Maps", labelKey: "contact.google.label", value: "Google Maps", valueKey: "contact.google.value", href: googleMapsUrl, icon: "pin" },
   { label: "Instagram", labelKey: "contact.instagram.label", value: instagramHandle, href: instagramUrl, icon: "camera" },
   { label: "TikTok", labelKey: "contact.tiktok.label", value: tiktokHandle, href: tiktokUrl, icon: "video" }
 ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey?: string; href: string; icon: Icon3DName }>;
@@ -30,12 +30,12 @@ export default function ContactPage() {
       <PageHero title="Contact Dhermi Boat" image={tours[2].image} label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}>
         <p>
           <LocalizedText id="contact.hero.text">
-            Send your date, number of guests and preferred route. Booking is confirmed directly on WhatsApp, including the exact meeting point.
+            Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.
           </LocalizedText>
         </p>
         <div className="mt-8">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-            <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
+            <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
@@ -47,11 +47,11 @@ export default function ContactPage() {
               <LocalizedText id="contact.info.label">Practical info</LocalizedText>
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="contact.info.title">A fast booking flow built around WhatsApp.</LocalizedText>
+              <LocalizedText id="contact.info.title">Useful information</LocalizedText>
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
               <LocalizedText id="contact.info.text">
-                Mention the tour you want, your date and the number of adults and children. Routes may change depending on sea conditions; safety and comfort come first.
+                Departure from the Dhërmi area. Booking recommended in high season. Routes may change depending on sea conditions.
               </LocalizedText>
             </p>
             <div className="mt-8 rounded-md border border-ink/10 bg-limestone p-6">
@@ -60,7 +60,7 @@ export default function ContactPage() {
                 <LocalizedText id="contact.departure.title">Departure from the Dhërmi area</LocalizedText>
               </p>
               <p className="mt-3 text-sm leading-7 text-ink-soft">
-                <LocalizedText id="contact.departure.text">The exact meeting point is sent after availability is confirmed.</LocalizedText>
+                <LocalizedText id="contact.departure.text">Routes may change depending on sea conditions.</LocalizedText>
               </p>
             </div>
           </div>

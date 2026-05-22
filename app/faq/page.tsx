@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, tours } from "@/data/content";
@@ -30,9 +31,11 @@ export default function FAQPage() {
   return (
     <>
       <SEOJsonLd data={faqSchema} />
-      <PageHero title="Before booking" image={tours[0].image} label="FAQ">
+      <PageHero title={<LocalizedText id="section.faq.label">Before booking</LocalizedText>} image={tours[0].image} label="FAQ">
         <p>
-          Quick answers about booking, departure, weather and what to bring before your Dhërmi boat tour.
+          <LocalizedText id="section.faq.text">
+            Quick answers to prepare your boat tour in Dhërmi without making the booking complicated.
+          </LocalizedText>
         </p>
       </PageHero>
       <section className="bg-pearl py-16 md:py-24">
@@ -40,8 +43,7 @@ export default function FAQPage() {
           <FAQAccordion items={faqs} />
         </div>
       </section>
-      <BookingCTA title="Have another question?" text="Message on WhatsApp with your date, group size and preferred route. We will confirm the practical details directly." />
+      <BookingCTA />
     </>
   );
 }
-

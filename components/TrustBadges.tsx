@@ -2,8 +2,8 @@ import { trustBadges } from "@/data/content";
 import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
 
-const icons: Icon3DName[] = ["calendar", "group", "anchor", "chat", "globe"];
-const keys = ["badge.daily", "badge.guests", "badge.skipper", "badge.whatsapp", "badge.languages"];
+const icons: Icon3DName[] = ["calendar", "group", "chat", "boat"];
+const keys = ["badge.daily", "badge.guests", "badge.whatsapp", "badge.private"];
 
 export function TrustBadges() {
   return (

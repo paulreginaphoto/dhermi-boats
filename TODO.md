@@ -13,7 +13,7 @@
 - [x] Add persistent EN / FR / AL language selector for key booking UI.
 - [x] Add official Instagram and TikTok links.
 - [x] Add the official Google Maps link.
-- [x] Display real public Google review excerpts with the 5.0 / 7 reviews rating.
+- [x] Restore the customer review excerpts from the current Dhermi Boat site.
 - [x] Add real public TikTok thumbnail media from `@dhermi.boat`.
 - [x] Add GitHub Pages workflow.
 - [x] Add README and deployment docs.
@@ -22,6 +22,9 @@
 - [x] Replace upscale wording with friendly, clear, everyone-welcome copy.
 - [x] Add a complete local 3D icon set for the practical cues used on the site.
 - [x] Keep the selected language visible through the contact page, booking CTA and footer.
+- [x] Restore the current `dhermi.boats` base text for excursions, inclusions, FAQ and reviews.
+- [x] Apply the restored source text through EN / FR / AL selected-language states.
+- [x] Remove visible invented Google-review description copy while keeping the Google Maps link and real review excerpts.
 
 ## Optional Future Improvements
 

@@ -7,6 +7,10 @@ import { Icon3D } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
 
 export function TourCard({ tour, priority = false }: { tour: Tour; priority?: boolean }) {
+  const translationBase = `tour.${tour.id}`;
+  const bookKey =
+    tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
+
   return (
     <article className="group overflow-hidden rounded-md border border-ink/10 bg-pearl shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
       <Link className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
@@ -24,8 +28,12 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
       <div className="p-5 md:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">{tour.price}</p>
-            <h3 className="mt-2 font-serif text-2xl font-medium leading-tight text-ink">{tour.shortTitle}</h3>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
+              <LocalizedText id={`${translationBase}.price`}>{tour.price}</LocalizedText>
+            </p>
+            <h3 className="mt-2 font-serif text-2xl font-medium leading-tight text-ink">
+              <LocalizedText id={`${translationBase}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+            </h3>
           </div>
           <Link
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
@@ -36,18 +44,37 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
           </Link>
         </div>
 
-        <p className="mt-4 min-h-20 text-sm leading-7 text-ink-soft">{tour.subtitle}</p>
+        {tour.subtitle ? (
+          <p className="mt-4 text-sm leading-7 text-ink-soft">
+            <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
+          </p>
+        ) : null}
 
         <div className="mt-5 grid gap-2 text-sm font-semibold text-ink">
-          <p className="flex items-center gap-2">
-            <Icon3D name="clock" alt="" size={28} />
-            {tour.duration}
-          </p>
-          <p className="flex items-center gap-2">
-            <Icon3D name="group" alt="" size={28} />
-            {tour.capacity}
-          </p>
+          {tour.duration ? (
+            <p className="flex items-center gap-2">
+              <Icon3D name="clock" alt="" size={28} />
+              <LocalizedText id={`${translationBase}.durationDisplay`}>Duration • {tour.duration}</LocalizedText>
+            </p>
+          ) : null}
+          {tour.capacity ? (
+            <p className="flex items-center gap-2">
+              <Icon3D name="group" alt="" size={28} />
+              (<LocalizedText id={`${translationBase}.capacity`}>{tour.capacity}</LocalizedText>)
+            </p>
+          ) : null}
         </div>
+
+        <ul className="mt-5 grid gap-2 text-sm leading-6 text-ink-soft">
+          {tour.included.map((item, index) => (
+            <li key={item} className="flex gap-2">
+              <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+              <span>
+                <LocalizedText id={`${translationBase}.included.${index}`}>{item}</LocalizedText>
+              </span>
+            </li>
+          ))}
+        </ul>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
@@ -57,7 +84,7 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             target="_blank"
           >
             <MessageCircle className="h-4 w-4" aria-hidden />
-            <LocalizedText id="tour.book">Book</LocalizedText>
+            <LocalizedText id={bookKey}>Book</LocalizedText>
           </a>
           <Link
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"

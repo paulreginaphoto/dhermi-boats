@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
 import { DestinationCard } from "@/components/DestinationCard";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { destinations, tours } from "@/data/content";
@@ -17,11 +18,7 @@ export const metadata: Metadata = {
 export default function DestinationsPage() {
   return (
     <>
-      <PageHero title="Destinations on the Albanian Riviera" image={tours[1].image} label="Destinations">
-        <p>
-          Caves, canyon beaches, turquoise bays and limestone walls. These are the stops that make the Dhërmi coastline worth seeing from the water.
-        </p>
-      </PageHero>
+      <PageHero title="Destinations" image={tours[1].image} label="Destinations" />
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band grid gap-5 lg:grid-cols-3">
           {destinations.map((destination) => (
@@ -31,14 +28,16 @@ export default function DestinationsPage() {
       </section>
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
-          <SectionHeading label="Gallery" title="Real views from the route." />
+          <SectionHeading
+            label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
+            title={<LocalizedText id="section.social.title">Our latest photos</LocalizedText>}
+          />
           <div className="mt-10">
             <GalleryGrid />
           </div>
         </div>
       </section>
-      <BookingCTA title="Ask which destination fits your day" />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
     </>
   );
 }
-

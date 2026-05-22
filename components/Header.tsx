@@ -54,7 +54,7 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle}>
-            <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
+            <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
           </ButtonLink>
         </div>
 

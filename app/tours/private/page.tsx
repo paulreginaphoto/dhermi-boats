@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
+import { LocalizedText } from "@/components/LocalizedText";
 import { TourDetailPage } from "@/components/TourDetailPage";
 import { tours } from "@/data/content";
 import { canonical } from "@/lib/site";
@@ -21,19 +22,27 @@ export default function PrivateTourPage() {
         <div className="site-band grid gap-6 md:grid-cols-2">
           {tours.filter((tour) => tour.id === "sunset" || tour.id === "fishing").map((tour) => (
             <article key={tour.id} className="rounded-md border border-ink/10 bg-limestone p-6 md:p-8">
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">{tour.price}</p>
-              <h2 className="mt-3 font-serif text-4xl font-medium text-ink">{tour.title}</h2>
-              <p className="mt-4 text-base leading-8 text-ink-soft">{tour.subtitle}</p>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+                <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+              </p>
+              <h2 className="mt-3 font-serif text-4xl font-medium text-ink">
+                <LocalizedText id={`tour.${tour.id}.title`}>{tour.title}</LocalizedText>
+              </h2>
+              <p className="mt-4 text-base leading-8 text-ink-soft">
+                <LocalizedText id={`tour.${tour.id}.subtitle`}>{tour.subtitle}</LocalizedText>
+              </p>
               <ul className="mt-6 grid gap-2 text-sm font-semibold text-ink">
-                {tour.highlights.map((item) => (
-                  <li key={item}>{item}</li>
+                {tour.highlights.map((item, index) => (
+                  <li key={item}>
+                    <LocalizedText id={`tour.${tour.id}.included.${index}`}>{item}</LocalizedText>
+                  </li>
                 ))}
               </ul>
             </article>
           ))}
         </div>
       </section>
-      <BookingCTA title="Request a private boat plan" />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
     </>
   );
 }

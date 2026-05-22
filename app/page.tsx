@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin, MessageCircle, Star } from "lucide-react";
+import { MapPin, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DestinationCard } from "@/components/DestinationCard";
@@ -15,13 +15,13 @@ import { TourCard } from "@/components/TourCard";
 import { TrustBadges } from "@/components/TrustBadges";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
-import { destinations, faqs, primaryWhatsappHref, reviews, tours } from "@/data/content";
+import { destinations, faqs, primaryWhatsappHref, reviews, tours, usefulInformation, whyChooseUs } from "@/data/content";
 import { canonical, emailAddress, googleMapsUrl, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
   description:
-    "Book friendly boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Clear prices, shared trips, private boats and WhatsApp booking.",
+    "Discover the Albanian Riviera from the sea with boat tours departing from Dhërmi.",
   alternates: { canonical: canonical("/") }
 };
 
@@ -41,13 +41,6 @@ const localBusinessSchema = {
   areaServed: ["Dhërmi", "Albanian Riviera", "Gjipe", "Grama Bay", "Karaburun"],
   sameAs: [instagramUrl, tiktokUrl, googleMapsUrl],
   hasMap: googleMapsUrl,
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "5.0",
-    reviewCount: "7",
-    bestRating: "5",
-    worstRating: "1"
-  },
   priceRange: "35 € - 200 € / hour"
 };
 
@@ -55,7 +48,7 @@ const touristTripSchema = tours.slice(0, 3).map((tour) => ({
   "@context": "https://schema.org",
   "@type": "TouristTrip",
   name: tour.title,
-  description: tour.subtitle,
+  description: tour.subtitle || tour.included.join(", "),
   image: canonical(tour.image.replace(/^.*\/images\//, "/images/")),
   touristType: tour.type === "private" ? "Private boat tour" : "Small-group boat tour",
   itinerary: tour.highlights.join(", "),
@@ -103,16 +96,10 @@ export default function HomePage() {
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <SectionHeading
               label={<LocalizedText id="section.tours.label">Choose your tour</LocalizedText>}
-              title={<LocalizedText id="section.tours.title">Fast booking, clear routes, real coastline.</LocalizedText>}
-            >
-              <p>
-                <LocalizedText id="section.tours.text">
-                  Pick a shared route for the essentials, or reserve the boat privately and shape the day around your group.
-                </LocalizedText>
-              </p>
-            </SectionHeading>
+              title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+            />
             <ButtonLink href="/tours/" variant="secondary">
-              All tours
+              <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
             </ButtonLink>
           </div>
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
@@ -128,27 +115,40 @@ export default function HomePage() {
       <section className="bg-limestone py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <SectionHeading label="Private boats" title="Your own boat, your own timing.">
-              <p>
-                Choose the duration, swimming stops and destinations. Private tours work well for families,
-                couples, groups of friends and anyone who wants a quieter day on the water.
-              </p>
-            </SectionHeading>
+            <SectionHeading label="Exclusive Experiences" title="Exclusive Experiences" />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/tours/private/" variant="primary">
-                Private tour details
+                <LocalizedText id="tour.details">VIEW DETAILS</LocalizedText>
               </ButtonLink>
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary">
-                Request a private tour
+                <LocalizedText id="tour.private.book">REQUEST A PRIVATE TOUR</LocalizedText>
               </ButtonLink>
             </div>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {tours.slice(3).map((tour) => (
               <article key={tour.id} className="rounded-md border border-ink/10 bg-pearl p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">{tour.price}</p>
-                <h3 className="mt-3 font-serif text-3xl font-medium text-ink">{tour.shortTitle}</h3>
-                <p className="mt-3 text-sm leading-7 text-ink-soft">{tour.subtitle}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
+                  <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                </p>
+                <h3 className="mt-3 font-serif text-3xl font-medium text-ink">
+                  <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                </h3>
+                {tour.subtitle ? (
+                  <p className="mt-3 text-sm leading-7 text-ink-soft">
+                    <LocalizedText id={`tour.${tour.id}.subtitle`}>{tour.subtitle}</LocalizedText>
+                  </p>
+                ) : null}
+                <ul className="mt-5 grid gap-2 text-sm leading-6 text-ink-soft">
+                  {tour.included.map((item, index) => (
+                    <li key={item} className="flex gap-2">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                      <span>
+                        <LocalizedText id={`tour.${tour.id}.included.${index}`}>{item}</LocalizedText>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
@@ -159,12 +159,7 @@ export default function HomePage() {
         <div className="site-band">
           <div className="max-w-3xl">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">Destinations</p>
-            <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">
-              The Riviera from the angle that matters: the water.
-            </h2>
-            <p className="mt-5 text-base leading-8 text-pearl/72 md:text-lg">
-              Gjipe, Grama Bay and Blue Cave are not checklist stops. They are the reason the boat is worth booking.
-            </p>
+            <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">Destinations</h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {destinations.map((destination) => (
@@ -177,12 +172,7 @@ export default function HomePage() {
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[1fr_0.82fr] lg:items-center">
           <div>
-            <SectionHeading label="On the water" title="Photos that show the actual route.">
-              <p>
-                Real beaches, real caves and real boat views from recent Dhermi Boat trips. The site keeps the media
-                light so it still feels fast on mobile.
-              </p>
-            </SectionHeading>
+            <SectionHeading label="Our latest photos" title="Our latest photos" />
           </div>
           <VideoFeature />
         </div>
@@ -193,19 +183,48 @@ export default function HomePage() {
 
       <SocialFeed />
 
+      <section className="bg-pearl py-16 md:py-24">
+        <div className="site-band grid gap-10 lg:grid-cols-2">
+          <div>
+            <h2 className="font-serif text-4xl font-medium text-ink">
+              <LocalizedText id="section.why.title">Why choose us?</LocalizedText>
+            </h2>
+            <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
+              {whyChooseUs.map((item, index) => (
+                <li key={item} className="flex gap-3">
+                  <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                  <span>
+                    <LocalizedText id={`why.${index}`}>{item}</LocalizedText>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2 className="font-serif text-4xl font-medium text-ink">
+              <LocalizedText id="section.info.title">Useful information</LocalizedText>
+            </h2>
+            <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
+              {usefulInformation.map((item, index) => (
+                <li key={item} className="flex gap-3">
+                  <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                  <span>
+                    <LocalizedText id={`useful.${index}`}>{item}</LocalizedText>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
       <section id="reviews" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
         <div className="site-band">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
-              label={<LocalizedText id="section.reviews.label">Google reviews</LocalizedText>}
-              title={<LocalizedText id="section.reviews.title">5.0 on Google from real boat guests.</LocalizedText>}
-            >
-              <p>
-                <LocalizedText id="section.reviews.text">
-                  Real public reviews from the Dhermi boats Google profile, checked on May 22, 2026.
-                </LocalizedText>
-              </p>
-            </SectionHeading>
+              label={<LocalizedText id="section.reviews.label">Guest reviews</LocalizedText>}
+              title={<LocalizedText id="section.reviews.title">Guest reviews</LocalizedText>}
+            />
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
               href={googleMapsUrl}
@@ -213,20 +232,8 @@ export default function HomePage() {
               target="_blank"
             >
               <MapPin className="h-4 w-4" aria-hidden />
-              <LocalizedText id="section.reviews.cta">Read all Google reviews</LocalizedText>
+              <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
             </a>
-          </div>
-          <div className="mt-8 inline-flex items-center gap-3 rounded-md border border-ink/10 bg-pearl px-4 py-3 text-sm font-semibold text-ink shadow-sm">
-            <span className="flex gap-1 text-bronze" aria-label="5.0 out of 5 on Google">
-              {Array.from({ length: 5 }).map((_, index) => (
-                <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
-              ))}
-            </span>
-            <span>5.0 / 5</span>
-            <span className="text-ink-soft">·</span>
-            <span>
-              <LocalizedText id="section.reviews.count">7 Google reviews</LocalizedText>
-            </span>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {reviews.map((review) => (
@@ -238,7 +245,16 @@ export default function HomePage() {
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <SectionHeading label="Before booking" title="Simple answers before you message." />
+          <SectionHeading
+            label={<LocalizedText id="section.faq.label">Before booking</LocalizedText>}
+            title={<LocalizedText id="section.faq.title">Frequently asked questions</LocalizedText>}
+          >
+            <p>
+              <LocalizedText id="section.faq.text">
+                Quick answers to prepare your boat tour in Dhërmi without making the booking complicated.
+              </LocalizedText>
+            </p>
+          </SectionHeading>
           <FAQAccordion items={faqs.slice(0, 4)} />
         </div>
       </section>

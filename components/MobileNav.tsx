@@ -54,7 +54,7 @@ export function MobileNav() {
               onClick={() => setOpen(false)}
             >
               <MessageCircle className="h-4 w-4" />
-              <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
+              <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
             </a>
           </nav>
         </div>

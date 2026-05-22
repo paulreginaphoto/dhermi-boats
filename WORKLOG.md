@@ -14,7 +14,7 @@
 - Added `llms.txt` and explicit AI crawler guidance in `robots.txt`.
 - Added a persistent language selector for the main booking interface: English, French and Albanian.
 - Added the official TikTok profile link and real public TikTok thumbnail media from `@dhermi.boat`.
-- Added the official Google Maps profile link and real public Google review excerpts from the Dhermi boats listing.
+- Added the official Google Maps profile link and restored the customer review excerpts from the current Dhermi Boat site.
 - Kept the official Instagram profile link and avoided fake Instagram media because the public profile did not expose downloadable posts without a logged-in/session source.
 - Ran typecheck, lint, production build, npm audit and static export checks.
 - Created GitHub repository `paulreginaphoto/dhermi-boats`, pushed `main`, enabled GitHub Pages and confirmed the Pages deployment workflow passes.
@@ -27,6 +27,9 @@
 - Replaced the incomplete previous icon set with local Microsoft Fluent Emoji 3D MIT icons, covering boat, contact, booking, price, people, location and social cues.
 - Extended the active-language behavior on the contact page, booking CTA and footer so the FR/AL selection stays consistent through the main booking path.
 - Re-ran typecheck, lint, static build, npm audit and local GitHub Pages-style browser QA after the icon and language changes.
+- Revisited the current `https://dhermi.boats` site and restored the base tour text, prices, durations, included stops/options, FAQ wording, "Why choose us", "Useful information" and customer review excerpts from that source.
+- Extended the source-copy restoration across the selected language state so EN / FR / AL tour cards, FAQ answers, inclusions and practical information no longer fall back to invented text.
+- Browser QA passed on the static GitHub Pages-style export for FR, AL and EN source-copy checks, with no visible Google-review description copy.
 
 ## Current Result
 

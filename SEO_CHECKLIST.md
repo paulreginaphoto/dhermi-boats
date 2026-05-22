@@ -24,7 +24,7 @@
 - [x] `TouristTrip` for main tours.
 - [x] `FAQPage` on home and FAQ.
 - [x] `sameAs` includes official Instagram, TikTok and Google Maps profiles.
-- [x] `LocalBusiness` includes Google Maps `hasMap` and the verified 5.0 / 7 reviews aggregate rating.
+- [x] `LocalBusiness` includes Google Maps `hasMap`; review cards show the source review excerpts without invented rating copy.
 
 ## Keyword Coverage
 

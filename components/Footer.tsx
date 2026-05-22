@@ -31,13 +31,13 @@ export function Footer() {
             <div>
               <p className="font-serif text-2xl font-semibold">Dhermi Boat</p>
               <p className="mt-1 text-sm text-pearl/70">
-                <LocalizedText id="footer.tagline">Friendly boat tours from Dhërmi, Albania.</LocalizedText>
+                <LocalizedText id="footer.tagline">Discover the Albanian Riviera.</LocalizedText>
               </p>
             </div>
           </div>
           <p className="mt-6 max-w-md text-sm leading-7 text-pearl/72">
             <LocalizedText id="footer.text">
-              Small-group and private boat tours to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Booking is confirmed directly on WhatsApp.
+              Discover the Albanian Riviera.
             </LocalizedText>
           </p>
         </div>
@@ -74,7 +74,7 @@ export function Footer() {
             </a>
             <a className="flex items-center gap-3 transition hover:text-white" href={googleMapsUrl} rel="noreferrer" target="_blank">
               <MapPin className="h-4 w-4 text-turquoise" />
-              <LocalizedText id="footer.google">Google reviews</LocalizedText>
+              <LocalizedText id="footer.google">Google Maps</LocalizedText>
             </a>
             <a className="flex items-center gap-3 transition hover:text-white" href={instagramUrl} rel="noreferrer" target="_blank">
               <AtSign className="h-4 w-4 text-turquoise" />
@@ -93,7 +93,7 @@ export function Footer() {
       </div>
       <div className="border-t border-white/10 px-5 py-5 text-center text-xs text-pearl/55">
         © {new Date().getFullYear()} Dhermi Boat.{" "}
-        <LocalizedText id="footer.credits">Static site built for speed, clarity and direct booking.</LocalizedText>
+        <LocalizedText id="footer.credits">Boat Tours in Dhërmi.</LocalizedText>
       </div>
     </footer>
   );

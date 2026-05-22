@@ -32,7 +32,6 @@ export type Destination = {
 export type Review = {
   name: string;
   detail: string;
-  detailKey: string;
   text: string;
   rating: 5;
 };
@@ -52,88 +51,86 @@ export const tours: Tour[] = [
     id: "gjipe",
     title: "Gjipe Boat Tour",
     shortTitle: "Gjipe Tour",
-    subtitle: "A compact coastal escape with caves, coves and a swim stop at one of Albania's most dramatic beaches.",
+    subtitle: "",
     type: "shared",
     duration: "1h30",
-    price: "35 € adult / 20 € child",
-    capacity: "Up to 15 guests",
+    price: "35 € / adult • 20 € / child (5-10 years)",
+    capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-gjipe.webp"),
     href: "/destinations/gjipe/",
     legacyHref: "/gjipe-boat-tour/",
     whatsappText: "Hello Dhermi Boat, I would like to book the Gjipe Tour. Date: __ / Adults: __ / Children: __",
-    highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "Two hidden coves", "30-minute swim stop"],
-    included: ["Local skipper", "Small-group boat experience", "Swimming stop", "WhatsApp confirmation"],
-    notes: ["Beach drop-off option: +15 € / person for the day or a few hours."]
+    highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
+    included: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"]
   },
   {
     id: "grama",
     title: "Grama Bay Boat Tour",
-    shortTitle: "Grama Bay Tour",
-    subtitle: "A longer Riviera route through Karaburun scenery, blue water caves and the iconic Grama Bay.",
+    shortTitle: "Grama Tour",
+    subtitle: "",
     type: "shared",
     duration: "3h30",
-    price: "75 € adult / 50 € child",
-    capacity: "Up to 15 guests",
+    price: "75 € / adult • 50 € / child (5-10 years)",
+    capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-grama.webp"),
     href: "/destinations/grama-bay/",
     legacyHref: "/grama-bay-boat-tour/",
     whatsappText: "Hello Dhermi Boat, I would like to book the Grama Bay Tour. Date: __ / Adults: __ / Children: __",
-    highlights: ["Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave"],
-    included: ["Local skipper", "Scenic coastline route", "Swimming stops", "WhatsApp confirmation"],
-    notes: ["Karaburun extension: +20 € / person from 3 people."]
+    highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
+    included: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"]
   },
   {
     id: "private",
     title: "Private Boat Tour Albania",
-    shortTitle: "Private Tour",
-    subtitle: "A flexible private boat trip where your group chooses the timing, stops and atmosphere.",
+    shortTitle: "Tailor-made private tour",
+    subtitle: "",
     type: "private",
-    duration: "Minimum 2 hours",
-    price: "200 € / hour per group",
-    capacity: "Up to 15 guests",
+    duration: "",
+    price: "200 € / hour per group (minimum 2 hours)",
+    capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-private.webp"),
     href: "/tours/private/",
     legacyHref: "/private-boat-tour-albania/",
     whatsappText: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
-    highlights: ["Custom duration", "Custom itinerary", "Swimming stops", "One drink included per person", "Good for families and small celebrations"],
-    included: ["Private skipper", "Flexible route", "One drink per guest", "WhatsApp planning"]
+    highlights: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for VIPs, families, groups of friends or special occasions ✨"],
+    included: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for VIPs, families, groups of friends or special occasions ✨"]
   },
   {
     id: "sunset",
     title: "Sunset Private Tour",
-    shortTitle: "Sunset Tour",
-    subtitle: "A quiet golden-hour cruise around Dhërmi for couples, proposals or a softer end to the day.",
+    shortTitle: "Sunset Private Tour",
+    subtitle: "Romantic sunset cruise",
     type: "experience",
-    duration: "Evening cruise",
+    duration: "",
     price: "From 120 € for 2 people",
-    capacity: "Private experience",
+    capacity: "",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-sunset.webp"),
     href: "/tours/private/#sunset",
     legacyHref: "/sunset-boat-tour/",
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Sunset Private Tour. Date: __ / People: __",
-    highlights: ["Romantic sunset cruise", "Dhërmi coastline", "Private boat", "Golden-hour photos"],
-    included: ["Private skipper", "Flexible timing", "WhatsApp confirmation"]
+    highlights: ["Around Dhërmi"],
+    included: ["Around Dhërmi"]
   },
   {
     id: "fishing",
     title: "Morning Fishing Tour",
-    shortTitle: "Fishing Tour",
-    subtitle: "A calm sunrise experience around Dhërmi with rods included and a small private group.",
+    shortTitle: "Morning Fishing Tour",
+    subtitle: "An authentic and peaceful sunrise experience",
     type: "experience",
     duration: "5 AM to 8 AM",
-    price: "100 € / hour per group",
-    capacity: "Max 5 guests",
+    price: "100 € / hour per group (max 5 people)",
+    capacity: "",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-fishing.webp"),
     href: "/tours/private/#fishing",
     legacyHref: "/morning-fishing-tour/",
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Morning Fishing Tour. Date: __ / People: __",
-    highlights: ["Sunrise departure", "Two fishing rods included", "Peaceful local experience", "Small private group"],
-    included: ["Private skipper", "Two rods", "Early morning route", "WhatsApp confirmation"]
+    highlights: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"],
+    included: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"]
   }
 ];
 
@@ -141,29 +138,29 @@ export const destinations: Destination[] = [
   {
     id: "gjipe",
     title: "Gjipe",
-    eyebrow: "Canyon beach",
-    summary: "A limestone canyon opening into clear water, with caves and coves that feel made for a short sea escape.",
+    eyebrow: "Gjipe Tour",
+    summary: "Pirates Cave, Gjipe Beach, Pigeon Cave, 2 coves, 30-minute swimming stop on a beach.",
     image: assetPath("/images/tour-gjipe.webp"),
     href: "/destinations/gjipe/",
-    highlights: ["Canyon cliffs", "Beach swim stop", "Pirates Cave", "Pigeon Cave"]
+    highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach"]
   },
   {
     id: "grama",
     title: "Grama Bay",
-    eyebrow: "Karaburun route",
-    summary: "A cinematic bay inside the Karaburun coastline, reached by a longer route through cliffs, caves and turquoise water.",
+    eyebrow: "Grama Tour",
+    summary: "Sailing along Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach, Secret Cave.",
     image: assetPath("/images/tour-grama.webp"),
     href: "/destinations/grama-bay/",
-    highlights: ["Grama Beach", "San Andrea Beach", "Secret Cave", "Karaburun Natural Park"]
+    highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave"]
   },
   {
     id: "blue-cave",
     title: "Blue Cave",
-    eyebrow: "Clear water cave",
-    summary: "A luminous cave stop where the sea turns bright blue beneath the rocks, often included on the Grama route.",
+    eyebrow: "Blue Cave",
+    summary: "Blue Cave.",
     image: assetPath("/images/gallery-blue-cave.webp"),
     href: "/destinations/blue-cave/",
-    highlights: ["Blue light", "Rock formations", "Photo stop", "Grama route highlight"]
+    highlights: ["Blue Cave"]
   }
 ];
 
@@ -180,53 +177,54 @@ export const gallery = [
 
 export const reviews = [
   {
-    name: "Lirim Avdili",
-    detail: "Google review · 2 weeks ago",
-    detailKey: "review.detail.lirim",
-    rating: 5,
-    text: "Tout était parfaitement organisé et d'un grand professionnalisme. L'équipe était accueillante, compétente et toujours prête à rendre service."
-  },
-  {
     name: "Julie Dw",
-    detail: "Google Local Guide · 3 months ago",
-    detailKey: "review.detail.julie",
+    detail: "Local Guide • 21 avis • 4 photos · Il y a 11 semaines",
     rating: 5,
-    text: "Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante."
-  },
-  {
-    name: "Madisson _nails",
-    detail: "Google review · 4 months ago",
-    detailKey: "review.detail.madisson",
-    rating: 5,
-    text: "Super moment, capitaine très gentil et très drôle qui m'a fait découvrir des paysages magnifiques. N'hésitez pas !"
-  },
-  {
-    name: "Vanessa Cariou",
-    detail: "Google review · 9 months ago",
-    detailKey: "review.detail.vanessa",
-    rating: 5,
-    text: "Très belle excursion en mer, une escapade intimiste pour une famille qui recherche la tranquilité."
+    text: "⭐️⭐️⭐️⭐️⭐️ Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante, il met tout de suite en confiance et l'ambiance à bord est juste top."
   },
   {
     name: "Marianne Vayson",
-    detail: "Google review · 9 months ago",
-    detailKey: "review.detail.marianne",
+    detail: "11 avis • 0 photo · Il y a 38 semaines",
     rating: 5,
-    text: "Super expérience très à l'écoute, je recommande à 200%. Merci encore pour cette belle sortie."
+    text: "Super expérience très à l écoute je recommande à 200% merci encore pour cette belle sortie."
+  },
+  {
+    name: "Vanessa Cariou",
+    detail: "3 avis • 3 photos · Il y a 39 semaines",
+    rating: 5,
+    text: "Très belle excursion en mer une escapade intimiste pour une famille qui recherche la tranquilité. Le plus pour le tourisme français, maîtrise de la langue."
+  },
+  {
+    name: "Madisson _nails",
+    detail: "8 avis • 3 photos · Il y a 13 semaines",
+    rating: 5,
+    text: "Super moment, capitaine très gentil et très drôle qui m’a fait découvrir des paysages magnifiques. N’hésitez pas!"
   },
   {
     name: "EROUNY KK",
-    detail: "Google review · 9 months ago",
-    detailKey: "review.detail.erouny",
+    detail: "6 avis • 2 photos · Il y a 39 semaines",
     rating: 5,
-    text: "Hautement recommandé pour les excursions en bateau à Dhermi. Ponctuel, sympathique et accueillant."
+    text: "Super Weiterempfehlung für Bootstouren in Dhermi. Pünktlich, sympathisch und offen."
   }
 ] satisfies Review[];
+
+export const whyChooseUs = [
+  "Experienced local skipper, passionate about Albanian history, culture and landscapes",
+  "Fluent in Albanian and French, with good knowledge of English",
+  "Customizable experiences",
+  "Friendly & premium atmosphere"
+];
+
+export const usefulInformation = [
+  "Departure from the Dhërmi area",
+  "Booking recommended in high season",
+  "Routes may change depending on sea conditions"
+];
 
 export const faqs = [
   {
     question: "How do I book a tour?",
-    answer: "Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together before the trip."
+    answer: "Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together."
   },
   {
     question: "Where is the departure point?",
@@ -238,7 +236,7 @@ export const faqs = [
   },
   {
     question: "Can I choose a private tour?",
-    answer: "Yes. Private tours are available on request and are ideal for couples, families, friends and special occasions."
+    answer: "Yes, private tours are available on request and are ideal for couples, families, friends or special occasions."
   },
   {
     question: "What should I bring?",
@@ -246,16 +244,15 @@ export const faqs = [
   },
   {
     question: "How many people can join?",
-    answer: "Tours are designed for small groups, up to 15 people depending on the tour. For special requests, contact us on WhatsApp."
+    answer: "Tours are made for small groups, up to 15 people depending on the tour. For special requests, contact us on WhatsApp."
   }
 ];
 
 export const trustBadges = [
   "Daily departures",
   "Up to 15 guests",
-  "Local skipper",
   "WhatsApp booking",
-  "Albanian, French and English"
+  "Private charter available"
 ];
 
 export const primaryWhatsappHref = whatsappUrl(defaultBookingMessage);

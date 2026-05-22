@@ -6,9 +6,9 @@ import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
 
 const heroFacts: Array<[Icon3DName, string, string, string, string, string]> = [
-  ["euro", "hero.fact.from", "From", "35 €", "hero.fact.gjipeShared", "shared Gjipe tour"],
-  ["boat", "hero.fact.privateBoat", "Private boat", "200 € / hour", "hero.fact.minimum", "minimum 2 hours"],
-  ["group", "hero.fact.groups", "Groups", "15 guests", "hero.fact.capacity", "small-boat capacity"]
+  ["euro", "hero.fact.from", "From", "35 €", "hero.fact.gjipeShared", "Gjipe Tour"],
+  ["boat", "hero.fact.privateBoat", "Private", "200 € / hour", "hero.fact.minimum", "per group"],
+  ["group", "hero.fact.groups", "Groups", "15 guests", "hero.fact.capacity", "MAX 15 GUESTS"]
 ];
 
 export function HeroCinematic() {
@@ -31,18 +31,20 @@ export function HeroCinematic() {
 
       <div className="relative mx-auto grid min-h-[620px] max-w-site items-center gap-10 px-5 py-12 md:min-h-[calc(100svh-10rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
         <div className="max-w-3xl">
+          <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">
+            <LocalizedText id="hero.label">Boat Tours in Dhërmi</LocalizedText>
+          </p>
           <h1 className="max-w-4xl font-serif text-5xl font-medium leading-[0.96] text-balance drop-shadow-[0_5px_22px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
-            <LocalizedText id="hero.title">Boat tours in Dhërmi</LocalizedText>
+            <LocalizedText id="hero.title">
+              Discover the Albanian Riviera from the sea with our boat tours departing from Dhërmi.
+            </LocalizedText>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/90 drop-shadow-[0_3px_16px_rgba(0,0,0,0.55)] md:text-xl">
-            <LocalizedText id="hero.text">
-              Discover the Albanian Riviera from the sea with clear prices, shared trips and private boat tours
-              to Gjipe, Grama Bay, Blue Cave and Karaburun.
-            </LocalizedText>
+            <LocalizedText id="hero.text">Discover the Albanian Riviera.</LocalizedText>
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-              <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
+              <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
             </ButtonLink>
             <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
               <LocalizedText id="cta.viewTours">View tours</LocalizedText>

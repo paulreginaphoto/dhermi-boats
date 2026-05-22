@@ -24,11 +24,13 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Optimized images and kept video lazy with metadata preload.
 - Added a clear EN / FR / AL language selector for the main conversion interface.
 - Added official Instagram and TikTok paths, using real public TikTok media thumbnails and no invented production imagery.
-- Added the official Google Maps path with the verified 5.0 / 7 reviews summary and real public review excerpts.
+- Added the official Google Maps path and restored the customer review excerpts from the current Dhermi Boat site.
 - Added `llms.txt` and explicit crawler guidance for better AI/search understanding.
 - Replaced upscale wording with a more open, practical tone: clear prices, shared trips and private boats for normal groups.
 - Replaced the incomplete previous icon assets with Microsoft Fluent Emoji 3D icons so every practical cue uses a matching, colorful icon instead of an approximate substitute.
 - Extended FR/AL language handling on the contact page, booking CTA and footer to avoid mixed-language booking screens.
+- Replaced invented tour and review copy with the current `dhermi.boats` base text for excursions, included stops/options, FAQ and customer reviews.
+- Extended the same source-copy approach through the selected language state so French and Albanian tour details, FAQ, practical info and CTAs stay aligned with the current site.
 
 ## QA Scores
 
@@ -51,6 +53,7 @@ Fixes applied:
 - Added accessible language-switch labels.
 - Replaced mismatched 3D icons with a better-covered local MIT icon pack and verified the contact/social icons in the browser.
 - Rechecked the French contact path so the language selector, booking CTA, footer and social links stay coherent.
+- Rechecked the static export in browser for FR, AL and EN content and removed visible Google-review rating description copy.
 
 Final self-review:
 

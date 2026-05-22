@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
+import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -22,7 +23,7 @@ const schema = {
   hasPart: tours.map((tour) => ({
     "@type": "TouristTrip",
     name: tour.title,
-    description: tour.subtitle,
+    description: tour.subtitle || tour.included.join(", "),
     url: canonical(tour.href)
   }))
 };
@@ -31,20 +32,11 @@ export default function ToursPage() {
   return (
     <>
       <SEOJsonLd data={schema} />
-      <PageHero title="Boat tours from Dhërmi" image={tours[1].image} label="Tours">
-        <p>
-          Choose the quick Gjipe escape, the longer Grama Bay route, or a private boat trip built around your group.
-          Every booking starts with a simple WhatsApp message.
-        </p>
-      </PageHero>
+      <PageHero title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>} image={tours[1].image} label="Tours" />
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
-          <SectionHeading title="Compare the routes" label="Clear choices">
-            <p>
-              Prices and duration are visible before you book. Final departure time and meeting point are confirmed on WhatsApp.
-            </p>
-          </SectionHeading>
+          <SectionHeading title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>} label="Tours" />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {tours.map((tour, index) => (
               <TourCard key={tour.id} tour={tour} priority={index === 0} />
@@ -57,23 +49,42 @@ export default function ToursPage() {
         <div className="site-band overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-md bg-pearl text-left text-sm shadow-sm">
             <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
-              Practical comparison
+              <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
             </caption>
             <thead className="bg-ink text-pearl">
               <tr>
                 <th className="px-5 py-4 font-semibold">Tour</th>
-                <th className="px-5 py-4 font-semibold">Duration</th>
-                <th className="px-5 py-4 font-semibold">Price</th>
-                <th className="px-5 py-4 font-semibold">Best for</th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
+                </th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="tour.priceLabel">Price</LocalizedText>
+                </th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-ink/10">
               {tours.map((tour) => (
                 <tr key={tour.id}>
-                  <td className="px-5 py-4 font-semibold text-ink">{tour.shortTitle}</td>
-                  <td className="px-5 py-4 text-ink-soft">{tour.duration}</td>
-                  <td className="px-5 py-4 text-ink-soft">{tour.price}</td>
-                  <td className="px-5 py-4 text-ink-soft">{tour.highlights.slice(0, 3).join(", ")}</td>
+                  <td className="px-5 py-4 font-semibold text-ink">
+                    <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                  </td>
+                  <td className="px-5 py-4 text-ink-soft">
+                    {tour.duration ? <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText> : "-"}
+                  </td>
+                  <td className="px-5 py-4 text-ink-soft">
+                    <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                  </td>
+                  <td className="px-5 py-4 text-ink-soft">
+                    {tour.highlights.slice(0, 3).map((item, index) => (
+                      <span key={item}>
+                        {index > 0 ? ", " : null}
+                        <LocalizedText id={`tour.${tour.id}.included.${index}`}>{item}</LocalizedText>
+                      </span>
+                    ))}
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -81,7 +92,7 @@ export default function ToursPage() {
         </div>
       </section>
 
-      <BookingCTA title="Book the right tour for your day" />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
     </>
   );
 }

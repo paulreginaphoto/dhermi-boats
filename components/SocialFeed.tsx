@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { AtSign, ExternalLink, Music2 } from "lucide-react";
 import tiktokItems from "@/data/tiktok-media.json";
-import { assetPath, instagramHandle, instagramUrl, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { assetPath, instagramUrl, tiktokUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 
 type TikTokItem = {
@@ -24,16 +24,11 @@ export function SocialFeed() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.social.label">Social proof</LocalizedText>
+              <LocalizedText id="section.social.label">Our latest photos</LocalizedText>
             </p>
             <h2 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
-              <LocalizedText id="section.social.title">Real moments from the boat, not stock media.</LocalizedText>
+              <LocalizedText id="section.social.title">Our latest photos</LocalizedText>
             </h2>
-            <p className="mt-5 text-base leading-8 text-ink-soft md:text-lg">
-              <LocalizedText id="section.social.text">
-                A light feed using public Dhermi Boat social media and real site media. Follow the profiles for current clips, route conditions and fresh guest moments.
-              </LocalizedText>
-            </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-ink px-5 text-sm font-semibold text-pearl transition hover:bg-navy"
@@ -91,9 +86,6 @@ export function SocialFeed() {
                 </a>
               ))}
             </div>
-            <p className="mt-4 text-xs leading-6 text-ink-soft">
-              Source: public posts from {tiktokHandle} on TikTok and the official {instagramHandle} profile link.
-            </p>
           </div>
         </div>
       </div>

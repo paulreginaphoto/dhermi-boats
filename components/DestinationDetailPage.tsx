@@ -1,12 +1,14 @@
-import { Compass, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { tours, type Destination } from "@/data/content";
 import { primaryWhatsappHref } from "@/data/content";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
+  const translationBase = `destination.${destination.id}`;
   const relatedTours = tours.filter((tour) =>
     destination.id === "gjipe"
       ? tour.id === "gjipe"
@@ -17,32 +19,34 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
 
   return (
     <>
-      <PageHero title={`${destination.title} boat tour`} image={destination.image} label={destination.eyebrow}>
-        <p>{destination.summary}</p>
+      <PageHero
+        title={<LocalizedText id={`${translationBase}.eyebrow`}>{destination.eyebrow}</LocalizedText>}
+        image={destination.image}
+        label={<LocalizedText id={`${translationBase}.title`}>{destination.title}</LocalizedText>}
+      >
+        <p>
+          <LocalizedText id={`${translationBase}.summary`}>{destination.summary}</LocalizedText>
+        </p>
         <div className="mt-8">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-            Ask availability
+            <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
 
       <section className="bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="site-band grid gap-8 lg:grid-cols-[0.7fr_1.1fr]">
           <div>
-            <Compass className="h-10 w-10 text-turquoise" aria-hidden />
-            <h2 className="mt-5 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              Why this stop works by boat
+            <h2 className="font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
             </h2>
-            <p className="mt-5 text-base leading-8 text-ink-soft">
-              The Dhërmi coast is best understood from the water: limestone walls, hidden coves,
-              sea caves and beaches that feel completely different from the road. The route is
-              confirmed around the day&apos;s weather so you get the most comfortable version of the trip.
-            </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {destination.highlights.map((item) => (
+            {destination.highlights.map((item, index) => (
               <div key={item} className="rounded-md border border-ink/10 bg-limestone p-5">
-                <p className="text-base font-semibold text-ink">{item}</p>
+                <p className="text-base font-semibold text-ink">
+                  <LocalizedText id={`${translationBase}.highlight.${index}`}>{item}</LocalizedText>
+                </p>
               </div>
             ))}
           </div>
@@ -57,7 +61,9 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
-          <h2 className="font-serif text-4xl font-medium text-ink">Best tours for {destination.title}</h2>
+          <h2 className="font-serif text-4xl font-medium text-ink">
+            <LocalizedText id="section.tours.title">Choose your tour</LocalizedText>
+          </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {relatedTours.map((tour) => (
               <a
@@ -65,17 +71,24 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                 className="rounded-md border border-ink/10 bg-limestone p-6 transition hover:-translate-y-1 hover:shadow-soft"
                 href={tour.href}
               >
-                <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">{tour.price}</p>
-                <h3 className="mt-2 font-serif text-3xl font-medium text-ink">{tour.shortTitle}</h3>
-                <p className="mt-3 text-sm leading-7 text-ink-soft">{tour.subtitle}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+                  <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                </p>
+                <h3 className="mt-2 font-serif text-3xl font-medium text-ink">
+                  <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                </h3>
+                {tour.subtitle ? (
+                  <p className="mt-3 text-sm leading-7 text-ink-soft">
+                    <LocalizedText id={`tour.${tour.id}.subtitle`}>{tour.subtitle}</LocalizedText>
+                  </p>
+                ) : null}
               </a>
             ))}
           </div>
         </div>
       </section>
 
-      <BookingCTA title={`Plan a ${destination.title} boat trip`} />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
     </>
   );
 }
-
