@@ -1,0 +1,45 @@
+; DNS zone file for dhermi.boats
+; Target: GitHub Pages repository paulreginaphoto/dhermi-boats
+; Use this when moving the domain away from the old WordPress-hosted site.
+;
+; IMPORTANT:
+; - Remove old WordPress.com A records such as 192.0.78.153 and 192.0.78.206.
+; - Do not create a wildcard record like *.dhermi.boats.
+; - Keep any existing MX/TXT/SPF/DKIM records if domain email is configured.
+; - In the GitHub repo Pages settings, the custom domain must be set to dhermi.boats.
+; - When the domain is connected, the repo build should use:
+;     NEXT_PUBLIC_BASE_PATH=
+;     NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
+
+$ORIGIN dhermi.boats.
+$TTL 3600
+
+@ IN SOA ns1.wordpress.com. hostmaster.wordpress.com. (
+  2026052201 ; serial: increment whenever this zone changes
+  3600       ; refresh
+  900        ; retry
+  1209600    ; expire
+  3600       ; minimum TTL
+)
+
+; If the domain continues to use WordPress.com DNS management, keep these.
+; If the registrar uses different authoritative nameservers, replace these NS lines
+; with the registrar/DNS provider's real nameservers.
+@ IN NS ns1.wordpress.com.
+@ IN NS ns2.wordpress.com.
+@ IN NS ns3.wordpress.com.
+
+; Apex domain: dhermi.boats -> GitHub Pages
+@ IN A 185.199.108.153
+@ IN A 185.199.109.153
+@ IN A 185.199.110.153
+@ IN A 185.199.111.153
+
+; IPv6 support for GitHub Pages
+@ IN AAAA 2606:50c0:8000::153
+@ IN AAAA 2606:50c0:8001::153
+@ IN AAAA 2606:50c0:8002::153
+@ IN AAAA 2606:50c0:8003::153
+
+; www subdomain. Do not include /dhermi-boats here.
+www IN CNAME paulreginaphoto.github.io.
