@@ -7,9 +7,9 @@
 - [x] Unique page titles and descriptions.
 - [x] Canonical URLs.
 - [x] OpenGraph metadata.
-- [x] `robots.txt`.
+- [x] `robots.txt` (`app/robots.ts`).
 - [x] `llms.txt`.
-- [x] `sitemap.xml`.
+- [x] `sitemap.xml` (`app/sitemap.ts`).
 - [x] No `CNAME` while the site uses the default GitHub Pages URL.
 - [x] Optimized local WebP images with descriptive alt text.
 - [x] Owner-provided Drive media selected, cropped and compressed locally.
@@ -20,6 +20,7 @@
 - [x] Official GetYourGuide supplier link added as a secondary trust/contact link.
 - [x] Persistent language selector updates the document language for EN / FR / AL users.
 - [x] Language switcher remains visible on mobile and desktop, and updates the `dlang` URL parameter.
+- [x] Legacy WordPress tour/gallery paths still resolve to live pages (`/gjipe-boat-tour/`, `/grama-bay-boat-tour/`, `/private-boat-tour-albania/`, `/sunset-boat-tour/`, `/morning-fishing-tour/`, `/boat-photos/`) via canonical mapping.
 
 ## Structured Data
 

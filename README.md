@@ -87,10 +87,10 @@ Language labels and interface translations live in `lib/i18n.ts`. The current si
 
 Social media thumbnails from the public TikTok profile live in `public/images/social/`, with metadata in `data/tiktok-media.json`. Instagram, TikTok, Google Maps and GetYourGuide are linked through the official URLs in `lib/site.ts`. Google review excerpts are stored in `data/content.ts`.
 
-## Static SEO Files
+## SEO Files
 
-- `public/robots.txt`
+- `app/robots.ts` (generates `/robots.txt`)
+- `app/sitemap.ts` (generates `/sitemap.xml`)
 - `public/llms.txt`
-- `public/sitemap.xml`
 - page metadata in `app/**/page.tsx`
 - JSON-LD schema in `app/page.tsx` and `app/faq/page.tsx`
