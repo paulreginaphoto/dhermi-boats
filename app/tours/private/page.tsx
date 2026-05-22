@@ -1,0 +1,40 @@
+import type { Metadata } from "next";
+import { BookingCTA } from "@/components/BookingCTA";
+import { TourDetailPage } from "@/components/TourDetailPage";
+import { tours } from "@/data/content";
+import { canonical } from "@/lib/site";
+
+const privateTour = tours.find((tour) => tour.id === "private")!;
+
+export const metadata: Metadata = {
+  title: "Private Boat Tour Albania",
+  description:
+    "Private boat charter from Dhërmi, Albania. Choose your route, swimming stops and timing for couples, families, friends or special occasions.",
+  alternates: { canonical: canonical("/tours/private/") }
+};
+
+export default function PrivateTourPage() {
+  return (
+    <>
+      <TourDetailPage tour={privateTour} />
+      <section id="sunset" className="bg-pearl py-16 md:py-24">
+        <div className="site-band grid gap-6 md:grid-cols-2">
+          {tours.filter((tour) => tour.id === "sunset" || tour.id === "fishing").map((tour) => (
+            <article key={tour.id} className="rounded-md border border-ink/10 bg-limestone p-6 md:p-8">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">{tour.price}</p>
+              <h2 className="mt-3 font-serif text-4xl font-medium text-ink">{tour.title}</h2>
+              <p className="mt-4 text-base leading-8 text-ink-soft">{tour.subtitle}</p>
+              <ul className="mt-6 grid gap-2 text-sm font-semibold text-ink">
+                {tour.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
+      </section>
+      <BookingCTA title="Request a private boat plan" />
+    </>
+  );
+}
+

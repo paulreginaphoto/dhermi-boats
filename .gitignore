@@ -1,0 +1,11 @@
+.next/
+out/
+node_modules/
+_asset-intake/
+*.log
+.env*
+!.env.example
+coverage/
+playwright-report/
+test-results/
+tsconfig.tsbuildinfo

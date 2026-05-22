@@ -1,0 +1,74 @@
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
+import "./globals.css";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { StickyBookingBar } from "@/components/StickyBookingBar";
+import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
+import { assetPath, brandName, canonical, siteUrl } from "@/lib/site";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi, Albania",
+    template: "%s | Dhermi Boat"
+  },
+  description:
+    "Premium boat tours from Dhërmi, Albania to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Private charters and small-group trips with WhatsApp booking.",
+  keywords: [
+    "Dhermi boat tours",
+    "Dhërmi boat tours",
+    "Albania boat tours",
+    "Riviera Albania tours",
+    "Gjipe boat tour",
+    "Blue Cave Albania",
+    "Grama Bay tour",
+    "private boat Albania"
+  ],
+  alternates: {
+    canonical: canonical("/")
+  },
+  openGraph: {
+    type: "website",
+    url: siteUrl,
+    siteName: brandName,
+    title: "Dhermi Boat Tours",
+    description:
+      "Private and small-group boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave.",
+    images: [
+      {
+        url: assetPath("/images/hero-riviera.webp"),
+        width: 1440,
+        height: 1080,
+        alt: "Aerial Albanian Riviera beach reached by boat"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Dhermi Boat Tours",
+    description: "Premium boat tours from Dhërmi, Albania."
+  },
+  icons: {
+    icon: [
+      { url: assetPath("/favicon-32.png"), sizes: "32x32", type: "image/png" },
+      { url: assetPath("/icon-192.png"), sizes: "192x192", type: "image/png" }
+    ],
+    apple: [{ url: assetPath("/icon-192.png"), sizes: "192x192", type: "image/png" }]
+  }
+};
+
+export default function RootLayout({ children }: { children: ReactNode }) {
+  return (
+    <html lang="en">
+      <body className="pb-20 md:pb-0">
+        <Header />
+        <main>{children}</main>
+        <Footer />
+        <WhatsAppFloatingButton />
+        <StickyBookingBar />
+      </body>
+    </html>
+  );
+}
+
