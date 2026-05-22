@@ -8,9 +8,9 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { canonical, googleMapsUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Dhermi boat photos",
+  title: "Boat Tour Photos in Dhërmi",
   description:
-    "Photos of Dhermi boat tours on the Albanian Riviera, with clear-water coves, rocky cliffs and sunset moments.",
+    "Browse all the latest photos from our tours, hidden beaches and our most beautiful moments at sea in Dhërmi.",
   alternates: { canonical: canonical("/boat-photos/") }
 };
 
@@ -21,8 +21,14 @@ export default function BoatPhotosLegacyPage() {
         <div className="site-band">
           <SectionHeading
             label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
-            title={<LocalizedText id="section.social.title">Our latest photos</LocalizedText>}
-          />
+            title={<LocalizedText id="page.photos.title">Boat tour photos in Dhërmi</LocalizedText>}
+          >
+            <p>
+              <LocalizedText id="page.photos.text">
+                Browse all the latest photos from our tours, hidden beaches and our most beautiful moments at sea in Dhërmi.
+              </LocalizedText>
+            </p>
+          </SectionHeading>
           <div className="mt-8 grid gap-8 md:grid-cols-[1fr_0.5fr] md:items-end">
             <VideoFeature />
             <a
@@ -32,7 +38,7 @@ export default function BoatPhotosLegacyPage() {
               target="_blank"
             >
               <MapPin className="h-4 w-4" aria-hidden />
-              View on Google Maps
+              <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
             </a>
           </div>
           <div className="mt-10">

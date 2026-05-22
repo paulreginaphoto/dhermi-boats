@@ -4,7 +4,8 @@ import type { Review } from "@/data/content";
 export function ReviewCard({ review }: { review: Review }) {
   return (
     <article className="flex h-full flex-col rounded-lg border border-ink/8 bg-pearl/88 p-6 shadow-sm">
-      <div className="flex gap-1 text-bronze" aria-label={`${review.rating} star review`}>
+      <div className="flex gap-1 text-bronze">
+        <span className="sr-only">{review.rating} star review</span>
         {Array.from({ length: review.rating }).map((_, index) => (
           <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
         ))}

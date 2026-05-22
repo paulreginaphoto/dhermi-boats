@@ -19,7 +19,7 @@ const items = tiktokItems as TikTokItem[];
 
 export function SocialFeed() {
   return (
-    <section className="bg-limestone py-16 md:py-24" id="social">
+    <section className="below-fold bg-limestone py-16 md:py-24" id="social">
       <div className="site-band">
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
@@ -69,6 +69,10 @@ export function SocialFeed() {
                       src={assetPath(item.image)}
                       alt={item.title}
                       fill
+                      loading="lazy"
+                      fetchPriority="low"
+                      decoding="async"
+                      quality={52}
                       sizes="(min-width: 1024px) 20vw, (min-width: 640px) 45vw, 100vw"
                       className="object-cover transition duration-700 group-hover:scale-105"
                     />

@@ -73,6 +73,7 @@ Contact and booking constants live in `lib/site.ts`:
 - `whatsappNumber`
 - `phoneDisplay`
 - `emailAddress`
+- `bookingFormEndpoint`
 - `instagramHandle`
 - `instagramUrl`
 - `tiktokHandle`
@@ -87,6 +88,17 @@ Interface icons use `lucide-react` outline icons with a shared 1.75px stroke. Th
 Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector in the header; changing language also updates the `dlang` URL parameter.
 
 Social media thumbnails from the public TikTok profile live in `public/images/social/`, with metadata in `data/tiktok-media.json`. Instagram, TikTok, Google Maps and GetYourGuide are linked through the official URLs in `lib/site.ts`. Google review excerpts are stored in `data/content.ts`.
+
+## Booking And Email
+
+GitHub Pages is static, so it cannot run a private backend or send email itself.
+
+The one-minute booking form uses two static-friendly paths:
+
+- Primary: WhatsApp link generated in the browser with tour, date, people, name, phone and notes.
+- Backup: free FormSubmit endpoint from `bookingFormEndpoint`, currently `https://formsubmit.co/dhermi.boats1@gmail.com`.
+
+The first FormSubmit email may require the owner to click an activation link. After activation, form submissions are sent to the email address without adding a backend to the site.
 
 ## SEO Files
 

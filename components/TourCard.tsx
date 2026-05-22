@@ -1,31 +1,33 @@
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, Clock3, MessageCircle, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, iconStrokeWidth } from "@/components/OutlineIcon";
 
-export function TourCard({ tour, priority = false }: { tour: Tour; priority?: boolean }) {
+export function TourCard({ tour }: { tour: Tour }) {
   const translationBase = `tour.${tour.id}`;
   const bookKey =
     tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink/8 bg-pearl/92 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
-      <Link className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
+      <a className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
         <div className="relative aspect-[4/3] overflow-hidden bg-sand">
           <Image
             src={tour.image}
-            alt={`${tour.shortTitle} on the Albanian Riviera`}
+            alt={tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`}
             fill
-            priority={priority}
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+            quality={58}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition duration-700 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-navy/28 via-transparent to-white/5 opacity-80" />
+          <div className="absolute inset-0 from-navy/30 to-transparent bg-gradient-to-t" />
         </div>
-      </Link>
+      </a>
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -36,13 +38,13 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
               <LocalizedText id={`${translationBase}.shortTitle`}>{tour.shortTitle}</LocalizedText>
             </h3>
           </div>
-          <Link
+          <a
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
             href={tour.href}
             aria-label={`View details for ${tour.shortTitle}`}
           >
             <ArrowRight className="h-4 w-4" strokeWidth={iconStrokeWidth} />
-          </Link>
+          </a>
         </div>
 
         {tour.subtitle ? (
@@ -87,14 +89,15 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />
             <LocalizedText id={bookKey}>Book</LocalizedText>
           </a>
-          <Link
+          <a
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white active:translate-y-px"
             href={tour.href}
           >
             <LocalizedText id="tour.details">Details</LocalizedText>
-          </Link>
+          </a>
         </div>
       </div>
     </article>
   );
 }
+

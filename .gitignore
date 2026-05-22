@@ -10,3 +10,11 @@ coverage/
 playwright-report/
 test-results/
 tsconfig.tsbuildinfo
+.tmp-lh*.json
+.tmp_reopt/
+chromewebdata_*.report.html
+$log
+`$log
+`$log`
+*.tmp
+scripts/optimize-static-images.mjs

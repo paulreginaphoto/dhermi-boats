@@ -1,13 +1,9 @@
-"use client";
-
 import { Languages } from "lucide-react";
-import { localeAriaNames, localeLabels, locales, type Locale } from "@/lib/i18n";
-import { useLanguage } from "@/components/LanguageProvider";
+import { locales, type Locale } from "@/lib/i18n";
 import { LocalizedText } from "@/components/LocalizedText";
+import { localeLabels, localeAriaNames } from "@/lib/i18n";
 
 export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
-  const { locale, setLocale } = useLanguage();
-
   return (
     <div className={compact ? "flex items-center" : "flex items-center gap-2"} role="group" aria-label="Language selector">
       {!compact ? (
@@ -18,20 +14,19 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
       ) : null}
       <div className={compact ? "inline-flex rounded-md border border-ink/12 bg-white p-0.5 shadow-sm" : "inline-flex rounded-md border border-ink/12 bg-white p-1"}>
         {locales.map((item: Locale) => (
-          <button
+          <a
             key={item}
+            href={`?dlang=${item}`}
             aria-label={`Switch language to ${localeAriaNames[item]}`}
-            aria-pressed={locale === item}
+            data-locale={item}
+            data-locale-switcher
             className={[
               compact ? "h-8 min-w-7 rounded px-1 text-[10px] sm:min-w-8 sm:px-1.5 sm:text-[11px]" : "h-8 min-w-9 rounded px-2 text-xs",
-              "font-bold transition active:translate-y-px",
-              locale === item ? "bg-ink text-pearl" : "text-ink-soft hover:bg-ink/5 hover:text-ink"
+              "font-bold transition active:translate-y-px text-ink-soft hover:bg-ink/5 hover:text-ink"
             ].join(" ")}
-            type="button"
-            onClick={() => setLocale(item)}
           >
             {localeLabels[item]}
-          </button>
+          </a>
         ))}
       </div>
     </div>

@@ -39,6 +39,58 @@ video {
   text-wrap: balance;
 }
 
+.photo-title {
+  text-shadow:
+    0 2px 8px rgb(7 27 38 / 0.72),
+    0 10px 28px rgb(7 27 38 / 0.55),
+    0 0 1px rgb(7 27 38 / 0.8);
+  text-wrap: balance;
+}
+
+.photo-copy,
+.photo-label {
+  text-shadow:
+    0 2px 6px rgb(7 27 38 / 0.45),
+    0 0 18px rgb(7 27 38 / 0.4);
+  color: #fffcf6;
+  text-wrap: pretty;
+}
+
+.photo-panel-overlay {
+  border: 1px solid rgb(255 255 255 / 0.2);
+  background: rgb(7 27 38 / 0.93);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.photo-overlay-dark {
+  background:
+    linear-gradient(90deg, rgb(7 27 38 / 0.76), rgb(7 27 38 / 0.50) 48%, rgb(7 27 38 / 0.20)),
+    linear-gradient(180deg, rgb(7 27 38 / 0.16), rgb(7 27 38 / 0.82));
+}
+
+.photo-overlay-dark-strong {
+  background:
+    radial-gradient(circle at 22% 52%, rgb(7 27 38 / 0.42), transparent 46%),
+    linear-gradient(180deg, transparent 38%, rgb(7 27 38 / 0.68));
+}
+
+.media-text-shell {
+  border: 1px solid rgb(255 255 255 / 0.24);
+  background: rgb(7 27 38 / 0.62);
+  color: #fffcf6;
+  text-wrap: balance;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.16);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px 900px;
+}
+
 .site-band {
   @apply mx-auto max-w-site px-5 md:px-8;
 }
@@ -59,5 +111,18 @@ video {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .photo-overlay-dark {
+    background:
+      linear-gradient(180deg, rgb(7 27 38 / 0.12), rgb(7 27 38 / 0.66) 42%, rgb(7 27 38 / 0.92)),
+      linear-gradient(90deg, rgb(7 27 38 / 0.58), rgb(7 27 38 / 0.18));
+  }
+
+  .photo-overlay-dark-strong {
+    background:
+      linear-gradient(180deg, transparent 20%, rgb(7 27 38 / 0.66) 100%);
   }
 }

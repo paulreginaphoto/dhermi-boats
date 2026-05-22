@@ -45,8 +45,8 @@ export default function ToursPage() {
             label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
           />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
-            {tours.map((tour, index) => (
-              <TourCard key={tour.id} tour={tour} priority={index === 0} />
+            {tours.map((tour) => (
+              <TourCard key={tour.id} tour={tour} />
             ))}
           </div>
         </div>

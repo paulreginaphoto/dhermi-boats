@@ -40,7 +40,16 @@
 - Kept the Drive intake folder local and out of git; committed only lightweight WebP/MP4 assets needed by the static site.
 - Fixed the French mobile hero and compact header after browser QA so long translated titles do not create horizontal overflow and the EN / FR / AL selector remains visible.
 - Browser QA passed after the Lucide pass on mobile private FR, desktop home FR and mobile contact FR: no horizontal overflow, language selector visible, WhatsApp present and no old icon assets loaded.
+- Rechecked the live `https://dhermi.boats` source against the replacement site: tour prices, durations, capacity, inclusions, FAQ, reviews, WhatsApp number, email, Instagram, photos page copy, legacy tour URLs, robots rules and sitemap continuity are aligned. Kept earlier friendly wording where the original used upscale positioning.
+- Restored the original Photos entry into the main navigation, mobile navigation and footer with EN / FR / AL labels.
+- Audited the current media set visually and technically, then upgraded the tour card images from the best real intake assets: Gjipe aerial beach, Grama Bay aerial water, private cave boat scene, sunset bow and fishing rods at sunrise.
+- Curated the visible gallery down to the strongest real sea, cave, cove and sunset images, and rebuilt the video module as a lazy-loaded muted loop with a visible play / pause control.
+- Refined photo overlays and hero typography so French mobile titles stay inside the viewport while the photography remains visible.
+- Verified mobile media rendering at 390px: no horizontal overflow, selected tour images load at 960 x 720, gallery images load at 640 x 480, and the video source loads only when it is near the viewport.
+- Added a one-minute booking tunnel on the home and contact pages: tour choice, date, time, people, name, phone, notes, generated WhatsApp message and email fallback.
+- Added a static-compatible email route through `bookingFormEndpoint` with FormSubmit and documented the GitHub Pages limitation: no private backend can run directly on GitHub Pages.
+- Improved the locale bootstrap so translated labels inside hydrated client components are translated after they appear in the DOM.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media and GitHub Pages deployment.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media and GitHub Pages deployment.

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone, Ticket } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
@@ -6,6 +5,7 @@ import { LocalizedText } from "@/components/LocalizedText";
 
 const navKeyByLabel: Record<string, string> = {
   Tours: "nav.tours",
+  Photos: "nav.photos",
   Private: "nav.private",
   Destinations: "nav.destinations",
   FAQ: "nav.faq",
@@ -34,9 +34,9 @@ export function Footer() {
           </p>
           <nav className="mt-5 grid gap-3 text-sm text-pearl/78" aria-label="Footer navigation">
             {navItems.map((item) => (
-              <Link key={item.href} className="transition hover:text-white" href={item.href}>
+              <a key={item.href} className="transition hover:text-white" href={item.href}>
                 <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-              </Link>
+              </a>
             ))}
           </nav>
         </div>
@@ -88,3 +88,4 @@ export function Footer() {
     </footer>
   );
 }
+

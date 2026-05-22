@@ -8,7 +8,13 @@ const nextConfig = {
   basePath,
   assetPrefix: basePath || undefined,
   images: {
-    unoptimized: true
+    unoptimized: true,
+    formats: ["image/webp", "image/avif"],
+    deviceSizes: [360, 390, 430, 768, 1024, 1280],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 640]
+  },
+  experimental: {
+    optimizePackageImports: ["lucide-react"]
   }
 };
 

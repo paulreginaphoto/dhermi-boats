@@ -8,6 +8,7 @@ import { MobileNav } from "@/components/MobileNav";
 
 const navKeyByLabel: Record<string, string> = {
   Tours: "nav.tours",
+  Photos: "nav.photos",
   Private: "nav.private",
   Destinations: "nav.destinations",
   FAQ: "nav.faq",
@@ -31,13 +32,13 @@ export function Header() {
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.href}
               className="text-sm font-semibold text-ink-soft transition hover:text-ink"
               href={item.href}
             >
               <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-            </Link>
+            </a>
           ))}
         </nav>
 

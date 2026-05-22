@@ -1,4 +1,3 @@
-import Link from "next/link";
 import type { ComponentType, ReactNode } from "react";
 import { iconStrokeWidth } from "@/components/OutlineIcon";
 
@@ -58,8 +57,8 @@ export function ButtonLink({
   }
 
   return (
-    <Link aria-label={ariaLabel} className={classes} href={href}>
+    <a aria-label={ariaLabel} className={classes} href={href} rel={href.startsWith("http") ? "noreferrer" : undefined}>
       {content}
-    </Link>
+    </a>
   );
 }

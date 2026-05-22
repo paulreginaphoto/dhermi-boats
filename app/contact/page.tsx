@@ -3,6 +3,7 @@ import { Camera, Mail, MapPin, MessageCircle, Phone, Ticket, Video } from "lucid
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
+import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
@@ -44,6 +45,8 @@ export default function ContactPage() {
           </ButtonLink>
         </div>
       </PageHero>
+
+      <OneMinuteBooking />
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">

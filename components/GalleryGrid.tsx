@@ -19,6 +19,10 @@ export function GalleryGrid({ limit = gallery.length }: { limit?: number }) {
             src={item.src}
             alt={item.alt}
             fill
+            loading="lazy"
+            fetchPriority="low"
+            decoding="async"
+            quality={50}
             sizes={index === 0 ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
             className="object-cover"
           />

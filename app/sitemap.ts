@@ -1,8 +1,11 @@
 import type { MetadataRoute } from "next";
 import { canonical } from "@/lib/site";
 
+export const dynamic = "force-static";
+
 const pages: Array<{ path: string; priority: number; changefreq: MetadataRoute.Sitemap[number]["changeFrequency"] }> = [
   { path: "/", priority: 1, changefreq: "weekly" },
+  { path: "/boat-photos/", priority: 0.75, changefreq: "weekly" },
   { path: "/tours/", priority: 0.9, changefreq: "weekly" },
   { path: "/tours/private/", priority: 0.9, changefreq: "weekly" },
   { path: "/tours/group/", priority: 0.85, changefreq: "weekly" },
@@ -29,4 +32,3 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: page.priority
   }));
 }
-

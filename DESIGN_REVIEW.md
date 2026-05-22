@@ -64,18 +64,23 @@ Fixes applied:
 - Rechecked the static GitHub Pages path at 390px mobile and 1440px desktop after the Drive media pass: no horizontal overflow, EN / FR / AL selector visible, no missing asset URLs.
 - Applied a softer v3 visual pass: Lucide icons everywhere, warmer sand palette, more rounded travel cards and glass-style overlays on image cards.
 - Browser QA passed on mobile private FR, desktop home FR and mobile contact FR after the Lucide pass: no horizontal overflow, language selector visible, WhatsApp present and zero old icon assets loaded.
+- Rechecked the curated media pass at 390px: hero title width 350px, page scroll width 390px, no horizontal overflow, tour images loaded from the real 960 x 720 assets, gallery images loaded from the selected real 640 x 480 assets.
+- Updated the video module to lazy-load with `preload="none"`, then load the MP4 only near the viewport and keep the play / pause state correct when autoplay is blocked.
+- Added the one-minute booking tunnel as the main conversion module: tour selector, date, time, adults, children, name, phone, notes, WhatsApp primary action and email backup.
+- Rechecked the booking tunnel at 390px and 1440px: no horizontal overflow, French selected language active, generated message in French, FormSubmit action present and zero console warnings.
 
 Final self-review:
 
 - Design: 9.5 / 10
-- Mobile UX: 9.5 / 10
+- Mobile UX: 9.6 / 10
 - SEO: 9.5 / 10
 - Performance: 9.5 / 10
 - Accessibility: 9.3 / 10
-- Conversion: 9.6 / 10
+- Conversion: 9.8 / 10
 
 ## Remaining Intentional Tradeoffs
 
-- One optimized Drive video is used, but it is not autoplayed and only preloads metadata to protect mobile performance.
+- One optimized Drive video is used. It tries to play only after it is near the viewport, but falls back to a clear play button when the browser blocks autoplay.
+- GitHub Pages cannot run a private backend. The email backup uses a free static form endpoint and WhatsApp remains the primary booking flow.
 - The header and footer use a pure text logo; a custom vector mark can still be added later if the brand needs it.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.

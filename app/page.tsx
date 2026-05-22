@@ -7,6 +7,7 @@ import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { HeroCinematic } from "@/components/HeroCinematic";
 import { MotionReveal } from "@/components/MotionReveal";
+import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { ReviewCard } from "@/components/ReviewCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -91,6 +92,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <OneMinuteBooking />
+
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
@@ -105,14 +108,14 @@ export default function HomePage() {
           <div className="mt-12 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
             {tours.slice(0, 3).map((tour, index) => (
               <MotionReveal key={tour.id} delay={index * 90} className={index === 0 ? "lg:row-span-2" : ""}>
-                <TourCard tour={tour} priority={index === 0} />
+                <TourCard tour={tour} />
               </MotionReveal>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-limestone py-16 md:py-24">
+      <section className="below-fold bg-limestone py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <SectionHeading
@@ -176,10 +179,13 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-pearl py-16 md:py-24">
+      <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[1fr_0.82fr] lg:items-center">
           <div>
-            <SectionHeading label="Our latest photos" title="Our latest photos" />
+            <SectionHeading
+              label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
+              title={<LocalizedText id="section.social.title">Our latest photos</LocalizedText>}
+            />
           </div>
           <VideoFeature />
         </div>
@@ -190,7 +196,7 @@ export default function HomePage() {
 
       <SocialFeed />
 
-      <section className="bg-pearl py-16 md:py-24">
+      <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-2">
           <div>
             <h2 className="font-serif text-4xl font-medium text-ink">
@@ -225,7 +231,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="reviews" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
+      <section id="reviews" className="below-fold scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
         <div className="site-band">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
@@ -250,7 +256,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="bg-pearl py-16 md:py-24">
+      <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeading
             label={<LocalizedText id="section.faq.label">Before booking</LocalizedText>}

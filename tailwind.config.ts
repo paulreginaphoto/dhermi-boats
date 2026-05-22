@@ -18,7 +18,7 @@ const config: Config = {
         navy: "#071B26",
         turquoise: "#1F7C86",
         "turquoise-soft": "#D9EFEC",
-        bronze: "#A87847"
+        bronze: "#7B4D20"
       },
       fontFamily: {
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],

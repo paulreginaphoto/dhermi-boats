@@ -13,6 +13,20 @@ On every push to `main`, GitHub Actions:
 5. Uploads the static `out/` directory.
 6. Deploys it to GitHub Pages.
 
+## Email From The Static Site
+
+GitHub Pages cannot execute backend code, so it cannot send booking emails by itself.
+
+The site uses a static-compatible backup email path:
+
+```txt
+https://formsubmit.co/dhermi.boats1@gmail.com
+```
+
+This is configured in `lib/site.ts` as `bookingFormEndpoint`. The first submission can trigger an activation email to the owner. After that, the one-minute booking form can send a copy by email while WhatsApp stays the main conversion flow.
+
+If the owner later wants a real private backend, use Cloudflare Workers, Google Apps Script or another free serverless endpoint, then replace `bookingFormEndpoint`.
+
 ## Current GitHub Pages URL
 
 - Repository settings > Pages > Source: `GitHub Actions`.
