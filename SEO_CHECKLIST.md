@@ -17,6 +17,7 @@
 - [x] Official Instagram and TikTok profile links.
 - [x] Official Google Maps profile link.
 - [x] Persistent language selector updates the document language for EN / FR / AL users.
+- [x] Language switcher remains visible on mobile and desktop, and updates the `dlang` URL parameter.
 
 ## Structured Data
 

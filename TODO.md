@@ -25,6 +25,11 @@
 - [x] Restore the current `dhermi.boats` base text for excursions, inclusions, FAQ and reviews.
 - [x] Apply the restored source text through EN / FR / AL selected-language states.
 - [x] Remove visible invented Google-review description copy while keeping the Google Maps link and real review excerpts.
+- [x] Keep the language selector visible in the header on mobile and desktop.
+- [x] Sync language changes into the URL with `dlang`.
+- [x] Add a conversion-focused WhatsApp booking panel to tour detail pages.
+- [x] Shorten booking CTAs for better mobile readability.
+- [x] Remove visible customer-facing filler wording from the booking experience.
 
 ## Optional Future Improvements
 

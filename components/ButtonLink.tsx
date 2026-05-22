@@ -30,7 +30,7 @@ export function ButtonLink({
   ariaLabel
 }: ButtonLinkProps) {
   const classes = [
-    "inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 text-sm font-semibold leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
+    "inline-flex min-h-12 items-center justify-center gap-2 rounded-md px-5 text-sm font-semibold leading-none transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-px",
     variants[variant],
     className
   ].join(" ");

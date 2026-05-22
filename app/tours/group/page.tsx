@@ -18,7 +18,11 @@ export const metadata: Metadata = {
 export default function GroupToursPage() {
   return (
     <>
-      <PageHero title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>} image={groupTours[0].image} label="Shared tours" />
+      <PageHero
+        title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+        image={groupTours[0].image}
+        label={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
+      />
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">
           {groupTours.map((tour, index) => (

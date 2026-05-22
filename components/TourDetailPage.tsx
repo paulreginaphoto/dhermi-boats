@@ -57,7 +57,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
       </section>
 
       <section className="bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-10 lg:grid-cols-[1fr_0.8fr]">
+        <div className="site-band grid gap-8 lg:grid-cols-[0.92fr_0.56fr] lg:items-start">
           <div className="rounded-md border border-ink/10 bg-limestone p-6 md:p-8">
             <h2 className="font-serif text-3xl font-medium text-ink">
               <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
@@ -73,6 +73,36 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               ))}
             </ul>
           </div>
+          <aside className="rounded-md bg-ink p-6 text-pearl shadow-image lg:sticky lg:top-28">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="booking.panel.label">WhatsApp booking</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-3xl font-medium">
+              <LocalizedText id="booking.panel.title">Ready to book?</LocalizedText>
+            </h2>
+            <dl className="mt-6 grid gap-4 border-y border-white/10 py-5">
+              {facts.map((fact) => (
+                <div key={fact.label} className="grid grid-cols-[0.42fr_1fr] gap-4">
+                  <dt className="text-xs font-bold uppercase tracking-[0.18em] text-sand/80">
+                    <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
+                  </dt>
+                  <dd className="text-sm font-semibold leading-6 text-pearl">
+                    <LocalizedText id={fact.valueKey}>{fact.value}</LocalizedText>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full">
+              <LocalizedText id={bookKey}>Book this tour</LocalizedText>
+            </ButtonLink>
+            <p className="mt-4 text-sm leading-7 text-pearl/70">
+              <LocalizedText id="booking.panel.text">
+                Send your date, number of people and preferred tour. We confirm availability together.
+              </LocalizedText>
+            </p>
+          </aside>
+        </div>
+        <div className="site-band mt-10">
           <GalleryGrid limit={6} />
         </div>
       </section>

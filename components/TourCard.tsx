@@ -78,7 +78,7 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
-            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl transition hover:bg-navy"
+            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl transition hover:bg-navy active:translate-y-px"
             href={whatsappUrl(tour.whatsappText)}
             rel="noreferrer"
             target="_blank"
@@ -87,7 +87,7 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             <LocalizedText id={bookKey}>Book</LocalizedText>
           </a>
           <Link
-            className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
+            className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white active:translate-y-px"
             href={tour.href}
           >
             <LocalizedText id="tour.details">Details</LocalizedText>

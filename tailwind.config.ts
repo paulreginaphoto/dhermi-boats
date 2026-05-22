@@ -21,7 +21,7 @@ const config: Config = {
         bronze: "#B88955"
       },
       fontFamily: {
-        sans: ["var(--font-sans)", "Inter", "system-ui", "sans-serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         serif: ["var(--font-serif)", "Georgia", "serif"]
       },
       boxShadow: {

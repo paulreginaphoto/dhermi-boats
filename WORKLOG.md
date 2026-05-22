@@ -30,7 +30,10 @@
 - Revisited the current `https://dhermi.boats` site and restored the base tour text, prices, durations, included stops/options, FAQ wording, "Why choose us", "Useful information" and customer review excerpts from that source.
 - Extended the source-copy restoration across the selected language state so EN / FR / AL tour cards, FAQ answers, inclusions and practical information no longer fall back to invented text.
 - Browser QA passed on the static GitHub Pages-style export for FR, AL and EN source-copy checks, with no visible Google-review description copy.
+- Built a conversion-focused v2 pass: visible mobile language selector, shorter booking CTAs, URL-synced language state, a tour-page WhatsApp booking panel and cleaner mobile hero sizing.
+- Removed visible customer-facing filler wording while keeping practical tour prices, inclusions and real review excerpts.
+- Browser QA passed for mobile private-tour booking, FR/AL page localization, language switching and horizontal overflow.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, AI-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.
+The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.

@@ -1,8 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { assetPath, emailAddress, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { emailAddress, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 
 const navKeyByLabel: Record<string, string> = {
@@ -18,23 +17,10 @@ export function Footer() {
     <footer className="bg-navy text-pearl">
       <div className="mx-auto grid max-w-site gap-10 px-5 py-14 md:grid-cols-[1.2fr_0.8fr_0.8fr] md:px-8">
         <div>
-          <div className="flex items-center gap-4">
-            <span className="relative flex h-14 w-20 items-center justify-center overflow-hidden rounded-sm bg-white">
-              <Image
-                src={assetPath("/images/brand-mark-wide.webp")}
-                alt=""
-                width={104}
-                height={45}
-                className="h-auto w-16"
-              />
-            </span>
-            <div>
-              <p className="font-serif text-2xl font-semibold">Dhermi Boat</p>
-              <p className="mt-1 text-sm text-pearl/70">
-                <LocalizedText id="footer.tagline">Discover the Albanian Riviera.</LocalizedText>
-              </p>
-            </div>
-          </div>
+          <p className="font-serif text-3xl font-semibold leading-none">Dhermi Boat</p>
+          <p className="mt-3 text-sm text-pearl/70">
+            <LocalizedText id="footer.tagline">Discover the Albanian Riviera.</LocalizedText>
+          </p>
           <p className="mt-6 max-w-md text-sm leading-7 text-pearl/72">
             <LocalizedText id="footer.text">
               Discover the Albanian Riviera.

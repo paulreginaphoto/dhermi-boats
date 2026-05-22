@@ -32,11 +32,18 @@ export default function ToursPage() {
   return (
     <>
       <SEOJsonLd data={schema} />
-      <PageHero title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>} image={tours[1].image} label="Tours" />
+      <PageHero
+        title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+        image={tours[1].image}
+        label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
+      />
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
-          <SectionHeading title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>} label="Tours" />
+          <SectionHeading
+            title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+            label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
+          />
           <div className="mt-10 grid gap-6 lg:grid-cols-3">
             {tours.map((tour, index) => (
               <TourCard key={tour.id} tour={tour} priority={index === 0} />
@@ -53,7 +60,9 @@ export default function ToursPage() {
             </caption>
             <thead className="bg-ink text-pearl">
               <tr>
-                <th className="px-5 py-4 font-semibold">Tour</th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="table.tour">Tour</LocalizedText>
+                </th>
                 <th className="px-5 py-4 font-semibold">
                   <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
                 </th>

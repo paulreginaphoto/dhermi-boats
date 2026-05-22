@@ -7,7 +7,7 @@ const keys = ["badge.daily", "badge.guests", "badge.whatsapp", "badge.private"];
 
 export function TrustBadges() {
   return (
-    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5" aria-label="Trust indicators">
+    <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4" aria-label="Trust indicators">
       {trustBadges.map((badge, index) => {
         const icon = icons[index] ?? "check";
         return (

@@ -32,7 +32,7 @@ export function DestinationCard({ destination }: { destination: Destination }) {
             <LocalizedText id={`${translationBase}.summary`}>{destination.summary}</LocalizedText>
           </p>
           <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold">
-            <LocalizedText id="tour.details">VIEW DETAILS</LocalizedText>
+            <LocalizedText id="tour.details">View details</LocalizedText>
             <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
           </span>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { defaultLocale, isLocale, type Locale } from "@/lib/i18n";
 
 type LanguageContextValue = {
@@ -15,6 +15,13 @@ const LanguageContext = createContext<LanguageContextValue>({
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
+
+  const setLocale = useCallback((nextLocale: Locale) => {
+    setLocaleState(nextLocale);
+    const url = new URL(window.location.href);
+    url.searchParams.set("dlang", nextLocale);
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -44,9 +51,9 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const value = useMemo(
     () => ({
       locale,
-      setLocale: setLocaleState
+      setLocale
     }),
-    [locale]
+    [locale, setLocale]
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;

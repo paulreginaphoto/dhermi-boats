@@ -22,7 +22,7 @@ export function PageHero({
         {label ? (
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">{label}</p>
         ) : null}
-        <h1 className="max-w-4xl font-serif text-5xl font-medium leading-[1] md:text-7xl">{title}</h1>
+        <h1 className="max-w-4xl font-serif text-4xl font-medium leading-[1.02] sm:text-5xl md:text-7xl">{title}</h1>
         {children ? <div className="mt-6 max-w-2xl text-lg leading-8 text-pearl/82">{children}</div> : null}
       </div>
     </section>

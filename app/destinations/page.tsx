@@ -18,7 +18,11 @@ export const metadata: Metadata = {
 export default function DestinationsPage() {
   return (
     <>
-      <PageHero title="Destinations" image={tours[1].image} label="Destinations" />
+      <PageHero
+        title={<LocalizedText id="page.destinations.title">Destinations</LocalizedText>}
+        image={tours[1].image}
+        label={<LocalizedText id="section.destinations.label">Destinations</LocalizedText>}
+      />
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band grid gap-5 lg:grid-cols-3">
           {destinations.map((destination) => (

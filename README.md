@@ -82,7 +82,7 @@ Images are in `public/images/`. The sea clip is in `public/videos/`.
 
 3D interface icons are stored in `public/icons/fluent-emoji-3d/`. They come from Microsoft Fluent Emoji (`https://github.com/microsoft/fluentui-emoji`, MIT license) and are used for friendly visual cues in badges, tour facts and contact cards.
 
-Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector for the main booking interface.
+Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector in the header; changing language also updates the `dlang` URL parameter.
 
 Social media thumbnails from the public TikTok profile live in `public/images/social/`, with metadata in `data/tiktok-media.json`. Instagram is linked through the official profile URL. Google review excerpts and the Google Maps profile link are stored in `data/content.ts` and `lib/site.ts`.
 

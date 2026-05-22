@@ -95,8 +95,8 @@ export const tours: Tour[] = [
     href: "/tours/private/",
     legacyHref: "/private-boat-tour-albania/",
     whatsappText: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
-    highlights: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for VIPs, families, groups of friends or special occasions ✨"],
-    included: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for VIPs, families, groups of friends or special occasions ✨"]
+    highlights: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
+    included: ["You choose everything: duration – itinerary – swimming stops – destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"]
   },
   {
     id: "sunset",
@@ -180,7 +180,7 @@ export const reviews = [
     name: "Julie Dw",
     detail: "Local Guide • 21 avis • 4 photos · Il y a 11 semaines",
     rating: 5,
-    text: "⭐️⭐️⭐️⭐️⭐️ Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante, il met tout de suite en confiance et l'ambiance à bord est juste top."
+    text: "Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante, il met tout de suite en confiance et l'ambiance à bord est juste top."
   },
   {
     name: "Marianne Vayson",
@@ -212,7 +212,7 @@ export const whyChooseUs = [
   "Experienced local skipper, passionate about Albanian history, culture and landscapes",
   "Fluent in Albanian and French, with good knowledge of English",
   "Customizable experiences",
-  "Friendly & premium atmosphere"
+  "Friendly atmosphere"
 ];
 
 export const usefulInformation = [

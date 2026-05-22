@@ -14,7 +14,7 @@ export function StickyBookingBar() {
           target="_blank"
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
-          <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
+          <LocalizedText id="cta.book">Book now</LocalizedText>
         </a>
         <a
           aria-label="Call Dhermi Boat"

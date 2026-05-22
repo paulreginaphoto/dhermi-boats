@@ -115,10 +115,13 @@ export default function HomePage() {
       <section className="bg-limestone py-16 md:py-24">
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
-            <SectionHeading label="Exclusive Experiences" title="Exclusive Experiences" />
+            <SectionHeading
+              label={<LocalizedText id="section.experiences.label">Exclusive Experiences</LocalizedText>}
+              title={<LocalizedText id="section.experiences.title">Exclusive Experiences</LocalizedText>}
+            />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/tours/private/" variant="primary">
-                <LocalizedText id="tour.details">VIEW DETAILS</LocalizedText>
+                <LocalizedText id="tour.details">View details</LocalizedText>
               </ButtonLink>
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary">
                 <LocalizedText id="tour.private.book">REQUEST A PRIVATE TOUR</LocalizedText>
@@ -158,8 +161,12 @@ export default function HomePage() {
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band">
           <div className="max-w-3xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">Destinations</p>
-            <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">Destinations</h2>
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="section.destinations.label">Destinations</LocalizedText>
+            </p>
+            <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">
+              <LocalizedText id="section.destinations.title">Destinations</LocalizedText>
+            </h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
             {destinations.map((destination) => (

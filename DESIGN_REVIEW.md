@@ -31,6 +31,8 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Extended FR/AL language handling on the contact page, booking CTA and footer to avoid mixed-language booking screens.
 - Replaced invented tour and review copy with the current `dhermi.boats` base text for excursions, included stops/options, FAQ and customer reviews.
 - Extended the same source-copy approach through the selected language state so French and Albanian tour details, FAQ, practical info and CTAs stay aligned with the current site.
+- Added a v2 conversion pass: language selector always visible on mobile, language changes reflected in the URL, shorter CTAs and a WhatsApp booking panel on tour detail pages.
+- Cleaned visible filler wording from the customer experience while preserving practical source facts, prices and real review excerpts.
 
 ## QA Scores
 
@@ -54,6 +56,8 @@ Fixes applied:
 - Replaced mismatched 3D icons with a better-covered local MIT icon pack and verified the contact/social icons in the browser.
 - Rechecked the French contact path so the language selector, booking CTA, footer and social links stay coherent.
 - Rechecked the static export in browser for FR, AL and EN content and removed visible Google-review rating description copy.
+- Rechecked the private-tour page at a 390px mobile viewport: visible language selector, sticky booking CTA, no horizontal overflow and translated French booking panel.
+- Rechecked key FR/AL pages after the v2 pass: home, private tour, contact, destinations, FAQ and shared tours.
 
 Final self-review:
 

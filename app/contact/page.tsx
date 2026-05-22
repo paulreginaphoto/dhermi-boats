@@ -27,7 +27,11 @@ const contacts = [
 export default function ContactPage() {
   return (
     <>
-      <PageHero title="Contact Dhermi Boat" image={tours[2].image} label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}>
+      <PageHero
+        title={<LocalizedText id="page.contact.title">Contact Dhermi Boat</LocalizedText>}
+        image={tours[2].image}
+        label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}
+      >
         <p>
           <LocalizedText id="contact.hero.text">
             Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.
@@ -35,7 +39,7 @@ export default function ContactPage() {
         </p>
         <div className="mt-8">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-            <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
+            <LocalizedText id="cta.book">Book now</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>

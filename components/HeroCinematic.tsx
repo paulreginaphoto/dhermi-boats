@@ -29,7 +29,7 @@ export function HeroCinematic() {
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy to-transparent" />
       </div>
 
-      <div className="relative mx-auto grid min-h-[620px] max-w-site items-center gap-10 px-5 py-12 md:min-h-[calc(100svh-10rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
+      <div className="relative mx-auto grid min-h-[calc(100svh-5rem)] max-w-site items-center gap-10 px-5 py-12 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
         <div className="max-w-3xl">
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">
             <LocalizedText id="hero.label">Boat Tours in Dhërmi</LocalizedText>
@@ -44,7 +44,7 @@ export function HeroCinematic() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-              <LocalizedText id="cta.book">BOOK YOUR TOUR NOW</LocalizedText>
+              <LocalizedText id="cta.book">Book now</LocalizedText>
             </ButtonLink>
             <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
               <LocalizedText id="cta.viewTours">View tours</LocalizedText>
