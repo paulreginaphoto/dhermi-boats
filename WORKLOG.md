@@ -33,7 +33,11 @@
 - Built a conversion-focused v2 pass: visible mobile language selector, shorter booking CTAs, URL-synced language state, a tour-page WhatsApp booking panel and cleaner mobile hero sizing.
 - Removed visible customer-facing filler wording while keeping practical tour prices, inclusions and real review excerpts.
 - Browser QA passed for mobile private-tour booking, FR/AL page localization, language switching and horizontal overflow.
+- Audited the Google Drive folder `Photo & Videos Bateau`, separated photos and videos, generated local contact sheets for review, and selected real Dhermi Boat media for the site.
+- Replaced the hero, tour cards, destination images, gallery images and the homepage sea video with optimized Drive media only.
+- Kept the Drive intake folder local and out of git; committed only lightweight WebP/MP4 assets needed by the static site.
+- Fixed the French mobile hero and compact header after browser QA so long translated titles do not create horizontal overflow and the EN / FR / AL selector remains visible.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.
+The site is a static, image-led booking website with clear prices, direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media and GitHub Pages deployment.

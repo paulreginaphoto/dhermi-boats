@@ -33,6 +33,7 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Extended the same source-copy approach through the selected language state so French and Albanian tour details, FAQ, practical info and CTAs stay aligned with the current site.
 - Added a v2 conversion pass: language selector always visible on mobile, language changes reflected in the URL, shorter CTAs and a WhatsApp booking panel on tour detail pages.
 - Cleaned visible filler wording from the customer experience while preserving practical source facts, prices and real review excerpts.
+- Sorted the owner-provided Google Drive media by use case, then replaced the hero, tours, destinations, gallery and video with real optimized Dhermi Boat assets.
 
 ## QA Scores
 
@@ -58,18 +59,20 @@ Fixes applied:
 - Rechecked the static export in browser for FR, AL and EN content and removed visible Google-review rating description copy.
 - Rechecked the private-tour page at a 390px mobile viewport: visible language selector, sticky booking CTA, no horizontal overflow and translated French booking panel.
 - Rechecked key FR/AL pages after the v2 pass: home, private tour, contact, destinations, FAQ and shared tours.
+- Rechecked media choices against the local contact sheets: boat signal in the hero, cove image for Gjipe, cliff/bay image for Grama, Blue Cave image for the cave destination and a lightweight boat video for the homepage.
+- Rechecked the static GitHub Pages path at 390px mobile and 1440px desktop after the Drive media pass: no horizontal overflow, EN / FR / AL selector visible, no missing asset URLs.
 
 Final self-review:
 
 - Design: 9.3 / 10
-- Mobile UX: 9.4 / 10
+- Mobile UX: 9.5 / 10
 - SEO: 9.5 / 10
-- Performance: 9.2 / 10
+- Performance: 9.4 / 10
 - Accessibility: 9.3 / 10
-- Conversion: 9.5 / 10
+- Conversion: 9.6 / 10
 
 ## Remaining Intentional Tradeoffs
 
-- One existing video is preserved, but it is not autoplayed and only preloads metadata to protect mobile performance.
-- The existing logo is preserved, but a future vector mark would make the brand feel cleaner.
+- One optimized Drive video is used, but it is not autoplayed and only preloads metadata to protect mobile performance.
+- The header and footer use a pure text logo; a custom vector mark can still be added later if the brand needs it.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.

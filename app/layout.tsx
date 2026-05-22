@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     images: [
       {
         url: assetPath("/images/hero-riviera.webp"),
-        width: 1440,
-        height: 1080,
-        alt: "Aerial Albanian Riviera beach reached by boat"
+        width: 2400,
+        height: 1500,
+        alt: "Dhermi Boat on the Albanian Riviera coast"
       }
     ]
   },

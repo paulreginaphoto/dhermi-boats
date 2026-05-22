@@ -165,14 +165,17 @@ export const destinations: Destination[] = [
 ];
 
 export const gallery = [
-  { src: assetPath("/images/gallery-blue-cove-boat.webp"), alt: "Boat bow entering a clear turquoise cove on the Albanian Riviera" },
-  { src: assetPath("/images/gallery-canyon-water.webp"), alt: "Deep blue water between limestone cliffs near Dhërmi" },
-  { src: assetPath("/images/gallery-clear-water.webp"), alt: "Transparent turquoise water beside the boat in Albania" },
-  { src: assetPath("/images/gallery-cave-entrance.webp"), alt: "Small boat approaching a sea cave near Dhërmi" },
-  { src: assetPath("/images/gallery-limestone-cliff.webp"), alt: "Limestone cliffs and clear water on the Albanian Riviera" },
-  { src: assetPath("/images/gallery-sunset-bow.webp"), alt: "Sunset over the sea from the bow of a private boat" },
-  { src: assetPath("/images/gallery-boat-view.webp"), alt: "View from the boat toward bright cliffs and blue water" },
-  { src: assetPath("/images/gallery-boat-beach.webp"), alt: "Dhermi Boat on a beach before departure" }
+  { src: assetPath("/images/gallery-blue-cove-boat.webp"), alt: "Dhermi Boat entering a clear cove near Dhërmi" },
+  { src: assetPath("/images/gallery-canyon-water.webp"), alt: "Boat approaching a cave between limestone cliffs" },
+  { src: assetPath("/images/gallery-blue-cave.webp"), alt: "Blue Cave water and rock opening on the Albanian Riviera" },
+  { src: assetPath("/images/gallery-blue-wall.webp"), alt: "Blue water below a rocky cave wall" },
+  { src: assetPath("/images/gallery-clear-water.webp"), alt: "Clear turquoise water beside the boat" },
+  { src: assetPath("/images/gallery-cave-entrance.webp"), alt: "Boat bow facing a sea cave entrance" },
+  { src: assetPath("/images/gallery-limestone-cliff.webp"), alt: "High limestone cliffs above the sea near Dhërmi" },
+  { src: assetPath("/images/gallery-sunset-bow.webp"), alt: "Sunset from the bow of Dhermi Boat" },
+  { src: assetPath("/images/gallery-boat-view.webp"), alt: "View from Dhermi Boat toward the Riviera mountains" },
+  { src: assetPath("/images/gallery-boat-beach.webp"), alt: "Quiet beach cove reached by boat" },
+  { src: assetPath("/images/gallery-coastline.webp"), alt: "Rocky coastline and blue water along the Albanian Riviera" }
 ];
 
 export const reviews = [

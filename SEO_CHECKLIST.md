@@ -12,6 +12,7 @@
 - [x] `sitemap.xml`.
 - [x] No `CNAME` while the site uses the default GitHub Pages URL.
 - [x] Optimized local WebP images with descriptive alt text.
+- [x] Owner-provided Drive media selected, cropped and compressed locally.
 - [x] No WordPress, WooCommerce or plugin bloat.
 - [x] Explicit AI crawler allowances for useful indexing agents.
 - [x] Official Instagram and TikTok profile links.

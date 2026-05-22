@@ -78,7 +78,7 @@ Contact and booking constants live in `lib/site.ts`:
 - `tiktokUrl`
 - `googleMapsUrl`
 
-Images are in `public/images/`. The sea clip is in `public/videos/`.
+Images are in `public/images/`. The sea clip is in `public/videos/`. The current hero, tour, destination and gallery media were selected from the Google Drive folder `Photo & Videos Bateau`, then cropped and compressed for GitHub Pages.
 
 3D interface icons are stored in `public/icons/fluent-emoji-3d/`. They come from Microsoft Fluent Emoji (`https://github.com/microsoft/fluentui-emoji`, MIT license) and are used for friendly visual cues in badges, tour facts and contact cards.
 

@@ -2,6 +2,7 @@
 out/
 node_modules/
 _asset-intake/
+.media-review/
 *.log
 .env*
 !.env.example

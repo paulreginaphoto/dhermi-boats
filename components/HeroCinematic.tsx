@@ -17,7 +17,7 @@ export function HeroCinematic() {
       <div className="absolute inset-0">
         <Image
           src={heroImage}
-          alt="Aerial view of a turquoise Albanian Riviera beach reached by boat"
+          alt="Dhermi Boat heading along the Albanian Riviera coast"
           fill
           priority
           sizes="100vw"
@@ -34,7 +34,7 @@ export function HeroCinematic() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">
             <LocalizedText id="hero.label">Boat Tours in Dhërmi</LocalizedText>
           </p>
-          <h1 className="max-w-4xl font-serif text-5xl font-medium leading-[0.96] text-balance drop-shadow-[0_5px_22px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
+          <h1 className="max-w-full break-words font-serif text-4xl font-medium leading-[1.02] drop-shadow-[0_5px_22px_rgba(0,0,0,0.45)] sm:max-w-4xl sm:text-5xl md:text-7xl lg:text-8xl">
             <LocalizedText id="hero.title">
               Discover the Albanian Riviera from the sea with our boat tours departing from Dhërmi.
             </LocalizedText>

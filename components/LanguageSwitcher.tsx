@@ -23,7 +23,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
             aria-label={`Switch language to ${localeAriaNames[item]}`}
             aria-pressed={locale === item}
             className={[
-              compact ? "h-8 min-w-8 rounded px-1.5 text-[11px]" : "h-8 min-w-9 rounded px-2 text-xs",
+              compact ? "h-8 min-w-7 rounded px-1 text-[10px] sm:min-w-8 sm:px-1.5 sm:text-[11px]" : "h-8 min-w-9 rounded px-2 text-xs",
               "font-bold transition active:translate-y-px",
               locale === item ? "bg-ink text-pearl" : "text-ink-soft hover:bg-ink/5 hover:text-ink"
             ].join(" ")}

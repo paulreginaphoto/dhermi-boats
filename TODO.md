@@ -30,11 +30,14 @@
 - [x] Add a conversion-focused WhatsApp booking panel to tour detail pages.
 - [x] Shorten booking CTAs for better mobile readability.
 - [x] Remove visible customer-facing filler wording from the booking experience.
+- [x] Sort the Google Drive folder `Photo & Videos Bateau` into usable photo/video candidates.
+- [x] Replace the site hero, tour, destination, gallery and video media with optimized real Drive assets.
+- [x] Recheck mobile after the media pass so long French hero text and the language selector stay visible without horizontal overflow.
 
 ## Optional Future Improvements
 
-- [ ] Replace the current logo image with a cleaner vector brand mark if a designer provides one.
-- [ ] Add fresh professional boat photography or drone video when available.
+- [ ] Add a custom vector brand mark if a designer provides one later.
+- [ ] Add drone footage or a professional shoot if the owner provides one later.
 - [ ] Add static localized routes with hreflang if multilingual SEO becomes a priority.
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
 - [ ] Reconnect `dhermi.boats` when the domain is recovered.

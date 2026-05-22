@@ -9,11 +9,10 @@ export function VideoFeature() {
         muted
         playsInline
         preload="metadata"
-        poster={assetPath("/images/gallery-canyon-water.webp")}
+        poster={assetPath("/images/gallery-blue-cove-boat.webp")}
       >
         <source src={assetPath("/videos/dhermi-sea-moments.mp4")} type="video/mp4" />
       </video>
     </div>
   );
 }
-
