@@ -4,6 +4,7 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
+import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { tours, type Destination } from "@/data/content";
 import { primaryWhatsappHref } from "@/data/content";
 
@@ -50,6 +51,20 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="route" className="scroll-mt-24 bg-navy py-16 text-pearl md:scroll-mt-28 md:py-24">
+        <div className="site-band">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="map.label">Sea route</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-5xl">
+              <LocalizedText id="map.title">Route from Dhërmi by boat</LocalizedText>
+            </h2>
+          </div>
+          <SeaRouteMap destination={destination} />
         </div>
       </section>
 

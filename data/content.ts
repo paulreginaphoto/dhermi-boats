@@ -1,4 +1,4 @@
-import { assetPath, defaultBookingMessage, whatsappUrl } from "@/lib/site";
+import { assetPath, defaultBookingMessage, sitePath, whatsappUrl } from "@/lib/site";
 
 export type Tour = {
   id: string;
@@ -39,12 +39,12 @@ export type Review = {
 };
 
 export const navItems = [
-  { label: "Tours", href: "/tours/" },
-  { label: "Photos", href: "/boat-photos/" },
-  { label: "Private", href: "/tours/private/" },
-  { label: "Destinations", href: "/destinations/" },
-  { label: "FAQ", href: "/faq/" },
-  { label: "Contact", href: "/contact/" }
+  { label: "Tours", href: sitePath("/tours/") },
+  { label: "Photos", href: sitePath("/boat-photos/") },
+  { label: "Private", href: sitePath("/tours/private/") },
+  { label: "Destinations", href: sitePath("/destinations/") },
+  { label: "FAQ", href: sitePath("/faq/") },
+  { label: "Contact", href: sitePath("/contact/") }
 ];
 
 export const heroImage = assetPath("/images/hero-riviera.webp");
@@ -62,8 +62,8 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-gjipe.webp"),
     imageAlt: "Gjipe Beach seen from above with turquoise water and limestone cliffs",
-    href: "/destinations/gjipe/",
-    legacyHref: "/gjipe-boat-tour/",
+    href: sitePath("/destinations/gjipe/"),
+    legacyHref: sitePath("/gjipe-boat-tour/"),
     whatsappText: "Hello Dhermi Boat, I would like to book the Gjipe Tour. Date: __ / Adults: __ / Children: __",
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
     included: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"]
@@ -80,8 +80,8 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-grama.webp"),
     imageAlt: "Grama Bay seen from above with clear blue water and rocky coastline",
-    href: "/destinations/grama-bay/",
-    legacyHref: "/grama-bay-boat-tour/",
+    href: sitePath("/destinations/grama-bay/"),
+    legacyHref: sitePath("/grama-bay-boat-tour/"),
     whatsappText: "Hello Dhermi Boat, I would like to book the Grama Bay Tour. Date: __ / Adults: __ / Children: __",
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
     included: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"]
@@ -98,8 +98,8 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-private.webp"),
     imageAlt: "Dhermi Boat beside a sea cave with clear turquoise water",
-    href: "/tours/private/",
-    legacyHref: "/private-boat-tour-albania/",
+    href: sitePath("/tours/private/"),
+    legacyHref: sitePath("/private-boat-tour-albania/"),
     whatsappText: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
     highlights: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
     included: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"]
@@ -116,8 +116,8 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-sunset.webp"),
     imageAlt: "Sunset over the Albanian Riviera from the front of the boat",
-    href: "/tours/private/#sunset",
-    legacyHref: "/sunset-boat-tour/",
+    href: sitePath("/tours/private/#sunset"),
+    legacyHref: sitePath("/sunset-boat-tour/"),
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Sunset Private Tour. Date: __ / People: __",
     highlights: ["Around Dhërmi"],
     included: ["Around Dhërmi"]
@@ -134,8 +134,8 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-fishing.webp"),
     imageAlt: "Fishing rods on Dhermi Boat at sunrise near the Riviera mountains",
-    href: "/tours/private/#fishing",
-    legacyHref: "/morning-fishing-tour/",
+    href: sitePath("/tours/private/#fishing"),
+    legacyHref: sitePath("/morning-fishing-tour/"),
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Morning Fishing Tour. Date: __ / People: __",
     highlights: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"],
     included: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"]
@@ -150,7 +150,7 @@ export const destinations: Destination[] = [
     summary: "Pirates Cave, Gjipe Beach, Pigeon Cave, 2 coves, 30-minute swimming stop on a beach.",
     image: assetPath("/images/tour-gjipe.webp"),
     imageAlt: "Gjipe Beach seen from above with turquoise water and cliffs",
-    href: "/destinations/gjipe/",
+    href: sitePath("/destinations/gjipe/"),
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach"]
   },
   {
@@ -160,7 +160,7 @@ export const destinations: Destination[] = [
     summary: "Sailing along Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach, Secret Cave.",
     image: assetPath("/images/tour-grama.webp"),
     imageAlt: "Grama Bay and clear blue water seen from above",
-    href: "/destinations/grama-bay/",
+    href: sitePath("/destinations/grama-bay/"),
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave"]
   },
   {
@@ -170,7 +170,7 @@ export const destinations: Destination[] = [
     summary: "Blue Cave.",
     image: assetPath("/images/gallery-blue-cave.webp"),
     imageAlt: "Blue Cave water and rock opening on the Albanian Riviera",
-    href: "/destinations/blue-cave/",
+    href: sitePath("/destinations/blue-cave/"),
     highlights: ["Blue Cave"]
   }
 ];

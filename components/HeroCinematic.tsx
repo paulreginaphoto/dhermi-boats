@@ -3,6 +3,7 @@ import { ArrowRight, Euro, MessageCircle, Ship, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
+import { assetPath } from "@/lib/site";
 
 const heroFacts: Array<[OutlineIconComponent, string, string, string, string, string]> = [
   [Euro, "hero.fact.from", "From", "35 €", "hero.fact.gjipeShared", "Gjipe Tour"],
@@ -15,7 +16,7 @@ export function HeroCinematic() {
     <section className="relative overflow-hidden bg-limestone text-pearl">
       <div className="absolute inset-0">
         <Image
-          src="/images/hero-riviera-tablet.webp"
+          src={assetPath("/images/hero-riviera-tablet.webp")}
           alt="Dhermi Boat heading along the Albanian Riviera coast"
           fill
           priority

@@ -44,6 +44,9 @@
 - [x] Replace the site hero, tour, destination, gallery and video media with optimized real Drive assets.
 - [x] Recheck mobile after the media pass so long French hero text and the language selector stay visible without horizontal overflow.
 - [x] Apply a cleaner Lucide-only visual pass with softer outline icons, warmer sand palette and subtle photo glass overlays.
+- [x] Add mobile-optimized sea-route maps for each destination with static SVG paths from Dhërmi.
+- [x] Translate the route map labels in EN / FR / AL and verify the selected language applies on mobile.
+- [x] Verify GitHub Pages base-path navigation after the route map pass.
 
 ## Optional Future Improvements
 
@@ -52,3 +55,4 @@
 - [ ] Add static localized routes with hreflang if multilingual SEO becomes a priority.
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
 - [ ] Reconnect `dhermi.boats` when the domain is recovered.
+- [ ] Replace the indicative route SVGs with official nautical tracks if the captain provides GPS traces later.

@@ -4,6 +4,7 @@ import { DestinationCard } from "@/components/DestinationCard";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
+import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { SectionHeading } from "@/components/SectionHeading";
 import { destinations, tours } from "@/data/content";
 import { canonical } from "@/lib/site";
@@ -28,6 +29,19 @@ export default function DestinationsPage() {
           {destinations.map((destination) => (
             <DestinationCard key={destination.id} destination={destination} />
           ))}
+        </div>
+      </section>
+      <section id="routes" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
+        <div className="site-band">
+          <SectionHeading
+            label={<LocalizedText id="map.label">Sea route</LocalizedText>}
+            title={<LocalizedText id="map.overviewTitle">Routes from Dhërmi</LocalizedText>}
+          />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {destinations.map((destination) => (
+              <SeaRouteMap key={destination.id} destination={destination} compact />
+            ))}
+          </div>
         </div>
       </section>
       <section className="bg-pearl py-16 md:py-24">

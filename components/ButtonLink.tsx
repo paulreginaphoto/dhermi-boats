@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 import { iconStrokeWidth } from "@/components/OutlineIcon";
+import { sitePath } from "@/lib/site";
 
 type ButtonLinkProps = {
   href: string;
@@ -29,6 +30,7 @@ export function ButtonLink({
   icon: Icon,
   ariaLabel
 }: ButtonLinkProps) {
+  const resolvedHref = sitePath(href);
   const classes = [
     "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm font-semibold leading-none transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-px",
     variants[variant],
@@ -42,14 +44,14 @@ export function ButtonLink({
     </>
   );
 
-  if (/^(https?:|tel:|mailto:)/.test(href)) {
+  if (/^(https?:|tel:|mailto:)/.test(resolvedHref)) {
     return (
       <a
         aria-label={ariaLabel}
         className={classes}
-        href={href}
-        rel={href.startsWith("http") ? "noreferrer" : undefined}
-        target={href.startsWith("http") ? "_blank" : undefined}
+        href={resolvedHref}
+        rel={resolvedHref.startsWith("http") ? "noreferrer" : undefined}
+        target={resolvedHref.startsWith("http") ? "_blank" : undefined}
       >
         {content}
       </a>
@@ -57,7 +59,7 @@ export function ButtonLink({
   }
 
   return (
-    <a aria-label={ariaLabel} className={classes} href={href} rel={href.startsWith("http") ? "noreferrer" : undefined}>
+    <a aria-label={ariaLabel} className={classes} href={resolvedHref}>
       {content}
     </a>
   );

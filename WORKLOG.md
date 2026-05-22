@@ -49,7 +49,10 @@
 - Added a one-minute booking tunnel on the home and contact pages: tour choice, date, time, people, name, phone, notes, generated WhatsApp message and email fallback.
 - Added a static-compatible email route through `bookingFormEndpoint` with FormSubmit and documented the GitHub Pages limitation: no private backend can run directly on GitHub Pages.
 - Improved the locale bootstrap so translated labels inside hydrated client components are translated after they appear in the DOM.
+- Added lightweight static sea-route maps for Gjipe, Grama Bay and Blue Cave, with destination markers, route lines from Dhërmi and EN / FR / AL labels.
+- Optimized the route map cards for mobile so they avoid external map tiles, keep fast loading and stay readable on small screens.
+- Fixed internal navigation paths for the GitHub Pages `/dhermi-boats` base path so nav links, tour cards, destination cards and CTA buttons stay inside the deployed site.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media and GitHub Pages deployment.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, mobile route maps and GitHub Pages-safe navigation.

@@ -20,6 +20,12 @@ export function assetPath(path: string) {
   return `${basePath}${normalized}`;
 }
 
+export function sitePath(path: string) {
+  if (/^(https?:|tel:|mailto:|#)/.test(path)) return path;
+  const normalized = path.startsWith("/") ? path : `/${path}`;
+  return `${basePath}${normalized}`;
+}
+
 export function canonical(path = "/") {
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${siteUrl}${normalized}`;
