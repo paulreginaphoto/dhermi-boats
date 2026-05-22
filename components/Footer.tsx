@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { assetPath, emailAddress, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { assetPath, emailAddress, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 
 const navKeyByLabel: Record<string, string> = {
@@ -71,6 +71,10 @@ export function Footer() {
             <a className="flex items-center gap-3 transition hover:text-white" href={`mailto:${emailAddress}`}>
               <Mail className="h-4 w-4 text-turquoise" />
               {emailAddress}
+            </a>
+            <a className="flex items-center gap-3 transition hover:text-white" href={googleMapsUrl} rel="noreferrer" target="_blank">
+              <MapPin className="h-4 w-4 text-turquoise" />
+              <LocalizedText id="footer.google">Google reviews</LocalizedText>
             </a>
             <a className="flex items-center gap-3 transition hover:text-white" href={instagramUrl} rel="noreferrer" target="_blank">
               <AtSign className="h-4 w-4 text-turquoise" />

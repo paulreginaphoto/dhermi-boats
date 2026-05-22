@@ -15,6 +15,7 @@
 - [x] No WordPress, WooCommerce or plugin bloat.
 - [x] Explicit AI crawler allowances for useful indexing agents.
 - [x] Official Instagram and TikTok profile links.
+- [x] Official Google Maps profile link.
 - [x] Persistent language selector updates the document language for EN / FR / AL users.
 
 ## Structured Data
@@ -22,7 +23,8 @@
 - [x] `LocalBusiness` on home.
 - [x] `TouristTrip` for main tours.
 - [x] `FAQPage` on home and FAQ.
-- [x] `sameAs` includes official Instagram and TikTok profiles.
+- [x] `sameAs` includes official Instagram, TikTok and Google Maps profiles.
+- [x] `LocalBusiness` includes Google Maps `hasMap` and the verified 5.0 / 7 reviews aggregate rating.
 
 ## Keyword Coverage
 

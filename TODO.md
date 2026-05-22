@@ -12,6 +12,8 @@
 - [x] Add `llms.txt` and AI crawler guidance.
 - [x] Add persistent EN / FR / AL language selector for key booking UI.
 - [x] Add official Instagram and TikTok links.
+- [x] Add the official Google Maps link.
+- [x] Display real public Google review excerpts with the 5.0 / 7 reviews rating.
 - [x] Add real public TikTok thumbnail media from `@dhermi.boat`.
 - [x] Add GitHub Pages workflow.
 - [x] Add README and deployment docs.
@@ -25,7 +27,6 @@
 
 - [ ] Replace the current logo image with a cleaner vector brand mark if a designer provides one.
 - [ ] Add fresh professional boat photography or drone video when available.
-- [ ] Add real Google review links if the final Google Business profile URL is available.
 - [ ] Add static localized routes with hreflang if multilingual SEO becomes a priority.
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
 - [ ] Reconnect `dhermi.boats` when the domain is recovered.

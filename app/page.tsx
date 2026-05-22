@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MessageCircle } from "lucide-react";
+import { MapPin, MessageCircle, Star } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { DestinationCard } from "@/components/DestinationCard";
@@ -16,7 +16,7 @@ import { TrustBadges } from "@/components/TrustBadges";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, primaryWhatsappHref, reviews, tours } from "@/data/content";
-import { canonical, emailAddress, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
+import { canonical, emailAddress, googleMapsUrl, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
@@ -39,7 +39,15 @@ const localBusinessSchema = {
     addressCountry: "AL"
   },
   areaServed: ["Dhërmi", "Albanian Riviera", "Gjipe", "Grama Bay", "Karaburun"],
-  sameAs: [instagramUrl, tiktokUrl],
+  sameAs: [instagramUrl, tiktokUrl, googleMapsUrl],
+  hasMap: googleMapsUrl,
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: "5.0",
+    reviewCount: "7",
+    bestRating: "5",
+    worstRating: "1"
+  },
   priceRange: "35 € - 200 € / hour"
 };
 
@@ -185,11 +193,43 @@ export default function HomePage() {
 
       <SocialFeed />
 
-      <section className="bg-limestone py-16 md:py-24">
+      <section id="reviews" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
         <div className="site-band">
-          <SectionHeading label="Guest reviews" title="Local skipper, relaxed atmosphere, coastline worth remembering." />
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {reviews.slice(0, 3).map((review) => (
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <SectionHeading
+              label={<LocalizedText id="section.reviews.label">Google reviews</LocalizedText>}
+              title={<LocalizedText id="section.reviews.title">5.0 on Google from real boat guests.</LocalizedText>}
+            >
+              <p>
+                <LocalizedText id="section.reviews.text">
+                  Real public reviews from the Dhermi boats Google profile, checked on May 22, 2026.
+                </LocalizedText>
+              </p>
+            </SectionHeading>
+            <a
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
+              href={googleMapsUrl}
+              rel="noreferrer"
+              target="_blank"
+            >
+              <MapPin className="h-4 w-4" aria-hidden />
+              <LocalizedText id="section.reviews.cta">Read all Google reviews</LocalizedText>
+            </a>
+          </div>
+          <div className="mt-8 inline-flex items-center gap-3 rounded-md border border-ink/10 bg-pearl px-4 py-3 text-sm font-semibold text-ink shadow-sm">
+            <span className="flex gap-1 text-bronze" aria-label="5.0 out of 5 on Google">
+              {Array.from({ length: 5 }).map((_, index) => (
+                <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
+              ))}
+            </span>
+            <span>5.0 / 5</span>
+            <span className="text-ink-soft">·</span>
+            <span>
+              <LocalizedText id="section.reviews.count">7 Google reviews</LocalizedText>
+            </span>
+          </div>
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {reviews.map((review) => (
               <ReviewCard key={review.name} review={review} />
             ))}
           </div>

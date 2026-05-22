@@ -6,12 +6,12 @@ import { Icon3D, type Icon3DName } from "@/components/Icon3D";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
-import { canonical, emailAddress, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { canonical, emailAddress, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact and Booking",
   description:
-    "Contact Dhermi Boat to book a boat tour from Dhërmi, Albania. WhatsApp booking, phone, email and Instagram.",
+    "Contact Dhermi Boat to book a boat tour from Dhërmi, Albania. WhatsApp booking, phone, email, Google Maps, Instagram and TikTok.",
   alternates: { canonical: canonical("/contact/") }
 };
 
@@ -19,6 +19,7 @@ const contacts = [
   { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: "chat" },
   { label: "Phone", labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: "phone" },
   { label: "Email", labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: "email" },
+  { label: "Google Maps", labelKey: "contact.google.label", value: "5.0 · 7 Google reviews", valueKey: "contact.google.value", href: googleMapsUrl, icon: "pin" },
   { label: "Instagram", labelKey: "contact.instagram.label", value: instagramHandle, href: instagramUrl, icon: "camera" },
   { label: "TikTok", labelKey: "contact.tiktok.label", value: tiktokHandle, href: tiktokUrl, icon: "video" }
 ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey?: string; href: string; icon: Icon3DName }>;

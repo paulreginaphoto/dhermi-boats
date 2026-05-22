@@ -29,6 +29,14 @@ export type Destination = {
   highlights: string[];
 };
 
+export type Review = {
+  name: string;
+  detail: string;
+  detailKey: string;
+  text: string;
+  rating: 5;
+};
+
 export const navItems = [
   { label: "Tours", href: "/tours/" },
   { label: "Private", href: "/tours/private/" },
@@ -172,31 +180,48 @@ export const gallery = [
 
 export const reviews = [
   {
+    name: "Lirim Avdili",
+    detail: "Google review · 2 weeks ago",
+    detailKey: "review.detail.lirim",
+    rating: 5,
+    text: "Tout était parfaitement organisé et d'un grand professionnalisme. L'équipe était accueillante, compétente et toujours prête à rendre service."
+  },
+  {
     name: "Julie Dw",
-    detail: "Local Guide",
-    text: "Super expérience en bateau en Albanie ! Isuf est passionné, très sympa et bienveillant. Il met tout de suite en confiance et l'ambiance à bord est top."
+    detail: "Google Local Guide · 3 months ago",
+    detailKey: "review.detail.julie",
+    rating: 5,
+    text: "Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante."
   },
   {
-    name: "Marianne Vayson",
-    detail: "Guest review",
-    text: "Super expérience, très à l'écoute. Je recommande à 200%. Merci encore pour cette belle sortie."
-  },
-  {
-    name: "Vanessa Cariou",
-    detail: "Family trip",
-    text: "Très belle excursion en mer, une escapade intimiste pour une famille qui recherche la tranquillité. Le plus: maîtrise de la langue française."
-  },
-  {
-    name: "Madisson",
-    detail: "Guest review",
+    name: "Madisson _nails",
+    detail: "Google review · 4 months ago",
+    detailKey: "review.detail.madisson",
+    rating: 5,
     text: "Super moment, capitaine très gentil et très drôle qui m'a fait découvrir des paysages magnifiques. N'hésitez pas !"
   },
   {
+    name: "Vanessa Cariou",
+    detail: "Google review · 9 months ago",
+    detailKey: "review.detail.vanessa",
+    rating: 5,
+    text: "Très belle excursion en mer, une escapade intimiste pour une famille qui recherche la tranquilité."
+  },
+  {
+    name: "Marianne Vayson",
+    detail: "Google review · 9 months ago",
+    detailKey: "review.detail.marianne",
+    rating: 5,
+    text: "Super expérience très à l'écoute, je recommande à 200%. Merci encore pour cette belle sortie."
+  },
+  {
     name: "EROUNY KK",
-    detail: "Guest review",
-    text: "Super Weiterempfehlung für Bootstouren in Dhermi. Pünktlich, sympathisch und offen."
+    detail: "Google review · 9 months ago",
+    detailKey: "review.detail.erouny",
+    rating: 5,
+    text: "Hautement recommandé pour les excursions en bateau à Dhermi. Ponctuel, sympathique et accueillant."
   }
-];
+] satisfies Review[];
 
 export const faqs = [
   {

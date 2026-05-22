@@ -76,6 +76,7 @@ Contact and booking constants live in `lib/site.ts`:
 - `instagramUrl`
 - `tiktokHandle`
 - `tiktokUrl`
+- `googleMapsUrl`
 
 Images are in `public/images/`. The sea clip is in `public/videos/`.
 
@@ -83,7 +84,7 @@ Images are in `public/images/`. The sea clip is in `public/videos/`.
 
 Language labels and interface translations live in `lib/i18n.ts`. The current site supports a persistent EN / FR / AL selector for the main booking interface.
 
-Social media thumbnails from the public TikTok profile live in `public/images/social/`, with metadata in `data/tiktok-media.json`. Instagram is linked through the official profile URL.
+Social media thumbnails from the public TikTok profile live in `public/images/social/`, with metadata in `data/tiktok-media.json`. Instagram is linked through the official profile URL. Google review excerpts and the Google Maps profile link are stored in `data/content.ts` and `lib/site.ts`.
 
 ## Static SEO Files
 
