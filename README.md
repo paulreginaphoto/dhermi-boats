@@ -14,6 +14,7 @@ Open the local URL shown by Next.js.
 ## Checks
 
 ```bash
+npm run content:guard
 npm run typecheck
 npm run lint
 npm run build
