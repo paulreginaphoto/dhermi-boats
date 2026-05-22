@@ -12,11 +12,12 @@
 - Added legacy route pages for old useful URLs: `/gjipe-boat-tour/`, `/grama-bay-boat-tour/`, `/private-boat-tour-albania/`, `/sunset-boat-tour/`, `/morning-fishing-tour/`.
 - Added GitHub Pages deployment workflow, `CNAME`, `robots.txt`, `sitemap.xml` and SEO JSON-LD.
 - Ran typecheck, lint, production build, npm audit and static export checks.
+- Created GitHub repository `paulreginaphoto/dhermi-boats`, pushed `main`, enabled GitHub Pages and confirmed the Pages deployment workflow passes.
 - Browser QA found and fixed two issues:
   - hero text needed stronger contrast and a shorter first viewport on mobile
   - gallery grid rows could collapse to zero height on desktop
+- Custom domain is configured in GitHub Pages and `public/CNAME`; DNS still needs to be moved away from the old WordPress.com IPs at the domain provider.
 
 ## Current Result
 
 The site is a static, premium, image-led booking website with direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages and GitHub Pages deployment.
-

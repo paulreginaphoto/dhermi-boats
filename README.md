@@ -42,6 +42,8 @@ If the site is deployed without a custom domain, remove or edit `public/CNAME`.
 
 For a project subpath such as `https://owner.github.io/repo/`, set the repository variable `NEXT_PUBLIC_BASE_PATH` to `/repo` before deployment. Leave it blank for `https://dhermi.boats/`.
 
+DNS details for moving `dhermi.boats` from the old WordPress host to GitHub Pages are in `DEPLOYMENT.md`.
+
 ## Editing Content
 
 Most business content lives in `data/content.ts`:
@@ -68,4 +70,3 @@ Images are in `public/images/`. The sea clip is in `public/videos/`.
 - `public/sitemap.xml`
 - page metadata in `app/**/page.tsx`
 - JSON-LD schema in `app/page.tsx` and `app/faq/page.tsx`
-
