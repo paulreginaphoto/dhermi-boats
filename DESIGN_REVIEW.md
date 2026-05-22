@@ -35,8 +35,8 @@ Mediterranean boat-tour brand for everyone: cinematic coastline, readable typogr
 - Added a v2 conversion pass: language selector always visible on mobile, language changes reflected in the URL, shorter CTAs and a WhatsApp booking panel on tour detail pages.
 - Cleaned visible filler wording from the customer experience while preserving practical source facts, prices and real review excerpts.
 - Sorted the owner-provided Google Drive media by use case, then replaced the hero, tours, destinations, gallery and video with real optimized Dhermi Boat assets.
-- Added destination-specific sea-route maps as static SVGs so visitors understand the boat path without loading a heavy third-party map.
-- Placed the maps on the destinations overview and each destination detail page, with larger touch-friendly cards on mobile.
+- Added destination-specific sea-route maps using real OpenStreetMap tiles and public GPS points so visitors understand the route without seeing a mock map.
+- Placed the maps on the destinations overview and each destination detail page, with larger touch-friendly cards, visible coordinates and mobile-readable markers.
 
 ## QA Scores
 
@@ -70,7 +70,7 @@ Fixes applied:
 - Updated the video module to lazy-load with `preload="none"`, then load the MP4 only near the viewport and keep the play / pause state correct when autoplay is blocked.
 - Added the one-minute booking tunnel as the main conversion module: tour selector, date, time, adults, children, name, phone, notes, WhatsApp primary action and email backup.
 - Rechecked the booking tunnel at 390px and 1440px: no horizontal overflow, French selected language active, generated message in French, FormSubmit action present and zero console warnings.
-- Rechecked route maps at 390px mobile: three compact destination maps render at viewport width, the Grama detail map fits without horizontal overflow and SVG labels translate in French.
+- Rechecked route maps at 390px mobile: Gjipe, Grama Bay and Blue Cave load real OpenStreetMap tiles, show public GPS coordinates, include attribution, keep the French selected language and fit without horizontal overflow.
 
 Final self-review:
 
@@ -87,4 +87,4 @@ Final self-review:
 - GitHub Pages cannot run a private backend. The email backup uses a free static form endpoint and WhatsApp remains the primary booking flow.
 - The header and footer use a pure text logo; a custom vector mark can still be added later if the brand needs it.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.
-- Route maps are indicative customer maps, not nautical charts. They are intentionally light, readable and adjusted for booking context.
+- Route maps use public GPS points and OpenStreetMap tiles, not nautical charts. They are customer-facing route context and the captain can adjust the exact sea path.

@@ -49,10 +49,11 @@
 - Added a one-minute booking tunnel on the home and contact pages: tour choice, date, time, people, name, phone, notes, generated WhatsApp message and email fallback.
 - Added a static-compatible email route through `bookingFormEndpoint` with FormSubmit and documented the GitHub Pages limitation: no private backend can run directly on GitHub Pages.
 - Improved the locale bootstrap so translated labels inside hydrated client components are translated after they appear in the DOM.
-- Added lightweight static sea-route maps for Gjipe, Grama Bay and Blue Cave, with destination markers, route lines from Dhërmi and EN / FR / AL labels.
-- Optimized the route map cards for mobile so they avoid external map tiles, keep fast loading and stay readable on small screens.
+- Replaced the illustrative sea-route maps with real OpenStreetMap tile maps for Gjipe, Grama Bay and Blue Cave.
+- Added public GPS coordinates for Dhërmi beach area, Pirates Cave, Gjipe, Pigeon Cave, Blue Cave and Grama Bay, plus visible coordinate lists and OpenStreetMap attribution.
+- Optimized the real route map cards for mobile with readable markers, offset close points on Grama Bay and EN / FR / AL labels.
 - Fixed internal navigation paths for the GitHub Pages `/dhermi-boats` base path so nav links, tour cards, destination cards and CTA buttons stay inside the deployed site.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, mobile route maps and GitHub Pages-safe navigation.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps and GitHub Pages-safe navigation.
