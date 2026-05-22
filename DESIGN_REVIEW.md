@@ -22,6 +22,9 @@ Premium Mediterranean boat-tour brand: cinematic coastline, editorial typography
 - Improved readability, spacing, image hierarchy and mobile flow.
 - Added static SEO foundations and schema.org.
 - Optimized images and kept video lazy with metadata preload.
+- Added a clear EN / FR / AL language selector for the main conversion interface.
+- Added official Instagram and TikTok paths, using real public TikTok media thumbnails and no invented production imagery.
+- Added `llms.txt` and explicit crawler guidance for better AI/search understanding.
 
 ## QA Scores
 
@@ -40,18 +43,20 @@ Fixes applied:
 - Shortened hero first viewport so the next section is visible on mobile and desktop.
 - Fixed gallery grid row sizing so images cannot collapse to height zero.
 - Rechecked mobile menu, FAQ accordion and WhatsApp link generation.
+- Removed animation-dependent reveal wrappers so cards and social proof are visible in static captures, crawlers and no-motion environments.
+- Added accessible language-switch labels.
 
 Final self-review:
 
-- Design: 9.2 / 10
-- Mobile UX: 9.3 / 10
-- SEO: 9.4 / 10
-- Performance: 9.1 / 10
-- Accessibility: 9.1 / 10
-- Conversion: 9.4 / 10
+- Design: 9.3 / 10
+- Mobile UX: 9.4 / 10
+- SEO: 9.5 / 10
+- Performance: 9.2 / 10
+- Accessibility: 9.3 / 10
+- Conversion: 9.5 / 10
 
 ## Remaining Intentional Tradeoffs
 
 - One existing video is preserved, but it is not autoplayed and only preloads metadata to protect mobile performance.
 - The existing logo is preserved, but a future vector mark would make the brand feel even more refined.
-
+- Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.

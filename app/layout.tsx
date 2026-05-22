@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { assetPath, brandName, canonical, siteUrl } from "@/lib/site";
@@ -62,13 +63,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="pb-20 md:pb-0">
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
-        <StickyBookingBar />
+        <LanguageProvider>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          <WhatsAppFloatingButton />
+          <StickyBookingBar />
+        </LanguageProvider>
       </body>
     </html>
   );
 }
-

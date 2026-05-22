@@ -10,11 +10,13 @@ import { MotionReveal } from "@/components/MotionReveal";
 import { ReviewCard } from "@/components/ReviewCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
+import { SocialFeed } from "@/components/SocialFeed";
 import { TourCard } from "@/components/TourCard";
 import { TrustBadges } from "@/components/TrustBadges";
 import { VideoFeature } from "@/components/VideoFeature";
+import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, primaryWhatsappHref, reviews, tours } from "@/data/content";
-import { canonical, emailAddress, phoneDisplay, siteUrl } from "@/lib/site";
+import { canonical, emailAddress, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
@@ -37,7 +39,7 @@ const localBusinessSchema = {
     addressCountry: "AL"
   },
   areaServed: ["Dhërmi", "Albanian Riviera", "Gjipe", "Grama Bay", "Karaburun"],
-  sameAs: ["https://www.instagram.com/dhermi.boat/"],
+  sameAs: [instagramUrl, tiktokUrl],
   priceRange: "35 € - 200 € / hour"
 };
 
@@ -91,9 +93,14 @@ export default function HomePage() {
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <SectionHeading label="Choose your tour" title="Fast booking, clear routes, real coastline.">
+            <SectionHeading
+              label={<LocalizedText id="section.tours.label">Choose your tour</LocalizedText>}
+              title={<LocalizedText id="section.tours.title">Fast booking, clear routes, real coastline.</LocalizedText>}
+            >
               <p>
-                Pick a shared route for the essentials, or reserve the boat privately and shape the day around your group.
+                <LocalizedText id="section.tours.text">
+                  Pick a shared route for the essentials, or reserve the boat privately and shape the day around your group.
+                </LocalizedText>
               </p>
             </SectionHeading>
             <ButtonLink href="/tours/" variant="secondary">
@@ -176,6 +183,8 @@ export default function HomePage() {
         </div>
       </section>
 
+      <SocialFeed />
+
       <section className="bg-limestone py-16 md:py-24">
         <div className="site-band">
           <SectionHeading label="Guest reviews" title="Local skipper, relaxed atmosphere, coastline worth remembering." />
@@ -198,4 +207,3 @@ export default function HomePage() {
     </>
   );
 }
-

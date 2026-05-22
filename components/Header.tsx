@@ -4,7 +4,17 @@ import { MessageCircle } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { assetPath } from "@/lib/site";
 import { ButtonLink } from "@/components/ButtonLink";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LocalizedText } from "@/components/LocalizedText";
 import { MobileNav } from "@/components/MobileNav";
+
+const navKeyByLabel: Record<string, string> = {
+  Tours: "nav.tours",
+  Private: "nav.private",
+  Destinations: "nav.destinations",
+  FAQ: "nav.faq",
+  Contact: "nav.contact"
+};
 
 export function Header() {
   return (
@@ -36,14 +46,15 @@ export function Header() {
               className="text-sm font-semibold text-ink-soft transition hover:text-ink"
               href={item.href}
             >
-              {item.label}
+              <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
             </Link>
           ))}
         </nav>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <LanguageSwitcher />
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle}>
-            Book on WhatsApp
+            <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
           </ButtonLink>
         </div>
 
@@ -52,4 +63,3 @@ export function Header() {
     </header>
   );
 }
-

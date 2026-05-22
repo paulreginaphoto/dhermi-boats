@@ -1,8 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { AtSign, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { assetPath, emailAddress, instagramHandle, instagramUrl, phoneDisplay } from "@/lib/site";
+import { assetPath, emailAddress, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { LocalizedText } from "@/components/LocalizedText";
+
+const navKeyByLabel: Record<string, string> = {
+  Tours: "nav.tours",
+  Private: "nav.private",
+  Destinations: "nav.destinations",
+  FAQ: "nav.faq",
+  Contact: "nav.contact"
+};
 
 export function Footer() {
   return (
@@ -35,7 +44,7 @@ export function Footer() {
           <nav className="mt-5 grid gap-3 text-sm text-pearl/78" aria-label="Footer navigation">
             {navItems.map((item) => (
               <Link key={item.href} className="transition hover:text-white" href={item.href}>
-                {item.label}
+                <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
               </Link>
             ))}
           </nav>
@@ -59,6 +68,10 @@ export function Footer() {
             <a className="flex items-center gap-3 transition hover:text-white" href={instagramUrl} rel="noreferrer" target="_blank">
               <AtSign className="h-4 w-4 text-turquoise" />
               {instagramHandle}
+            </a>
+            <a className="flex items-center gap-3 transition hover:text-white" href={tiktokUrl} rel="noreferrer" target="_blank">
+              <Music2 className="h-4 w-4 text-turquoise" />
+              {tiktokHandle}
             </a>
             <p className="flex items-center gap-3">
               <MapPin className="h-4 w-4 text-turquoise" />

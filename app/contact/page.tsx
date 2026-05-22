@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { AtSign, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
+import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
-import { canonical, emailAddress, instagramHandle, instagramUrl, phoneDisplay } from "@/lib/site";
+import { canonical, emailAddress, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact and Booking",
@@ -17,7 +17,8 @@ const contacts = [
   { label: "WhatsApp", value: "Book or ask availability", href: primaryWhatsappHref, icon: MessageCircle },
   { label: "Phone", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: Phone },
   { label: "Email", value: emailAddress, href: `mailto:${emailAddress}`, icon: Mail },
-  { label: "Instagram", value: instagramHandle, href: instagramUrl, icon: AtSign }
+  { label: "Instagram", value: instagramHandle, href: instagramUrl, icon: AtSign },
+  { label: "TikTok", value: tiktokHandle, href: tiktokUrl, icon: Music2 }
 ];
 
 export default function ContactPage() {

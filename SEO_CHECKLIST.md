@@ -8,16 +8,21 @@
 - [x] Canonical URLs.
 - [x] OpenGraph metadata.
 - [x] `robots.txt`.
+- [x] `llms.txt`.
 - [x] `sitemap.xml`.
 - [x] `CNAME` for `dhermi.boats`.
 - [x] Optimized local WebP images with descriptive alt text.
 - [x] No WordPress, WooCommerce or plugin bloat.
+- [x] Explicit AI crawler allowances for useful indexing agents.
+- [x] Official Instagram and TikTok profile links.
+- [x] Persistent language selector updates the document language for EN / FR / AL users.
 
 ## Structured Data
 
 - [x] `LocalBusiness` on home.
 - [x] `TouristTrip` for main tours.
 - [x] `FAQPage` on home and FAQ.
+- [x] `sameAs` includes official Instagram and TikTok profiles.
 
 ## Keyword Coverage
 
@@ -48,4 +53,3 @@
 - [x] No thin spam pages.
 - [x] No generated location pages without real content.
 - [x] No dependency on old WordPress media URLs.
-

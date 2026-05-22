@@ -11,6 +11,10 @@
 - Added pages for home, tours, private tour, shared tours, destinations, Gjipe, Grama Bay, Blue Cave, FAQ and contact.
 - Added legacy route pages for old useful URLs: `/gjipe-boat-tour/`, `/grama-bay-boat-tour/`, `/private-boat-tour-albania/`, `/sunset-boat-tour/`, `/morning-fishing-tour/`.
 - Added GitHub Pages deployment workflow, `CNAME`, `robots.txt`, `sitemap.xml` and SEO JSON-LD.
+- Added `llms.txt` and explicit AI crawler guidance in `robots.txt`.
+- Added a persistent language selector for the main booking interface: English, French and Albanian.
+- Added the official TikTok profile link and real public TikTok thumbnail media from `@dhermi.boat`.
+- Kept the official Instagram profile link and avoided fake Instagram media because the public profile did not expose downloadable posts without a logged-in/session source.
 - Ran typecheck, lint, production build, npm audit and static export checks.
 - Created GitHub repository `paulreginaphoto/dhermi-boats`, pushed `main`, enabled GitHub Pages and confirmed the Pages deployment workflow passes.
 - Browser QA found and fixed two issues:
@@ -20,4 +24,4 @@
 
 ## Current Result
 
-The site is a static, premium, image-led booking website with direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages and GitHub Pages deployment.
+The site is a static, premium, image-led booking website with direct WhatsApp conversion, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, AI-readable SEO files, official social links, real social thumbnails and GitHub Pages deployment.

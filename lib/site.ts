@@ -5,6 +5,8 @@ export const phoneDisplay = "+355 69 392 1356";
 export const emailAddress = "dhermi.boats1@gmail.com";
 export const instagramHandle = "@dhermi.boat";
 export const instagramUrl = "https://www.instagram.com/dhermi.boat/";
+export const tiktokHandle = "@dhermi.boat";
+export const tiktokUrl = "https://www.tiktok.com/@dhermi.boat";
 
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");
@@ -25,4 +27,3 @@ export function whatsappUrl(message: string) {
 
 export const defaultBookingMessage =
   "Hello Dhermi Boat, I would like to book a boat tour. Date: __ / People: __ / Preferred tour: __";
-

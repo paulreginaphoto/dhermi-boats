@@ -2,6 +2,7 @@ import { CalendarDays, MessageCircle, Phone } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { primaryWhatsappHref } from "@/data/content";
 import { phoneDisplay } from "@/lib/site";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function BookingCTA({
   title = "Ready to plan your boat day?",
@@ -22,7 +23,7 @@ export function BookingCTA({
         </div>
         <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-            Book on WhatsApp
+            <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
           </ButtonLink>
           <ButtonLink href={`tel:${phoneDisplay.replace(/\s/g, "")}`} icon={Phone} variant="ghost" className="border border-white/15 text-pearl hover:bg-white/10">
             Call now
@@ -32,4 +33,3 @@ export function BookingCTA({
     </section>
   );
 }
-

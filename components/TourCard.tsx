@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArrowRight, Clock, MessageCircle, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function TourCard({ tour, priority = false }: { tour: Tour; priority?: boolean }) {
   return (
@@ -55,17 +56,16 @@ export function TourCard({ tour, priority = false }: { tour: Tour; priority?: bo
             target="_blank"
           >
             <MessageCircle className="h-4 w-4" aria-hidden />
-            Book
+            <LocalizedText id="tour.book">Book</LocalizedText>
           </a>
           <Link
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
             href={tour.href}
           >
-            Details
+            <LocalizedText id="tour.details">Details</LocalizedText>
           </Link>
         </div>
       </div>
     </article>
   );
 }
-

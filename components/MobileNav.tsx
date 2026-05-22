@@ -4,6 +4,16 @@ import Link from "next/link";
 import { Menu, MessageCircle, X } from "lucide-react";
 import { useState } from "react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LocalizedText } from "@/components/LocalizedText";
+
+const navKeyByLabel: Record<string, string> = {
+  Tours: "nav.tours",
+  Private: "nav.private",
+  Destinations: "nav.destinations",
+  FAQ: "nav.faq",
+  Contact: "nav.contact"
+};
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -23,6 +33,9 @@ export function MobileNav() {
       {open ? (
         <div className="absolute left-4 right-4 top-24 rounded-md border border-ink/10 bg-pearl p-4 shadow-soft">
           <nav className="grid gap-1" aria-label="Mobile navigation">
+            <div className="px-3 py-2">
+              <LanguageSwitcher compact />
+            </div>
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -30,7 +43,7 @@ export function MobileNav() {
                 href={item.href}
                 onClick={() => setOpen(false)}
               >
-                {item.label}
+                <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
               </Link>
             ))}
             <a
@@ -41,7 +54,7 @@ export function MobileNav() {
               onClick={() => setOpen(false)}
             >
               <MessageCircle className="h-4 w-4" />
-              Book on WhatsApp
+              <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
             </a>
           </nav>
         </div>
@@ -49,4 +62,3 @@ export function MobileNav() {
     </div>
   );
 }
-

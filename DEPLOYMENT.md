@@ -57,3 +57,10 @@ python -m http.server 4302 -d out
 ```
 
 Then open `http://127.0.0.1:4302/`.
+
+Useful static files to spot-check after a build:
+
+- `http://127.0.0.1:4302/robots.txt`
+- `http://127.0.0.1:4302/llms.txt`
+- `http://127.0.0.1:4302/sitemap.xml`
+- `http://127.0.0.1:4302/CNAME`

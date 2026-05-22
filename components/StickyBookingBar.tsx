@@ -1,6 +1,7 @@
 import { MessageCircle, Phone } from "lucide-react";
 import { primaryWhatsappHref } from "@/data/content";
 import { phoneDisplay } from "@/lib/site";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function StickyBookingBar() {
   return (
@@ -13,7 +14,7 @@ export function StickyBookingBar() {
           target="_blank"
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
-          Book on WhatsApp
+          <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
         </a>
         <a
           aria-label="Call Dhermi Boat"
@@ -26,4 +27,3 @@ export function StickyBookingBar() {
     </div>
   );
 }
-

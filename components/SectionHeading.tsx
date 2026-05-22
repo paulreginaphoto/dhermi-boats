@@ -6,8 +6,8 @@ export function SectionHeading({
   children,
   align = "left"
 }: {
-  label?: string;
-  title: string;
+  label?: ReactNode;
+  title: ReactNode;
   children?: ReactNode;
   align?: "left" | "center";
 }) {
@@ -27,4 +27,3 @@ export function SectionHeading({
     </div>
   );
 }
-

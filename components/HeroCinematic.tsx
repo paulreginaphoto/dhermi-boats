@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { heroImage, primaryWhatsappHref } from "@/data/content";
 import { ButtonLink } from "@/components/ButtonLink";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function HeroCinematic() {
   return (
@@ -24,18 +25,20 @@ export function HeroCinematic() {
       <div className="relative mx-auto grid min-h-[620px] max-w-site items-center gap-10 px-5 py-12 md:min-h-[calc(100svh-10rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
         <div className="max-w-3xl">
           <h1 className="max-w-4xl font-serif text-5xl font-medium leading-[0.96] text-balance drop-shadow-[0_5px_22px_rgba(0,0,0,0.45)] md:text-7xl lg:text-8xl">
-            Boat tours in Dhërmi
+            <LocalizedText id="hero.title">Boat tours in Dhërmi</LocalizedText>
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/90 drop-shadow-[0_3px_16px_rgba(0,0,0,0.55)] md:text-xl">
-            Discover the Albanian Riviera from the sea with private and small-group tours to Gjipe,
-            Grama Bay, Blue Cave and the Karaburun coastline.
+            <LocalizedText id="hero.text">
+              Discover the Albanian Riviera from the sea with private and small-group tours to Gjipe,
+              Grama Bay, Blue Cave and the Karaburun coastline.
+            </LocalizedText>
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
-              Book on WhatsApp
+              <LocalizedText id="cta.book">Book on WhatsApp</LocalizedText>
             </ButtonLink>
             <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-              View tours
+              <LocalizedText id="cta.viewTours">View tours</LocalizedText>
             </ButtonLink>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import { Anchor, CalendarDays, CheckCircle2, MessageCircle, Users } from "lucide-react";
 import { trustBadges } from "@/data/content";
+import { LocalizedText } from "@/components/LocalizedText";
 
 const icons = [CalendarDays, Users, Anchor, MessageCircle, CheckCircle2];
+const keys = ["badge.daily", "badge.guests", "badge.skipper", "badge.whatsapp", "badge.languages"];
 
 export function TrustBadges() {
   return (
@@ -14,11 +16,10 @@ export function TrustBadges() {
             className="flex min-h-16 items-center gap-3 rounded-md border border-ink/10 bg-pearl px-4 text-sm font-semibold text-ink shadow-sm"
           >
             <Icon className="h-5 w-5 shrink-0 text-turquoise" aria-hidden />
-            {badge}
+            <LocalizedText id={keys[index] ?? badge}>{badge}</LocalizedText>
           </li>
         );
       })}
     </ul>
   );
 }
-
