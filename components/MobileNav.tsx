@@ -38,6 +38,7 @@ export function MobileNav() {
             ))}
             <a
               className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
+              data-analytics-event="whatsapp_click"
               data-whatsapp-key="default"
               href={primaryWhatsappHref}
               rel="noreferrer"

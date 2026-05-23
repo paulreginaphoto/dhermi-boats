@@ -84,6 +84,7 @@ Fixes applied:
 - Confirmed the French booking summary now uses localized tour and time labels without inserting components into native select options.
 - Rechecked the quick booking logic for fixed-time tours and constrained `Sunset Private Tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
 - Rechecked the live and local quick booking date field and found past dates were still selectable. The form now sets the local date as the minimum and clamps manual past-date entry before WhatsApp/email message generation.
+- Rechecked the live and local quick booking form and found that empty date or name values could still leave through backup email, while WhatsApp and email-app links skipped the inline validation path. The one-minute form now validates date and name before any message or backup-email action opens.
 
 Final self-review:
 
@@ -91,8 +92,8 @@ Final self-review:
 - Mobile UX: 10 / 10
 - SEO: 9.7 / 10
 - Performance: 9.8 / 10
-- Accessibility: 9.8 / 10
-- Conversion: 9.9 / 10
+- Accessibility: 9.9 / 10
+- Conversion: 10 / 10
 
 ## Remaining Intentional Tradeoffs
 

@@ -1,5 +1,7 @@
 import { Star } from "lucide-react";
 import type { Review } from "@/data/content";
+import { googleMapsUrl } from "@/lib/site";
+import { LocalizedText } from "@/components/LocalizedText";
 
 export function ReviewCard({ review }: { review: Review }) {
   return (
@@ -18,6 +20,14 @@ export function ReviewCard({ review }: { review: Review }) {
       <figcaption className="mt-6">
         <p className="font-semibold text-ink">{review.name}</p>
         <p className="mt-1 text-sm text-ink-soft">{review.detail}</p>
+        <a
+          className="mt-4 inline-flex text-sm font-semibold text-turquoise transition hover:text-ink"
+          href={googleMapsUrl}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <LocalizedText id="review.source">Read on Google Maps</LocalizedText>
+        </a>
       </figcaption>
     </article>
   );

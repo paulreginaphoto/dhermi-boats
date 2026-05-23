@@ -26,12 +26,18 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     return Boolean(value && locales.has(value));
   }
 
+  function normalizeLocale(value) {
+    return value === "al" ? "sq" : value;
+  }
+
   function activeLocale() {
-    if (isLocale(urlLocale)) {
-      return urlLocale;
+    var normalizedUrlLocale = normalizeLocale(urlLocale);
+    var normalizedStoredLocale = normalizeLocale(storedLocale);
+    if (isLocale(normalizedUrlLocale)) {
+      return normalizedUrlLocale;
     }
-    if (isLocale(storedLocale)) {
-      return storedLocale;
+    if (isLocale(normalizedStoredLocale)) {
+      return normalizedStoredLocale;
     }
     return defaultLocale;
   }
@@ -43,7 +49,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     } catch (_e) {}
   }
 
-  document.documentElement.lang = locale === "al" ? "sq" : locale;
+  document.documentElement.lang = locale;
 
   try {
     window.document.querySelectorAll("[data-locale-switcher]").forEach(function (button) {

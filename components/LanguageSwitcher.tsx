@@ -18,6 +18,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
             key={item}
             href={`?dlang=${item}`}
             aria-label={`Switch language to ${localeAriaNames[item]}`}
+            data-analytics-event="language_switch_click"
             data-locale={item}
             data-locale-switcher
             className="language-option"

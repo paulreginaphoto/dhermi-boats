@@ -32,6 +32,7 @@ export function SocialFeed() {
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-ink px-5 text-sm font-semibold text-pearl transition hover:bg-navy"
+                data-analytics-event="instagram_click"
                 href={instagramUrl}
                 rel="noreferrer"
                 target="_blank"
@@ -41,6 +42,7 @@ export function SocialFeed() {
               </a>
               <a
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
+                data-analytics-event="tiktok_click"
                 href={tiktokUrl}
                 rel="noreferrer"
                 target="_blank"
@@ -60,6 +62,7 @@ export function SocialFeed() {
                 <a
                   key={item.id}
                   className="group overflow-hidden rounded-md border border-ink/10 bg-pearl shadow-sm transition hover:-translate-y-1 hover:shadow-soft"
+                  data-analytics-event="tiktok_click"
                   href={item.url}
                   rel="noreferrer"
                   target="_blank"

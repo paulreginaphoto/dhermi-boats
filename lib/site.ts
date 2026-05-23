@@ -13,8 +13,10 @@ export const bookingFormEndpoint = `https://formsubmit.co/${formSubmitId}`;
 
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");
-export const siteOrigin = (process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://regina.photo").replace(/\/$/, "");
+export const siteOrigin = (process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://dhermi.boats").replace(/\/$/, "");
+export const canonicalOrigin = (process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || "https://dhermi.boats").replace(/\/$/, "");
 export const siteUrl = `${siteOrigin}${basePath}`;
+export const isStagingDeployment = siteOrigin.includes("regina.photo") || basePath.includes("dhermi-boats");
 
 export function assetPath(path: string) {
   const normalized = path.startsWith("/") ? path : `/${path}`;
@@ -28,8 +30,18 @@ export function sitePath(path: string) {
 }
 
 export function canonical(path = "/") {
-  const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${siteUrl}${normalized}`;
+  const withoutBasePath = basePath && path.startsWith(`${basePath}/`) ? path.slice(basePath.length) : path;
+  const normalized = withoutBasePath.startsWith("/") ? withoutBasePath : `/${withoutBasePath}`;
+  return `${canonicalOrigin}${normalized}`;
+}
+
+export function languageAlternates(path = "/") {
+  return {
+    en: canonical(`${path}?dlang=en`),
+    fr: canonical(`${path}?dlang=fr`),
+    sq: canonical(`${path}?dlang=sq`),
+    "x-default": canonical(path)
+  };
 }
 
 export function whatsappUrl(message: string) {

@@ -7,16 +7,16 @@ import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
 import { LocalizedText } from "@/components/LocalizedText";
-import { assetPath, brandName, canonical, siteOrigin, siteUrl } from "@/lib/site";
+import { assetPath, brandName, canonical, canonicalOrigin, isStagingDeployment, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteOrigin),
+  metadataBase: new URL(canonicalOrigin),
   title: {
-    default: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi, Albania",
+    default: "Boat Tours in Dhërmi | Gjipe, Grama Bay & Private Trips",
     template: "%s | Dhermi Boat"
   },
   description:
-    "Discover the Albanian Riviera from the sea with boat tours departing from Dhërmi.",
+    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves. Fast WhatsApp booking with a local skipper.",
   keywords: [
     "Dhermi boat tours",
     "Dhërmi boat tours",
@@ -28,15 +28,17 @@ export const metadata: Metadata = {
     "private boat Albania"
   ],
   alternates: {
-    canonical: canonical("/")
+    canonical: canonical("/"),
+    languages: languageAlternates("/")
   },
+  robots: isStagingDeployment ? { index: false, follow: false } : { index: true, follow: true },
   openGraph: {
     type: "website",
-    url: siteUrl,
+    url: canonical("/"),
     siteName: brandName,
-    title: "Dhermi Boat Tours",
+    title: "Boat Tours in Dhërmi",
     description:
-      "Discover the Albanian Riviera from the sea with boat tours departing from Dhërmi.",
+      "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves.",
     images: [
       {
         url: assetPath("/images/hero-riviera.webp"),
@@ -48,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhermi Boat Tours",
-    description: "Discover the Albanian Riviera from the sea with boat tours departing from Dhërmi."
+    title: "Boat Tours in Dhërmi",
+    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves."
   },
   icons: {
     icon: [

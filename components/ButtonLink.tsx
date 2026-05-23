@@ -10,6 +10,7 @@ type ButtonLinkProps = {
   icon?: ComponentType<{ className?: string; "aria-hidden"?: boolean; strokeWidth?: number }>;
   ariaLabel?: string;
   whatsappKey?: string;
+  analyticsEvent?: string;
 };
 
 const variants = {
@@ -30,7 +31,8 @@ export function ButtonLink({
   className = "",
   icon: Icon,
   ariaLabel,
-  whatsappKey
+  whatsappKey,
+  analyticsEvent
 }: ButtonLinkProps) {
   const resolvedHref = sitePath(href);
   const classes = [
@@ -51,6 +53,7 @@ export function ButtonLink({
       <a
         aria-label={ariaLabel}
         className={classes}
+        data-analytics-event={analyticsEvent}
         data-whatsapp-key={whatsappKey}
         href={resolvedHref}
         rel={resolvedHref.startsWith("http") ? "noreferrer" : undefined}
@@ -62,7 +65,7 @@ export function ButtonLink({
   }
 
   return (
-    <a aria-label={ariaLabel} className={classes} data-whatsapp-key={whatsappKey} href={resolvedHref}>
+    <a aria-label={ariaLabel} className={classes} data-analytics-event={analyticsEvent} data-whatsapp-key={whatsappKey} href={resolvedHref}>
       {content}
     </a>
   );

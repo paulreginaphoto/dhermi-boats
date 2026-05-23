@@ -46,15 +46,15 @@ export function Footer() {
             <LocalizedText id="footer.contact">Contact</LocalizedText>
           </p>
           <div className="mt-5 grid gap-3 text-sm text-pearl/88">
-            <a className="flex items-center gap-3 transition hover:text-white" data-whatsapp-key="default" href={primaryWhatsappHref} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="whatsapp_click" data-whatsapp-key="default" href={primaryWhatsappHref} rel="noreferrer" target="_blank">
               <MessageCircle className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.whatsapp">WhatsApp booking</LocalizedText>
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={`tel:${phoneDisplay.replace(/\s/g, "")}`}>
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="call_click" href={`tel:${phoneDisplay.replace(/\s/g, "")}`}>
               <Phone className="h-4 w-4 text-turquoise" />
               {phoneDisplay}
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={`mailto:${emailAddress}`}>
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="email_click" href={`mailto:${emailAddress}`}>
               <Mail className="h-4 w-4 text-turquoise" />
               {emailAddress}
             </a>
@@ -62,15 +62,15 @@ export function Footer() {
               <MapPin className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.google">Google Maps</LocalizedText>
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={instagramUrl} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="instagram_click" href={instagramUrl} rel="noreferrer" target="_blank">
               <AtSign className="h-4 w-4 text-turquoise" />
               {instagramHandle}
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={tiktokUrl} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="tiktok_click" href={tiktokUrl} rel="noreferrer" target="_blank">
               <Music2 className="h-4 w-4 text-turquoise" />
               {tiktokHandle}
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={getYourGuideUrl} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="getyourguide_click" href={getYourGuideUrl} rel="noreferrer" target="_blank">
               <Ticket className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.getyourguide">GetYourGuide</LocalizedText>
             </a>

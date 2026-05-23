@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { MapPin, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
@@ -13,24 +14,24 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { SocialFeed } from "@/components/SocialFeed";
 import { TourCard } from "@/components/TourCard";
-import { TrustBadges } from "@/components/TrustBadges";
+import { TourComparison } from "@/components/TourComparison";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
-import { destinations, faqs, primaryWhatsappHref, reviews, tours, usefulInformation, whyChooseUs } from "@/data/content";
-import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, phoneDisplay, siteUrl, tiktokUrl } from "@/lib/site";
+import { destinations, faqs, primaryWhatsappHref, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
+import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, languageAlternates, phoneDisplay, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Dhermi Boat Tours | Private & Group Boat Trips in Dhërmi",
+  title: "Boat Tours in Dhërmi | Gjipe, Grama Bay & Private Trips",
   description:
-    "Discover the Albanian Riviera from the sea with boat tours departing from Dhërmi.",
-  alternates: { canonical: canonical("/") }
+    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves. Fast WhatsApp booking with a local skipper.",
+  alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 
 const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "Dhermi Boat",
-  url: siteUrl,
+  url: canonical("/"),
   telephone: phoneDisplay,
   email: emailAddress,
   image: canonical("/images/hero-riviera.webp"),
@@ -86,13 +87,9 @@ export default function HomePage() {
       <SEOJsonLd data={[localBusinessSchema, ...touristTripSchema, faqSchema]} />
       <HeroCinematic />
 
-      <section className="bg-limestone py-8 md:py-10">
-        <div className="site-band">
-          <TrustBadges />
-        </div>
-      </section>
-
       <OneMinuteBooking />
+
+      <TourComparison />
 
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">
@@ -105,9 +102,9 @@ export default function HomePage() {
               <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
             </ButtonLink>
           </div>
-          <div className="mt-12 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
-            {tours.slice(0, 3).map((tour, index) => (
-              <MotionReveal key={tour.id} delay={index * 90} className={index === 0 ? "lg:row-span-2" : ""}>
+          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {tours.map((tour, index) => (
+              <MotionReveal key={tour.id} delay={index * 80}>
                 <TourCard tour={tour} />
               </MotionReveal>
             ))}
@@ -126,7 +123,7 @@ export default function HomePage() {
               <ButtonLink href="/tours/private/" variant="primary">
                 <LocalizedText id="tour.details">View details</LocalizedText>
               </ButtonLink>
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsEvent="whatsapp_click">
                 <LocalizedText id="tour.private.book">REQUEST A PRIVATE TOUR</LocalizedText>
               </ButtonLink>
             </div>
@@ -197,32 +194,34 @@ export default function HomePage() {
       <SocialFeed />
 
       <section className="below-fold bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-10 lg:grid-cols-2">
+        <div className="site-band grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-sand shadow-image">
+            <Image
+              src={skipper.image}
+              alt={skipper.imageAlt}
+              fill
+              loading="lazy"
+              quality={58}
+              sizes="(min-width: 1024px) 45vw, 100vw"
+              className="object-cover"
+            />
+          </div>
           <div>
-            <h2 className="font-serif text-4xl font-medium text-ink">
-              <LocalizedText id="section.why.title">Why choose us?</LocalizedText>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="section.skipper.label">Meet your skipper</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="section.skipper.title">Meet Isuf, your local skipper</LocalizedText>
             </h2>
+            <p className="mt-5 text-base leading-8 text-ink-soft">
+              <LocalizedText id="section.skipper.text">{skipper.text}</LocalizedText>
+            </p>
             <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
               {whyChooseUs.map((item, index) => (
                 <li key={item} className="flex gap-3">
                   <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
                   <span>
                     <LocalizedText id={`why.${index}`}>{item}</LocalizedText>
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-serif text-4xl font-medium text-ink">
-              <LocalizedText id="section.info.title">Useful information</LocalizedText>
-            </h2>
-            <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
-              {usefulInformation.map((item, index) => (
-                <li key={item} className="flex gap-3">
-                  <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
-                  <span>
-                    <LocalizedText id={`useful.${index}`}>{item}</LocalizedText>
                   </span>
                 </li>
               ))}
@@ -256,6 +255,21 @@ export default function HomePage() {
         </div>
       </section>
 
+      <section className="below-fold bg-pearl py-16 md:py-20">
+        <div className="site-band">
+          <h2 className="font-serif text-4xl font-medium text-ink">
+            <LocalizedText id="section.info.title">Useful information</LocalizedText>
+          </h2>
+          <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft md:grid-cols-3">
+            {usefulInformation.map((item, index) => (
+              <li key={item} className="rounded-lg border border-ink/8 bg-limestone/70 p-5">
+                <LocalizedText id={`useful.${index}`}>{item}</LocalizedText>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeading
@@ -268,7 +282,7 @@ export default function HomePage() {
               </LocalizedText>
             </p>
           </SectionHeading>
-          <FAQAccordion items={faqs.slice(0, 4)} />
+          <FAQAccordion items={faqs} />
         </div>
       </section>
 

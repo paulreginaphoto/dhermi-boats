@@ -80,7 +80,9 @@
 - Constrained `Sunset Private Tour` to the sunset option and `Morning Fishing Tour` to the existing 5 AM to 8 AM source time, then added a content guard so those fixed-time mappings cannot disappear silently.
 - Audited local and live mobile booking again and found that the one-minute date field accepted past dates.
 - Added a client-side local minimum date and manual-entry clamp so a past date cannot appear in the generated WhatsApp booking message, then guarded the behavior in `content:guard`.
+- Audited local and live mobile booking again and found that the one-minute form could still send without a date or name, and the WhatsApp / email-app links bypassed the inline validation path.
+- Added required date and name checks across WhatsApp, FormSubmit and email-app actions, kept phone optional for fast WhatsApp contact, and extended `content:guard` so the booking-quality guard cannot silently regress.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.

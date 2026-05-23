@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 
 const root = process.cwd();
-const locales = ["en", "fr", "al"];
+const locales = ["en", "fr", "sq"];
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
 const outDir = path.join(root, "out");
 const i18nPath = path.join(root, "lib", "i18n.ts");

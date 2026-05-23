@@ -59,6 +59,7 @@
 - [x] Guard custom `next/image` quality values in the static content checks.
 - [x] Prevent fixed-time tours from generating incompatible preferred-time WhatsApp messages.
 - [x] Prevent the one-minute booking form from sending past dates in WhatsApp messages.
+- [x] Require date and name before the one-minute form can leave for WhatsApp or email.
 
 ## Optional Future Improvements
 

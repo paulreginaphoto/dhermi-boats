@@ -27,13 +27,15 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const params = new URLSearchParams(window.location.search);
     const requested = params.get("dlang") || params.get("lang");
     const stored = window.localStorage.getItem("dhermi-language");
-    const nextLocale = isLocale(requested) ? requested : isLocale(stored) ? stored : defaultLocale;
+    const normalizedRequested = requested === "al" ? "sq" : requested;
+    const normalizedStored = stored === "al" ? "sq" : stored;
+    const nextLocale = isLocale(normalizedRequested) ? normalizedRequested : isLocale(normalizedStored) ? normalizedStored : defaultLocale;
     const frame = window.requestAnimationFrame(() => setLocaleState(nextLocale));
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
-    document.documentElement.lang = locale === "al" ? "sq" : locale;
+    document.documentElement.lang = locale;
     window.localStorage.setItem("dhermi-language", locale);
   }, [locale]);
 

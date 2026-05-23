@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { CalendarDays, Mail, MessageCircle, Minus, Plus, Send, ShieldCheck, UserRound } from "lucide-react";
+import { useEffect, useMemo, useState, type FormEvent, type MouseEvent } from "react";
+import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, Send, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
-import { bookingFormEndpoint, emailAddress, siteUrl, whatsappUrl } from "@/lib/site";
+import { bookingFormEndpoint, emailAddress, phoneDisplay, siteUrl, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
 const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
@@ -17,12 +17,12 @@ const fixedTimeByTourId = {
   fishing: "FishingMorning"
 } as const satisfies Record<string, TimeOption>;
 
-type FormLocale = "en" | "fr" | "al";
+type FormLocale = "en" | "fr" | "sq";
 
 const messageIntro: Record<FormLocale, string> = {
   en: "Hello Dhermi Boat, I would like to book a boat tour.",
   fr: "Bonjour Dhermi Boat, je voudrais réserver un tour en bateau.",
-  al: "Pershendetje Dhermi Boat, dua te rezervoj nje tur me varke."
+  sq: "Pershendetje Dhermi Boat, dua te rezervoj nje tur me varke."
 };
 
 const fieldLabels: Record<FormLocale, Record<string, string>> = {
@@ -46,7 +46,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     phone: "Téléphone",
     notes: "Notes"
   },
-  al: {
+  sq: {
     tour: "Turi",
     date: "Data",
     time: "Ora",
@@ -73,7 +73,7 @@ const tourOptionLabels: Record<FormLocale, Record<string, string>> = {
     sunset: "Sunset Tour privé",
     fishing: "Morning Fishing Tour"
   },
-  al: {
+  sq: {
     gjipe: "Turi i Gjipesë",
     grama: "Turi i Gramës",
     private: "Tur privat sipas dëshirës",
@@ -97,7 +97,7 @@ const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
     Sunset: "Coucher du soleil",
     FishingMorning: "5 H À 8 H"
   },
-  al: {
+  sq: {
     Flexible: "Fleksibel",
     Morning: "Mengjes",
     Afternoon: "Pasdite",
@@ -115,9 +115,27 @@ const counterActionLabels: Record<FormLocale, { decrease: string; increase: stri
     decrease: "Diminuer",
     increase: "Augmenter"
   },
-  al: {
+  sq: {
     decrease: "Ule",
     increase: "Rrit"
+  }
+};
+
+const validationMessages: Record<FormLocale, { date: string; name: string; phoneHint: string }> = {
+  en: {
+    date: "Choose a date before sending WhatsApp.",
+    name: "Add your name before sending WhatsApp.",
+    phoneHint: "Phone is helpful, but WhatsApp can be used without it."
+  },
+  fr: {
+    date: "Choisissez une date avant d’envoyer WhatsApp.",
+    name: "Ajoutez votre nom avant d’envoyer WhatsApp.",
+    phoneHint: "Le téléphone aide, mais WhatsApp peut suffire."
+  },
+  sq: {
+    date: "Zgjidhni daten para se te dergoni WhatsApp.",
+    name: "Shtoni emrin para se te dergoni WhatsApp.",
+    phoneHint: "Telefoni ndihmon, por WhatsApp mund te mjaftoje."
   }
 };
 
@@ -137,10 +155,12 @@ function todayInputValue() {
 function readLocale(): FormLocale {
   if (typeof window === "undefined") return "en";
   const urlLocale = new URL(window.location.href).searchParams.get("dlang");
-  if (urlLocale === "fr" || urlLocale === "al" || urlLocale === "en") return urlLocale;
+  if (urlLocale === "fr" || urlLocale === "sq" || urlLocale === "en") return urlLocale;
+  if (urlLocale === "al") return "sq";
   try {
     const stored = window.localStorage.getItem("dhermi-language");
-    if (stored === "fr" || stored === "al" || stored === "en") return stored;
+    if (stored === "fr" || stored === "sq" || stored === "en") return stored;
+    if (stored === "al") return "sq";
   } catch {
     return "en";
   }
@@ -167,6 +187,7 @@ export function OneMinuteBooking() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
+  const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
@@ -174,6 +195,7 @@ export function OneMinuteBooking() {
   const availableTimeOptions = useMemo(() => timeOptionsForTour(tourId), [tourId]);
   const selectedTime = availableTimeOptions.includes(time) ? time : availableTimeOptions[0];
   const activeTimeLabel = timeOptionLabels[locale][selectedTime] ?? selectedTime;
+  const messages = validationMessages[locale];
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
@@ -207,6 +229,31 @@ export function OneMinuteBooking() {
   }, [activeTimeLabel, activeTourTitle, adults, children, date, labels, locale, name, notes, phone]);
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
+  const whatsappHref = whatsappUrl(bookingMessage);
+  const phoneHref = `tel:${phoneDisplay.replace(/\s/g, "")}`;
+
+  function validateRequiredFields() {
+    const nextErrors = {
+      date: !date,
+      name: !name.trim()
+    };
+
+    setErrors(nextErrors);
+
+    return !nextErrors.date && !nextErrors.name;
+  }
+
+  function handleMessageLinkClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (!validateRequiredFields()) {
+      event.preventDefault();
+    }
+  }
+
+  function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
+    if (!validateRequiredFields()) {
+      event.preventDefault();
+    }
+  }
 
   function changePeople(kind: "adults" | "children", direction: 1 | -1) {
     if (kind === "adults") {
@@ -225,6 +272,7 @@ export function OneMinuteBooking() {
 
   function selectDate(nextDate: string) {
     setDate(minimumDate && nextDate && nextDate < minimumDate ? minimumDate : nextDate);
+    setErrors((currentErrors) => ({ ...currentErrors, date: false }));
   }
 
   return (
@@ -261,7 +309,9 @@ export function OneMinuteBooking() {
         <form
           action={bookingFormEndpoint}
           className="rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6"
+          data-analytics-event="booking_form_submit"
           method="POST"
+          onSubmit={handleEmailSubmit}
         >
           <input type="hidden" name="_subject" value={`Dhermi Boat booking: ${activeTourTitle}`} />
           <input type="hidden" name="_captcha" value="false" />
@@ -330,16 +380,27 @@ export function OneMinuteBooking() {
                   <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
                   <input
                     id="quick-date"
-                    className="h-12 w-full rounded-md border border-ink/12 bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
+                    aria-describedby={errors.date ? "quick-date-error" : undefined}
+                    aria-invalid={errors.date || undefined}
+                    className={[
+                      "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
+                      errors.date ? "border-bronze" : "border-ink/12"
+                    ].join(" ")}
                     name="Date"
                     type="date"
                     min={minimumDate || undefined}
+                    required
                     value={date}
                     onInput={(event) => selectDate(event.currentTarget.value)}
                     onChange={(event) => selectDate(event.target.value)}
                     onBlur={(event) => selectDate(event.currentTarget.value)}
                   />
                 </div>
+                {errors.date ? (
+                  <p id="quick-date-error" className="text-sm font-semibold text-bronze">
+                    {messages.date}
+                  </p>
+                ) : null}
               </div>
 
               <div className="grid gap-2">
@@ -417,13 +478,27 @@ export function OneMinuteBooking() {
                   <UserRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
                   <input
                     id="quick-name"
+                    aria-describedby={errors.name ? "quick-name-error" : undefined}
+                    aria-invalid={errors.name || undefined}
                     autoComplete="name"
-                    className="h-12 w-full rounded-md border border-ink/12 bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
+                    className={[
+                      "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
+                      errors.name ? "border-bronze" : "border-ink/12"
+                    ].join(" ")}
                     name="Name"
+                    required
                     value={name}
-                    onChange={(event) => setName(event.target.value)}
+                    onChange={(event) => {
+                      setName(event.target.value);
+                      setErrors((currentErrors) => ({ ...currentErrors, name: false }));
+                    }}
                   />
                 </div>
+                {errors.name ? (
+                  <p id="quick-name-error" className="text-sm font-semibold text-bronze">
+                    {messages.name}
+                  </p>
+                ) : null}
               </div>
 
               <div className="grid gap-2">
@@ -439,6 +514,7 @@ export function OneMinuteBooking() {
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
                 />
+                <p className="text-xs font-semibold text-ink-soft">{messages.phoneHint}</p>
               </div>
             </div>
           </div>
@@ -463,18 +539,22 @@ export function OneMinuteBooking() {
             <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft">{bookingMessage}</p>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-[1.2fr_0.8fr_0.8fr]">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.7fr]">
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
-              href={whatsappUrl(bookingMessage)}
+              data-analytics-event="whatsapp_click"
+              data-tour-id={activeTour.id}
+              href={whatsappHref}
               rel="noreferrer"
               target="_blank"
+              onClick={handleMessageLinkClick}
             >
               <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="quick.whatsapp">Send on WhatsApp</LocalizedText>
             </a>
             <button
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
+              data-analytics-event="booking_form_submit"
               type="submit"
             >
               <Send className="h-4 w-4" aria-hidden strokeWidth={1.75} />
@@ -482,10 +562,20 @@ export function OneMinuteBooking() {
             </button>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
+              data-analytics-event="email_click"
               href={emailHref}
+              onClick={handleMessageLinkClick}
             >
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="quick.mailto">Email app</LocalizedText>
+            </a>
+            <a
+              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
+              data-analytics-event="call_click"
+              href={phoneHref}
+            >
+              <Phone className="h-4 w-4" aria-hidden strokeWidth={1.75} />
+              <LocalizedText id="cta.call">Call now</LocalizedText>
             </a>
           </div>
         </form>

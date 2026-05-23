@@ -194,11 +194,55 @@ function checkBookingDateMinimum(filePath, content) {
   }
 }
 
+function inputMarkupById(content, id) {
+  const match = content.match(new RegExp(`<input\\b(?:(?!\\/>)[\\s\\S])*id="${id}"(?:(?!\\/>)[\\s\\S])*\\/>`));
+  return match ? match[0] : "";
+}
+
+function checkBookingRequiredFields(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
+
+  for (const [id, label] of [
+    ["quick-date", "date"],
+    ["quick-name", "nom"]
+  ]) {
+    const inputMarkup = inputMarkupById(content, id);
+    if (!inputMarkup.includes("required")) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, content.indexOf(`id="${id}"`) >= 0 ? content.indexOf(`id="${id}"`) : 0),
+        `Le champ ${label} du formulaire rapide doit être requis avant WhatsApp ou email.`,
+        inputMarkup || id
+      );
+    }
+  }
+
+  const guardedMessageLinks = content.match(/onClick=\{handleMessageLinkClick\}/g) ?? [];
+  if (!content.includes("function handleMessageLinkClick") || guardedMessageLinks.length < 2) {
+    addIssue(
+      filePath,
+      1,
+      "Les liens WhatsApp et Email app du formulaire rapide doivent vérifier date et nom avant de partir.",
+      "handleMessageLinkClick"
+    );
+  }
+
+  if (!content.includes("onSubmit={handleEmailSubmit}")) {
+    addIssue(
+      filePath,
+      1,
+      "Le bouton FormSubmit du formulaire rapide doit vérifier date et nom avant envoi.",
+      "onSubmit={handleEmailSubmit}"
+    );
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
   checkBookingFixedTimeTours(filePath, content);
   checkBookingDateMinimum(filePath, content);
+  checkBookingRequiredFields(filePath, content);
 }
 
 function walkDir(dir) {

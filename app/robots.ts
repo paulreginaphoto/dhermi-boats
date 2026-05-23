@@ -1,9 +1,18 @@
 import type { MetadataRoute } from "next";
-import { canonical } from "@/lib/site";
+import { canonical, isStagingDeployment } from "@/lib/site";
 
 export const dynamic = "force-static";
 
 export default function robots(): MetadataRoute.Robots {
+  if (isStagingDeployment) {
+    return {
+      rules: {
+        userAgent: "*",
+        disallow: "/"
+      }
+    };
+  }
+
   const legacyWordPressDisallow = [
     "/wp-content/uploads/wc-logs/",
     "/wp-content/uploads/woocommerce_transient_files/",
