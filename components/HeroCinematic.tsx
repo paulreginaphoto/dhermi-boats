@@ -23,7 +23,7 @@ export function HeroCinematic() {
             src={assetPath("/images/hero-riviera-tablet.webp")}
             alt="Dhermi Boat heading along the Albanian Riviera coast"
             className="h-full w-full object-cover"
-            decoding="async"
+            decoding="sync"
             fetchPriority="high"
             loading="eager"
           />
