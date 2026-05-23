@@ -7,10 +7,17 @@ import { tours } from "@/data/content";
 import { bookingFormEndpoint, emailAddress, siteUrl, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
-const timeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
+const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
+const fixedOnlyTimeOptions = ["FishingMorning"] as const;
+const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
+type TimeOption = (typeof timeOptions)[number];
+
+const fixedTimeByTourId = {
+  sunset: "Sunset",
+  fishing: "FishingMorning"
+} as const satisfies Record<string, TimeOption>;
 
 type FormLocale = "en" | "fr" | "al";
-type TimeOption = (typeof timeOptions)[number];
 
 const messageIntro: Record<FormLocale, string> = {
   en: "Hello Dhermi Boat, I would like to book a boat tour.",
@@ -80,19 +87,22 @@ const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
     Flexible: "Flexible",
     Morning: "Morning",
     Afternoon: "Afternoon",
-    Sunset: "Sunset"
+    Sunset: "Sunset",
+    FishingMorning: "5 AM to 8 AM"
   },
   fr: {
     Flexible: "Flexible",
     Morning: "Matin",
     Afternoon: "Après-midi",
-    Sunset: "Coucher du soleil"
+    Sunset: "Coucher du soleil",
+    FishingMorning: "5 H À 8 H"
   },
   al: {
     Flexible: "Fleksibel",
     Morning: "Mengjes",
     Afternoon: "Pasdite",
-    Sunset: "Perendim dielli"
+    Sunset: "Perendim dielli",
+    FishingMorning: "5:00 - 8:00"
   }
 };
 
@@ -132,6 +142,11 @@ function isTimeOption(value: string): value is TimeOption {
   return timeOptions.includes(value as TimeOption);
 }
 
+function timeOptionsForTour(tourId: string): TimeOption[] {
+  const fixedTime = fixedTimeByTourId[tourId as keyof typeof fixedTimeByTourId];
+  return fixedTime ? [fixedTime] : [...flexibleTimeOptions];
+}
+
 export function OneMinuteBooking() {
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
@@ -146,7 +161,9 @@ export function OneMinuteBooking() {
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
   const activeTourTitle = tourOptionLabels[locale][activeTour.id] ?? activeTour.shortTitle;
-  const activeTimeLabel = timeOptionLabels[locale][time] ?? time;
+  const availableTimeOptions = useMemo(() => timeOptionsForTour(tourId), [tourId]);
+  const selectedTime = availableTimeOptions.includes(time) ? time : availableTimeOptions[0];
+  const activeTimeLabel = timeOptionLabels[locale][selectedTime] ?? selectedTime;
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
@@ -177,6 +194,13 @@ export function OneMinuteBooking() {
       return;
     }
     setChildren((value) => Math.min(14, Math.max(0, value + direction)));
+  }
+
+  function selectTour(nextTourId: string) {
+    const nextTimeOptions = timeOptionsForTour(nextTourId);
+
+    setTourId(nextTourId);
+    setTime((currentTime) => (nextTimeOptions.includes(currentTime) ? currentTime : nextTimeOptions[0]));
   }
 
   return (
@@ -240,7 +264,7 @@ export function OneMinuteBooking() {
                         selected ? "border-ink bg-ink text-pearl" : "border-ink/10 bg-limestone/70 text-ink hover:border-ink/25 hover:bg-white"
                       ].join(" ")}
                       type="button"
-                      onClick={() => setTourId(tour.id)}
+                      onClick={() => selectTour(tour.id)}
                     >
                       <span>
                         <span className="block font-serif text-xl font-medium">
@@ -262,7 +286,7 @@ export function OneMinuteBooking() {
                 value={activeTour.id}
                 onChange={(event) => {
                   const option = selectableTours.find((tour) => tour.id === event.target.value);
-                  if (option) setTourId(option.id);
+                  if (option) selectTour(option.id);
                 }}
               >
                 {selectableTours.map((tour) => (
@@ -299,13 +323,13 @@ export function OneMinuteBooking() {
                   id="quick-time"
                   className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
                   name="Preferred time"
-                  value={time}
+                  value={selectedTime}
                   onChange={(event) => {
                     const nextTime = event.target.value;
                     if (isTimeOption(nextTime)) setTime(nextTime);
                   }}
                 >
-                  {timeOptions.map((option) => (
+                  {availableTimeOptions.map((option) => (
                     <option key={option} value={option}>
                       {timeOptionLabels[locale][option]}
                     </option>

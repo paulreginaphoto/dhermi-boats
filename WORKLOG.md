@@ -76,7 +76,9 @@
 - Found a React hydration error in the one-minute booking form caused by translated components inside native `option` elements.
 - Reworked the booking form options to render plain text, kept FR / AL / EN labels coherent in the generated WhatsApp message and added a content guard so this cannot regress silently.
 - Added the custom Next image quality values to `next.config.mjs` and extended the content guard to catch unconfigured `next/image` quality values before deployment.
+- Found a booking-quality issue in the one-minute form: fixed-time tours could still generate WhatsApp messages with incompatible preferred times.
+- Constrained `Sunset Private Tour` to the sunset option and `Morning Fishing Tour` to the existing 5 AM to 8 AM source time, then added a content guard so those fixed-time mappings cannot disappear silently.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.

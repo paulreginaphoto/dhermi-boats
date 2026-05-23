@@ -136,9 +136,39 @@ function checkImageQualityConfig(filePath, content) {
   }
 }
 
+function checkBookingFixedTimeTours(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
+
+  if (!content.includes("fixedTimeByTourId")) {
+    addIssue(
+      filePath,
+      1,
+      "Le formulaire rapide doit contraindre les tours à horaire fixe pour éviter des messages WhatsApp incohérents.",
+      "Missing fixedTimeByTourId"
+    );
+    return;
+  }
+
+  for (const [tourId, timeValue] of [
+    ["sunset", "Sunset"],
+    ["fishing", "FishingMorning"]
+  ]) {
+    const fixedTimePattern = new RegExp(`${tourId}:\\s*"${timeValue}"`);
+    if (!fixedTimePattern.test(content)) {
+      addIssue(
+        filePath,
+        1,
+        `Le tour ${tourId} doit être associé à l’horaire fixe ${timeValue}.`,
+        `${tourId}: ${timeValue}`
+      );
+    }
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
+  checkBookingFixedTimeTours(filePath, content);
 }
 
 function walkDir(dir) {

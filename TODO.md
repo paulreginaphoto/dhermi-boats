@@ -57,6 +57,7 @@
 - [x] Run a complete route-by-route mobile delivery audit and fix the remaining home, tours and photos page polish issues.
 - [x] Fix the booking form hydration error from translated `option` children.
 - [x] Guard custom `next/image` quality values in the static content checks.
+- [x] Prevent fixed-time tours from generating incompatible preferred-time WhatsApp messages.
 
 ## Optional Future Improvements
 

@@ -82,6 +82,7 @@ Fixes applied:
 - Tightened the home hero to a short, direct booking headline and removed the duplicated visible heading on the tours listing so offers appear sooner on mobile.
 - Rechecked the one-minute booking form in dev browser QA and fixed the invalid translated `option` markup that was causing a React hydration error.
 - Confirmed the French booking summary now uses localized tour and time labels without inserting components into native select options.
+- Rechecked the quick booking logic for fixed-time tours and constrained `Sunset Private Tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
 
 Final self-review:
 
