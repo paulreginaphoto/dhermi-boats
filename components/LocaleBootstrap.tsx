@@ -47,10 +47,14 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   try {
     window.document.querySelectorAll("[data-locale-switcher]").forEach(function (button) {
+      var nextLocale = button.getAttribute("data-locale");
       var isActive = button.getAttribute("data-locale") === locale;
-      button.classList.toggle("bg-ink", isActive);
-      button.classList.toggle("text-pearl", isActive);
-      button.classList.toggle("text-ink-soft", !isActive);
+      button.toggleAttribute("data-active", isActive);
+      if (isLocale(nextLocale)) {
+        var target = new URL(window.location.href);
+        target.searchParams.set("dlang", nextLocale);
+        button.setAttribute("href", target.pathname + target.search + target.hash);
+      }
       if (isActive) {
         button.setAttribute("aria-current", "true");
       } else {

@@ -68,6 +68,9 @@
 - Localized the hero price and capacity facts so French visitors see `200 € / heure` and `15 pers.` instead of mixed English values.
 - Added a keyboard skip link and global focus-visible outlines for cleaner accessibility without changing the visual brand.
 - Tightened mobile tour detail fact cards so duration, price, capacity and departure scan faster above the main booking panel.
+- Reproduced the mobile menu bug: the open panel was only 34px wide because it was absolutely positioned inside the 44px menu control.
+- Rebuilt the mobile menu as a viewport-width panel with an opaque readable surface, stronger backdrop, clean hamburger / close state and touch-friendly navigation rows.
+- Redesigned the language selector into a cleaner compact segmented control and updated language links so they preserve the current path, query and hash.
 
 ## Current Result
 

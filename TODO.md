@@ -53,6 +53,7 @@
 - [x] Recompress the PageSpeed-flagged media payload and make homepage video click-to-load.
 - [x] Improve accessibility on the booking controls, language selector state and low-contrast dark sections.
 - [x] Run a hard screenshot-based UI review across mobile and desktop, then tighten destination cards, hero spacing, localized hero facts and mobile tour fact cards.
+- [x] Fix the mobile language selector and broken mobile menu before delivery.
 
 ## Optional Future Improvements
 

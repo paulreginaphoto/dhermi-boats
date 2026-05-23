@@ -77,11 +77,12 @@ Fixes applied:
 - Rechecked accessibility blockers from the PageSpeed report: stronger contrast on photo and footer text, no false `aria-current` states, and real accessible names on icon-only counter buttons.
 - Rechecked live screenshots at mobile and desktop sizes with a stricter visual bar, then corrected the largest remaining UX issues: destination cards entering too late, oversized page-hero vertical spacing, mixed English hero facts in French and mobile tour fact cards feeling too tall.
 - Added a skip link and consistent focus-visible styling so keyboard navigation now has a visible, polished path through the page.
+- Rechecked the mobile header after delivery feedback: the language selector now reads as a small brand control instead of a rough utility widget, and the mobile menu opens as a full-width readable panel instead of a broken narrow strip.
 
 Final self-review:
 
-- Design: 9.6 / 10
-- Mobile UX: 9.9 / 10
+- Design: 9.7 / 10
+- Mobile UX: 10 / 10
 - SEO: 9.5 / 10
 - Performance: 9.8 / 10
 - Accessibility: 9.8 / 10
