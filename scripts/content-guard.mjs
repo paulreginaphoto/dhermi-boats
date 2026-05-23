@@ -266,6 +266,34 @@ function checkImportantPageHreflang(filePath, content) {
   );
 }
 
+function checkLocaleBrowserDetection(filePath, content) {
+  const targetFiles = [
+    path.join("components", "LocaleBootstrap.tsx"),
+    path.join("components", "LanguageProvider.tsx"),
+    path.join("components", "OneMinuteBooking.tsx")
+  ];
+
+  if (!targetFiles.some((target) => filePath.endsWith(target))) return;
+
+  if (!content.includes("navigator.languages")) {
+    addIssue(
+      filePath,
+      1,
+      "La langue doit tomber sur la langue du navigateur avant le fallback anglais.",
+      "navigator.languages"
+    );
+  }
+
+  if (!content.includes("sq-AL")) {
+    addIssue(
+      filePath,
+      1,
+      "La détection de langue doit accepter l’albanais via sq-AL.",
+      "sq-AL"
+    );
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
@@ -274,6 +302,7 @@ function scanFileContent(filePath, content) {
   checkBookingRequiredFields(filePath, content);
   checkPageHeroAltText(filePath, content);
   checkImportantPageHreflang(filePath, content);
+  checkLocaleBrowserDetection(filePath, content);
 }
 
 function walkDir(dir) {

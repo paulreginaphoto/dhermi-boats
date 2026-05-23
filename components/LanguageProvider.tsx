@@ -13,6 +13,28 @@ const LanguageContext = createContext<LanguageContextValue>({
   setLocale: () => {}
 });
 
+function normalizeLocale(value: string | null | undefined) {
+  if (!value) return value;
+  if (value === "sq-AL") return "sq";
+
+  const normalized = value.toLowerCase().replace("_", "-");
+  if (normalized === "al" || normalized === "sq-al") return "sq";
+
+  const primaryLocale = normalized.split("-")[0];
+  return primaryLocale === "al" ? "sq" : primaryLocale;
+}
+
+function browserLocale(): Locale {
+  const preferredLocales = navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+
+  for (const preferredLocale of preferredLocales) {
+    const normalized = normalizeLocale(preferredLocale);
+    if (isLocale(normalized)) return normalized;
+  }
+
+  return defaultLocale;
+}
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
 
@@ -27,9 +49,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     const params = new URLSearchParams(window.location.search);
     const requested = params.get("dlang") || params.get("lang");
     const stored = window.localStorage.getItem("dhermi-language");
-    const normalizedRequested = requested === "al" ? "sq" : requested;
-    const normalizedStored = stored === "al" ? "sq" : stored;
-    const nextLocale = isLocale(normalizedRequested) ? normalizedRequested : isLocale(normalizedStored) ? normalizedStored : defaultLocale;
+    const normalizedRequested = normalizeLocale(requested);
+    const normalizedStored = normalizeLocale(stored);
+    const nextLocale = isLocale(normalizedRequested)
+      ? normalizedRequested
+      : isLocale(normalizedStored)
+        ? normalizedStored
+        : browserLocale();
     const frame = window.requestAnimationFrame(() => setLocaleState(nextLocale));
     return () => window.cancelAnimationFrame(frame);
   }, []);

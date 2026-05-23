@@ -17,17 +17,42 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   var whatsappNumber = ${bootstrapWhatsappNumber};
   var whatsappMessages = ${bootstrapWhatsappMessages};
   var translationsUrl = (basePath ? basePath : "") + "/locales/translations.json";
-  var urlLocale = (new URL(window.location.href)).searchParams.get("dlang");
+  var searchParams = (new URL(window.location.href)).searchParams;
+  var urlLocale = searchParams.get("dlang") || searchParams.get("lang");
   var storedLocale = null;
+  var browserLocales = [];
 
   try { storedLocale = window.localStorage.getItem("dhermi-language"); } catch (_e) {}
+  try {
+    var navigatorLanguages = window.navigator.languages;
+    browserLocales = Array.isArray(navigatorLanguages) && navigatorLanguages.length
+      ? navigatorLanguages
+      : [window.navigator.language || "en"];
+  } catch (_e) {
+    browserLocales = ["en"];
+  }
 
   function isLocale(value) {
     return Boolean(value && locales.has(value));
   }
 
   function normalizeLocale(value) {
-    return value === "al" ? "sq" : value;
+    if (!value) return value;
+    if (value === "sq-AL") return "sq";
+    var normalized = String(value).toLowerCase().replace("_", "-");
+    if (normalized === "al" || normalized === "sq-al") return "sq";
+    var primary = normalized.split("-")[0];
+    return primary === "al" ? "sq" : primary;
+  }
+
+  function browserLocale() {
+    for (var i = 0; i < browserLocales.length; i += 1) {
+      var normalized = normalizeLocale(browserLocales[i]);
+      if (isLocale(normalized)) {
+        return normalized;
+      }
+    }
+    return defaultLocale;
   }
 
   function activeLocale() {
@@ -39,15 +64,13 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     if (isLocale(normalizedStoredLocale)) {
       return normalizedStoredLocale;
     }
-    return defaultLocale;
+    return browserLocale();
   }
 
   var locale = activeLocale();
-  if (urlLocale) {
-    try {
-      window.localStorage.setItem("dhermi-language", locale);
-    } catch (_e) {}
-  }
+  try {
+    window.localStorage.setItem("dhermi-language", locale);
+  } catch (_e) {}
 
   document.documentElement.lang = locale;
 

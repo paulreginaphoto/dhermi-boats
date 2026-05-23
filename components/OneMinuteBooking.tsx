@@ -152,19 +152,43 @@ function todayInputValue() {
   return `${year}-${month}-${day}`;
 }
 
+function normalizeLocale(value: string | null | undefined) {
+  if (!value) return value;
+  if (value === "sq-AL") return "sq";
+
+  const normalized = value.toLowerCase().replace("_", "-");
+  if (normalized === "al" || normalized === "sq-al") return "sq";
+
+  const primaryLocale = normalized.split("-")[0];
+  return primaryLocale === "al" ? "sq" : primaryLocale;
+}
+
+function browserLocale(): FormLocale {
+  const preferredLocales = navigator.languages.length ? navigator.languages : [navigator.language || "en"];
+
+  for (const preferredLocale of preferredLocales) {
+    const normalized = normalizeLocale(preferredLocale);
+    if (normalized === "fr" || normalized === "sq" || normalized === "en") return normalized;
+  }
+
+  return "en";
+}
+
 function readLocale(): FormLocale {
   if (typeof window === "undefined") return "en";
   const urlLocale = new URL(window.location.href).searchParams.get("dlang");
-  if (urlLocale === "fr" || urlLocale === "sq" || urlLocale === "en") return urlLocale;
-  if (urlLocale === "al") return "sq";
+  const normalizedUrlLocale = normalizeLocale(urlLocale);
+  if (normalizedUrlLocale === "fr" || normalizedUrlLocale === "sq" || normalizedUrlLocale === "en") return normalizedUrlLocale;
   try {
     const stored = window.localStorage.getItem("dhermi-language");
-    if (stored === "fr" || stored === "sq" || stored === "en") return stored;
-    if (stored === "al") return "sq";
+    const normalizedStoredLocale = normalizeLocale(stored);
+    if (normalizedStoredLocale === "fr" || normalizedStoredLocale === "sq" || normalizedStoredLocale === "en") return normalizedStoredLocale;
+    const htmlLocale = normalizeLocale(document.documentElement.lang);
+    if (htmlLocale === "fr" || htmlLocale === "sq" || htmlLocale === "en") return htmlLocale;
   } catch {
     return "en";
   }
-  return "en";
+  return browserLocale();
 }
 
 function isTimeOption(value: string): value is TimeOption {
