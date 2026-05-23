@@ -83,6 +83,7 @@ Fixes applied:
 - Rechecked the one-minute booking form in dev browser QA and fixed the invalid translated `option` markup that was causing a React hydration error.
 - Confirmed the French booking summary now uses localized tour and time labels without inserting components into native select options.
 - Rechecked the quick booking logic for fixed-time tours and constrained `Sunset Private Tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
+- Rechecked the live and local quick booking date field and found past dates were still selectable. The form now sets the local date as the minimum and clamps manual past-date entry before WhatsApp/email message generation.
 
 Final self-review:
 

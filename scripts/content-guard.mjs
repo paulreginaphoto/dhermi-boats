@@ -165,10 +165,40 @@ function checkBookingFixedTimeTours(filePath, content) {
   }
 }
 
+function checkBookingDateMinimum(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
+
+  const requiredSnippets = [
+    {
+      snippet: "function todayInputValue()",
+      message: "Le formulaire rapide doit calculer la date locale minimale pour éviter les réservations dans le passé."
+    },
+    {
+      snippet: "const [minimumDate, setMinimumDate]",
+      message: "Le formulaire rapide doit stocker la date minimale côté client sans casser l’export statique."
+    },
+    {
+      snippet: "min={minimumDate || undefined}",
+      message: "Le champ date du formulaire rapide doit refuser les dates passées."
+    },
+    {
+      snippet: "onInput={(event) => selectDate(event.currentTarget.value)}",
+      message: "Le champ date du formulaire rapide doit corriger une saisie manuelle passée avant l’envoi WhatsApp."
+    }
+  ];
+
+  for (const { snippet, message } of requiredSnippets) {
+    if (!content.includes(snippet)) {
+      addIssue(filePath, 1, message, snippet);
+    }
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
   checkBookingFixedTimeTours(filePath, content);
+  checkBookingDateMinimum(filePath, content);
 }
 
 function walkDir(dir) {

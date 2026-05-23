@@ -58,6 +58,7 @@
 - [x] Fix the booking form hydration error from translated `option` children.
 - [x] Guard custom `next/image` quality values in the static content checks.
 - [x] Prevent fixed-time tours from generating incompatible preferred-time WhatsApp messages.
+- [x] Prevent the one-minute booking form from sending past dates in WhatsApp messages.
 
 ## Optional Future Improvements
 

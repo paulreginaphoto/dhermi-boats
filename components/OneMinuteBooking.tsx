@@ -125,6 +125,15 @@ function cleanValue(value: string) {
   return value.trim() || "-";
 }
 
+function todayInputValue() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const day = String(today.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
 function readLocale(): FormLocale {
   if (typeof window === "undefined") return "en";
   const urlLocale = new URL(window.location.href).searchParams.get("dlang");
@@ -151,6 +160,7 @@ export function OneMinuteBooking() {
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
   const [date, setDate] = useState("");
+  const [minimumDate, setMinimumDate] = useState("");
   const [time, setTime] = useState<TimeOption>("Flexible");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
@@ -167,6 +177,16 @@ export function OneMinuteBooking() {
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      const currentMinimumDate = todayInputValue();
+      setMinimumDate(currentMinimumDate);
+      setDate((currentDate) => (currentDate && currentDate < currentMinimumDate ? currentMinimumDate : currentDate));
+    }, 0);
+
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -201,6 +221,10 @@ export function OneMinuteBooking() {
 
     setTourId(nextTourId);
     setTime((currentTime) => (nextTimeOptions.includes(currentTime) ? currentTime : nextTimeOptions[0]));
+  }
+
+  function selectDate(nextDate: string) {
+    setDate(minimumDate && nextDate && nextDate < minimumDate ? minimumDate : nextDate);
   }
 
   return (
@@ -309,8 +333,11 @@ export function OneMinuteBooking() {
                     className="h-12 w-full rounded-md border border-ink/12 bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
                     name="Date"
                     type="date"
+                    min={minimumDate || undefined}
                     value={date}
-                    onChange={(event) => setDate(event.target.value)}
+                    onInput={(event) => selectDate(event.currentTarget.value)}
+                    onChange={(event) => selectDate(event.target.value)}
+                    onBlur={(event) => selectDate(event.currentTarget.value)}
                   />
                 </div>
               </div>
