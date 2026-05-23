@@ -25,7 +25,7 @@ Goal: make every arrival path feel clear, reassuring and direct to WhatsApp with
 | `/faq/` | 8.4 | 9.0 | H1 said "Before booking" instead of the real page purpose | Changed H1 to "Frequently asked questions" |
 | `/contact/` | 9.1 | 9.2 | Strong booking path, missing active section awareness | Added active nav state |
 | Legacy redirect pages | 8.2 | 8.5 | Static continuity pages were correct but still felt separate | Active nav and global comfort now apply around them |
-| Unknown routes | 4.0 | 9.0 | Default 404 felt cold and generic | Added branded 404 with tour, home and WhatsApp CTAs |
+| Unknown routes | 4.0 | 9.2 | Default 404 felt cold, then the first branded version was too heavy | Added a compact recovery page with tour, home and WhatsApp CTAs |
 
 ## Verification Evidence
 
@@ -40,4 +40,4 @@ Goal: make every arrival path feel clear, reassuring and direct to WhatsApp with
 
 - No fake reviews, ratings, licenses or safety claims were added.
 - WhatsApp remains the primary booking action.
-- The default 404 is now a conversion-safe recovery path instead of a dead end.
+- The default 404 is now a compact recovery path instead of a dead end.
