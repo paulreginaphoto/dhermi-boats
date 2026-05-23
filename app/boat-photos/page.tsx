@@ -4,13 +4,13 @@ import { GalleryGrid } from "@/components/GalleryGrid";
 import { SocialFeed } from "@/components/SocialFeed";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
-import { canonical, googleMapsUrl } from "@/lib/site";
+import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Boat Tour Photos in Dhërmi",
   description:
     "Browse all the latest photos from our tours, hidden beaches and our most beautiful moments at sea in Dhërmi.",
-  alternates: { canonical: canonical("/boat-photos/") }
+  alternates: { canonical: canonical("/boat-photos/"), languages: languageAlternates("/boat-photos/") }
 };
 
 export default function BoatPhotosLegacyPage() {

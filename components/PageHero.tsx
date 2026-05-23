@@ -5,11 +5,13 @@ export function PageHero({
   title,
   children,
   image,
+  imageAlt = "",
   label
 }: {
   title: ReactNode;
   children?: ReactNode;
   image: string;
+  imageAlt?: string;
   label?: ReactNode;
 }) {
   return (
@@ -17,7 +19,7 @@ export function PageHero({
       <div className="absolute inset-0">
         <Image
           src={image}
-          alt=""
+          alt={imageAlt}
           fill
           priority
           quality={72}

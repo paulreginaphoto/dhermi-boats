@@ -7,13 +7,13 @@ import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
-import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, languageAlternates, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Contact and Booking",
   description:
     "Contact Dhermi Boat to book a boat tour from Dhërmi, Albania. WhatsApp booking, phone, email, Google Maps, Instagram, TikTok and GetYourGuide.",
-  alternates: { canonical: canonical("/contact/") }
+  alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
 const contacts = [
@@ -32,6 +32,7 @@ export default function ContactPage() {
       <PageHero
         title={<LocalizedText id="page.contact.title">Contact Dhermi Boat</LocalizedText>}
         image={tours[2].image}
+        imageAlt={tours[2].imageAlt}
         label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}
       >
         <p>

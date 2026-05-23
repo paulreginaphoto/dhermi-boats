@@ -10,6 +10,7 @@ import { primaryWhatsappHref } from "@/data/content";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
   const translationBase = `destination.${destination.id}`;
+  const heroImageAlt = destination.imageAlt ?? `${destination.title} on the Albanian Riviera`;
   const relatedTours = tours.filter((tour) =>
     destination.id === "gjipe"
       ? tour.id === "gjipe"
@@ -23,6 +24,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
       <PageHero
         title={<LocalizedText id={`${translationBase}.eyebrow`}>{destination.eyebrow}</LocalizedText>}
         image={destination.image}
+        imageAlt={heroImageAlt}
         label={<LocalizedText id={`${translationBase}.title`}>{destination.title}</LocalizedText>}
       >
         <p>

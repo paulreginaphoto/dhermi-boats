@@ -5,13 +5,13 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, tours } from "@/data/content";
-import { canonical } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "FAQ",
   description:
     "Practical answers for Dhermi Boat tours: booking, departure point, weather, private tours, what to bring and group size.",
-  alternates: { canonical: canonical("/faq/") }
+  alternates: { canonical: canonical("/faq/"), languages: languageAlternates("/faq/") }
 };
 
 const faqSchema = {
@@ -31,7 +31,7 @@ export default function FAQPage() {
   return (
     <>
       <SEOJsonLd data={faqSchema} />
-      <PageHero title={<LocalizedText id="section.faq.label">Before booking</LocalizedText>} image={tours[0].image} label="FAQ">
+      <PageHero title={<LocalizedText id="section.faq.label">Before booking</LocalizedText>} image={tours[0].image} imageAlt={tours[0].imageAlt} label="FAQ">
         <p>
           <LocalizedText id="section.faq.text">
             Quick answers to prepare your boat tour in Dhërmi without making the booking complicated.

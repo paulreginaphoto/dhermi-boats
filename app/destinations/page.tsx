@@ -7,13 +7,13 @@ import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { SectionHeading } from "@/components/SectionHeading";
 import { destinations, tours } from "@/data/content";
-import { canonical } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Boat Tour Destinations",
   description:
     "Explore Dhermi Boat destinations: Gjipe, Grama Bay, Blue Cave and the Karaburun coastline on the Albanian Riviera.",
-  alternates: { canonical: canonical("/destinations/") }
+  alternates: { canonical: canonical("/destinations/"), languages: languageAlternates("/destinations/") }
 };
 
 export default function DestinationsPage() {
@@ -22,6 +22,7 @@ export default function DestinationsPage() {
       <PageHero
         title={<LocalizedText id="page.destinations.title">Destinations</LocalizedText>}
         image={tours[1].image}
+        imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="section.destinations.label">Destinations</LocalizedText>}
       />
       <section className="destination-section py-8 text-pearl md:py-16">

@@ -4,7 +4,7 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { TourCard } from "@/components/TourCard";
 import { tours } from "@/data/content";
-import { canonical } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 
 const groupTours = tours.filter((tour) => tour.type === "shared");
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   title: "Group and Shared Boat Tours",
   description:
     "Small-group shared boat tours from Dhërmi to Gjipe and Grama Bay, with clear prices and WhatsApp booking.",
-  alternates: { canonical: canonical("/tours/group/") }
+  alternates: { canonical: canonical("/tours/group/"), languages: languageAlternates("/tours/group/") }
 };
 
 export default function GroupToursPage() {
@@ -21,6 +21,7 @@ export default function GroupToursPage() {
       <PageHero
         title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
         image={groupTours[0].image}
+        imageAlt={groupTours[0].imageAlt}
         label={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
       />
       <section className="bg-pearl py-16 md:py-24">

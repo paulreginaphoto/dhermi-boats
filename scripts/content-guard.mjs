@@ -237,12 +237,43 @@ function checkBookingRequiredFields(filePath, content) {
   }
 }
 
+function checkPageHeroAltText(filePath, content) {
+  if (![".tsx", ".jsx"].includes(path.extname(filePath))) return;
+  if (filePath.endsWith(path.join("components", "PageHero.tsx"))) return;
+  if (!content.includes("<PageHero")) return;
+  if (content.includes("imageAlt=")) return;
+
+  addIssue(
+    filePath,
+    lineNumberForIndex(content, content.indexOf("<PageHero")),
+    "Les pages avec un hero photo doivent transmettre imageAlt quand l’image est informative.",
+    "<PageHero ... imageAlt={...}"
+  );
+}
+
+function checkImportantPageHreflang(filePath, content) {
+  if (!filePath.endsWith(path.join("page.tsx"))) return;
+  if (!content.includes("export const metadata")) return;
+  if (!content.includes("alternates:")) return;
+  if (content.includes("robots: { index: false")) return;
+  if (content.includes("languageAlternates(")) return;
+
+  addIssue(
+    filePath,
+    lineNumberForIndex(content, content.indexOf("alternates:")),
+    "Les pages indexables doivent exposer les alternates hreflang EN/FR/SQ/x-default.",
+    "alternates: { canonical: canonical(\"/.../\"), languages: languageAlternates(\"/.../\") }"
+  );
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
   checkBookingFixedTimeTours(filePath, content);
   checkBookingDateMinimum(filePath, content);
   checkBookingRequiredFields(filePath, content);
+  checkPageHeroAltText(filePath, content);
+  checkImportantPageHreflang(filePath, content);
 }
 
 function walkDir(dir) {

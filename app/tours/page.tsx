@@ -5,13 +5,13 @@ import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
 import { tours } from "@/data/content";
-import { canonical } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Boat Tours in Dhërmi",
   description:
     "Compare Dhermi Boat tours: Gjipe, Grama Bay, private boat trips, sunset trips and morning fishing tours.",
-  alternates: { canonical: canonical("/tours/") }
+  alternates: { canonical: canonical("/tours/"), languages: languageAlternates("/tours/") }
 };
 
 const schema = {
@@ -34,6 +34,7 @@ export default function ToursPage() {
       <PageHero
         title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
         image={tours[1].image}
+        imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
       />
 

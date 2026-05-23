@@ -17,6 +17,7 @@ function imageCanonical(image: string) {
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
   const translationBase = `tour.${tour.id}`;
+  const heroImageAlt = tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`;
   const bookKey =
     tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
   const facts = ([
@@ -75,6 +76,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
       <PageHero
         title={<LocalizedText id={`${translationBase}.title`}>{tour.title}</LocalizedText>}
         image={tour.image}
+        imageAlt={heroImageAlt}
         label={<LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>}
       >
         <p>
