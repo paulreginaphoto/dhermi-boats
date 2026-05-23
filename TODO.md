@@ -55,6 +55,8 @@
 - [x] Run a hard screenshot-based UI review across mobile and desktop, then tighten destination cards, hero spacing, localized hero facts and mobile tour fact cards.
 - [x] Fix the mobile language selector and broken mobile menu before delivery.
 - [x] Run a complete route-by-route mobile delivery audit and fix the remaining home, tours and photos page polish issues.
+- [x] Fix the booking form hydration error from translated `option` children.
+- [x] Guard custom `next/image` quality values in the static content checks.
 
 ## Optional Future Improvements
 

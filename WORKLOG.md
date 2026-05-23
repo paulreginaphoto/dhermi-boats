@@ -73,6 +73,9 @@
 - Redesigned the language selector into a cleaner compact segmented control and updated language links so they preserve the current path, query and hash.
 - Ran a complete mobile audit across all exported useful pages and legacy continuity pages, checking 22 routes for HTTP status, horizontal overflow, visible booking access, selected language, broken visible images, internal base-path links and forbidden copy.
 - Tightened the home hero into a clearer conversion headline, reduced its mobile height, removed the repeated Tours heading on the tours listing and added the missing visible H1 on the photos page.
+- Found a React hydration error in the one-minute booking form caused by translated components inside native `option` elements.
+- Reworked the booking form options to render plain text, kept FR / AL / EN labels coherent in the generated WhatsApp message and added a content guard so this cannot regress silently.
+- Added the custom Next image quality values to `next.config.mjs` and extended the content guard to catch unconfigured `next/image` quality values before deployment.
 
 ## Current Result
 

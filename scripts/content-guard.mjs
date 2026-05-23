@@ -8,6 +8,8 @@ const EXCLUDE_DIRS = new Set([".git", ".next", "out", "node_modules"]);
 
 const FORBIDDEN_DASH = "\u2014";
 const REPEATED_WORD = /(?:^|\s)([\p{L}\p{M}][\p{L}\p{M}'’-]{1,})\s+\1(?:\s|$)/giu;
+const LOCALIZED_OPTION_CONTENT = /<option\b(?:(?!<\/option>)[\s\S])*<LocalizedText\b(?:(?!<\/option>)[\s\S])*<\/option>/g;
+const IMAGE_QUALITY_VALUE = /quality=\{(\d+)\}/g;
 const MIN_PHRASE_WORDS = 2;
 const MAX_PHRASE_WORDS = 6;
 const MIN_PHRASE_TEXT_LENGTH = 12;
@@ -83,6 +85,62 @@ function scanLine(filePath, text, lineNumber) {
   checkRepeatedPhrase(filePath, text, lineNumber);
 }
 
+function lineNumberForIndex(content, index) {
+  return content.slice(0, index).split(/\r?\n/).length;
+}
+
+function configuredImageQualities() {
+  const configPath = path.join(ROOT_DIR, "next.config.mjs");
+  if (!fs.existsSync(configPath)) return new Set([75]);
+
+  const config = fs.readFileSync(configPath, "utf8");
+  const match = config.match(/qualities:\s*\[([^\]]+)\]/);
+  if (!match) return new Set([75]);
+
+  return new Set(
+    match[1]
+      .split(",")
+      .map((value) => Number(value.trim()))
+      .filter((value) => Number.isInteger(value))
+  );
+}
+
+const allowedImageQualities = configuredImageQualities();
+
+function checkOptionContent(filePath, content) {
+  if (path.extname(filePath) !== ".tsx") return;
+
+  for (const match of content.matchAll(LOCALIZED_OPTION_CONTENT)) {
+    addIssue(
+      filePath,
+      lineNumberForIndex(content, match.index ?? 0),
+      "Ne pas rendre LocalizedText dans une balise option: React génère un span invalide et une erreur d’hydratation.",
+      match[0].replace(/\s+/g, " ")
+    );
+  }
+}
+
+function checkImageQualityConfig(filePath, content) {
+  if (![".tsx", ".ts", ".jsx", ".js"].includes(path.extname(filePath))) return;
+
+  for (const match of content.matchAll(IMAGE_QUALITY_VALUE)) {
+    const value = Number(match[1]);
+    if (!allowedImageQualities.has(value)) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, match.index ?? 0),
+        `La qualité next/image ${value} doit être listée dans images.qualities de next.config.mjs.`,
+        match[0]
+      );
+    }
+  }
+}
+
+function scanFileContent(filePath, content) {
+  checkOptionContent(filePath, content);
+  checkImageQualityConfig(filePath, content);
+}
+
 function walkDir(dir) {
   const entries = fs.readdirSync(dir, { withFileTypes: true });
   for (const entry of entries) {
@@ -94,6 +152,7 @@ function walkDir(dir) {
     }
     if (entry.isFile() && shouldScanFile(full)) {
       const content = fs.readFileSync(full, "utf8");
+      scanFileContent(full, content);
       const lines = content.split(/\r?\n/);
       lines.forEach((line, index) => scanLine(full, line, index + 1));
     }

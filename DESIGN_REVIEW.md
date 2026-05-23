@@ -80,6 +80,8 @@ Fixes applied:
 - Rechecked the mobile header after delivery feedback: the language selector now reads as a small brand control instead of a rough utility widget, and the mobile menu opens as a full-width readable panel instead of a broken narrow strip.
 - Ran a route-by-route mobile QA pass across the public pages and legacy continuity pages. Conversion access is visible on every route, selected French state persists, no horizontal overflow appears and no visible images are broken.
 - Tightened the home hero to a short, direct booking headline and removed the duplicated visible heading on the tours listing so offers appear sooner on mobile.
+- Rechecked the one-minute booking form in dev browser QA and fixed the invalid translated `option` markup that was causing a React hydration error.
+- Confirmed the French booking summary now uses localized tour and time labels without inserting components into native select options.
 
 Final self-review:
 

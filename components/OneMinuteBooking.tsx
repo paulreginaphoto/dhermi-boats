@@ -7,8 +7,10 @@ import { tours } from "@/data/content";
 import { bookingFormEndpoint, emailAddress, siteUrl, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
+const timeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
 
 type FormLocale = "en" | "fr" | "al";
+type TimeOption = (typeof timeOptions)[number];
 
 const messageIntro: Record<FormLocale, string> = {
   en: "Hello Dhermi Boat, I would like to book a boat tour.",
@@ -25,8 +27,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     children: "Children",
     name: "Name",
     phone: "Phone",
-    notes: "Notes",
-    flexible: "Flexible"
+    notes: "Notes"
   },
   fr: {
     tour: "Tour",
@@ -36,8 +37,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     children: "Enfants",
     name: "Nom",
     phone: "Téléphone",
-    notes: "Notes",
-    flexible: "Flexible"
+    notes: "Notes"
   },
   al: {
     tour: "Turi",
@@ -47,8 +47,52 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     children: "Femije",
     name: "Emri",
     phone: "Telefoni",
-    notes: "Shenime",
-    flexible: "Fleksibel"
+    notes: "Shenime"
+  }
+};
+
+const tourOptionLabels: Record<FormLocale, Record<string, string>> = {
+  en: {
+    gjipe: "Gjipe Tour",
+    grama: "Grama Tour",
+    private: "Tailor-made private tour",
+    sunset: "Sunset Private Tour",
+    fishing: "Morning Fishing Tour"
+  },
+  fr: {
+    gjipe: "Tour de Gjipe",
+    grama: "Tour de Grama",
+    private: "Tour privé sur mesure",
+    sunset: "Sunset Tour privé",
+    fishing: "Morning Fishing Tour"
+  },
+  al: {
+    gjipe: "Turi i Gjipesë",
+    grama: "Turi i Gramës",
+    private: "Tur privat sipas dëshirës",
+    sunset: "Tur privat në perëndim",
+    fishing: "Morning Fishing Tour"
+  }
+};
+
+const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
+  en: {
+    Flexible: "Flexible",
+    Morning: "Morning",
+    Afternoon: "Afternoon",
+    Sunset: "Sunset"
+  },
+  fr: {
+    Flexible: "Flexible",
+    Morning: "Matin",
+    Afternoon: "Après-midi",
+    Sunset: "Coucher du soleil"
+  },
+  al: {
+    Flexible: "Fleksibel",
+    Morning: "Mengjes",
+    Afternoon: "Pasdite",
+    Sunset: "Perendim dielli"
   }
 };
 
@@ -84,11 +128,15 @@ function readLocale(): FormLocale {
   return "en";
 }
 
+function isTimeOption(value: string): value is TimeOption {
+  return timeOptions.includes(value as TimeOption);
+}
+
 export function OneMinuteBooking() {
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
   const [date, setDate] = useState("");
-  const [time, setTime] = useState("Flexible");
+  const [time, setTime] = useState<TimeOption>("Flexible");
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [name, setName] = useState("");
@@ -97,6 +145,8 @@ export function OneMinuteBooking() {
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
+  const activeTourTitle = tourOptionLabels[locale][activeTour.id] ?? activeTour.shortTitle;
+  const activeTimeLabel = timeOptionLabels[locale][time] ?? time;
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
@@ -106,9 +156,9 @@ export function OneMinuteBooking() {
   const bookingMessage = useMemo(() => {
     const lines = [
       messageIntro[locale],
-      `${labels.tour}: ${activeTour.shortTitle}`,
+      `${labels.tour}: ${activeTourTitle}`,
       `${labels.date}: ${cleanValue(date)}`,
-      `${labels.time}: ${cleanValue(time || labels.flexible)}`,
+      `${labels.time}: ${cleanValue(activeTimeLabel)}`,
       `${labels.adults}: ${adults}`,
       `${labels.children}: ${children}`,
       `${labels.name}: ${cleanValue(name)}`,
@@ -117,9 +167,9 @@ export function OneMinuteBooking() {
     ];
 
     return lines.join("\n");
-  }, [activeTour.shortTitle, adults, children, date, labels, locale, name, notes, phone, time]);
+  }, [activeTimeLabel, activeTourTitle, adults, children, date, labels, locale, name, notes, phone]);
 
-  const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTour.shortTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
+  const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
 
   function changePeople(kind: "adults" | "children", direction: 1 | -1) {
     if (kind === "adults") {
@@ -165,10 +215,12 @@ export function OneMinuteBooking() {
           className="rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6"
           method="POST"
         >
-          <input type="hidden" name="_subject" value={`Dhermi Boat booking: ${activeTour.shortTitle}`} />
+          <input type="hidden" name="_subject" value={`Dhermi Boat booking: ${activeTourTitle}`} />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
           <input type="hidden" name="_next" value={`${siteUrl}/contact/?booking=sent`} />
+          <input type="hidden" name="Tour selected" value={activeTourTitle} />
+          <input type="hidden" name="Preferred time label" value={activeTimeLabel} />
           <input type="hidden" name="Booking message" value={bookingMessage} />
 
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
@@ -206,16 +258,16 @@ export function OneMinuteBooking() {
               <select
                 id="quick-tour"
                 className="sr-only"
-                name="Tour"
-                value={activeTour.shortTitle}
+                name="Tour id"
+                value={activeTour.id}
                 onChange={(event) => {
-                  const option = selectableTours.find((tour) => tour.shortTitle === event.target.value);
+                  const option = selectableTours.find((tour) => tour.id === event.target.value);
                   if (option) setTourId(option.id);
                 }}
               >
                 {selectableTours.map((tour) => (
-                  <option key={tour.id} value={tour.shortTitle}>
-                    {tour.shortTitle}
+                  <option key={tour.id} value={tour.id}>
+                    {tourOptionLabels[locale][tour.id] ?? tour.shortTitle}
                   </option>
                 ))}
               </select>
@@ -248,20 +300,16 @@ export function OneMinuteBooking() {
                   className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
                   name="Preferred time"
                   value={time}
-                  onChange={(event) => setTime(event.target.value)}
+                  onChange={(event) => {
+                    const nextTime = event.target.value;
+                    if (isTimeOption(nextTime)) setTime(nextTime);
+                  }}
                 >
-                  <option value="Flexible">
-                    <LocalizedText id="quick.time.flexible">Flexible</LocalizedText>
-                  </option>
-                  <option value="Morning">
-                    <LocalizedText id="quick.time.morning">Morning</LocalizedText>
-                  </option>
-                  <option value="Afternoon">
-                    <LocalizedText id="quick.time.afternoon">Afternoon</LocalizedText>
-                  </option>
-                  <option value="Sunset">
-                    <LocalizedText id="quick.time.sunset">Sunset</LocalizedText>
-                  </option>
+                  {timeOptions.map((option) => (
+                    <option key={option} value={option}>
+                      {timeOptionLabels[locale][option]}
+                    </option>
+                  ))}
                 </select>
               </div>
 

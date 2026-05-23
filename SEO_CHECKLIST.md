@@ -26,6 +26,7 @@
 - [x] Export QA checks missing translation keys, broken internal links and GitHub Pages base-path mistakes before deploy.
 - [x] Tour-specific WhatsApp booking links are localized from the active EN / FR / AL language state.
 - [x] PageSpeed-flagged hero, tour and gallery images have been recompressed, and the homepage MP4 is click-to-load.
+- [x] `next/image` custom quality values are configured and guarded before deploy.
 
 ## Structured Data
 
