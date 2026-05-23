@@ -2,13 +2,14 @@ export const brandName = "Dhermi Boat";
 export const whatsappNumber = "355693921356";
 export const phoneDisplay = "+355 69 392 1356";
 export const emailAddress = "dhermi.boats1@gmail.com";
+export const formSubmitId = "58d2000ae13924641d4bc3061af4ca1a";
 export const instagramHandle = "@dhermi.boat";
 export const instagramUrl = "https://www.instagram.com/dhermi.boat/";
 export const tiktokHandle = "@dhermi.boat";
 export const tiktokUrl = "https://www.tiktok.com/@dhermi.boat";
 export const googleMapsUrl = "https://maps.app.goo.gl/NRsVPEKAqkKfoHmn6";
 export const getYourGuideUrl = "https://www.getyourguide.com/dhermi-boat-s720012/";
-export const bookingFormEndpoint = `https://formsubmit.co/${emailAddress}`;
+export const bookingFormEndpoint = `https://formsubmit.co/${formSubmitId}`;
 
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");

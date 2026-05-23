@@ -20,10 +20,10 @@ GitHub Pages cannot execute backend code, so it cannot send booking emails by it
 The site uses a static-compatible backup email path:
 
 ```txt
-https://formsubmit.co/dhermi.boats1@gmail.com
+https://formsubmit.co/58d2000ae13924641d4bc3061af4ca1a
 ```
 
-This is configured in `lib/site.ts` as `bookingFormEndpoint`. The first submission can trigger an activation email to the owner. After that, the one-minute booking form can send a copy by email while WhatsApp stays the main conversion flow.
+This is configured in `lib/site.ts` as `bookingFormEndpoint`. The first submission can trigger an activation email to the owner. After that, the one-minute booking form can send a copy by email while WhatsApp stays the main conversion flow, without exposing the naked email in the form action.
 
 If the owner later wants a real private backend, use Cloudflare Workers, Google Apps Script or another free serverless endpoint, then replace `bookingFormEndpoint`.
 
