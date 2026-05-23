@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
-import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
 import { tours } from "@/data/content";
@@ -38,13 +37,9 @@ export default function ToursPage() {
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
       />
 
-      <section className="bg-pearl py-16 md:py-24">
+      <section aria-label="Tours" className="bg-pearl py-10 md:py-16">
         <div className="site-band">
-          <SectionHeading
-            title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
-            label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
-          />
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-3">
             {tours.map((tour) => (
               <TourCard key={tour.id} tour={tour} />
             ))}

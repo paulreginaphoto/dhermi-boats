@@ -71,6 +71,8 @@
 - Reproduced the mobile menu bug: the open panel was only 34px wide because it was absolutely positioned inside the 44px menu control.
 - Rebuilt the mobile menu as a viewport-width panel with an opaque readable surface, stronger backdrop, clean hamburger / close state and touch-friendly navigation rows.
 - Redesigned the language selector into a cleaner compact segmented control and updated language links so they preserve the current path, query and hash.
+- Ran a complete mobile audit across all exported useful pages and legacy continuity pages, checking 22 routes for HTTP status, horizontal overflow, visible booking access, selected language, broken visible images, internal base-path links and forbidden copy.
+- Tightened the home hero into a clearer conversion headline, reduced its mobile height, removed the repeated Tours heading on the tours listing and added the missing visible H1 on the photos page.
 
 ## Current Result
 

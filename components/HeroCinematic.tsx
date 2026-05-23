@@ -40,14 +40,14 @@ export function HeroCinematic() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/14 via-navy/14 to-navy/80 md:hidden" />
       </div>
 
-      <div className="relative mx-auto grid min-h-[calc(100svh-5rem)] max-w-site items-center gap-10 px-5 py-12 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
+      <div className="relative mx-auto grid min-h-[calc(72svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
         <div className="max-w-3xl">
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">
-            <LocalizedText id="hero.label">Boat Tours in Dhërmi</LocalizedText>
+            <LocalizedText id="hero.label">Albanian Riviera</LocalizedText>
           </p>
           <h1 className="photo-title max-w-3xl break-words font-serif text-3xl font-medium leading-[1.06] text-pearl sm:text-5xl md:text-6xl lg:text-6xl">
             <LocalizedText id="hero.title">
-              Discover the Albanian Riviera from the sea with our boat tours departing from Dhërmi.
+              Boat tours in Dhërmi
             </LocalizedText>
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">

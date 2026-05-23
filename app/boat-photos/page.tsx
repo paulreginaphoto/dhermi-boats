@@ -3,7 +3,6 @@ import { MapPin } from "lucide-react";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { SocialFeed } from "@/components/SocialFeed";
 import { VideoFeature } from "@/components/VideoFeature";
-import { SectionHeading } from "@/components/SectionHeading";
 import { LocalizedText } from "@/components/LocalizedText";
 import { canonical, googleMapsUrl } from "@/lib/site";
 
@@ -19,16 +18,21 @@ export default function BoatPhotosLegacyPage() {
     <>
       <section className="bg-limestone py-12 md:py-16">
         <div className="site-band">
-          <SectionHeading
-            label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
-            title={<LocalizedText id="page.photos.title">Boat tour photos in Dhërmi</LocalizedText>}
-          >
-            <p>
-              <LocalizedText id="page.photos.text">
-                Browse all the latest photos from our tours, hidden beaches and our most beautiful moments at sea in Dhërmi.
-              </LocalizedText>
+          <div className="max-w-3xl">
+            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="section.social.label">Our latest photos</LocalizedText>
             </p>
-          </SectionHeading>
+            <h1 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
+              <LocalizedText id="page.photos.title">Boat tour photos in Dhërmi</LocalizedText>
+            </h1>
+            <p>
+              <span className="mt-5 block text-base leading-8 text-ink-soft md:text-lg">
+                <LocalizedText id="page.photos.text">
+                  Browse all the latest photos from our tours, hidden beaches and our most beautiful moments at sea in Dhërmi.
+                </LocalizedText>
+              </span>
+            </p>
+          </div>
           <div className="mt-8 grid gap-8 md:grid-cols-[1fr_0.5fr] md:items-end">
             <VideoFeature />
             <a

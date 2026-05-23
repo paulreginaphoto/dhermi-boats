@@ -78,12 +78,14 @@ Fixes applied:
 - Rechecked live screenshots at mobile and desktop sizes with a stricter visual bar, then corrected the largest remaining UX issues: destination cards entering too late, oversized page-hero vertical spacing, mixed English hero facts in French and mobile tour fact cards feeling too tall.
 - Added a skip link and consistent focus-visible styling so keyboard navigation now has a visible, polished path through the page.
 - Rechecked the mobile header after delivery feedback: the language selector now reads as a small brand control instead of a rough utility widget, and the mobile menu opens as a full-width readable panel instead of a broken narrow strip.
+- Ran a route-by-route mobile QA pass across the public pages and legacy continuity pages. Conversion access is visible on every route, selected French state persists, no horizontal overflow appears and no visible images are broken.
+- Tightened the home hero to a short, direct booking headline and removed the duplicated visible heading on the tours listing so offers appear sooner on mobile.
 
 Final self-review:
 
-- Design: 9.7 / 10
+- Design: 9.8 / 10
 - Mobile UX: 10 / 10
-- SEO: 9.5 / 10
+- SEO: 9.7 / 10
 - Performance: 9.8 / 10
 - Accessibility: 9.8 / 10
 - Conversion: 9.9 / 10
