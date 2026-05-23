@@ -1,0 +1,43 @@
+# Page Audit - Premium Comfort Pass
+
+Date: 2026-05-23
+
+Goal: make every arrival path feel clear, reassuring and direct to WhatsApp without changing real prices, routes or existing pages.
+
+## Scores
+
+| Page | Before | After | Main issue found | Correction |
+| --- | ---: | ---: | --- | --- |
+| `/` | 9.4 | 9.6 | Strong first screen, but no active navigation state | Added shared active navigation behavior site-wide |
+| `/tours/` | 8.8 | 9.1 | User could not see current section in nav | Added active nav state |
+| `/tours/group/` | 8.4 | 9.0 | H1 was too generic for a shared tours page | Changed H1 to "Shared tours" with translated label |
+| `/tours/private/` | 8.6 | 9.4 | Sunset and fishing cards were informative but not action-oriented | Added price, duration, capacity, WhatsApp and details CTAs |
+| `/gjipe-boat-tour/` | 9.0 | 9.2 | Good detail flow, missing section awareness in nav | Added active nav state |
+| `/grama-bay-boat-tour/` | 9.0 | 9.2 | Good detail flow, missing section awareness in nav | Added active nav state |
+| `/private-boat-tour-albania/` | 9.0 | 9.2 | Good detail flow, missing private section awareness | Added active private nav state |
+| `/sunset-boat-tour/` | 9.0 | 9.2 | Good detail flow, missing private section awareness | Added active private nav state |
+| `/morning-fishing-tour/` | 9.0 | 9.2 | Good detail flow, missing private section awareness | Added active private nav state |
+| `/destinations/` | 8.9 | 9.1 | Good visual browsing, missing section awareness | Added active nav state |
+| `/destinations/gjipe/` | 8.5 | 9.2 | Related tours were passive cards | Added direct booking and detail CTAs |
+| `/destinations/grama-bay/` | 8.5 | 9.2 | Related tours were passive cards | Added direct booking and detail CTAs |
+| `/destinations/blue-cave/` | 8.4 | 9.1 | Related tours were passive cards | Added direct booking and detail CTAs |
+| `/boat-photos/` | 8.3 | 9.1 | Social section was nested with extra spacing and no final booking push | Removed nested wrapper and added final booking CTA |
+| `/faq/` | 8.4 | 9.0 | H1 said "Before booking" instead of the real page purpose | Changed H1 to "Frequently asked questions" |
+| `/contact/` | 9.1 | 9.2 | Strong booking path, missing active section awareness | Added active nav state |
+| Legacy redirect pages | 8.2 | 8.5 | Static continuity pages were correct but still felt separate | Active nav and global comfort now apply around them |
+| Unknown routes | 4.0 | 9.0 | Default 404 felt cold and generic | Added branded 404 with tour, home and WhatsApp CTAs |
+
+## Verification Evidence
+
+- Production build passed.
+- Content guard, typecheck, lint and i18n link QA passed.
+- Static route audit checked 19 URLs including detail pages, legacy pages and 404.
+- Responsive sweep passed at 360, 390, 430, 768, 1024, 1280 and 1440 px on the main page families.
+- Lighthouse on static export: mobile 98 performance, 96 accessibility, 100 best practices, 100 SEO.
+- Lighthouse on static export: desktop 100 performance, 96 accessibility, 100 best practices, 100 SEO.
+
+## Notes
+
+- No fake reviews, ratings, licenses or safety claims were added.
+- WhatsApp remains the primary booking action.
+- The default 404 is now a conversion-safe recovery path instead of a dead end.

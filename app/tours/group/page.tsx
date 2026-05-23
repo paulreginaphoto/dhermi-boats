@@ -19,10 +19,10 @@ export default function GroupToursPage() {
   return (
     <>
       <PageHero
-        title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+        title={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
         image={groupTours[0].image}
         imageAlt={groupTours[0].imageAlt}
-        label={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
+        label={<LocalizedText id="section.tours.label">Choose your tour</LocalizedText>}
       />
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">

@@ -26,6 +26,9 @@ export function assetPath(path: string) {
 export function sitePath(path: string) {
   if (/^(https?:|tel:|mailto:|#)/.test(path)) return path;
   const normalized = path.startsWith("/") ? path : `/${path}`;
+  const pathIsBase = Boolean(basePath && normalized === basePath);
+  const pathHasPrefix = Boolean(basePath && normalized.startsWith(`${basePath}/`));
+  if (pathIsBase || pathHasPrefix) return normalized;
   return `${basePath}${normalized}`;
 }
 

@@ -1,15 +1,8 @@
 import { Menu, MessageCircle, X } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
+import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { LocalizedText } from "@/components/LocalizedText";
-
-const navKeyByLabel: Record<string, string> = {
-  Tours: "nav.tours",
-  Photos: "nav.photos",
-  Private: "nav.private",
-  Destinations: "nav.destinations",
-  FAQ: "nav.faq",
-  Contact: "nav.contact"
-};
+import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
 
 export function MobileNav() {
   return (
@@ -28,13 +21,15 @@ export function MobileNav() {
         <div className="fixed left-3 right-3 top-[5.75rem] z-50 hidden overflow-hidden rounded-xl border border-ink/10 bg-pearl p-2 shadow-[0_28px_90px_rgba(7,27,38,0.28)] group-open:block">
           <nav className="grid gap-1" aria-label="Mobile navigation">
             {navItems.map((item) => (
-              <a
+              <ActiveNavLink
                 key={item.href}
+                activeClassName="bg-turquoise-soft text-ink shadow-[inset_0_0_0_1px_rgba(16,34,45,0.06)]"
+                activePaths={navActivePathsByLabel[item.label]}
                 className="flex min-h-12 items-center justify-between rounded-lg px-4 text-base font-semibold text-ink transition hover:bg-limestone active:translate-y-px"
                 href={item.href}
               >
                 <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-              </a>
+              </ActiveNavLink>
             ))}
             <a
               className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"

@@ -1,16 +1,9 @@
 import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone, Ticket } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { LocalizedText } from "@/components/LocalizedText";
-
-const navKeyByLabel: Record<string, string> = {
-  Tours: "nav.tours",
-  Photos: "nav.photos",
-  Private: "nav.private",
-  Destinations: "nav.destinations",
-  FAQ: "nav.faq",
-  Contact: "nav.contact"
-};
+import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
 
 export function Footer() {
   return (
@@ -34,9 +27,15 @@ export function Footer() {
           </p>
           <nav className="mt-5 grid gap-3 text-sm text-pearl/88" aria-label="Footer navigation">
             {navItems.map((item) => (
-              <a key={item.href} className="transition hover:text-white" href={item.href}>
+              <ActiveNavLink
+                key={item.href}
+                activeClassName="bg-white/10 text-white"
+                activePaths={navActivePathsByLabel[item.label]}
+                className="-mx-2 rounded-md px-2 py-1 transition hover:bg-white/8 hover:text-white"
+                href={item.href}
+              >
                 <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-              </a>
+              </ActiveNavLink>
             ))}
           </nav>
         </div>

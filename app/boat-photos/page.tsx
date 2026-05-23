@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { MapPin } from "lucide-react";
+import { BookingCTA } from "@/components/BookingCTA";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { SocialFeed } from "@/components/SocialFeed";
 import { VideoFeature } from "@/components/VideoFeature";
@@ -51,11 +52,8 @@ export default function BoatPhotosLegacyPage() {
         </div>
       </section>
 
-      <div className="bg-pearl">
-        <div className="site-band">
-          <SocialFeed />
-        </div>
-      </div>
+      <SocialFeed />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
     </>
   );
 }

@@ -31,7 +31,12 @@ export default function FAQPage() {
   return (
     <>
       <SEOJsonLd data={faqSchema} />
-      <PageHero title={<LocalizedText id="section.faq.label">Before booking</LocalizedText>} image={tours[0].image} imageAlt={tours[0].imageAlt} label="FAQ">
+      <PageHero
+        title={<LocalizedText id="section.faq.title">Frequently asked questions</LocalizedText>}
+        image={tours[0].image}
+        imageAlt={tours[0].imageAlt}
+        label={<LocalizedText id="section.faq.label">Before booking</LocalizedText>}
+      >
         <p>
           <LocalizedText id="section.faq.text">
             Quick answers to prepare your boat tour in Dhërmi without making the booking complicated.

@@ -1,19 +1,12 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
+import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { LocalizedText } from "@/components/LocalizedText";
 import { MobileNav } from "@/components/MobileNav";
-
-const navKeyByLabel: Record<string, string> = {
-  Tours: "nav.tours",
-  Photos: "nav.photos",
-  Private: "nav.private",
-  Destinations: "nav.destinations",
-  FAQ: "nav.faq",
-  Contact: "nav.contact"
-};
+import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
 
 export function Header() {
   return (
@@ -30,15 +23,17 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
-            <a
+            <ActiveNavLink
               key={item.href}
-              className="text-sm font-semibold text-ink-soft transition hover:text-ink"
+              activeClassName="bg-turquoise-soft text-ink shadow-[inset_0_0_0_1px_rgba(16,34,45,0.06)]"
+              activePaths={navActivePathsByLabel[item.label]}
+              className="rounded-full px-3 py-2 text-sm font-semibold text-ink-soft transition hover:bg-white/70 hover:text-ink"
               href={item.href}
             >
               <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-            </a>
+            </ActiveNavLink>
           ))}
         </nav>
 

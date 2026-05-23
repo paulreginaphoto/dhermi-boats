@@ -7,6 +7,7 @@ import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { tours, type Destination } from "@/data/content";
 import { primaryWhatsappHref } from "@/data/content";
+import { whatsappUrl } from "@/lib/site";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
   const translationBase = `destination.${destination.id}`;
@@ -83,10 +84,9 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {relatedTours.map((tour) => (
-              <a
+              <article
                 key={tour.id}
-                className="rounded-md border border-ink/10 bg-limestone p-6 transition hover:-translate-y-1 hover:shadow-soft"
-                href={tour.href}
+                className="flex h-full flex-col rounded-md border border-ink/10 bg-limestone p-6 transition hover:-translate-y-1 hover:shadow-soft"
               >
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
                   <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
@@ -99,7 +99,15 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                     <LocalizedText id={`tour.${tour.id}.subtitle`}>{tour.subtitle}</LocalizedText>
                   </p>
                 ) : null}
-              </a>
+                <div className="mt-6 flex flex-1 flex-col justify-end gap-3 sm:flex-row">
+                  <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
+                    <LocalizedText id={tour.id === "private" ? "tour.private.book" : "tour.book"}>Book this tour</LocalizedText>
+                  </ButtonLink>
+                  <ButtonLink href={tour.href} variant="secondary" className="flex-1">
+                    <LocalizedText id="tour.details">View details</LocalizedText>
+                  </ButtonLink>
+                </div>
+              </article>
             ))}
           </div>
         </div>
