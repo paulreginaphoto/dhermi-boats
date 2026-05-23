@@ -19,7 +19,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-pearl/90 backdrop-blur-xl">
       <div className="mx-auto flex h-20 max-w-site items-center justify-between gap-2 px-3 sm:gap-3 sm:px-4 md:px-8">
-        <Link className="min-w-0 leading-none" href="/" aria-label="Dhermi Boat home">
+        <Link className="min-w-0 leading-none" href="/" aria-label="Dhermi Boat home" prefetch={false}>
           <span className="flex min-w-0 flex-col leading-none">
             <span className="whitespace-nowrap font-serif text-lg font-semibold tracking-wide text-ink sm:text-2xl">
               Dhermi Boat
