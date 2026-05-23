@@ -82,6 +82,7 @@ export function TourCard({ tour }: { tour: Tour }) {
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
             className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl transition hover:bg-navy active:translate-y-px"
+            data-whatsapp-key={tour.id}
             href={whatsappUrl(tour.whatsappText)}
             rel="noreferrer"
             target="_blank"

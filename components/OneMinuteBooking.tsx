@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Plus, Send, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
@@ -52,6 +52,21 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
   }
 };
 
+const counterActionLabels: Record<FormLocale, { decrease: string; increase: string }> = {
+  en: {
+    decrease: "Decrease",
+    increase: "Increase"
+  },
+  fr: {
+    decrease: "Diminuer",
+    increase: "Augmenter"
+  },
+  al: {
+    decrease: "Ule",
+    increase: "Rrit"
+  }
+};
+
 function cleanValue(value: string) {
   return value.trim() || "-";
 }
@@ -70,7 +85,7 @@ function readLocale(): FormLocale {
 }
 
 export function OneMinuteBooking() {
-  const [locale] = useState<FormLocale>(() => readLocale());
+  const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("Flexible");
@@ -82,6 +97,11 @@ export function OneMinuteBooking() {
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLocale(readLocale()), 0);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const bookingMessage = useMemo(() => {
     const lines = [
@@ -119,12 +139,12 @@ export function OneMinuteBooking() {
           <h2 className="mt-4 font-serif text-4xl font-medium leading-[1.02] md:text-6xl">
             <LocalizedText id="quick.title">Reserve in one minute</LocalizedText>
           </h2>
-          <p className="mt-5 text-base leading-8 text-pearl/76 md:text-lg">
+          <p className="mt-5 text-base leading-8 text-pearl/88 md:text-lg">
             <LocalizedText id="quick.text">
               Choose a tour, add date and people, then send the ready message on WhatsApp.
             </LocalizedText>
           </p>
-          <div className="mt-8 grid gap-3 text-sm text-pearl/80 sm:grid-cols-3">
+          <div className="mt-8 grid gap-3 text-sm text-pearl/90 sm:grid-cols-3">
             {[
               ["quick.promise.whatsapp", "WhatsApp first"],
               ["quick.promise.reply", "Fast reply"],
@@ -249,22 +269,45 @@ export function OneMinuteBooking() {
                 {[
                   ["adults", "quick.adults", "Adults", adults],
                   ["children", "quick.children", "Children", children]
-                ].map(([kind, id, fallback, value]) => (
-                  <div key={String(kind)} className="grid gap-2">
-                    <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                      <LocalizedText id={String(id)}>{fallback}</LocalizedText>
-                    </label>
-                    <div className="grid h-12 grid-cols-[2.5rem_1fr_2.5rem] overflow-hidden rounded-md border border-ink/12 bg-white">
-                      <button className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50" type="button" onClick={() => changePeople(kind as "adults" | "children", -1)}>
-                        <Minus className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-                      </button>
-                      <input className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none" name={String(fallback)} readOnly value={Number(value)} />
-                      <button className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50" type="button" onClick={() => changePeople(kind as "adults" | "children", 1)}>
-                        <Plus className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-                      </button>
+                ].map(([kind, id, fallback, value]) => {
+                  const field = kind as "adults" | "children";
+                  const counterName = labels[field].toLocaleLowerCase(locale === "fr" ? "fr" : "en");
+                  const actionLabel = counterActionLabels[locale];
+
+                  return (
+                    <div key={String(kind)} className="grid gap-2">
+                      <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor={`quick-${field}`}>
+                        <LocalizedText id={String(id)}>{fallback}</LocalizedText>
+                      </label>
+                      <div className="grid h-12 grid-cols-[2.5rem_1fr_2.5rem] overflow-hidden rounded-md border border-ink/12 bg-white">
+                        <button
+                          aria-label={`${actionLabel.decrease} ${counterName}`}
+                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50"
+                          type="button"
+                          onClick={() => changePeople(field, -1)}
+                        >
+                          <Minus className="h-4 w-4" aria-hidden strokeWidth={1.75} />
+                        </button>
+                        <input
+                          id={`quick-${field}`}
+                          aria-label={labels[field]}
+                          className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none"
+                          name={String(fallback)}
+                          readOnly
+                          value={Number(value)}
+                        />
+                        <button
+                          aria-label={`${actionLabel.increase} ${counterName}`}
+                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50"
+                          type="button"
+                          onClick={() => changePeople(field, 1)}
+                        >
+                          <Plus className="h-4 w-4" aria-hidden strokeWidth={1.75} />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="grid gap-2">

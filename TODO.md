@@ -47,6 +47,11 @@
 - [x] Add mobile-optimized sea-route maps for each destination with real OpenStreetMap tiles and public GPS points from Dhërmi.
 - [x] Translate the route map labels in EN / FR / AL and verify the selected language applies on mobile.
 - [x] Verify GitHub Pages base-path navigation after the route map pass.
+- [x] Verify EN / FR / AL translation key coverage in the exported static site.
+- [x] Verify exported internal links and legacy WordPress redirect pages for the GitHub Pages `/dhermi-boats` path.
+- [x] Localize WhatsApp booking messages by selected language and tour.
+- [x] Recompress the PageSpeed-flagged media payload and make homepage video click-to-load.
+- [x] Improve accessibility on the booking controls, language selector state and low-contrast dark sections.
 
 ## Optional Future Improvements
 
@@ -56,3 +61,4 @@
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
 - [ ] Reconnect `dhermi.boats` when the domain is recovered.
 - [ ] Replace the public GPS point routes with official captain GPS traces if the captain provides them later.
+- [ ] Put the final site behind Cloudflare or another CDN if custom cache headers are needed after reconnecting `dhermi.boats`.

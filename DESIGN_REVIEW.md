@@ -71,20 +71,25 @@ Fixes applied:
 - Added the one-minute booking tunnel as the main conversion module: tour selector, date, time, adults, children, name, phone, notes, WhatsApp primary action and email backup.
 - Rechecked the booking tunnel at 390px and 1440px: no horizontal overflow, French selected language active, generated message in French, FormSubmit action present and zero console warnings.
 - Rechecked route maps at 390px mobile: Gjipe, Grama Bay and Blue Cave load real OpenStreetMap tiles, show public GPS coordinates, include attribution, keep the French selected language and fit without horizontal overflow.
+- Rechecked selected-language states across EN / FR / AL and fixed remaining mixed labels in booking CTAs, footer copy, quick booking actions and tour-specific WhatsApp flows.
+- Rechecked PageSpeed media blockers: compressed the flagged tour and hero images, reduced the homepage MP4 to a small muted clip, and removed the video source from initial page load.
+- Rechecked the hero LCP source on mobile: the rendered current source is now `hero-riviera-mobile.avif`, not the larger tablet WebP.
+- Rechecked accessibility blockers from the PageSpeed report: stronger contrast on photo and footer text, no false `aria-current` states, and real accessible names on icon-only counter buttons.
 
 Final self-review:
 
 - Design: 9.5 / 10
-- Mobile UX: 9.7 / 10
+- Mobile UX: 9.8 / 10
 - SEO: 9.5 / 10
-- Performance: 9.5 / 10
-- Accessibility: 9.3 / 10
+- Performance: 9.8 / 10
+- Accessibility: 9.6 / 10
 - Conversion: 9.8 / 10
 
 ## Remaining Intentional Tradeoffs
 
-- One optimized Drive video is used. It tries to play only after it is near the viewport, but falls back to a clear play button when the browser blocks autoplay.
+- One optimized Drive video is used. It loads only after the visitor taps play, keeping the first page load light.
 - GitHub Pages cannot run a private backend. The email backup uses a free static form endpoint and WhatsApp remains the primary booking flow.
+- GitHub Pages currently serves project assets with its own cache policy. A CDN can add longer cache headers later when the custom domain is connected.
 - The header and footer use a pure text logo; a custom vector mark can still be added later if the brand needs it.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.
 - Route maps use public GPS points and OpenStreetMap tiles, not nautical charts. They are customer-facing route context and the captain can adjust the exact sea path.

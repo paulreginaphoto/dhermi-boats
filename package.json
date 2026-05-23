@@ -7,6 +7,7 @@
     "build": "node ./scripts/build-translations.mjs && next build",
     "export": "npm run build",
     "translations": "node ./scripts/build-translations.mjs",
+    "qa:i18n-links": "node ./scripts/qa-i18n-links.mjs",
     "content:guard": "node ./scripts/content-guard.mjs",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit"

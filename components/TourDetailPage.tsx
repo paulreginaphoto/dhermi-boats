@@ -32,7 +32,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           </p>
         ) : null}
         <div className="mt-8">
-          <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark">
+          <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" whatsappKey={tour.id}>
             <LocalizedText id={bookKey}>BOOK THIS TOUR</LocalizedText>
           </ButtonLink>
         </div>
@@ -83,7 +83,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             <dl className="mt-6 grid gap-4 border-y border-white/10 py-5">
               {facts.map((fact) => (
                 <div key={fact.label} className="grid grid-cols-[0.42fr_1fr] gap-4">
-                  <dt className="text-xs font-bold uppercase tracking-[0.18em] text-sand/80">
+                  <dt className="text-xs font-bold uppercase tracking-[0.18em] text-sand">
                     <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
                   </dt>
                   <dd className="text-sm font-semibold leading-6 text-pearl">
@@ -92,10 +92,10 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
                 </div>
               ))}
             </dl>
-            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full">
+            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full" whatsappKey={tour.id}>
               <LocalizedText id={bookKey}>Book this tour</LocalizedText>
             </ButtonLink>
-            <p className="mt-4 text-sm leading-7 text-pearl/70">
+            <p className="mt-4 text-sm leading-7 text-pearl/88">
               <LocalizedText id="booking.panel.text">
                 Send your date, number of people and preferred tour. We confirm availability together.
               </LocalizedText>

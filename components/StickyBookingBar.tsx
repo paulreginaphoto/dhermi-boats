@@ -9,6 +9,7 @@ export function StickyBookingBar() {
       <div className="mx-auto grid max-w-md grid-cols-[1fr_auto] gap-3">
         <a
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl"
+          data-whatsapp-key="default"
           href={primaryWhatsappHref}
           rel="noreferrer"
           target="_blank"

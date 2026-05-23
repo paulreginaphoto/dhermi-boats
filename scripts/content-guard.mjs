@@ -2,11 +2,11 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOT_DIR = process.cwd();
-const TARGET_DIRS = ["app", "components", "data", "lib", "public"];
+const TARGET_DIRS = ["app", "components", "data", "lib", "public", "scripts"];
 const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".json", ".md", ".txt"]);
 const EXCLUDE_DIRS = new Set([".git", ".next", "out", "node_modules"]);
 
-const FORBIDDEN_DASH = "—";
+const FORBIDDEN_DASH = "\u2014";
 const REPEATED_WORD = /(?:^|\s)([\p{L}\p{M}][\p{L}\p{M}'’-]{1,})\s+\1(?:\s|$)/giu;
 const MIN_PHRASE_WORDS = 2;
 const MAX_PHRASE_WORDS = 6;
@@ -31,7 +31,7 @@ function addIssue(file, lineNumber, message, excerpt) {
 
 function checkLineForForbiddenDash(file, text, lineNumber) {
   if (text.includes(FORBIDDEN_DASH)) {
-    addIssue(file, lineNumber, "Le caractère interdit U+2014 (—) est présent.", text);
+    addIssue(file, lineNumber, "Le caractère interdit U+2014 est présent.", text);
   }
 }
 

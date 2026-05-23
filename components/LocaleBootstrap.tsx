@@ -1,15 +1,21 @@
 import { basePath } from "@/lib/site";
+import { whatsappNumber } from "@/lib/site";
 import { defaultLocale, locales } from "@/lib/i18n";
+import { whatsappMessages } from "@/lib/whatsappMessages";
 import Script from "next/script";
 
 const supportedLocaleSet = JSON.stringify(locales);
 const bootstrapBasePath = JSON.stringify(basePath || "");
+const bootstrapWhatsappNumber = JSON.stringify(whatsappNumber);
+const bootstrapWhatsappMessages = JSON.stringify(whatsappMessages);
 
-function toScript(localeList: string, bootstrapBasePath: string) {
+function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsappNumber: string, bootstrapWhatsappMessages: string) {
   return `(function(){
   var locales = new Set(${localeList});
   var defaultLocale = ${JSON.stringify(defaultLocale)};
   var basePath = ${bootstrapBasePath};
+  var whatsappNumber = ${bootstrapWhatsappNumber};
+  var whatsappMessages = ${bootstrapWhatsappMessages};
   var translationsUrl = (basePath ? basePath : "") + "/locales/translations.json";
   var urlLocale = (new URL(window.location.href)).searchParams.get("dlang");
   var storedLocale = null;
@@ -45,7 +51,11 @@ function toScript(localeList: string, bootstrapBasePath: string) {
       button.classList.toggle("bg-ink", isActive);
       button.classList.toggle("text-pearl", isActive);
       button.classList.toggle("text-ink-soft", !isActive);
-      button.setAttribute("aria-current", isActive ? "true" : "false");
+      if (isActive) {
+        button.setAttribute("aria-current", "true");
+      } else {
+        button.removeAttribute("aria-current");
+      }
     });
   } catch (_e) {}
 
@@ -61,6 +71,19 @@ function toScript(localeList: string, bootstrapBasePath: string) {
     }
   }
 
+  function applyWhatsappLinks() {
+    try {
+      window.document.querySelectorAll("[data-whatsapp-key]").forEach(function (link) {
+        var key = link.getAttribute("data-whatsapp-key");
+        var messageMap = key && whatsappMessages[key];
+        var message = messageMap && (messageMap[locale] || messageMap[defaultLocale]);
+        if (message && link.setAttribute) {
+          link.setAttribute("href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message));
+        }
+      });
+    } catch (_e) {}
+  }
+
   var translationsStore = null;
   var observerTimer = null;
 
@@ -68,6 +91,7 @@ function toScript(localeList: string, bootstrapBasePath: string) {
     try {
       window.document.querySelectorAll("[data-i18n]").forEach(setContent);
     } catch (_e) {}
+    applyWhatsappLinks();
   }
 
   function scheduleLocaleText() {
@@ -112,6 +136,7 @@ function toScript(localeList: string, bootstrapBasePath: string) {
   }
 
   updateTranslations();
+  applyWhatsappLinks();
 })();`;
 }
 
@@ -121,7 +146,7 @@ export function LocaleBootstrap() {
       id="dhermi-locale-bootstrap"
       strategy="afterInteractive"
       dangerouslySetInnerHTML={{
-        __html: toScript(supportedLocaleSet, bootstrapBasePath)
+        __html: toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages)
       }}
     />
   );

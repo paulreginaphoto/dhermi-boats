@@ -29,7 +29,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
           <LocalizedText id={`${translationBase}.summary`}>{destination.summary}</LocalizedText>
         </p>
         <div className="mt-8">
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default">
             <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
           </ButtonLink>
         </div>

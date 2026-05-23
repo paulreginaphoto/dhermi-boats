@@ -53,7 +53,13 @@
 - Added public GPS coordinates for Dhërmi beach area, Pirates Cave, Gjipe, Pigeon Cave, Blue Cave and Grama Bay, plus visible coordinate lists and OpenStreetMap attribution.
 - Optimized the real route map cards for mobile with readable markers, offset close points on Grama Bay and EN / FR / AL labels.
 - Fixed internal navigation paths for the GitHub Pages `/dhermi-boats` base path so nav links, tour cards, destination cards and CTA buttons stay inside the deployed site.
+- Audited all selected-language states again for EN / FR / AL, then fixed remaining mixed-language labels in booking CTAs, footer text, quick booking labels and tour-specific WhatsApp messages.
+- Added a static QA script for exported HTML that checks translation key coverage, GitHub Pages base-path links, missing route targets and legacy redirect output.
+- Reworked legacy WordPress noise routes to render static noindex pages with client-side fallback redirects instead of exporting `NEXT_REDIRECT` payloads.
+- Reduced the PageSpeed media payload by recompressing the main tour images, hero image variants and the homepage MP4, then changed the video module so the MP4 source is not present until the visitor taps play.
+- Replaced the hero image renderer with a static responsive `picture` element so mobile uses the lightweight AVIF hero and desktop keeps the larger image.
+- Raised text contrast in dark photo and footer areas, removed false `aria-current` states, and added accessible labels to the booking stepper controls.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps and GitHub Pages-safe navigation.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.

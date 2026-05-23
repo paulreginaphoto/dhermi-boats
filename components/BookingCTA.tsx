@@ -21,7 +21,7 @@ export function BookingCTA({
           <h2 className="font-serif text-4xl font-medium leading-tight md:text-5xl">
             {title ?? <LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>}
           </h2>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-pearl/74">
+          <p className="mt-4 max-w-2xl text-base leading-8 text-pearl/88">
             {text ?? (
               <LocalizedText id="booking.text">
                 Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.
@@ -30,7 +30,7 @@ export function BookingCTA({
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default">
             <LocalizedText id="cta.book">Book now</LocalizedText>
           </ButtonLink>
           <ButtonLink href={`tel:${phoneDisplay.replace(/\s/g, "")}`} icon={Phone} variant="ghost" className="border border-white/15 text-pearl hover:bg-white/10">

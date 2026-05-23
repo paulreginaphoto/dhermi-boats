@@ -17,14 +17,14 @@ export const metadata: Metadata = {
 };
 
 const contacts = [
-  { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle },
+  { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle, whatsappKey: "default" },
   { label: "Phone", labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: Phone },
   { label: "Email", labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: Mail },
   { label: "Google Maps", labelKey: "contact.google.label", value: "Google Maps", valueKey: "contact.google.value", href: googleMapsUrl, icon: MapPin },
   { label: "Instagram", labelKey: "contact.instagram.label", value: instagramHandle, href: instagramUrl, icon: Camera },
   { label: "TikTok", labelKey: "contact.tiktok.label", value: tiktokHandle, href: tiktokUrl, icon: Video },
   { label: "GetYourGuide", labelKey: "contact.getyourguide.label", value: "GetYourGuide", valueKey: "contact.getyourguide.value", href: getYourGuideUrl, icon: Ticket }
-] satisfies Array<{ label: string; labelKey: string; value: string; valueKey?: string; href: string; icon: OutlineIconComponent }>;
+] satisfies Array<{ label: string; labelKey: string; value: string; valueKey?: string; href: string; icon: OutlineIconComponent; whatsappKey?: string }>;
 
 export default function ContactPage() {
   return (
@@ -40,7 +40,7 @@ export default function ContactPage() {
           </LocalizedText>
         </p>
         <div className="mt-8">
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default">
             <LocalizedText id="cta.book">Book now</LocalizedText>
           </ButtonLink>
         </div>
@@ -77,6 +77,7 @@ export default function ContactPage() {
               <a
                 key={contact.label}
                 className="flex items-center gap-5 rounded-lg border border-ink/8 bg-limestone/70 p-5 transition duration-300 hover:-translate-y-1 hover:bg-pearl hover:shadow-soft"
+                data-whatsapp-key={contact.whatsappKey}
                 href={contact.href}
                 rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
                 target={contact.href.startsWith("http") ? "_blank" : undefined}

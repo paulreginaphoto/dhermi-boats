@@ -126,7 +126,7 @@ export default function HomePage() {
               <ButtonLink href="/tours/private/" variant="primary">
                 <LocalizedText id="tour.details">View details</LocalizedText>
               </ButtonLink>
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private">
                 <LocalizedText id="tour.private.book">REQUEST A PRIVATE TOUR</LocalizedText>
               </ButtonLink>
             </div>

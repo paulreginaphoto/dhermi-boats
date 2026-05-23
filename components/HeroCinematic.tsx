@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* eslint-disable @next/next/no-img-element */
 import { ArrowRight, Euro, MessageCircle, Ship, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -15,18 +15,26 @@ export function HeroCinematic() {
   return (
     <section className="relative overflow-hidden bg-limestone text-pearl">
       <div className="absolute inset-0">
-        <Image
-          src={assetPath("/images/hero-riviera-tablet.webp")}
-          alt="Dhermi Boat heading along the Albanian Riviera coast"
-          fill
-          priority
-          fetchPriority="high"
-          decoding="async"
-          sizes="100vw"
-          loading="eager"
-          quality={60}
-          className="object-cover"
-        />
+        <picture className="block h-full w-full">
+          <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile.avif")} type="image/avif" />
+          <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile.webp")} type="image/webp" />
+          <source srcSet={assetPath("/images/hero-riviera-tablet.avif")} type="image/avif" />
+          <img
+            src={assetPath("/images/hero-riviera-tablet.webp")}
+            alt="Dhermi Boat heading along the Albanian Riviera coast"
+            className="h-full w-full object-cover"
+            decoding="async"
+            fetchPriority="high"
+            loading="eager"
+          />
+        </picture>
+        <noscript>
+          <img
+            src={assetPath("/images/hero-riviera-tablet.webp")}
+            alt="Dhermi Boat heading along the Albanian Riviera coast"
+            className="h-full w-full object-cover"
+          />
+        </noscript>
         <div className="absolute inset-0 photo-overlay-dark" />
         <div className="absolute inset-0 photo-overlay-dark-strong" />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/14 via-navy/14 to-navy/80 md:hidden" />
@@ -66,7 +74,7 @@ export function HeroCinematic() {
                       <LocalizedText id={labelKey}>{label}</LocalizedText>
                     </p>
                     <p className="mt-1 font-serif text-3xl font-medium">{value}</p>
-                    <p className="mt-1 text-sm text-pearl/65">
+                    <p className="mt-1 text-sm text-pearl/86">
                       <LocalizedText id={noteKey}>{note}</LocalizedText>
                     </p>
                   </div>

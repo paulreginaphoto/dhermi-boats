@@ -22,6 +22,10 @@
 - [x] Persistent language selector updates the document language for EN / FR / AL users.
 - [x] Language switcher remains visible on mobile and desktop, and updates the `dlang` URL parameter.
 - [x] Legacy WordPress tour/gallery paths still resolve to live pages (`/gjipe-boat-tour/`, `/grama-bay-boat-tour/`, `/private-boat-tour-albania/`, `/sunset-boat-tour/`, `/morning-fishing-tour/`, `/boat-photos/`) via canonical mapping.
+- [x] Legacy WordPress noise paths render static noindex fallback pages and redirect visitors without leaking `NEXT_REDIRECT` into exported HTML.
+- [x] Export QA checks missing translation keys, broken internal links and GitHub Pages base-path mistakes before deploy.
+- [x] Tour-specific WhatsApp booking links are localized from the active EN / FR / AL language state.
+- [x] PageSpeed-flagged hero, tour and gallery images have been recompressed, and the homepage MP4 is click-to-load.
 
 ## Structured Data
 
