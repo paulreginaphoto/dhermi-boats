@@ -35,13 +35,14 @@ const mapWidth = 640;
 const mapHeight = 460;
 const tileSize = 256;
 const mapPadding = 54;
+const satelliteTileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile";
 
 const dhermiBeach: GeoPoint = {
   id: "dhermi",
   label: "Dhërmi beach area",
   labelKey: "map.point.dhermiBeach",
-  lat: 40.1442,
-  lng: 19.63409,
+  lat: 40.14295,
+  lng: 19.62995,
   tone: "start"
 };
 
@@ -49,8 +50,8 @@ const piratesCave: GeoPoint = {
   id: "pirates",
   label: "Pirates Cave",
   labelKey: "tour.gjipe.included.0",
-  lat: 40.129179,
-  lng: 19.6514375,
+  lat: 40.12872,
+  lng: 19.64882,
   tone: "stop"
 };
 
@@ -58,8 +59,8 @@ const gjipeBeach: GeoPoint = {
   id: "gjipe",
   label: "Gjipe",
   labelKey: "destination.gjipe.title",
-  lat: 40.1418,
-  lng: 19.6792,
+  lat: 40.1262,
+  lng: 19.66834,
   tone: "end"
 };
 
@@ -67,8 +68,8 @@ const pigeonCave: GeoPoint = {
   id: "pigeon-cave",
   label: "Pigeon Cave",
   labelKey: "tour.gjipe.included.2",
-  lat: 40.1245561,
-  lng: 19.6773936,
+  lat: 40.12384,
+  lng: 19.67458,
   tone: "stop"
 };
 
@@ -76,8 +77,8 @@ const blueCave: GeoPoint = {
   id: "blue-cave",
   label: "Blue Cave",
   labelKey: "destination.blue-cave.title",
-  lat: 40.214205,
-  lng: 19.479016,
+  lat: 40.21372,
+  lng: 19.47644,
   tone: "end"
 };
 
@@ -85,8 +86,8 @@ const gramaBay: GeoPoint = {
   id: "grama",
   label: "Grama Bay",
   labelKey: "destination.grama.title",
-  lat: 40.2153227,
-  lng: 19.473504,
+  lat: 40.21458,
+  lng: 19.47184,
   tone: "end"
 };
 
@@ -103,7 +104,7 @@ const routeMaps: Record<string, RouteMap> = {
     areaKey: "map.area.dhermiCoast",
     distance: "Short coastal route",
     distanceKey: "map.route.short",
-    note: "OpenStreetMap with public GPS points. The skipper may adjust the exact sea path.",
+    note: "Satellite imagery with sea GPS waypoints. The skipper may adjust the exact sea path.",
     noteKey: "map.note.gjipe",
     points: [dhermiBeach, piratesCave, gjipeBeach, pigeonCave],
     highlights: [
@@ -117,7 +118,7 @@ const routeMaps: Record<string, RouteMap> = {
     areaKey: "map.area.karaburunCoast",
     distance: "Long coastal route",
     distanceKey: "map.route.long",
-    note: "OpenStreetMap with public GPS points. The skipper may adjust the exact sea path.",
+    note: "Satellite imagery with sea GPS waypoints. The skipper may adjust the exact sea path.",
     noteKey: "map.note.grama",
     points: [dhermiBeach, blueCaveNearGrama, gramaBay],
     highlights: [
@@ -131,7 +132,7 @@ const routeMaps: Record<string, RouteMap> = {
     areaKey: "map.area.karaburunCaves",
     distance: "Cave route",
     distanceKey: "map.route.cave",
-    note: "OpenStreetMap with public GPS points. Cave entry depends on sea conditions.",
+    note: "Satellite imagery with sea GPS waypoints. Cave entry depends on sea conditions.",
     noteKey: "map.note.blueCave",
     points: [dhermiBeach, blueCave],
     highlights: [
@@ -187,7 +188,7 @@ function buildMap(points: GeoPoint[]) {
     for (let y = minTileY; y <= maxTileY; y += 1) {
       tiles.push({
         key: `${zoom}-${x}-${y}`,
-        src: `https://tile.openstreetmap.org/${zoom}/${x}/${y}.png`,
+        src: `${satelliteTileUrl}/${zoom}/${y}/${x}`,
         style: {
           height: `${(tileSize / mapHeight) * 100}%`,
           left: `${((x * tileSize - left) / mapWidth) * 100}%`,
@@ -296,17 +297,17 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
           );
         })}
       </svg>
-      <div className="absolute left-3 top-3 inline-flex items-center gap-2 rounded-full bg-pearl/92 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur">
+      <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full bg-pearl/92 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur">
         <MapPin className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={1.75} />
-        <LocalizedText id="map.real">GPS map</LocalizedText>
+        <LocalizedText id="map.real">Satellite GPS map</LocalizedText>
       </div>
       <a
         className="absolute bottom-2 right-2 inline-flex min-h-8 items-center rounded bg-pearl/92 px-2 text-[10px] font-semibold text-ink-soft underline-offset-2 hover:text-ink hover:underline"
-        href="https://www.openstreetmap.org/copyright"
+        href="https://www.esri.com/en-us/legal/terms/data-attributions"
         rel="noreferrer"
         target="_blank"
       >
-        © OpenStreetMap
+        Imagery © Esri
       </a>
     </div>
   );
