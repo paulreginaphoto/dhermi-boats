@@ -36,6 +36,17 @@ Goal: make every arrival path feel clear, reassuring and direct to WhatsApp with
 - Lighthouse on static export: mobile 98 performance, 96 accessibility, 100 best practices, 100 SEO.
 - Lighthouse on static export: desktop 100 performance, 96 accessibility, 100 best practices, 100 SEO.
 
+## AAAAA Follow-up
+
+Date: 2026-05-23
+
+- Re-audited 17 active routes in Albanian at 360, 390, 430, 768, 1024, 1280 and 1440 px.
+- Fixed visible language buttons to meet 44 px touch target expectations.
+- Removed remaining English "Sunset Tour" and "Morning Fishing Tour" copy from French and Albanian user-facing content.
+- Localized the quick booking tour labels and WhatsApp fallback messages for French and Albanian.
+- Prioritized the first gallery image on the photo page when it can become the LCP image.
+- Kept the reliable Next language bootstrap after testing an earlier-start variant that did not execute consistently.
+
 ## Notes
 
 - No fake reviews, ratings, licenses or safety claims were added.

@@ -301,7 +301,7 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
         <LocalizedText id="map.real">GPS map</LocalizedText>
       </div>
       <a
-        className="absolute bottom-2 right-2 rounded bg-pearl/92 px-2 py-1 text-[10px] font-semibold text-ink-soft underline-offset-2 hover:text-ink hover:underline"
+        className="absolute bottom-2 right-2 inline-flex min-h-8 items-center rounded bg-pearl/92 px-2 text-[10px] font-semibold text-ink-soft underline-offset-2 hover:text-ink hover:underline"
         href="https://www.openstreetmap.org/copyright"
         rel="noreferrer"
         target="_blank"

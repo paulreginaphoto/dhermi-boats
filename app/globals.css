@@ -65,18 +65,18 @@ summary:focus-visible {
 
 .language-switcher-shell-compact {
   gap: 0.0625rem;
-  border-radius: 0.8rem;
+  border-radius: 0.95rem;
   background: rgba(255, 255, 255, 0.7);
 }
 
 .language-option {
   position: relative;
   display: inline-flex;
-  min-width: 2.25rem;
-  height: 2.25rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
   align-items: center;
   justify-content: center;
-  border-radius: 0.65rem;
+  border-radius: 0.8rem;
   color: #405766;
   font-size: 0.75rem;
   font-weight: 800;
@@ -90,9 +90,9 @@ summary:focus-visible {
 }
 
 .language-switcher-compact .language-option {
-  min-width: 1.95rem;
-  height: 1.95rem;
-  font-size: 0.6875rem;
+  min-width: 2.75rem;
+  height: 2.75rem;
+  font-size: 0.75rem;
 }
 
 .language-option:hover {

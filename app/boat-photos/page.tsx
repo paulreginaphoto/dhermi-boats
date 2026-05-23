@@ -47,7 +47,7 @@ export default function BoatPhotosLegacyPage() {
             </a>
           </div>
           <div className="mt-10">
-            <GalleryGrid />
+            <GalleryGrid priorityFirst />
           </div>
         </div>
       </section>

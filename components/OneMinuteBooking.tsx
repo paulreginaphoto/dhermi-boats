@@ -59,11 +59,11 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     tour: "Turi",
     date: "Data",
     time: "Ora",
-    adults: "Te rritur",
-    children: "Femije",
+    adults: "Të rritur",
+    children: "Fëmijë",
     name: "Emri",
     phone: "Telefoni",
-    notes: "Shenime"
+    notes: "Shënime"
   }
 };
 
@@ -79,15 +79,15 @@ const tourOptionLabels: Record<FormLocale, Record<string, string>> = {
     gjipe: "Tour de Gjipe",
     grama: "Tour de Grama",
     private: "Tour privé sur mesure",
-    sunset: "Sunset Tour privé",
-    fishing: "Morning Fishing Tour"
+    sunset: "Tour privé au coucher du soleil",
+    fishing: "Tour pêche du matin"
   },
   sq: {
     gjipe: "Turi i Gjipesë",
     grama: "Turi i Gramës",
     private: "Tur privat sipas dëshirës",
     sunset: "Tur privat në perëndim",
-    fishing: "Morning Fishing Tour"
+    fishing: "Tur peshkimi në mëngjes"
   }
 };
 
@@ -108,9 +108,9 @@ const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
   },
   sq: {
     Flexible: "Fleksibel",
-    Morning: "Mengjes",
+    Morning: "Mëngjes",
     Afternoon: "Pasdite",
-    Sunset: "Perendim dielli",
+    Sunset: "Perëndim dielli",
     FishingMorning: "5:00 - 8:00"
   }
 };
