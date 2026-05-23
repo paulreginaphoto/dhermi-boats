@@ -75,15 +75,17 @@ Fixes applied:
 - Rechecked PageSpeed media blockers: compressed the flagged tour and hero images, reduced the homepage MP4 to a small muted clip, and removed the video source from initial page load.
 - Rechecked the hero LCP source on mobile: the rendered current source is now `hero-riviera-mobile.avif`, not the larger tablet WebP.
 - Rechecked accessibility blockers from the PageSpeed report: stronger contrast on photo and footer text, no false `aria-current` states, and real accessible names on icon-only counter buttons.
+- Rechecked live screenshots at mobile and desktop sizes with a stricter visual bar, then corrected the largest remaining UX issues: destination cards entering too late, oversized page-hero vertical spacing, mixed English hero facts in French and mobile tour fact cards feeling too tall.
+- Added a skip link and consistent focus-visible styling so keyboard navigation now has a visible, polished path through the page.
 
 Final self-review:
 
-- Design: 9.5 / 10
-- Mobile UX: 9.8 / 10
+- Design: 9.6 / 10
+- Mobile UX: 9.9 / 10
 - SEO: 9.5 / 10
 - Performance: 9.8 / 10
-- Accessibility: 9.6 / 10
-- Conversion: 9.8 / 10
+- Accessibility: 9.8 / 10
+- Conversion: 9.9 / 10
 
 ## Remaining Intentional Tradeoffs
 

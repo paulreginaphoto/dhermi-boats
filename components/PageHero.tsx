@@ -29,7 +29,7 @@ export function PageHero({
         <div className="absolute inset-0 photo-overlay-dark" />
         <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-navy/55 via-navy/22 to-transparent" />
       </div>
-      <div className="relative mx-auto max-w-site px-5 py-20 md:px-8 md:py-32">
+      <div className="relative mx-auto max-w-site px-5 py-14 md:px-8 md:py-24">
         {label ? (
           <p className="photo-label mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">{label}</p>
         ) : null}

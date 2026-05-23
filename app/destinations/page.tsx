@@ -24,8 +24,8 @@ export default function DestinationsPage() {
         image={tours[1].image}
         label={<LocalizedText id="section.destinations.label">Destinations</LocalizedText>}
       />
-      <section className="bg-navy py-16 text-pearl md:py-24">
-        <div className="site-band grid gap-5 lg:grid-cols-3">
+      <section className="destination-section py-8 text-pearl md:py-16">
+        <div className="site-band grid gap-4 md:gap-5 lg:grid-cols-3">
           {destinations.map((destination) => (
             <DestinationCard key={destination.id} destination={destination} />
           ))}

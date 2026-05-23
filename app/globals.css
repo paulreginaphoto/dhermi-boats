@@ -25,6 +25,43 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+a,
+button,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible {
+  outline: 2px solid #1f7c86;
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 80;
+  transform: translateY(-150%);
+  border-radius: 0.5rem;
+  background: #10222d;
+  color: #fff9ef;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 img,
 video {
   max-width: 100%;
@@ -89,6 +126,12 @@ video {
 .below-fold {
   content-visibility: auto;
   contain-intrinsic-size: 1000px 900px;
+}
+
+.destination-section {
+  margin-top: -1px;
+  background:
+    linear-gradient(180deg, #071b26 0%, #08202c 44%, #f6f0e6 44%, #f6f0e6 100%);
 }
 
 .site-band {

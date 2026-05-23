@@ -5,10 +5,10 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { assetPath } from "@/lib/site";
 
-const heroFacts: Array<[OutlineIconComponent, string, string, string, string, string]> = [
-  [Euro, "hero.fact.from", "From", "35 €", "hero.fact.gjipeShared", "Gjipe Tour"],
-  [Ship, "hero.fact.privateBoat", "Private", "200 € / hour", "hero.fact.minimum", "per group"],
-  [Users, "hero.fact.groups", "Groups", "15 guests", "hero.fact.capacity", "MAX 15 GUESTS"]
+const heroFacts: Array<[OutlineIconComponent, string, string, string, string, string, string]> = [
+  [Euro, "hero.fact.from", "From", "hero.fact.gjipePrice", "35 €", "hero.fact.gjipeShared", "Gjipe Tour"],
+  [Ship, "hero.fact.privateBoat", "Private", "hero.fact.privatePrice", "200 € / hour", "hero.fact.minimum", "per group"],
+  [Users, "hero.fact.groups", "Groups", "hero.fact.groupSize", "15 guests", "hero.fact.capacity", "MAX 15 GUESTS"]
 ];
 
 export function HeroCinematic() {
@@ -45,7 +45,7 @@ export function HeroCinematic() {
           <p className="mb-5 text-xs font-bold uppercase tracking-[0.24em] text-sand">
             <LocalizedText id="hero.label">Boat Tours in Dhërmi</LocalizedText>
           </p>
-          <h1 className="photo-title max-w-3xl break-words font-serif text-3xl font-medium leading-[1.06] text-pearl sm:text-5xl md:text-6xl lg:text-7xl">
+          <h1 className="photo-title max-w-3xl break-words font-serif text-3xl font-medium leading-[1.06] text-pearl sm:text-5xl md:text-6xl lg:text-6xl">
             <LocalizedText id="hero.title">
               Discover the Albanian Riviera from the sea with our boat tours departing from Dhërmi.
             </LocalizedText>
@@ -65,7 +65,7 @@ export function HeroCinematic() {
 
         <aside className="hidden self-end rounded-lg border border-white/18 bg-white/12 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl lg:block">
           <div className="grid gap-4">
-            {heroFacts.map(([icon, labelKey, label, value, noteKey, note]) => (
+            {heroFacts.map(([icon, labelKey, label, valueKey, value, noteKey, note]) => (
               <div key={labelKey} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <div className="flex items-center gap-4">
                   <IconFrame icon={icon} variant="glass" size="lg" />
@@ -73,7 +73,9 @@ export function HeroCinematic() {
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">
                       <LocalizedText id={labelKey}>{label}</LocalizedText>
                     </p>
-                    <p className="mt-1 font-serif text-3xl font-medium">{value}</p>
+                    <p className="mt-1 font-serif text-3xl font-medium">
+                      <LocalizedText id={valueKey}>{value}</LocalizedText>
+                    </p>
                     <p className="mt-1 text-sm text-pearl/86">
                       <LocalizedText id={noteKey}>{note}</LocalizedText>
                     </p>

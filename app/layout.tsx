@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
+import { LocalizedText } from "@/components/LocalizedText";
 import { assetPath, brandName, canonical, siteOrigin, siteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -63,8 +64,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className="pb-20 md:pb-0">
+        <a className="skip-link" href="#main-content">
+          <LocalizedText id="a11y.skip">Skip to content</LocalizedText>
+        </a>
         <Header />
-        <main>{children}</main>
+        <main id="main-content">{children}</main>
         <Footer />
         <WhatsAppFloatingButton />
         <StickyBookingBar />

@@ -60,6 +60,15 @@
 - Replaced the hero image renderer with a static responsive `picture` element so mobile uses the lightweight AVIF hero and desktop keeps the larger image.
 - Raised text contrast in dark photo and footer areas, removed false `aria-current` states, and added accessible labels to the booking stepper controls.
 
+## 2026-05-23
+
+- Ran a hard visual QA pass from live and local screenshots across mobile destinations, mobile home, mobile private tour, desktop home and desktop destinations.
+- Found that the destinations overview had too much empty dark space before useful card content, and fixed the section blend, card height, overlay density and spacing.
+- Found that the desktop hero headline was visually heavy and reduced its largest breakpoint size while preserving the cinematic image lead.
+- Localized the hero price and capacity facts so French visitors see `200 € / heure` and `15 pers.` instead of mixed English values.
+- Added a keyboard skip link and global focus-visible outlines for cleaner accessibility without changing the visual brand.
+- Tightened mobile tour detail fact cards so duration, price, capacity and departure scan faster above the main booking panel.
+
 ## Current Result
 
 The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, email backup, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.

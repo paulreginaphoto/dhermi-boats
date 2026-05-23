@@ -38,25 +38,29 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         </div>
       </PageHero>
 
-      <section className="bg-limestone py-16">
+      <section className="bg-limestone py-8 md:py-14">
         <div className="site-band">
           <div className="grid gap-3 md:grid-cols-4">
             {facts.map((fact) => (
-              <div key={fact.label} className="rounded-lg border border-ink/8 bg-pearl/88 p-5 shadow-sm">
-                <IconFrame icon={fact.icon} variant="soft" size="lg" />
-                <p className="mt-4 text-xs font-bold uppercase tracking-[0.2em] text-bronze">
-                  <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
-                </p>
-                <p className="mt-2 text-base font-semibold text-ink">
-                  <LocalizedText id={fact.valueKey}>{fact.value}</LocalizedText>
-                </p>
+              <div key={fact.label} className="rounded-lg border border-ink/8 bg-pearl/90 p-4 shadow-sm md:p-5">
+                <div className="flex items-center gap-4 md:block">
+                  <IconFrame icon={fact.icon} variant="soft" size="lg" />
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze md:mt-4 md:tracking-[0.2em]">
+                      <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
+                    </p>
+                    <p className="mt-1 text-base font-semibold leading-6 text-ink md:mt-2">
+                      <LocalizedText id={fact.valueKey}>{fact.value}</LocalizedText>
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-pearl py-16 md:py-24">
+      <section className="bg-pearl py-12 md:py-24">
         <div className="site-band grid gap-8 lg:grid-cols-[0.92fr_0.56fr] lg:items-start">
           <div className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
             <h2 className="font-serif text-3xl font-medium text-ink">
