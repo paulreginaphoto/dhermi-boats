@@ -294,6 +294,48 @@ function checkLocaleBrowserDetection(filePath, content) {
   }
 }
 
+function checkArrivalComfortSection(filePath, content) {
+  if (!filePath.endsWith(path.join("app", "page.tsx"))) return;
+
+  if (!content.includes("ArrivalComfortBar")) {
+    addIssue(
+      filePath,
+      1,
+      "La home doit rassurer les visiteurs dès l’arrivée avec une section courte avant le formulaire.",
+      "ArrivalComfortBar"
+    );
+  }
+}
+
+function checkBookingDraftComfort(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
+
+  for (const snippet of [
+    "bookingDraftStorageKey",
+    "bookingDraftReady",
+    "function safeBookingDraft",
+    "window.localStorage.setItem(bookingDraftStorageKey"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "Le formulaire doit sauvegarder localement les choix non sensibles pour le confort du visiteur.",
+        snippet
+      );
+    }
+  }
+
+  if (!content.includes("name, phone and notes are intentionally not saved")) {
+    addIssue(
+      filePath,
+      1,
+      "La sauvegarde locale du formulaire ne doit pas stocker le nom, le téléphone ou les notes.",
+      "name, phone and notes are intentionally not saved"
+    );
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
@@ -303,6 +345,8 @@ function scanFileContent(filePath, content) {
   checkPageHeroAltText(filePath, content);
   checkImportantPageHreflang(filePath, content);
   checkLocaleBrowserDetection(filePath, content);
+  checkArrivalComfortSection(filePath, content);
+  checkBookingDraftComfort(filePath, content);
 }
 
 function walkDir(dir) {

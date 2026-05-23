@@ -18,6 +18,15 @@ const fixedTimeByTourId = {
 } as const satisfies Record<string, TimeOption>;
 
 type FormLocale = "en" | "fr" | "sq";
+const bookingDraftStorageKey = "dhermi-booking-draft-v1";
+
+type BookingDraft = {
+  tourId: string;
+  date: string;
+  time: TimeOption;
+  adults: number;
+  children: number;
+};
 
 const messageIntro: Record<FormLocale, string> = {
   en: "Hello Dhermi Boat, I would like to book a boat tour.",
@@ -200,6 +209,43 @@ function timeOptionsForTour(tourId: string): TimeOption[] {
   return fixedTime ? [fixedTime] : [...flexibleTimeOptions];
 }
 
+function clampPeople(value: unknown, min: number, max: number, fallback: number) {
+  return typeof value === "number" && Number.isFinite(value)
+    ? Math.min(max, Math.max(min, Math.round(value)))
+    : fallback;
+}
+
+function safeBookingDraft(rawDraft: unknown, minimumDate: string): BookingDraft {
+  const source = typeof rawDraft === "object" && rawDraft !== null ? (rawDraft as Record<string, unknown>) : {};
+  const savedTourId = typeof source.tourId === "string" && selectableTours.some((tour) => tour.id === source.tourId)
+    ? source.tourId
+    : selectableTours[0]?.id ?? "gjipe";
+  const savedDate = typeof source.date === "string" && /^\d{4}-\d{2}-\d{2}$/.test(source.date) && source.date >= minimumDate
+    ? source.date
+    : "";
+  const availableDraftTimes = timeOptionsForTour(savedTourId);
+  const savedTime = typeof source.time === "string" && isTimeOption(source.time) && availableDraftTimes.includes(source.time)
+    ? source.time
+    : availableDraftTimes[0];
+
+  return {
+    tourId: savedTourId,
+    date: savedDate,
+    time: savedTime,
+    adults: clampPeople(source.adults, 1, 15, 2),
+    children: clampPeople(source.children, 0, 14, 0)
+  };
+}
+
+function readStoredBookingDraft(minimumDate: string) {
+  try {
+    const rawDraft = window.localStorage.getItem(bookingDraftStorageKey);
+    return safeBookingDraft(rawDraft ? JSON.parse(rawDraft) : null, minimumDate);
+  } catch {
+    return safeBookingDraft(null, minimumDate);
+  }
+}
+
 export function OneMinuteBooking() {
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
@@ -212,6 +258,7 @@ export function OneMinuteBooking() {
   const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
+  const [bookingDraftReady, setBookingDraftReady] = useState(false);
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
@@ -229,12 +276,29 @@ export function OneMinuteBooking() {
   useEffect(() => {
     const timer = window.setTimeout(() => {
       const currentMinimumDate = todayInputValue();
+      const bookingDraft = readStoredBookingDraft(currentMinimumDate);
+
       setMinimumDate(currentMinimumDate);
-      setDate((currentDate) => (currentDate && currentDate < currentMinimumDate ? currentMinimumDate : currentDate));
+      setTourId(bookingDraft.tourId);
+      setTime(bookingDraft.time);
+      setAdults(bookingDraft.adults);
+      setChildren(bookingDraft.children);
+      setDate(bookingDraft.date);
+      setBookingDraftReady(true);
     }, 0);
 
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!bookingDraftReady) return;
+
+    const draft = { tourId, date, time: selectedTime, adults, children };
+    // name, phone and notes are intentionally not saved because they are personal details.
+    try {
+      window.localStorage.setItem(bookingDraftStorageKey, JSON.stringify(draft));
+    } catch {}
+  }, [adults, bookingDraftReady, children, date, selectedTime, tourId]);
 
   const bookingMessage = useMemo(() => {
     const lines = [

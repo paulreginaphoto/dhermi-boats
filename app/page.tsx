@@ -3,6 +3,7 @@ import Image from "next/image";
 import { MapPin, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ArrivalComfortBar } from "@/components/ArrivalComfortBar";
 import { DestinationCard } from "@/components/DestinationCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
@@ -86,6 +87,8 @@ export default function HomePage() {
     <>
       <SEOJsonLd data={[localBusinessSchema, ...touristTripSchema, faqSchema]} />
       <HeroCinematic />
+
+      <ArrivalComfortBar />
 
       <OneMinuteBooking />
 
