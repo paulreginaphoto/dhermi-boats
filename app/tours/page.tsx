@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { BookingCTA } from "@/components/BookingCTA";
+import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
+import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
 import { breadcrumbSchema, localBusinessSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
@@ -48,6 +50,44 @@ export default function ToursPage() {
             {tours.map((tour, index) => (
               <TourCard key={tour.id} tour={tour} imagePriority={index < 3} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <TourComparison />
+
+      <section className="bg-navy py-16 text-pearl md:py-24">
+        <div className="site-band">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="decision.label">Which tour should I choose?</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-5xl">
+              <LocalizedText id="decision.title">Choose by time, swim stops and group style</LocalizedText>
+            </h2>
+          </div>
+          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              ["decision.gjipe.title", "Gjipe: value and shorter route", "decision.gjipe.text", "Choose Gjipe for caves, Gjipe Beach and a 30-minute swim stop when you want a clear, easy sea trip.", "gjipe"],
+              ["decision.grama.title", "Grama: most complete shared route", "decision.grama.text", "Choose Grama when you want Karaburun, Blue Cave, San Andrea Beach and Grama Beach in one longer tour.", "grama"],
+              ["decision.private.title", "Private: families and groups", "decision.private.text", "Choose private when your group wants custom timing, destinations and swimming stops with the skipper.", "private"],
+              ["decision.weather.title", "Sea-safe planning", "decision.weather.text", "Choose WhatsApp if you are unsure: routes and cave access depend on wind, waves and skipper safety decisions.", "default"]
+            ].map(([titleKey, title, textKey, text, tourId]) => {
+              const tour = tours.find((item) => item.id === tourId) ?? tours[0];
+              return (
+                <article key={String(titleKey)} className="rounded-lg border border-white/12 bg-white/8 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                  <h3 className="font-serif text-2xl font-medium">
+                    <LocalizedText id={String(titleKey)}>{title}</LocalizedText>
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-pearl/86">
+                    <LocalizedText id={String(textKey)}>{text}</LocalizedText>
+                  </p>
+                  <ButtonLink href={tour.href} variant="ghost" className="mt-5 border border-white/15 text-pearl hover:bg-white/10">
+                    <LocalizedText id="tour.details">See route and price</LocalizedText>
+                  </ButtonLink>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -101,7 +141,10 @@ export default function ToursPage() {
         </div>
       </section>
 
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
+      <BookingCTA
+        title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>}
+        text={<LocalizedText id="booking.text">Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.</LocalizedText>}
+      />
     </>
   );
 }

@@ -49,6 +49,36 @@ export default function ContactPage() {
 
       <OneMinuteBooking />
 
+      <section className="bg-limestone py-12 md:py-16">
+        <div className="site-band">
+          <div className="rounded-lg border border-ink/8 bg-pearl p-6 shadow-sm md:p-8">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="contact.message.label">Fastest way to book</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
+            </h2>
+            <div className="mt-8 grid gap-4 md:grid-cols-4">
+              {[
+                ["contact.message.date", "Date"],
+                ["contact.message.group", "Group size"],
+                ["contact.message.tour", "Preferred tour"],
+                ["contact.message.question", "Question or timing"]
+              ].map(([id, fallback]) => (
+                <div key={id} className="rounded-md border border-ink/8 bg-limestone/70 p-4 text-sm font-semibold text-ink">
+                  <LocalizedText id={id}>{fallback}</LocalizedText>
+                </div>
+              ))}
+            </div>
+            <div className="mt-8">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsEvent="whatsapp_click">
+                <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+              </ButtonLink>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div>

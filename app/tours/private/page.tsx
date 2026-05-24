@@ -21,6 +21,40 @@ export default function PrivateTourPage() {
   return (
     <>
       <TourDetailPage tour={privateTour} />
+      <section className="bg-navy py-16 text-pearl md:py-24">
+        <div className="site-band grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="private.plan.label">Private planning</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-5xl">
+              <LocalizedText id="private.plan.title">Plan a private tour in three steps</LocalizedText>
+            </h2>
+            <p className="mt-5 text-base leading-8 text-pearl/86">
+              <LocalizedText id="private.plan.text">
+                Send your date, group size and route ideas. The skipper confirms the safest timing and stops according to sea conditions.
+              </LocalizedText>
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              ["1", "private.step.1.title", "Send date and group size", "private.step.1.text", "Tell us your date, number of people and preferred places on WhatsApp."],
+              ["2", "private.step.2.title", "Choose route and duration", "private.step.2.text", "Pick at least 2 hours, then agree the route, coves and swim stops with the skipper."],
+              ["3", "private.step.3.title", "Confirm with the skipper", "private.step.3.text", "The skipper confirms meeting point, timing and any weather-safe route adjustments."]
+            ].map(([number, titleKey, title, textKey, text]) => (
+              <article key={String(number)} className="rounded-lg border border-white/12 bg-white/8 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sand text-sm font-bold text-ink">{number}</span>
+                <h3 className="mt-5 font-serif text-2xl font-medium">
+                  <LocalizedText id={String(titleKey)}>{title}</LocalizedText>
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-pearl/86">
+                  <LocalizedText id={String(textKey)}>{text}</LocalizedText>
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
       <section id="sunset" className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">
           {tours.filter((tour) => tour.id === "sunset" || tour.id === "fishing").map((tour) => (

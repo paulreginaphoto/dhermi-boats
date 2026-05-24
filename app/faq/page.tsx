@@ -27,6 +27,15 @@ const faqSchema = {
   }))
 };
 
+const faqGroups = [
+  { titleKey: "faq.group.booking", title: "Booking", indexes: [0, 1, 9] },
+  { titleKey: "faq.group.tours", title: "Tours and routes", indexes: [3, 5, 7] },
+  { titleKey: "faq.group.weather", title: "Weather and safety", indexes: [2] },
+  { titleKey: "faq.group.families", title: "Families and groups", indexes: [6] },
+  { titleKey: "faq.group.payment", title: "Payment", indexes: [8] },
+  { titleKey: "faq.group.bring", title: "What to bring", indexes: [4] }
+];
+
 export default function FAQPage() {
   return (
     <>
@@ -44,8 +53,15 @@ export default function FAQPage() {
         </p>
       </PageHero>
       <section className="bg-pearl py-16 md:py-24">
-        <div className="site-band max-w-4xl">
-          <FAQAccordion items={faqs} />
+        <div className="site-band grid gap-8">
+          {faqGroups.map((group) => (
+            <section key={group.titleKey} className="grid gap-5 lg:grid-cols-[0.32fr_0.68fr]">
+              <h2 className="font-serif text-3xl font-medium text-ink">
+                <LocalizedText id={group.titleKey}>{group.title}</LocalizedText>
+              </h2>
+              <FAQAccordion items={group.indexes.map((index) => ({ ...faqs[index], translationIndex: index })).filter((item) => item.question)} />
+            </section>
+          ))}
         </div>
       </section>
       <BookingCTA />
