@@ -73,6 +73,9 @@ Date: 2026-05-24
 - Added export QA coverage for incomplete booking action links and visible required-field placeholders.
 - Rechecked FR desktop home, mobile home, desktop tours and desktop contact on the exported `/dhermi-boats` path: no overflow, no framework overlay, no console issues, guarded booking actions, validation focus and ready links after entry.
 - Rechecked 100 generated external URLs: 99 OK, GetYourGuide expected 403, zero hard failures.
+- Added another visible-copy guard for generic route/detail/practical-info labels, confirmed it failed, then replaced those labels with route, departure, weather and payment wording across EN / FR / AL.
+- Rechecked FR mobile home, mobile contact, desktop tours and desktop private tour on the exported `/dhermi-boats` path: active FR state, no stale labels, no overflow, no broken images and no console issues.
+- Rechecked 100 generated external URLs after the label pass: 99 OK, GetYourGuide expected 403, zero hard failures.
 
 ## Notes
 

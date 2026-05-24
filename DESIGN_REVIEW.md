@@ -103,6 +103,8 @@ Fixes applied:
 - Rechecked exported quick-booking anchors before hydration and removed incomplete WhatsApp/email URLs containing missing required fields.
 - Replaced required-field dashes in the message preview with direct prompts, then verified the form focuses the first missing field and only turns WhatsApp/email into external actions after date and name are present.
 - Rechecked the final rendered export with Chrome CDP across FR desktop home, FR mobile home, FR desktop tours and FR desktop contact: no overflow, no framework overlay and no relevant console events.
+- Replaced the remaining generic section labels with concrete route, departure, weather and payment wording.
+- Guarded those weak labels in `content:guard`, then rechecked FR mobile home/contact and FR desktop tours/private tour: no stale labels, no overflow, no broken images and no console issues.
 
 Final self-review:
 

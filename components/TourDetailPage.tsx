@@ -24,7 +24,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
     { label: "Duration", labelKey: "tour.durationLabel", value: tour.duration, valueKey: `${translationBase}.duration`, icon: Clock3 },
     { label: "Price", labelKey: "tour.priceLabel", value: tour.price, valueKey: `${translationBase}.price`, icon: Euro },
     { label: "Capacity", labelKey: "tour.capacityLabel", value: tour.capacity, valueKey: `${translationBase}.capacity`, icon: Users },
-    { label: "Best for", labelKey: "tour.bestForLabel", value: tour.bestFor, valueKey: `${translationBase}.bestFor`, icon: Sparkles },
+    { label: "Good fit", labelKey: "tour.bestForLabel", value: tour.bestFor, valueKey: `${translationBase}.bestFor`, icon: Sparkles },
     { label: "Departure", labelKey: "tour.departureLabel", value: tour.departure, valueKey: `${translationBase}.departure`, icon: MapPin }
   ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
 
@@ -77,7 +77,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         title={<LocalizedText id={`${translationBase}.title`}>{tour.title}</LocalizedText>}
         image={tour.image}
         imageAlt={heroImageAlt}
-        label={<LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>}
+        label={<LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>}
       >
         <p>
           <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
@@ -218,7 +218,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <LocalizedText id={`${translationBase}.bestFor`}>{tour.bestFor}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="tour.bestForTitle">Who it’s best for</LocalizedText>
+              <LocalizedText id="tour.bestForTitle">Choose by route pace</LocalizedText>
             </h2>
           </div>
           <FAQAccordion items={tour.detailFaqs} translationPrefix={`${translationBase}.faq`} />

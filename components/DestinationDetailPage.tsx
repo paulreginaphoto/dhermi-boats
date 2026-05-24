@@ -42,7 +42,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         <div className="site-band grid gap-8 lg:grid-cols-[0.7fr_1.1fr]">
           <div>
             <h2 className="font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
+              <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">

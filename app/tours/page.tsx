@@ -52,7 +52,7 @@ export default function ToursPage() {
         <div className="site-band overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-lg bg-pearl text-left text-sm shadow-sm">
             <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
-              <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
+              <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
             </caption>
             <thead className="bg-ink text-pearl">
               <tr>
@@ -66,7 +66,7 @@ export default function ToursPage() {
                   <LocalizedText id="tour.priceLabel">Price</LocalizedText>
                 </th>
                 <th className="px-5 py-4 font-semibold">
-                  <LocalizedText id="tour.detailsLabel">Tour details</LocalizedText>
+                  <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
                 </th>
               </tr>
             </thead>

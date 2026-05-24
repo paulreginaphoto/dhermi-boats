@@ -53,10 +53,10 @@ export default function ContactPage() {
         <div className="site-band grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="contact.info.label">Practical info</LocalizedText>
+              <LocalizedText id="contact.info.label">Before departure</LocalizedText>
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="contact.info.title">Useful information</LocalizedText>
+              <LocalizedText id="contact.info.title">Departure, weather and payment</LocalizedText>
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
               <LocalizedText id="contact.info.text">

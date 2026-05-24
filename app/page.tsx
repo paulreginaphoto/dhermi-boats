@@ -261,7 +261,7 @@ export default function HomePage() {
       <section className="below-fold bg-pearl py-16 md:py-20">
         <div className="site-band">
           <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.info.title">Useful information</LocalizedText>
+            <LocalizedText id="section.info.title">Departure, weather and payment</LocalizedText>
           </h2>
           <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft md:grid-cols-3">
             {usefulInformation.map((item, index) => (

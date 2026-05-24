@@ -82,6 +82,9 @@
 - [x] Replace required-field dashes in the quick-booking preview with useful localized prompts.
 - [x] Guard exported booking action links and required-field placeholders in static QA.
 - [x] Recheck FR desktop/mobile rendered booking actions and final generated external URLs after the booking-link fix.
+- [x] Replace remaining generic route/detail/practical-info labels with concrete departure, route, weather and payment wording.
+- [x] Guard those generic labels across EN / FR / AL visible content.
+- [x] Recheck FR mobile home/contact and FR desktop tours/private tour after the final label pass.
 
 ## Optional Future Improvements
 
