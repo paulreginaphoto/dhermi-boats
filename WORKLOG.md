@@ -126,7 +126,11 @@
 - Added a red `content:guard` blocklist for those weak labels, then replaced them with concrete route, departure, weather and payment wording.
 - Rechecked the exported `/dhermi-boats` path with Chrome CDP on FR mobile home, FR mobile contact, FR desktop tours and FR desktop private tour: no overflow, active FR state, no stale labels, no broken images and no relevant console events.
 - Rechecked generated external HTTP URLs after the label pass: 99 OK, GetYourGuide expected 403, zero hard failures.
+- Re-audited the one-minute booking summary and found it still said the message was ready before required date and name were present.
+- Split the summary into pending and ready states across EN / FR / AL, then guarded the two-state behavior in `content:guard`.
+- Found that dynamic React `data-i18n` key changes could re-render in English after hydration; updated the locale bootstrap observer to catch data-i18n attributes and text mutations.
+- Rechecked the exported FR booking flow locally through Chrome CDP: pending summary says `Date et nom à ajouter`, WhatsApp stays on `#quick-date`, filled date/name switch the summary to `Message prêt`, the generated WhatsApp URL is French and there are no relevant console events.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, guarded pre-hydration booking links, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded route-specific visible copy.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, guarded pre-hydration booking links, explicit pending/ready booking summary states, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded route-specific visible copy.

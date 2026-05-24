@@ -337,6 +337,9 @@ function checkBookingRequiredFields(filePath, content) {
     "bookingFallbackHref",
     "whatsappActionHref",
     "emailActionHref",
+    "bookingSummaryKey",
+    "quick.summary.pending",
+    "quick.summary.ready",
     "aria-disabled={!bookingLinksReady}"
   ]) {
     if (!content.includes(snippet)) {
@@ -482,6 +485,21 @@ function checkLocaleSwitcherHydration(filePath, content) {
       "Le sélecteur FR/AL/EN doit être resynchronisé dans le même cycle que les textes localisés.",
       "applyLocaleSwitchers();"
     );
+  }
+
+  for (const snippet of [
+    'attributeFilter: ["data-i18n"]',
+    "attributes: true",
+    "characterData: true"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, content.indexOf("observer.observe")),
+        "Le bootstrap i18n doit observer les changements React dynamiques de clés et textes data-i18n.",
+        snippet
+      );
+    }
   }
 }
 

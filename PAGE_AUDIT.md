@@ -76,6 +76,9 @@ Date: 2026-05-24
 - Added another visible-copy guard for generic route/detail/practical-info labels, confirmed it failed, then replaced those labels with route, departure, weather and payment wording across EN / FR / AL.
 - Rechecked FR mobile home, mobile contact, desktop tours and desktop private tour on the exported `/dhermi-boats` path: active FR state, no stale labels, no overflow, no broken images and no console issues.
 - Rechecked 100 generated external URLs after the label pass: 99 OK, GetYourGuide expected 403, zero hard failures.
+- Rechecked the local exported FR booking form and found the summary could claim readiness before required fields, then briefly fall back to English after React changed the summary key.
+- Added localized pending/ready summary labels and expanded the locale observer so dynamic `data-i18n` changes stay translated after interaction.
+- Rechecked the local exported FR booking flow: no horizontal overflow, active FR state, pending `#quick-date` action, ready French WhatsApp URL after date/name entry and no relevant console events.
 
 ## Notes
 

@@ -363,6 +363,7 @@ export function OneMinuteBooking() {
   const bookingFallbackHref = firstMissingRequiredFieldId ? `#${firstMissingRequiredFieldId}` : "#book";
   const whatsappActionHref = bookingLinksReady ? whatsappHref : bookingFallbackHref;
   const emailActionHref = bookingLinksReady ? emailHref : bookingFallbackHref;
+  const bookingSummaryKey = bookingLinksReady ? "quick.summary.ready" : "quick.summary.pending";
 
   function validateRequiredFields() {
     const nextErrors = {
@@ -675,7 +676,9 @@ export function OneMinuteBooking() {
 
           <div className="mt-5 rounded-md border border-ink/10 bg-limestone/75 p-4">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-              <LocalizedText id="quick.summary">Message ready</LocalizedText>
+              <LocalizedText id={bookingSummaryKey}>
+                {bookingLinksReady ? "Message ready" : "Date and name needed"}
+              </LocalizedText>
             </p>
             <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft">{bookingMessage}</p>
           </div>

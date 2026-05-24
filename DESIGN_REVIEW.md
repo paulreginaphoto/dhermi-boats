@@ -105,6 +105,9 @@ Fixes applied:
 - Rechecked the final rendered export with Chrome CDP across FR desktop home, FR mobile home, FR desktop tours and FR desktop contact: no overflow, no framework overlay and no relevant console events.
 - Replaced the remaining generic section labels with concrete route, departure, weather and payment wording.
 - Guarded those weak labels in `content:guard`, then rechecked FR mobile home/contact and FR desktop tours/private tour: no stale labels, no overflow, no broken images and no console issues.
+- Tightened the quick-booking summary state so it no longer says the message is ready until date and name are filled.
+- Fixed dynamic post-hydration i18n updates so React state changes keep the selected French copy instead of falling back to English.
+- Rechecked the local exported booking flow at 390px: pending and ready states localize correctly, WhatsApp remains guarded before required fields and no horizontal overflow appears.
 
 Final self-review:
 

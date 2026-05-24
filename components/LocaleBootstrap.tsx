@@ -144,7 +144,13 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     try {
       if (!window.MutationObserver) return;
       var observer = new window.MutationObserver(scheduleLocaleText);
-      observer.observe(window.document.documentElement, { childList: true, subtree: true });
+      observer.observe(window.document.documentElement, {
+        attributeFilter: ["data-i18n"],
+        attributes: true,
+        characterData: true,
+        childList: true,
+        subtree: true
+      });
     } catch (_e) {}
   }
 

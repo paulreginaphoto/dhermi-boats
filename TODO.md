@@ -85,6 +85,9 @@
 - [x] Replace remaining generic route/detail/practical-info labels with concrete departure, route, weather and payment wording.
 - [x] Guard those generic labels across EN / FR / AL visible content.
 - [x] Recheck FR mobile home/contact and FR desktop tours/private tour after the final label pass.
+- [x] Split the quick-booking summary into localized pending and ready states.
+- [x] Keep dynamic post-hydration `data-i18n` changes translated after React interactions.
+- [x] Recheck the local exported FR booking flow after summary and i18n observer fixes.
 
 ## Optional Future Improvements
 
