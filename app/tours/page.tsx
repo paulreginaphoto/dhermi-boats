@@ -6,37 +6,41 @@ import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
 import { tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
+import { breadcrumbSchema, localBusinessSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Boat Tours in Dhërmi",
+  title: "Dhermi Boat Tours",
   description:
-    "Compare Dhermi Boat tours: Gjipe, Grama Bay, private boat trips, sunset trips and morning fishing tours.",
+    "Compare Dhermi boat tours from Dhërmi to Gjipe, Grama Bay, Blue Cave, private routes, sunset trips and morning fishing tours.",
   alternates: { canonical: canonical("/tours/"), languages: languageAlternates("/tours/") }
-};
-
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "CollectionPage",
-  name: "Dhermi Boat tours",
-  url: canonical("/tours/"),
-  hasPart: tours.map((tour) => ({
-    "@type": "TouristTrip",
-    name: tour.title,
-    description: tour.subtitle || tour.included.join(", "),
-    url: canonical(tour.href)
-  }))
 };
 
 export default function ToursPage() {
   return (
     <>
-      <SEOJsonLd data={schema} />
+      <SEOJsonLd
+        data={[
+          localBusinessSchema(),
+          tourCollectionSchema(),
+          ...tours.map((tour) => touristTripSchema(tour)),
+          breadcrumbSchema([
+            { name: "Dhermi boat tours", url: "/" },
+            { name: "Compare tours", url: "/tours/" }
+          ])
+        ]}
+      />
       <PageHero
-        title={<LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>}
+        title={<LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
-      />
+      >
+        <p>
+          <LocalizedText id="section.tours.text">
+            Choose a Dhermi boat tour for Gjipe, Grama Bay, Blue Cave, a private route, sunset cruise or morning fishing, then confirm the date with the local skipper on WhatsApp.
+          </LocalizedText>
+        </p>
+      </PageHero>
 
       <section aria-label="Tours" className="bg-pearl py-10 md:py-16">
         <div className="site-band">

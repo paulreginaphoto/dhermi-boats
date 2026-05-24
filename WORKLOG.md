@@ -145,3 +145,10 @@ The site is a static, image-led booking website with clear prices, a one-minute 
 - Restored `public/CNAME` for `dhermi.boats`.
 - Updated `llms.txt`, deployment notes and DNS notes so production URLs use the custom domain root.
 - Confirmed the GitHub Pages repository setting already has `dhermi.boats` configured, the certificate is approved and HTTPS enforcement is enabled.
+
+## 2026-05-25 SEO Technical Audit For Dhermi Boat Tour
+
+- Audited indexable metadata, sitemap, robots, hreflang, legacy WordPress routes, visible headings, internal tour links and JSON-LD schema against the target query cluster around `dhermi boat tour`.
+- Tightened homepage, tours, destination, FAQ, contact and photo metadata so the exact non-accented query and route-specific variants appear naturally in titles and descriptions.
+- Expanded structured data with reusable LocalBusiness, WebSite, WebPage, TouristTrip, CollectionPage, ItemList, Offer and breadcrumb schema across home, tours and detail pages.
+- Strengthened visible copy and internal CTA labels around route, price, local skipper, WhatsApp booking, Gjipe, Grama Bay, Blue Cave and private Dhermi boat tours without adding thin SEO-only pages.

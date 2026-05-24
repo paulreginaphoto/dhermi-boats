@@ -6,9 +6,9 @@ import { canonical, languageAlternates } from "@/lib/site";
 const destination = destinations.find((item) => item.id === "grama")!;
 
 export const metadata: Metadata = {
-  title: "Grama Bay Tour",
+  title: "Grama Bay Boat Tour from Dhermi",
   description:
-    "Explore Grama Bay by boat from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave and Secret Cave.",
+    "Explore Grama Bay by boat from Dhërmi on a Dhermi boat tour with Karaburun Natural Park, San Andrea Beach, Blue Cave and Secret Cave.",
   alternates: { canonical: canonical("/destinations/grama-bay/"), languages: languageAlternates("/destinations/grama-bay/") }
 };
 

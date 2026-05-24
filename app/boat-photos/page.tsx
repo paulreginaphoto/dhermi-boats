@@ -8,9 +8,9 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Boat Tour Photos in Dhërmi",
+  title: "Dhermi Boat Tour Photos",
   description:
-    "Browse recent Dhermi Boat photos from Gjipe, Grama Bay, Blue Cave and onboard sea clips.",
+    "Browse real Dhermi boat tour photos from Gjipe, Grama Bay, Blue Cave, Karaburun coves and onboard sea clips.",
   alternates: { canonical: canonical("/boat-photos/"), languages: languageAlternates("/boat-photos/") }
 };
 
@@ -29,7 +29,7 @@ export default function BoatPhotosLegacyPage() {
             <p>
               <span className="mt-5 block text-base leading-8 text-ink-soft md:text-lg">
                 <LocalizedText id="page.photos.text">
-                  Browse recent Dhermi Boat photos from Gjipe, Grama Bay, Blue Cave and onboard sea clips.
+                  Browse real Dhermi boat tour photos from Gjipe, Grama Bay, Blue Cave, Karaburun coves and onboard sea clips.
                 </LocalizedText>
               </span>
             </p>

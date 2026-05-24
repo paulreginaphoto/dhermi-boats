@@ -46,7 +46,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
           <a
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
             href={tour.href}
-            aria-label={`View details for ${tour.shortTitle}`}
+            aria-label={`See route and price for ${tour.shortTitle}`}
           >
             <ArrowRight className="h-4 w-4" strokeWidth={iconStrokeWidth} />
           </a>
@@ -101,7 +101,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white active:translate-y-px"
             href={tour.href}
           >
-            <LocalizedText id="tour.details">View details</LocalizedText>
+            <LocalizedText id="tour.details">See route and price</LocalizedText>
           </a>
         </div>
       </div>

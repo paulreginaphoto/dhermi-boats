@@ -10,9 +10,9 @@ import { primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, languageAlternates, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact and Booking",
+  title: "Contact Dhermi Boat Tours",
   description:
-    "Contact Dhermi Boat to book a boat tour from Dhërmi, Albania. WhatsApp booking, phone, email, Google Maps, Instagram, TikTok and GetYourGuide.",
+    "Contact Dhermi Boat to book a Dhermi boat tour from Dhërmi, Albania. WhatsApp booking, phone, email, Google Maps, Instagram, TikTok and GetYourGuide.",
   alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
@@ -30,7 +30,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHero
-        title={<LocalizedText id="page.contact.title">Contact Dhermi Boat</LocalizedText>}
+        title={<LocalizedText id="page.contact.title">Contact Dhermi Boat Tours</LocalizedText>}
         image={tours[2].image}
         imageAlt={tours[2].imageAlt}
         label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}

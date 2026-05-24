@@ -8,13 +8,9 @@ import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import type { Tour } from "@/data/content";
-import { canonical, phoneDisplay, whatsappUrl } from "@/lib/site";
+import { whatsappUrl } from "@/lib/site";
+import { breadcrumbSchema, localBusinessSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
-
-function imageCanonical(image: string) {
-  const imagePath = image.includes("/images/") ? `/images/${image.split("/images/").pop()}` : image;
-  return canonical(imagePath);
-}
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
   const translationBase = `tour.${tour.id}`;
@@ -30,45 +26,12 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
   ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
 
   const schema = [
-    {
-      "@context": "https://schema.org",
-      "@type": "TouristTrip",
-      name: tour.title,
-      description: tour.subtitle || tour.included.join(", "),
-      image: imageCanonical(tour.image),
-      touristType: tour.type === "private" ? "Private boat tour" : "Small-group boat tour",
-      itinerary: tour.itinerary.join(", "),
-      offers: {
-        "@type": "Offer",
-        priceCurrency: "EUR",
-        description: tour.price,
-        availability: "https://schema.org/InStock",
-        url: canonical(tour.href)
-      },
-      provider: {
-        "@type": "LocalBusiness",
-        name: "Dhermi Boat",
-        telephone: phoneDisplay
-      }
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      itemListElement: [
-        {
-          "@type": "ListItem",
-          position: 1,
-          name: "Boat tours in Dhërmi",
-          item: canonical("/")
-        },
-        {
-          "@type": "ListItem",
-          position: 2,
-          name: tour.shortTitle,
-          item: canonical(tour.href)
-        }
-      ]
-    }
+    localBusinessSchema(),
+    touristTripSchema(tour),
+    breadcrumbSchema([
+      { name: "Dhermi boat tours", url: "/" },
+      { name: tour.shortTitle, url: tour.href }
+    ])
   ];
 
   return (
@@ -88,7 +51,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </ButtonLink>
           <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-            <LocalizedText id="tour.backAll">All tours</LocalizedText>
+            <LocalizedText id="tour.backAll">All Dhermi boat tours</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>

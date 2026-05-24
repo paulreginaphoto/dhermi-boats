@@ -81,7 +81,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>
+            <LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {relatedTours.map((tour) => (
@@ -105,7 +105,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                     <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                   </ButtonLink>
                   <ButtonLink href={tour.href} variant="secondary" className="flex-1">
-                    <LocalizedText id="tour.details">View details</LocalizedText>
+                    <LocalizedText id="tour.details">See route and price</LocalizedText>
                   </ButtonLink>
                 </div>
               </article>

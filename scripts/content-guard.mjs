@@ -640,6 +640,46 @@ function checkExternalTrustLinks(filePath, content) {
   }
 }
 
+function checkSEOFocus(filePath, content) {
+  const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
+  const requirements = [
+    {
+      file: "app/layout.tsx",
+      snippets: ["Dhermi boat tour", "boat tour Dhermi"]
+    },
+    {
+      file: "app/page.tsx",
+      snippets: ["absolute: \"Dhermi Boat Tour", "localBusinessSchema()", "websiteSchema()", "homePageSchema()"]
+    },
+    {
+      file: "app/tours/page.tsx",
+      snippets: ["Dhermi Boat Tours", "tourCollectionSchema()", "touristTripSchema(tour)"]
+    },
+    {
+      file: "lib/seo.ts",
+      snippets: ["hasOfferCatalog", "touristTripSchema", "breadcrumbSchema", "Dhermi boat tour"]
+    },
+    {
+      file: "lib/i18n.ts",
+      snippets: ["Dhermi boat tours from Dhërmi", "Compare Dhermi boat tours by route and price"]
+    }
+  ];
+
+  const requirement = requirements.find((item) => item.file === relative);
+  if (!requirement) return;
+
+  for (const snippet of requirement.snippets) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "Le focus SEO `dhermi boat tour` doit rester explicite dans les métadonnées, textes visibles et schema.",
+        snippet
+      );
+    }
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkLocalizedTextFallback(filePath, content);
   checkDynamicTourBookingFallback(filePath, content);
@@ -657,6 +697,7 @@ function scanFileContent(filePath, content) {
   checkArrivalComfortSection(filePath, content);
   checkBookingDraftComfort(filePath, content);
   checkExternalTrustLinks(filePath, content);
+  checkSEOFocus(filePath, content);
 }
 
 function walkDir(dir) {

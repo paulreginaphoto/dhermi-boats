@@ -14,13 +14,15 @@ const socialImageUrl = canonical("/images/hero-riviera.webp");
 export const metadata: Metadata = {
   metadataBase: new URL(canonicalOrigin),
   title: {
-    default: "Boat Tours in Dhërmi | Gjipe, Grama Bay & Private Trips",
+    default: "Dhermi Boat Tours | Gjipe, Grama Bay & Private Trips",
     template: "%s | Dhermi Boat"
   },
   description:
-    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Fast WhatsApp booking with a local skipper.",
+    "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Small-group and private trips with a local skipper.",
   keywords: [
+    "Dhermi boat tour",
     "Dhermi boat tours",
+    "boat tour Dhermi",
     "Dhërmi boat tours",
     "Albania boat tours",
     "Riviera Albania tours",
@@ -38,9 +40,9 @@ export const metadata: Metadata = {
     type: "website",
     url: canonical("/"),
     siteName: brandName,
-    title: "Boat Tours in Dhërmi",
+    title: "Dhermi Boat Tours",
     description:
-      "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
+      "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
     images: [
       {
         url: socialImageUrl,
@@ -52,8 +54,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Boat Tours in Dhërmi",
-    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
+    title: "Dhermi Boat Tours",
+    description: "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
     images: [socialImageUrl]
   },
   icons: {

@@ -9,9 +9,9 @@ import { canonical, languageAlternates } from "@/lib/site";
 const groupTours = tours.filter((tour) => tour.type === "shared");
 
 export const metadata: Metadata = {
-  title: "Group and Shared Boat Tours",
+  title: "Shared Dhermi Boat Tours",
   description:
-    "Small-group shared boat tours from Dhërmi to Gjipe and Grama Bay, with clear prices and WhatsApp booking.",
+    "Small-group Dhermi boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave, with clear prices and WhatsApp booking.",
   alternates: { canonical: canonical("/tours/group/"), languages: languageAlternates("/tours/group/") }
 };
 
@@ -19,7 +19,7 @@ export default function GroupToursPage() {
   return (
     <>
       <PageHero
-        title={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
+        title={<LocalizedText id="page.group.label">Shared Dhermi boat tours</LocalizedText>}
         image={groupTours[0].image}
         imageAlt={groupTours[0].imageAlt}
         label={<LocalizedText id="section.tours.label">Tours from Dhërmi</LocalizedText>}

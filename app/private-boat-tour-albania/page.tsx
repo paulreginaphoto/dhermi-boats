@@ -8,11 +8,11 @@ const tour = tours.find((item) => item.id === "private")!;
 export const metadata: Metadata = {
   title: "Private Boat Tour from Dhërmi Albania",
   description:
-    "Private boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations.",
+    "Book a private Dhermi boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations from 200 EUR per hour.",
   alternates: { canonical: canonical("/private-boat-tour-albania/"), languages: languageAlternates("/private-boat-tour-albania/") },
   openGraph: {
     title: "Private Boat Tour from Dhërmi Albania",
-    description: "Private boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations.",
+    description: "Book a private Dhermi boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations from 200 EUR per hour.",
     url: canonical("/private-boat-tour-albania/"),
     type: "website",
     images: [{ url: canonical("/images/tour-private.webp"), width: 900, height: 675, alt: tour.imageAlt }]
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Private Boat Tour from Dhërmi Albania",
-    description: "Private boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations.",
+    description: "Book a private Dhermi boat tour from Dhërmi, Albania. Choose your duration, route, swimming stops and destinations from 200 EUR per hour.",
     images: [canonical("/images/tour-private.webp")]
   }
 };

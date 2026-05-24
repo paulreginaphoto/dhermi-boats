@@ -10,9 +10,9 @@ import { destinations, tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Boat Tour Destinations",
+  title: "Dhermi Boat Tour Destinations",
   description:
-    "Explore Dhermi Boat destinations: Gjipe, Grama Bay, Blue Cave and the Karaburun coastline on the Albanian Riviera.",
+    "Explore Dhermi boat tour destinations from Dhërmi: Gjipe Beach, Grama Bay, Blue Cave and the Karaburun coastline on the Albanian Riviera.",
   alternates: { canonical: canonical("/destinations/"), languages: languageAlternates("/destinations/") }
 };
 
@@ -20,7 +20,7 @@ export default function DestinationsPage() {
   return (
     <>
       <PageHero
-        title={<LocalizedText id="page.destinations.title">Destinations</LocalizedText>}
+        title={<LocalizedText id="page.destinations.title">Dhermi boat tour destinations</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="section.destinations.label">Route highlights</LocalizedText>}

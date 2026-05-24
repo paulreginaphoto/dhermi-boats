@@ -8,9 +8,9 @@ import { faqs, tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "FAQ",
+  title: "Dhermi Boat Tour FAQ",
   description:
-    "Practical answers for Dhermi Boat tours: booking, departure point, weather, private tours, what to bring and group size.",
+    "Practical answers for booking a Dhermi boat tour: departure point, weather, private tours, what to bring, children, payment and group size.",
   alternates: { canonical: canonical("/faq/"), languages: languageAlternates("/faq/") }
 };
 

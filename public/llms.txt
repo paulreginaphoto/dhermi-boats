@@ -4,7 +4,7 @@ Current website: https://dhermi.boats/
 
 ## Business
 
-Dhermi Boat is a local boat-tour operator in Dhërmi, Albania. It offers small-group and private boat tours along the Albanian Riviera, including Gjipe, Grama Bay, Blue Cave, Karaburun, sunset private tours and morning fishing tours.
+Dhermi Boat is a local Dhermi boat tour operator in Dhërmi, Albania. It offers small-group and private boat tours along the Albanian Riviera, including Gjipe, Grama Bay, Blue Cave, Karaburun, sunset private tours and morning fishing tours.
 
 ## Booking
 
@@ -18,7 +18,7 @@ Google Maps: https://maps.app.goo.gl/NRsVPEKAqkKfoHmn6
 ## Main Pages
 
 - Home: https://dhermi.boats/
-- Tours: https://dhermi.boats/tours/
+- Dhermi boat tours: https://dhermi.boats/tours/
 - Private tours: https://dhermi.boats/tours/private/
 - Shared tours: https://dhermi.boats/tours/group/
 - Destinations: https://dhermi.boats/destinations/

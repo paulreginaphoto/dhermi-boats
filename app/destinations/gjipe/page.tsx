@@ -6,9 +6,9 @@ import { canonical, languageAlternates } from "@/lib/site";
 const destination = destinations.find((item) => item.id === "gjipe")!;
 
 export const metadata: Metadata = {
-  title: "Gjipe Boat Tour",
+  title: "Gjipe Boat Tour from Dhermi",
   description:
-    "Visit Gjipe by boat from Dhërmi with Pirates Cave, Pigeon Cave, 2 nearby coves and a swim stop at Gjipe Beach.",
+    "Visit Gjipe by boat from Dhërmi on a Dhermi boat tour with Pirates Cave, Pigeon Cave, nearby coves and a swim stop at Gjipe Beach.",
   alternates: { canonical: canonical("/destinations/gjipe/"), languages: languageAlternates("/destinations/gjipe/") }
 };
 

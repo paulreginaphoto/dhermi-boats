@@ -8,11 +8,11 @@ const tour = tours.find((item) => item.id === "grama")!;
 export const metadata: Metadata = {
   title: "Grama Bay Boat Tour from Dhërmi",
   description:
-    "Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
+    "Book the 3h30 Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
   alternates: { canonical: canonical("/grama-bay-boat-tour/"), languages: languageAlternates("/grama-bay-boat-tour/") },
   openGraph: {
     title: "Grama Bay Boat Tour from Dhërmi",
-    description: "Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
+    description: "Book the 3h30 Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
     url: canonical("/grama-bay-boat-tour/"),
     type: "website",
     images: [{ url: canonical("/images/tour-grama.webp"), width: 900, height: 675, alt: tour.imageAlt }]
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Grama Bay Boat Tour from Dhërmi",
-    description: "Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
+    description: "Book the 3h30 Grama Bay boat tour from Dhërmi with Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
     images: [canonical("/images/tour-grama.webp")]
   }
 };

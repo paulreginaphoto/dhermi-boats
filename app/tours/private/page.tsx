@@ -11,9 +11,9 @@ import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 const privateTour = tours.find((tour) => tour.id === "private")!;
 
 export const metadata: Metadata = {
-  title: "Private Boat Tour Albania",
+  title: "Private Dhermi Boat Tour Albania",
   description:
-    "Private boat tour from Dhërmi, Albania. Choose your route, swimming stops and timing for families, couples, friends or small celebrations.",
+    "Book a private Dhermi boat tour from Dhërmi, Albania. Choose your route, swimming stops and timing for families, couples and small groups.",
   alternates: { canonical: canonical("/tours/private/"), languages: languageAlternates("/tours/private/") }
 };
 
@@ -58,7 +58,7 @@ export default function PrivateTourPage() {
                   <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                 </ButtonLink>
                 <ButtonLink href={tour.href} icon={ArrowRight} variant="secondary" className="flex-1">
-                  <LocalizedText id="tour.details">View details</LocalizedText>
+                  <LocalizedText id="tour.details">See route and price</LocalizedText>
                 </ButtonLink>
               </div>
             </article>

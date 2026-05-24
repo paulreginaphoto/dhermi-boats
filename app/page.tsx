@@ -19,73 +19,22 @@ import { TourComparison } from "@/components/TourComparison";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, primaryWhatsappHref, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
-import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, languageAlternates, phoneDisplay, tiktokUrl } from "@/lib/site";
+import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
+import { faqSchema, homePageSchema, localBusinessSchema, touristTripSchema, websiteSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Boat Tours in Dhërmi | Gjipe, Grama Bay & Private Trips",
+  title: {
+    absolute: "Dhermi Boat Tour | Boat Tours from Dhërmi to Gjipe & Grama Bay"
+  },
   description:
-    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Fast WhatsApp booking with a local skipper.",
+    "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun. Small-group and private boat trips by WhatsApp.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
-};
-
-const localBusinessSchema = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Dhermi Boat",
-  url: canonical("/"),
-  telephone: phoneDisplay,
-  email: emailAddress,
-  image: canonical("/images/hero-riviera.webp"),
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Dhërmi",
-    addressCountry: "AL"
-  },
-  areaServed: ["Dhërmi", "Albanian Riviera", "Gjipe", "Grama Bay", "Karaburun"],
-  sameAs: [instagramUrl, tiktokUrl, googleMapsUrl, getYourGuideUrl],
-  hasMap: googleMapsUrl,
-  priceRange: "35 € - 200 € / hour"
-};
-
-const touristTripSchema = tours.slice(0, 3).map((tour) => ({
-  "@context": "https://schema.org",
-  "@type": "TouristTrip",
-  name: tour.title,
-  description: tour.subtitle || tour.included.join(", "),
-  image: canonical(tour.image.replace(/^.*\/images\//, "/images/")),
-  touristType: tour.type === "private" ? "Private boat tour" : "Small-group boat tour",
-  itinerary: tour.highlights.join(", "),
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "EUR",
-    description: tour.price,
-    availability: "https://schema.org/InStock",
-    url: canonical(tour.href)
-  },
-  provider: {
-    "@type": "LocalBusiness",
-    name: "Dhermi Boat",
-    telephone: phoneDisplay
-  }
-}));
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer
-    }
-  }))
 };
 
 export default function HomePage() {
   return (
     <>
-      <SEOJsonLd data={[localBusinessSchema, ...touristTripSchema, faqSchema]} />
+      <SEOJsonLd data={[localBusinessSchema(), websiteSchema(), homePageSchema(), ...tours.map((tour) => touristTripSchema(tour)), faqSchema(faqs)]} />
       <HeroCinematic />
 
       <ArrivalComfortBar />
@@ -99,8 +48,14 @@ export default function HomePage() {
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <SectionHeading
               label={<LocalizedText id="section.tours.label">Tours from Dhërmi</LocalizedText>}
-              title={<LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>}
-            />
+              title={<LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>}
+            >
+              <p>
+                <LocalizedText id="section.tours.text">
+                  Choose a Dhermi boat tour for Gjipe, Grama Bay, Blue Cave, a private route, sunset cruise or morning fishing, then confirm the date with the local skipper on WhatsApp.
+                </LocalizedText>
+              </p>
+            </SectionHeading>
             <ButtonLink href="/tours/" variant="secondary">
               <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
             </ButtonLink>
@@ -124,7 +79,7 @@ export default function HomePage() {
             />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/tours/private/" variant="primary">
-                <LocalizedText id="tour.details">View details</LocalizedText>
+                <LocalizedText id="tour.details">See route and price</LocalizedText>
               </ButtonLink>
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsEvent="whatsapp_click">
                 <LocalizedText id="tour.private.book">Request private tour</LocalizedText>

@@ -5,9 +5,9 @@ export const dynamic = "force-static";
 export async function GET() {
   const txt = `# Dhermi Boat
 
-Dhermi Boat is a local boat tour operator on the Albanian Riviera near Dhërmi.
+Dhermi Boat is a local Dhermi boat tour operator on the Albanian Riviera near Dhërmi.
 
-- Private and group boat tours with departure from Dhërmi area.
+- Private and group Dhermi boat tours with departure from Dhërmi area.
 - Destinations include Gjipe, Grama Bay, and Blue Cave on the Grama route.
 - WhatsApp-first booking workflow.
 - Social: Instagram and TikTok.

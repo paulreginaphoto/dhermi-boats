@@ -10,7 +10,7 @@
 - [x] `robots.txt` (`app/robots.ts`).
 - [x] `llms.txt`.
 - [x] `sitemap.xml` (`app/sitemap.ts`).
-- [x] No `CNAME` while the site uses the default GitHub Pages URL.
+- [x] `public/CNAME` restored for `dhermi.boats` and GitHub Pages HTTPS enforcement enabled.
 - [x] Optimized local WebP images with descriptive alt text.
 - [x] Owner-provided Drive media selected, cropped and compressed locally.
 - [x] Real OpenStreetMap route maps with public GPS points and visible attribution on destination pages.
@@ -31,14 +31,18 @@
 ## Structured Data
 
 - [x] `LocalBusiness` on home.
-- [x] `TouristTrip` for main tours.
+- [x] `LocalBusiness` includes official profile links, map, contact point, offer catalog and Dhermi boat tour topics.
+- [x] `TouristTrip` for every main tour with canonical URL, image, provider, itinerary and EUR offer data.
+- [x] `WebSite`, `WebPage`, `CollectionPage`, `ItemList` and breadcrumb schema reinforce the home, tours index and tour detail pages.
 - [x] `FAQPage` on home and FAQ.
 - [x] `sameAs` includes official Instagram, TikTok, Google Maps and GetYourGuide profiles.
 - [x] `LocalBusiness` includes Google Maps `hasMap`; review cards show the source review excerpts without invented rating copy.
 
 ## Keyword Coverage
 
+- [x] Dhermi boat tour
 - [x] Dhermi boat tours
+- [x] boat tour Dhermi
 - [x] Dhërmi boat tours
 - [x] Albania boat tours
 - [x] Riviera Albania tours
