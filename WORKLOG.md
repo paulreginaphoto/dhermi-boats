@@ -144,4 +144,4 @@ The site is a static, image-led booking website with clear prices, a one-minute 
 - Switched the GitHub Pages workflow from `https://regina.photo/dhermi-boats/` to `https://dhermi.boats/` with an empty `NEXT_PUBLIC_BASE_PATH`.
 - Restored `public/CNAME` for `dhermi.boats`.
 - Updated `llms.txt`, deployment notes and DNS notes so production URLs use the custom domain root.
-- Confirmed the GitHub Pages repository setting already has `dhermi.boats` configured; HTTPS enforcement remains a post-DNS propagation check.
+- Confirmed the GitHub Pages repository setting already has `dhermi.boats` configured, the certificate is approved and HTTPS enforcement is enabled.

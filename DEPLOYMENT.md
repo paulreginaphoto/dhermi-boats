@@ -25,8 +25,9 @@ If the owner later wants direct form delivery, use Cloudflare Workers, Google Ap
 
 - Repository settings > Pages > Source: `GitHub Actions`.
 - Custom domain: `dhermi.boats`.
-- Current live URL after DNS propagation: `https://dhermi.boats/`.
+- Current live URL: `https://dhermi.boats/`.
 - The workflow builds with `NEXT_PUBLIC_BASE_PATH=` and `NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats`.
+- HTTPS enforcement is enabled in GitHub Pages.
 
 ## Custom Domain
 
@@ -63,7 +64,7 @@ AAAA  @     2606:50c0:8003::153
 CNAME www   paulreginaphoto.github.io
 ```
 
-After DNS propagates, return to GitHub Pages settings and enable HTTPS enforcement if GitHub has not enabled it automatically. DNS changes can take up to 24 hours to propagate.
+DNS changes can take up to 24 hours to propagate. Keep the `www` record pointed directly at `paulreginaphoto.github.io`; pointing `www` at `dhermi.boats` can break HTTPS for visitors who type the `www` variant.
 
 ## Base Path
 
