@@ -68,6 +68,11 @@ Date: 2026-05-24
 - Rechecked FR mobile home, desktop tours and desktop photos on the exported `/dhermi-boats` path: no overflow, no old phrases, FR active state and localized WhatsApp links.
 - Rechecked the hydrated quick booking WhatsApp action: missing date and name show French inline errors and `aria-invalid`.
 - Rechecked 101 generated external URLs: 100 OK, GetYourGuide expected 403, zero hard failures.
+- Found that the static export still exposed incomplete pre-hydration booking action URLs for the quick form before React validation could run.
+- Changed the quick form actions so WhatsApp and email point to the first missing required field until date and name are filled, with useful visible prompts instead of `Date: -` and `Name: -`.
+- Added export QA coverage for incomplete booking action links and visible required-field placeholders.
+- Rechecked FR desktop home, mobile home, desktop tours and desktop contact on the exported `/dhermi-boats` path: no overflow, no framework overlay, no console issues, guarded booking actions, validation focus and ready links after entry.
+- Rechecked 100 generated external URLs: 99 OK, GetYourGuide expected 403, zero hard failures.
 
 ## Notes
 

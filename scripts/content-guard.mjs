@@ -297,7 +297,7 @@ function checkBookingRequiredFields(filePath, content) {
     );
   }
 
-  if (!content.includes("href={emailHref}")) {
+  if (!content.includes("href={emailHref}") && !content.includes("href={emailActionHref}")) {
     addIssue(
       filePath,
       1,
@@ -313,6 +313,23 @@ function checkBookingRequiredFields(filePath, content) {
       "Le formulaire rapide ne doit pas dépendre de FormSubmit, qui peut renvoyer 521.",
       "bookingFormEndpoint / formsubmit.co"
     );
+  }
+
+  for (const snippet of [
+    "bookingLinksReady",
+    "bookingFallbackHref",
+    "whatsappActionHref",
+    "emailActionHref",
+    "aria-disabled={!bookingLinksReady}"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "Les liens WhatsApp et Email ne doivent pas exposer de message avec date ou nom manquants avant hydratation.",
+        snippet
+      );
+    }
   }
 }
 

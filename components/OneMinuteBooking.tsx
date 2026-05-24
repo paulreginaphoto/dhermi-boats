@@ -156,8 +156,27 @@ const validationMessages: Record<FormLocale, { date: string; name: string; phone
   }
 };
 
+const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> = {
+  en: {
+    date: "choose date",
+    name: "add name"
+  },
+  fr: {
+    date: "choisir la date",
+    name: "ajouter le nom"
+  },
+  sq: {
+    date: "zgjidhni daten",
+    name: "shtoni emrin"
+  }
+};
+
 function cleanValue(value: string) {
   return value.trim() || "-";
+}
+
+function requiredValue(value: string, fallback: string) {
+  return value.trim() || fallback;
 }
 
 function todayInputValue() {
@@ -286,6 +305,7 @@ export function OneMinuteBooking() {
   const maxChildrenForTour = Math.max(0, activeTourCapacity - safeAdults);
   const safeChildren = Math.min(Math.max(0, children), maxChildrenForTour);
   const messages = validationMessages[locale];
+  const requiredPrompts = requiredFieldPrompts[locale];
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
@@ -323,21 +343,26 @@ export function OneMinuteBooking() {
     const lines = [
       messageIntro[locale],
       `${labels.tour}: ${activeTourTitle}`,
-      `${labels.date}: ${cleanValue(date)}`,
+      `${labels.date}: ${requiredValue(date, requiredPrompts.date)}`,
       `${labels.time}: ${cleanValue(activeTimeLabel)}`,
       `${labels.adults}: ${safeAdults}`,
       `${labels.children}: ${safeChildren}`,
-      `${labels.name}: ${cleanValue(name)}`,
+      `${labels.name}: ${requiredValue(name, requiredPrompts.name)}`,
       `${labels.phone}: ${cleanValue(phone)}`,
       `${labels.notes}: ${cleanValue(notes)}`
     ];
 
     return lines.join("\n");
-  }, [activeTimeLabel, activeTourTitle, date, labels, locale, name, notes, phone, safeAdults, safeChildren]);
+  }, [activeTimeLabel, activeTourTitle, date, labels, locale, name, notes, phone, requiredPrompts, safeAdults, safeChildren]);
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
   const whatsappHref = whatsappUrl(bookingMessage);
   const phoneHref = `tel:${phoneDisplay.replace(/\s/g, "")}`;
+  const firstMissingRequiredFieldId = !date ? "quick-date" : !name.trim() ? "quick-name" : null;
+  const bookingLinksReady = firstMissingRequiredFieldId === null;
+  const bookingFallbackHref = firstMissingRequiredFieldId ? `#${firstMissingRequiredFieldId}` : "#book";
+  const whatsappActionHref = bookingLinksReady ? whatsappHref : bookingFallbackHref;
+  const emailActionHref = bookingLinksReady ? emailHref : bookingFallbackHref;
 
   function validateRequiredFields() {
     const nextErrors = {
@@ -353,6 +378,12 @@ export function OneMinuteBooking() {
   function handleMessageLinkClick(event: MouseEvent<HTMLAnchorElement>) {
     if (!validateRequiredFields()) {
       event.preventDefault();
+      const targetId = !date ? "quick-date" : "quick-name";
+      window.setTimeout(() => {
+        const target = document.getElementById(targetId);
+        target?.scrollIntoView({ block: "center", behavior: "smooth" });
+        target?.focus({ preventScroll: true });
+      }, 0);
     }
   }
 
@@ -652,11 +683,12 @@ export function OneMinuteBooking() {
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.7fr]">
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
+              aria-disabled={!bookingLinksReady}
               data-analytics-event="whatsapp_click"
               data-tour-id={activeTour.id}
-              href={whatsappHref}
-              rel="noreferrer"
-              target="_blank"
+              href={whatsappActionHref}
+              rel={bookingLinksReady ? "noreferrer" : undefined}
+              target={bookingLinksReady ? "_blank" : undefined}
               onClick={handleMessageLinkClick}
             >
               <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
@@ -664,8 +696,9 @@ export function OneMinuteBooking() {
             </a>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
+              aria-disabled={!bookingLinksReady}
               data-analytics-event="email_click"
-              href={emailHref}
+              href={emailActionHref}
               onClick={handleMessageLinkClick}
             >
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />

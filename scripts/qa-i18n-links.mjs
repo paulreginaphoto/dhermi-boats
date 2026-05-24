@@ -88,6 +88,8 @@ const nextRedirectPages = [];
 const badCanonicalHrefs = [];
 const badSitemapLocs = [];
 const badDuplicateBaseUrls = [];
+const badPrehydrationBookingLinks = [];
+const badBookingPlaceholderText = [];
 
 function absoluteUrlUsesExpectedCanonicalBase(url) {
   return url === expectedCanonicalBase ||
@@ -107,6 +109,27 @@ function absoluteUrlRepeatsBasePath(url) {
   }
 }
 
+function decodedBookingBody(href) {
+  if (!href.startsWith("https://wa.me/") && !href.startsWith("mailto:")) return "";
+
+  try {
+    const parsed = new URL(href);
+    const body = parsed.searchParams.get(href.startsWith("mailto:") ? "body" : "text");
+    return body || "";
+  } catch {
+    try {
+      return decodeURIComponent(href);
+    } catch {
+      return href;
+    }
+  }
+}
+
+function hasMissingRequiredBookingFields(href) {
+  const body = decodedBookingBody(href);
+  return /(?:^|\n)(?:Date|Name):\s*-/i.test(body);
+}
+
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
   const relativeFile = path.relative(root, file);
@@ -117,6 +140,10 @@ for (const file of htmlFiles) {
 
   if (html.includes("NEXT_REDIRECT")) {
     nextRedirectPages.push(relativeFile);
+  }
+
+  if (/(?:^|[\s>])(?:Date|Name):\s*-/.test(html)) {
+    badBookingPlaceholderText.push(relativeFile);
   }
 
   for (const match of html.matchAll(/(?:\bhref|\bsrc|\bcontent)="(https?:[^"]+)"/g)) {
@@ -139,6 +166,10 @@ for (const file of htmlFiles) {
 
   for (const match of html.matchAll(/\shref="([^"]+)"/g)) {
     const href = match[1].replaceAll("&amp;", "&");
+    if (hasMissingRequiredBookingFields(href)) {
+      badPrehydrationBookingLinks.push({ file: relativeFile, href });
+    }
+
     if (/^(https?:|mailto:|tel:|#|\?|data:)/.test(href)) continue;
     if (!href.startsWith("/")) continue;
 
@@ -181,6 +212,8 @@ if (fs.existsSync(sitemapPath)) {
 
 fail("Sitemap URLs using the wrong public base:", badSitemapLocs);
 fail("Absolute URLs repeating the configured base path:", badDuplicateBaseUrls);
+fail("Pre-hydration booking action links with missing required fields:", badPrehydrationBookingLinks);
+fail("Visible booking message placeholders for required fields:", badBookingPlaceholderText);
 
 const failureCount =
   localeKeyGaps.length +
@@ -190,7 +223,9 @@ const failureCount =
   nextRedirectPages.length +
   badCanonicalHrefs.length +
   badSitemapLocs.length +
-  badDuplicateBaseUrls.length;
+  badDuplicateBaseUrls.length +
+  badPrehydrationBookingLinks.length +
+  badBookingPlaceholderText.length;
 
 if (failureCount > 0) {
   process.exit(1);

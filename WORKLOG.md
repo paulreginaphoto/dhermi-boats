@@ -118,7 +118,11 @@
 - Rechecked the GitHub Pages-style export in headless Chrome CDP: FR mobile home, FR desktop tours and FR desktop photos have no horizontal overflow, no old phrases, active FR state, localized WhatsApp links and no relevant console events.
 - Rechecked the quick booking action by triggering the hydrated WhatsApp link directly: empty date and name now show the French inline errors and set `aria-invalid`.
 - Rechecked 101 generated external URLs after the copy pass: 100 returned OK and only GetYourGuide returned the expected bot-protection 403.
+- Re-audited the exported booking form links and found the static HTML still exposed pre-hydration WhatsApp and email actions with `Date: -` and `Name: -` in the message body.
+- Guarded exported booking action links and visible required-field placeholders in `qa:i18n-links`, then changed the form so WhatsApp and email stay on the missing field until date and name are filled.
+- Rechecked the exported `/dhermi-boats` path with Chrome CDP on FR desktop home, FR mobile home, FR desktop tours and FR desktop contact: no overflow, no framework overlay, no console issues, guarded form links, French validation errors and ready WhatsApp/email links after date/name entry.
+- Rechecked 100 generated external HTTP URLs after the booking-link fix: 99 returned OK and only GetYourGuide returned the expected bot-protection 403.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded non-generic visible copy.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, guarded pre-hydration booking links, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded non-generic visible copy.

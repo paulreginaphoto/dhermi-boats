@@ -100,6 +100,9 @@ Fixes applied:
 - Expanded `content:guard` to block these weak phrases across source data, locale files and public content before they can reach the export.
 - Rechecked FR mobile home, FR desktop tours and FR desktop photos from the exported `/dhermi-boats` path: no horizontal overflow, no stale phrases, active FR selector and localized WhatsApp links.
 - Rechecked the hydrated booking validation directly: empty date and name are blocked with French inline errors and `aria-invalid`.
+- Rechecked exported quick-booking anchors before hydration and removed incomplete WhatsApp/email URLs containing missing required fields.
+- Replaced required-field dashes in the message preview with direct prompts, then verified the form focuses the first missing field and only turns WhatsApp/email into external actions after date and name are present.
+- Rechecked the final rendered export with Chrome CDP across FR desktop home, FR mobile home, FR desktop tours and FR desktop contact: no overflow, no framework overlay and no relevant console events.
 
 Final self-review:
 
