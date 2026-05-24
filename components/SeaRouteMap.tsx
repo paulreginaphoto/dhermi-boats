@@ -31,11 +31,17 @@ type MapTile = {
   style: CSSProperties;
 };
 
+type ViewPoint = GeoPoint & {
+  x: number;
+  y: number;
+};
+
 const mapWidth = 640;
 const mapHeight = 460;
 const tileSize = 256;
 const mapPadding = 54;
 const satelliteTileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile";
+const seaBendVector = { x: -1, y: 1 };
 
 const dhermiBeach: GeoPoint = {
   id: "dhermi",
@@ -210,6 +216,58 @@ function buildMap(points: GeoPoint[]) {
   };
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function svgPoint(value: number) {
+  return value.toFixed(1);
+}
+
+function segmentControlPoint(start: ViewPoint, end: ViewPoint, bendRatio: number, maxBend: number) {
+  const dx = end.x - start.x;
+  const dy = end.y - start.y;
+  const length = Math.hypot(dx, dy);
+
+  if (length === 0) {
+    return { x: start.x, y: start.y };
+  }
+
+  const normal = { x: -dy / length, y: dx / length };
+  const direction = normal.x * seaBendVector.x + normal.y * seaBendVector.y >= 0 ? 1 : -1;
+  const bend = clamp(length * bendRatio, 10, maxBend);
+  const x = (start.x + end.x) / 2 + normal.x * direction * bend;
+  const y = (start.y + end.y) / 2 + normal.y * direction * bend;
+
+  return {
+    x: clamp(x, 14, mapWidth - 14),
+    y: clamp(y, 14, mapHeight - 14)
+  };
+}
+
+function smoothRoutePath(points: ViewPoint[], bendRatio: number, maxBend: number) {
+  if (points.length < 2) return "";
+
+  const [start, ...stops] = points;
+  const commands = [`M ${svgPoint(start.x)} ${svgPoint(start.y)}`];
+  let previous = start;
+
+  stops.forEach((point) => {
+    const control = segmentControlPoint(previous, point, bendRatio, maxBend);
+    commands.push(`Q ${svgPoint(control.x)} ${svgPoint(control.y)} ${svgPoint(point.x)} ${svgPoint(point.y)}`);
+    previous = point;
+  });
+
+  return commands.join(" ");
+}
+
+function buildRoundTripPaths(points: ViewPoint[]) {
+  return {
+    outbound: smoothRoutePath(points, 0.12, 42),
+    returnRoute: smoothRoutePath([...points].reverse(), 0.24, 68)
+  };
+}
+
 function markerPaint(tone: GeoPoint["tone"]) {
   if (tone === "start") return { fill: "#fffaf0", stroke: "#071b26", text: "#071b26" };
   if (tone === "end") return { fill: "#3aa8a0", stroke: "#fffaf0", text: "#071b26" };
@@ -244,7 +302,7 @@ function PointList({ points, compact = false }: { points: GeoPoint[]; compact?: 
 
 function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: string; descId: string }) {
   const view = buildMap(map.points);
-  const routePoints = view.points.map((point) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+  const routePaths = buildRoundTripPaths(view.points);
 
   return (
     <div
@@ -270,9 +328,12 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
       </div>
       <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,252,246,0.08),rgba(255,252,246,0)),radial-gradient(circle_at_18%_20%,rgba(255,252,246,0.18),transparent_28%)]" />
       <svg aria-hidden className="absolute inset-0 h-full w-full" viewBox={`0 0 ${mapWidth} ${mapHeight}`}>
-        <polyline fill="none" points={routePoints} stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="18" opacity="0.88" />
-        <polyline fill="none" points={routePoints} stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="7" />
-        <polyline fill="none" points={routePoints} stroke="#f4d39a" strokeDasharray="2 17" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+        <path data-route-layer="return-outer" d={routePaths.returnRoute} fill="none" opacity="0.8" stroke="#fffaf0" strokeLinecap="round" strokeLinejoin="round" strokeWidth="13" />
+        <path data-route-layer="return-core" d={routePaths.returnRoute} fill="none" opacity="0.92" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+        <path data-route-layer="return-dash" d={routePaths.returnRoute} fill="none" opacity="0.95" stroke="#3aa8a0" strokeDasharray="9 15" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.5" />
+        <path data-route-layer="outbound-outer" d={routePaths.outbound} fill="none" opacity="0.88" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="17" />
+        <path data-route-layer="outbound-core" d={routePaths.outbound} fill="none" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6.5" />
+        <path data-route-layer="outbound-dash" d={routePaths.outbound} fill="none" stroke="#f4d39a" strokeDasharray="2 16" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" />
         {view.points.map((point, index) => {
           const badgeX = point.x + (point.badgeDx ?? 0);
           const badgeY = point.y + (point.badgeDy ?? 0);
