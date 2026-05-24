@@ -12,8 +12,8 @@ export const getYourGuideUrl = "https://www.getyourguide.com/dhermi-boat-tours-s
 const rawBasePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
 export const basePath = rawBasePath === "/" ? "" : rawBasePath.replace(/\/$/, "");
 export const siteOrigin = (process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://dhermi.boats").replace(/\/$/, "");
-export const canonicalOrigin = (process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || "https://dhermi.boats").replace(/\/$/, "");
 export const siteUrl = `${siteOrigin}${basePath}`;
+export const canonicalOrigin = (process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || siteUrl).replace(/\/$/, "");
 export const isStagingDeployment = siteOrigin.includes("regina.photo") || basePath.includes("dhermi-boats");
 
 export function assetPath(path: string) {

@@ -99,6 +99,12 @@
 - Tightened the desktop hero typography so the long French headline fits as a clean three-line hero instead of a broken tall stack.
 - Reproduced a rapid-tap booking bug where the fishing tour counters could temporarily exceed the 5-person capacity under batched React updates.
 - Clamped derived booking values for display, saved drafts and generated messages, then rechecked the mobile booking flow: invalid date/name sends are blocked and fishing remains capped at 5.
+- Audited all exported external URLs and found canonical, hreflang and sitemap links still pointed to `https://dhermi.boats` while the custom domain has not migrated; several of those live URLs returned 404.
+- Changed canonical generation to default to the deployed public URL (`NEXT_PUBLIC_SITE_ORIGIN` + `NEXT_PUBLIC_BASE_PATH`) unless an explicit canonical override is provided, then added QA coverage and a GitHub Pages workflow step to prevent regressions.
+- Rechecked all exported external URLs after rebuild: 74 checked, no hard failures, and GitHub Pages canonical paths returned 200.
+- Replaced a few visible generic "experience" labels with concrete route/cruise/fishing wording across EN / FR / AL.
+- Removed the Next image `priority` prop on page heroes in favor of `preload`, and prioritized above-fold duplicate card images on destinations and shared tours so they no longer trigger LCP warnings when they reuse the hero photo.
+- Captured fresh FR mobile and desktop screenshots and ran a headless Chromium booking flow: no mobile overflow, required date/name errors show, fishing capacity stays 5, WhatsApp/email messages include the selected date and name, and `/tours`, `/destinations` and `/tours/group` show zero LCP warnings.
 
 ## Current Result
 

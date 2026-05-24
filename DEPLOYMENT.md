@@ -74,6 +74,8 @@ NEXT_PUBLIC_BASE_PATH=/dhermi-boats
 NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
 ```
 
+With that configuration, canonical, hreflang, sitemap and `llms.txt` URLs are expected to use `https://regina.photo/dhermi-boats`. The QA script checks this after the static export is built.
+
 For `https://dhermi.boats/`, use:
 
 ```txt

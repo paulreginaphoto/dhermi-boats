@@ -5,6 +5,10 @@ import process from "node:process";
 const root = process.cwd();
 const locales = ["en", "fr", "sq"];
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || "").replace(/\/$/, "");
+const siteOrigin = (process.env.NEXT_PUBLIC_SITE_ORIGIN || "https://dhermi.boats").replace(/\/$/, "");
+const expectedCanonicalBase = (
+  process.env.NEXT_PUBLIC_CANONICAL_ORIGIN || `${siteOrigin}${basePath}`
+).replace(/\/$/, "");
 const outDir = path.join(root, "out");
 const i18nPath = path.join(root, "lib", "i18n.ts");
 
@@ -81,6 +85,14 @@ const usedI18nKeys = new Set();
 const badInternalHrefs = [];
 const missingInternalTargets = [];
 const nextRedirectPages = [];
+const badCanonicalHrefs = [];
+const badSitemapLocs = [];
+
+function absoluteUrlUsesExpectedCanonicalBase(url) {
+  return url === expectedCanonicalBase ||
+    url.startsWith(`${expectedCanonicalBase}/`) ||
+    url.startsWith(`${expectedCanonicalBase}?`);
+}
 
 for (const file of htmlFiles) {
   const html = fs.readFileSync(file, "utf8");
@@ -92,6 +104,17 @@ for (const file of htmlFiles) {
 
   if (html.includes("NEXT_REDIRECT")) {
     nextRedirectPages.push(relativeFile);
+  }
+
+  for (const match of html.matchAll(/<link\b[^>]*>/g)) {
+    const tag = match[0];
+    const rel = tag.match(/\brel="([^"]+)"/)?.[1];
+    const href = tag.match(/\bhref="([^"]+)"/)?.[1]?.replaceAll("&amp;", "&");
+    if (!rel || !href || !/^https?:/.test(href)) continue;
+    if (!/(^|\s)(canonical|alternate)(\s|$)/.test(rel)) continue;
+    if (!absoluteUrlUsesExpectedCanonicalBase(href)) {
+      badCanonicalHrefs.push({ file: relativeFile, rel, href, expectedCanonicalBase });
+    }
   }
 
   for (const match of html.matchAll(/\shref="([^"]+)"/g)) {
@@ -120,13 +143,29 @@ fail("Used data-i18n keys missing from at least one locale:", missingUsedKeys);
 fail("Internal hrefs missing the configured base path:", badInternalHrefs);
 fail("Internal href targets missing from out:", missingInternalTargets);
 fail("Static pages still exporting NEXT_REDIRECT:", nextRedirectPages);
+fail("Canonical and hreflang URLs using the wrong public base:", badCanonicalHrefs);
+
+const sitemapPath = path.join(outDir, "sitemap.xml");
+if (fs.existsSync(sitemapPath)) {
+  const sitemap = fs.readFileSync(sitemapPath, "utf8");
+  for (const match of sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)) {
+    const loc = match[1];
+    if (!absoluteUrlUsesExpectedCanonicalBase(loc)) {
+      badSitemapLocs.push({ loc, expectedCanonicalBase });
+    }
+  }
+}
+
+fail("Sitemap URLs using the wrong public base:", badSitemapLocs);
 
 const failureCount =
   localeKeyGaps.length +
   missingUsedKeys.length +
   badInternalHrefs.length +
   missingInternalTargets.length +
-  nextRedirectPages.length;
+  nextRedirectPages.length +
+  badCanonicalHrefs.length +
+  badSitemapLocs.length;
 
 if (failureCount > 0) {
   process.exit(1);

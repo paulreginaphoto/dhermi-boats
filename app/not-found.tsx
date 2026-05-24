@@ -45,7 +45,7 @@ export default function NotFound() {
               src={tours[1].image}
               alt={tours[1].imageAlt ?? "Dhermi Boat tour on the Albanian Riviera"}
               fill
-              priority
+              preload
               quality={58}
               sizes="(min-width: 1024px) 48vw, 100vw"
               className="object-cover"

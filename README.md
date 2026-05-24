@@ -44,6 +44,8 @@ NEXT_PUBLIC_BASE_PATH=/dhermi-boats
 NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
 ```
 
+Canonical, hreflang, sitemap and `llms.txt` URLs follow this public GitHub Pages URL by default. Do not point them to `dhermi.boats` until the custom domain is active.
+
 There is no `public/CNAME` while the custom domain is not connected.
 
 ## Custom Domain Later

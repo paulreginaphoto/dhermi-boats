@@ -65,6 +65,10 @@
 - [x] Verify the GetYourGuide supplier URL and guard against the obsolete supplier ID.
 - [x] Prevent rapid booking counter taps from exceeding the 5-person fishing capacity.
 - [x] Recheck FR mobile and desktop hero rendering with no horizontal overflow.
+- [x] Fix canonical, hreflang and sitemap URLs for the current GitHub Pages deployment URL.
+- [x] Add CI/export QA coverage for canonical and sitemap public base regressions.
+- [x] Remove remaining generic visible tour-card "experience" labels.
+- [x] Clear LCP image warnings on tours, destinations and shared tours pages.
 
 ## Optional Future Improvements
 

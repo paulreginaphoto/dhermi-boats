@@ -27,8 +27,8 @@ export default function DestinationsPage() {
       />
       <section className="destination-section py-8 text-pearl md:py-16">
         <div className="site-band grid gap-4 md:gap-5 lg:grid-cols-3">
-          {destinations.map((destination) => (
-            <DestinationCard key={destination.id} destination={destination} />
+          {destinations.map((destination, index) => (
+            <DestinationCard key={destination.id} destination={destination} imagePriority={index < 3} />
           ))}
         </div>
       </section>

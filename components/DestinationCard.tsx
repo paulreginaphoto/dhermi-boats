@@ -3,7 +3,13 @@ import { ArrowRight } from "lucide-react";
 import type { Destination } from "@/data/content";
 import { LocalizedText } from "@/components/LocalizedText";
 
-export function DestinationCard({ destination }: { destination: Destination }) {
+export function DestinationCard({
+  destination,
+  imagePriority = false
+}: {
+  destination: Destination;
+  imagePriority?: boolean;
+}) {
   const translationBase = `destination.${destination.id}`;
 
   return (
@@ -16,8 +22,8 @@ export function DestinationCard({ destination }: { destination: Destination }) {
           src={destination.image}
           alt={destination.imageAlt ?? `${destination.title} boat tour destination in Albania`}
           fill
-          loading="lazy"
-          fetchPriority="low"
+          loading={imagePriority ? "eager" : "lazy"}
+          fetchPriority={imagePriority ? "high" : "low"}
           decoding="async"
           quality={52}
           sizes="(min-width: 1024px) 33vw, 100vw"

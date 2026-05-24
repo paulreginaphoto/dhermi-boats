@@ -88,6 +88,9 @@ Fixes applied:
 - Rechecked clickable external trust links and replaced the obsolete GetYourGuide supplier ID with the verified Dhermi Boat Tours supplier profile.
 - Rechecked FR mobile and desktop hero screenshots with Chrome DevTools Protocol: no horizontal overflow, selected FR language visible and the desktop headline now reads as a controlled three-line hero.
 - Reproduced rapid-tap counter batching in the one-minute booking form and clamped the generated booking values so the 5-person fishing capacity cannot be exceeded in display, draft storage or WhatsApp messages.
+- Rechecked exported canonical, hreflang and sitemap URLs against the current GitHub Pages deployment URL and stopped them from pointing at non-migrated `dhermi.boats` paths.
+- Replaced remaining generic "experience" labels in the visible tour cards with concrete route, cruise and fishing language across EN / FR / AL.
+- Rechecked page-hero and above-fold card image loading on `/tours`, `/destinations` and `/tours/group`; duplicate hero/card images no longer produce LCP warnings.
 
 Final self-review:
 

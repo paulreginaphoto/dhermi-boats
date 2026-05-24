@@ -27,7 +27,7 @@ export default function GroupToursPage() {
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">
           {groupTours.map((tour) => (
-            <TourCard key={tour.id} tour={tour} />
+            <TourCard key={tour.id} tour={tour} imagePriority />
           ))}
         </div>
       </section>

@@ -55,6 +55,9 @@ Date: 2026-05-24
 - Corrected the GetYourGuide supplier link to the verified `dhermi-boat-tours-s702528` profile.
 - Tightened the desktop hero title so long French copy presents as a controlled three-line hero.
 - Reproduced rapid booking counter taps and fixed the fishing tour capacity invariant so display, drafts and generated messages stay capped at 5 people.
+- Found canonical, hreflang and sitemap URLs pointing to the not-yet-migrated `dhermi.boats` domain while production is on `https://regina.photo/dhermi-boats`; corrected the public URL base and added export QA plus a CI step.
+- Rechecked exported external links after rebuild: no 404 or 5xx hard failures across 74 URLs.
+- Rechecked FR mobile and desktop screenshots, plus a headless booking flow: no horizontal overflow, required date/name validation works, fishing capacity remains 5 and no LCP warnings remain on `/tours`, `/destinations` or `/tours/group`.
 
 ## Notes
 
