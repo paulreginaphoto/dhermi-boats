@@ -99,6 +99,6 @@
 - [ ] Add drone footage or a professional shoot if the owner provides one later.
 - [ ] Add static localized routes with hreflang if multilingual SEO becomes a priority.
 - [ ] Add Instagram media cards if the owner provides an API/session export or downloadable original posts.
-- [ ] Reconnect `dhermi.boats` when the domain is recovered.
+- [x] Reconnect `dhermi.boats` when the domain is recovered.
 - [ ] Replace the public GPS point routes with official captain GPS traces if the captain provides them later.
 - [ ] Put the final site behind Cloudflare or another CDN if custom cache headers are needed after reconnecting `dhermi.boats`.

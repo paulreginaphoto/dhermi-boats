@@ -31,32 +31,24 @@ Deployment is handled by `.github/workflows/deploy.yml` on every push to `main`.
 2. Push to `main`.
 3. The workflow installs dependencies, builds the static export, uploads `out/`, and deploys it with GitHub Pages.
 
-## GitHub Pages URL
+## Production URL
 
-The site currently deploys to the default GitHub Pages project URL:
+The site deploys to the custom GitHub Pages domain:
 
-https://regina.photo/dhermi-boats/
+https://dhermi.boats/
 
 The workflow sets:
 
 ```txt
-NEXT_PUBLIC_BASE_PATH=/dhermi-boats
-NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
+NEXT_PUBLIC_BASE_PATH=
+NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
 ```
 
-Canonical, hreflang, sitemap and `llms.txt` URLs follow this public GitHub Pages URL by default. Do not point them to `dhermi.boats` until the custom domain is active.
-
-There is no `public/CNAME` while the custom domain is not connected.
-
-## Custom Domain Later
-
-When `dhermi.boats` is ready, restore a `public/CNAME` file containing:
+Canonical, hreflang, sitemap and `llms.txt` URLs now use the production domain. The static export includes `public/CNAME`:
 
 ```txt
 dhermi.boats
 ```
-
-Then set `NEXT_PUBLIC_BASE_PATH` to an empty value and `NEXT_PUBLIC_SITE_ORIGIN` to `https://dhermi.boats` in `.github/workflows/deploy.yml`.
 
 DNS details for moving `dhermi.boats` from the old WordPress host to GitHub Pages are in `DEPLOYMENT.md`.
 

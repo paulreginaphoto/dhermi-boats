@@ -1,7 +1,6 @@
 # Dhermi Boat
 
-Current website: https://regina.photo/dhermi-boats/
-Future custom domain: https://dhermi.boats/
+Current website: https://dhermi.boats/
 
 ## Business
 
@@ -18,16 +17,16 @@ Google Maps: https://maps.app.goo.gl/NRsVPEKAqkKfoHmn6
 
 ## Main Pages
 
-- Home: https://regina.photo/dhermi-boats/
-- Tours: https://regina.photo/dhermi-boats/tours/
-- Private tours: https://regina.photo/dhermi-boats/tours/private/
-- Shared tours: https://regina.photo/dhermi-boats/tours/group/
-- Destinations: https://regina.photo/dhermi-boats/destinations/
-- Gjipe: https://regina.photo/dhermi-boats/destinations/gjipe/
-- Grama Bay: https://regina.photo/dhermi-boats/destinations/grama-bay/
-- Blue Cave: https://regina.photo/dhermi-boats/destinations/blue-cave/
-- FAQ: https://regina.photo/dhermi-boats/faq/
-- Contact: https://regina.photo/dhermi-boats/contact/
+- Home: https://dhermi.boats/
+- Tours: https://dhermi.boats/tours/
+- Private tours: https://dhermi.boats/tours/private/
+- Shared tours: https://dhermi.boats/tours/group/
+- Destinations: https://dhermi.boats/destinations/
+- Gjipe: https://dhermi.boats/destinations/gjipe/
+- Grama Bay: https://dhermi.boats/destinations/grama-bay/
+- Blue Cave: https://dhermi.boats/destinations/blue-cave/
+- FAQ: https://dhermi.boats/faq/
+- Contact: https://dhermi.boats/contact/
 
 ## Key Facts
 

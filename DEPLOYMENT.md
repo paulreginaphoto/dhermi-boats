@@ -24,19 +24,19 @@ If the owner later wants direct form delivery, use Cloudflare Workers, Google Ap
 ## Current GitHub Pages URL
 
 - Repository settings > Pages > Source: `GitHub Actions`.
-- No custom domain is active yet.
-- Current live URL: `https://regina.photo/dhermi-boats/`.
-- The workflow currently builds with `NEXT_PUBLIC_BASE_PATH=/dhermi-boats`.
+- Custom domain: `dhermi.boats`.
+- Current live URL after DNS propagation: `https://dhermi.boats/`.
+- The workflow builds with `NEXT_PUBLIC_BASE_PATH=` and `NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats`.
 
-## Custom Domain Later
+## Custom Domain
 
-When the domain is recovered, add `public/CNAME` with:
+The repository includes `public/CNAME` with:
 
 ```txt
 dhermi.boats
 ```
 
-Then update `.github/workflows/deploy.yml`:
+The GitHub Pages custom domain is also configured in repository settings. The workflow must keep these values:
 
 ```txt
 NEXT_PUBLIC_BASE_PATH=
@@ -45,7 +45,7 @@ NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
 
 ## DNS Records For `dhermi.boats`
 
-At the moment of setup, `dhermi.boats` still resolved to WordPress.com IPs (`192.0.78.153` and `192.0.78.206`). To make the new GitHub Pages site live on the custom domain, update DNS at the domain provider:
+At the moment of migration, `dhermi.boats` still resolved to WordPress.com IPs (`192.0.78.153` and `192.0.78.206`). To make the new GitHub Pages site live on the custom domain, update DNS at WordPress.com:
 
 A ready-to-share import file is available in `DNS_DHERMI_BOATS_BIND.zone`. It intentionally contains only simple DNS records because some DNS panels reject full BIND zone files with `SOA`, `NS`, `$ORIGIN` or comments.
 
@@ -63,18 +63,9 @@ AAAA  @     2606:50c0:8003::153
 CNAME www   paulreginaphoto.github.io
 ```
 
-After DNS propagates, return to GitHub Pages settings and enable HTTPS enforcement if GitHub has not enabled it automatically.
+After DNS propagates, return to GitHub Pages settings and enable HTTPS enforcement if GitHub has not enabled it automatically. DNS changes can take up to 24 hours to propagate.
 
 ## Base Path
-
-For the current GitHub Pages project URL, use:
-
-```txt
-NEXT_PUBLIC_BASE_PATH=/dhermi-boats
-NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
-```
-
-With that configuration, canonical, hreflang, sitemap and `llms.txt` URLs are expected to use `https://regina.photo/dhermi-boats`. The QA script checks this after the static export is built.
 
 For `https://dhermi.boats/`, use:
 
@@ -83,7 +74,14 @@ NEXT_PUBLIC_BASE_PATH=
 NEXT_PUBLIC_SITE_ORIGIN=https://dhermi.boats
 ```
 
-Then rebuild through the workflow.
+For the old GitHub Pages project URL fallback, use:
+
+```txt
+NEXT_PUBLIC_BASE_PATH=/dhermi-boats
+NEXT_PUBLIC_SITE_ORIGIN=https://regina.photo
+```
+
+With the production configuration, canonical, hreflang, sitemap and `llms.txt` URLs are expected to use `https://dhermi.boats`. The QA script checks this after the static export is built.
 
 ## Local Static Export Test
 
@@ -99,4 +97,4 @@ Useful static files to spot-check after a build:
 - `http://127.0.0.1:4302/robots.txt`
 - `http://127.0.0.1:4302/llms.txt`
 - `http://127.0.0.1:4302/sitemap.xml`
-When testing the GitHub Pages subpath locally, use a static server that maps `/dhermi-boats/` to the `out/` directory.
+When testing the old GitHub Pages subpath locally, use a static server that maps `/dhermi-boats/` to the `out/` directory.

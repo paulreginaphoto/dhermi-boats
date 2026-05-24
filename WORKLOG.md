@@ -138,3 +138,10 @@
 ## Current Result
 
 The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, guarded pre-hydration booking links, explicit pending/ready booking summary states, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation, guarded route-specific visible copy and guarded no-JS English fallbacks.
+
+## 2026-05-25 Custom Domain Reconnection
+
+- Switched the GitHub Pages workflow from `https://regina.photo/dhermi-boats/` to `https://dhermi.boats/` with an empty `NEXT_PUBLIC_BASE_PATH`.
+- Restored `public/CNAME` for `dhermi.boats`.
+- Updated `llms.txt`, deployment notes and DNS notes so production URLs use the custom domain root.
+- Confirmed the GitHub Pages repository setting already has `dhermi.boats` configured; HTTPS enforcement remains a post-DNS propagation check.

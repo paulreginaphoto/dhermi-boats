@@ -23,4 +23,4 @@ Then add:
 | AAAA | @ | 2606:50c0:8003::153 | 3600 |
 | CNAME | www | paulreginaphoto.github.io | 3600 |
 
-Do not add `/dhermi-boats` in DNS. DNS points only to GitHub Pages; the repository handles the site path until the custom domain is connected.
+Do not add `/dhermi-boats` in DNS. DNS points only to GitHub Pages; the deployed site now lives at the root of `https://dhermi.boats/`.
