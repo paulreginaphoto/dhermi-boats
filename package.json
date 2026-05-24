@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "node ./scripts/build-translations.mjs && next build",
     "export": "npm run build",
+    "test:date-format": "node ./scripts/booking-date-format.test.mjs",
     "translations": "node ./scripts/build-translations.mjs",
     "qa:i18n-links": "node ./scripts/qa-i18n-links.mjs",
     "content:guard": "node ./scripts/content-guard.mjs",

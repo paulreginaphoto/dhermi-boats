@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
+import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
 import { emailAddress, phoneDisplay, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
@@ -306,6 +307,8 @@ export function OneMinuteBooking() {
   const safeChildren = Math.min(Math.max(0, children), maxChildrenForTour);
   const messages = validationMessages[locale];
   const requiredPrompts = requiredFieldPrompts[locale];
+  const formattedBookingDate = date ? formatBookingDate(date, locale) : "";
+  const shortBookingDate = date ? formatDateShort(date) : "";
 
   useEffect(() => {
     const timer = window.setTimeout(() => setLocale(readLocale()), 0);
@@ -343,7 +346,7 @@ export function OneMinuteBooking() {
     const lines = [
       messageIntro[locale],
       `${labels.tour}: ${activeTourTitle}`,
-      `${labels.date}: ${requiredValue(date, requiredPrompts.date)}`,
+      `${labels.date}: ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
       `${labels.time}: ${cleanValue(activeTimeLabel)}`,
       `${labels.adults}: ${safeAdults}`,
       `${labels.children}: ${safeChildren}`,
@@ -353,7 +356,7 @@ export function OneMinuteBooking() {
     ];
 
     return lines.join("\n");
-  }, [activeTimeLabel, activeTourTitle, date, labels, locale, name, notes, phone, requiredPrompts, safeAdults, safeChildren]);
+  }, [activeTimeLabel, activeTourTitle, formattedBookingDate, labels, locale, name, notes, phone, requiredPrompts, safeAdults, safeChildren]);
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
   const whatsappHref = whatsappUrl(bookingMessage);
@@ -529,6 +532,11 @@ export function OneMinuteBooking() {
                 {errors.date ? (
                   <p id="quick-date-error" className="text-sm font-semibold text-bronze">
                     {messages.date}
+                  </p>
+                ) : null}
+                {shortBookingDate ? (
+                  <p className="text-xs font-semibold text-ink-soft" aria-live="polite">
+                    {shortBookingDate} · {formattedBookingDate}
                   </p>
                 ) : null}
               </div>
