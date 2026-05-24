@@ -96,6 +96,10 @@ Fixes applied:
 - Fixed a social-card regression where global OpenGraph/Twitter images doubled the GitHub Pages base path, then added export QA so absolute URLs cannot repeat `/dhermi-boats`.
 - Fixed the language segmented control after hydration so FR / AL / EN remain visually active even after React replaces the static markup.
 - Rechecked the current export through Chrome CDP on FR mobile home, FR desktop tours and FR mobile 404: active language state, WhatsApp links, social metadata, page width and console output all passed.
+- Removed the last weak destination and comparison copy: hero/metadata no longer use hidden-place language, comparison chips now name route duration or planning mode, and Blue Cave has a real Karaburun route summary.
+- Expanded `content:guard` to block these weak phrases across source data, locale files and public content before they can reach the export.
+- Rechecked FR mobile home, FR desktop tours and FR desktop photos from the exported `/dhermi-boats` path: no horizontal overflow, no stale phrases, active FR selector and localized WhatsApp links.
+- Rechecked the hydrated booking validation directly: empty date and name are blocked with French inline errors and `aria-invalid`.
 
 Final self-review:
 

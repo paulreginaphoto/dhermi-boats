@@ -63,6 +63,11 @@ Date: 2026-05-24
 - Rechecked exported social metadata and found a duplicated `/dhermi-boats/dhermi-boats/` OpenGraph/Twitter image URL across static pages; fixed the source URL generation and added export QA coverage.
 - Rechecked the current export in Chrome CDP and found FR text loaded but the language selector was not marked active after hydration; resynced the switcher in the locale bootstrap and guarded the behavior.
 - Final rendered QA passed on FR mobile home, FR desktop tours and FR mobile 404: no horizontal overflow, no console issues, FR active state visible and social images point to the working GitHub Pages URL.
+- Replaced remaining vague copy on hero metadata, photos, Gjipe descriptions, comparison chips and Blue Cave summaries with concrete route/place wording.
+- Extended the visible-copy guard so the weak phrases are now release blockers in EN / FR / AL.
+- Rechecked FR mobile home, desktop tours and desktop photos on the exported `/dhermi-boats` path: no overflow, no old phrases, FR active state and localized WhatsApp links.
+- Rechecked the hydrated quick booking WhatsApp action: missing date and name show French inline errors and `aria-invalid`.
+- Rechecked 101 generated external URLs: 100 OK, GetYourGuide expected 403, zero hard failures.
 
 ## Notes
 

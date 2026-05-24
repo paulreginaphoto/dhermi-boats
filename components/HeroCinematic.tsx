@@ -47,7 +47,7 @@ export function HeroCinematic() {
         <div className="max-w-4xl">
           <h1 className="photo-title max-w-4xl break-words font-serif text-3xl font-medium leading-[1.04] text-pearl sm:text-5xl md:text-[3.3rem] lg:text-[3.45rem] xl:text-[3.65rem]">
             <LocalizedText id="hero.title">
-              Dhërmi boat tours to Gjipe, Grama Bay & hidden caves
+              Dhërmi boat tours to Gjipe, Grama Bay & Blue Cave
             </LocalizedText>
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">

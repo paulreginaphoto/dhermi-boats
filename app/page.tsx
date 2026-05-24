@@ -24,7 +24,7 @@ import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, 
 export const metadata: Metadata = {
   title: "Boat Tours in Dhërmi | Gjipe, Grama Bay & Private Trips",
   description:
-    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves. Fast WhatsApp booking with a local skipper.",
+    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Fast WhatsApp booking with a local skipper.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 

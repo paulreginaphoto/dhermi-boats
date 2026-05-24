@@ -8,11 +8,11 @@ const tour = tours.find((item) => item.id === "gjipe")!;
 export const metadata: Metadata = {
   title: "Gjipe Boat Tour from Dhërmi",
   description:
-    "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, hidden coves and a 30-minute swim stop.",
+    "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, 2 nearby coves and a 30-minute swim stop.",
   alternates: { canonical: canonical("/gjipe-boat-tour/"), languages: languageAlternates("/gjipe-boat-tour/") },
   openGraph: {
     title: "Gjipe Boat Tour from Dhërmi",
-    description: "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, hidden coves and a 30-minute swim stop.",
+    description: "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, 2 nearby coves and a 30-minute swim stop.",
     url: canonical("/gjipe-boat-tour/"),
     type: "website",
     images: [{ url: canonical("/images/tour-gjipe.webp"), width: 900, height: 675, alt: tour.imageAlt }]
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Gjipe Boat Tour from Dhërmi",
-    description: "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, hidden coves and a 30-minute swim stop.",
+    description: "Gjipe boat tour from Dhërmi with Pirates Cave, Pigeon Cave, 2 nearby coves and a 30-minute swim stop.",
     images: [canonical("/images/tour-gjipe.webp")]
   }
 };

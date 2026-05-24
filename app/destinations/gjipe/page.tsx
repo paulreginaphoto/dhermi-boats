@@ -8,7 +8,7 @@ const destination = destinations.find((item) => item.id === "gjipe")!;
 export const metadata: Metadata = {
   title: "Gjipe Boat Tour",
   description:
-    "Visit Gjipe by boat from Dhërmi with Pirates Cave, Pigeon Cave, hidden coves and a swim stop at Gjipe Beach.",
+    "Visit Gjipe by boat from Dhërmi with Pirates Cave, Pigeon Cave, 2 nearby coves and a swim stop at Gjipe Beach.",
   alternates: { canonical: canonical("/destinations/gjipe/"), languages: languageAlternates("/destinations/gjipe/") }
 };
 

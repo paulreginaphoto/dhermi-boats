@@ -74,6 +74,10 @@
 - [x] Guard exported absolute URLs against duplicated GitHub Pages base paths in social metadata.
 - [x] Keep the EN / FR / AL selector active after React hydration replaces the initial static markup.
 - [x] Recheck final external URLs and rendered FR mobile / desktop / 404 pages after the metadata and language fixes.
+- [x] Replace remaining hidden-place and best-tour filler copy with concrete route, duration and Karaburun wording.
+- [x] Guard the final weak copy phrases across app, data, locale and public content.
+- [x] Recheck exported FR mobile home, desktop tours and desktop photos after the copy pass.
+- [x] Recheck hydrated quick booking validation and all generated external URLs after the copy pass.
 
 ## Optional Future Improvements
 

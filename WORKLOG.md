@@ -113,6 +113,12 @@
 - Rechecked rendered FR pages and found the locale bootstrap translated text after hydration but did not reapply the active FR state to the language selector; resynced the switcher in the same observer cycle as localized text.
 - Rechecked the final export with HTTP and Chrome CDP: 101 generated external URLs had no hard failures, FR mobile home / desktop tours / mobile 404 had no overflow, no console issues, working social image metadata and active FR controls.
 
+- Re-audited visible copy for remaining generic delivery phrases and replaced `hidden caves`, `hidden coves`, `hidden beaches`, vague comparison labels and the bare `Blue Cave.` destination summary with concrete route, duration and Karaburun wording across EN / FR / AL.
+- Extended `content:guard` so those weak phrases cannot return in app, component, data, locale or public content.
+- Rechecked the GitHub Pages-style export in headless Chrome CDP: FR mobile home, FR desktop tours and FR desktop photos have no horizontal overflow, no old phrases, active FR state, localized WhatsApp links and no relevant console events.
+- Rechecked the quick booking action by triggering the hydrated WhatsApp link directly: empty date and name now show the French inline errors and set `aria-invalid`.
+- Rechecked 101 generated external URLs after the copy pass: 100 returned OK and only GetYourGuide returned the expected bot-protection 403.
+
 ## Current Result
 
 The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded non-generic visible copy.

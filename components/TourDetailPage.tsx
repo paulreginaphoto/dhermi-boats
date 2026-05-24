@@ -185,7 +185,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <LocalizedText id="booking.panel.label">WhatsApp booking</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-3xl font-medium">
-              <LocalizedText id="booking.panel.title">Ready to book?</LocalizedText>
+              <LocalizedText id="booking.panel.title">Send your date and group size</LocalizedText>
             </h2>
             <dl className="mt-6 grid gap-4 border-y border-white/10 py-5">
               {facts.slice(0, 4).map((fact) => (

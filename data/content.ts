@@ -124,8 +124,8 @@ export const tours: Tour[] = [
     safetyNote: "The skipper adapts cave access, stops and timing to the sea and weather on the day.",
     detailFaqs: [
       {
-        question: "Is Grama Tour the best full trip?",
-        answer: "Yes. It is the longer shared route and includes the Karaburun coast, Blue Cave and Grama Beach."
+        question: "Is Grama Tour the longest shared route?",
+        answer: "Yes. It is the longest shared route and includes the Karaburun coast, Blue Cave and Grama Beach."
       },
       {
         question: "Can we add Secret Cave?",
@@ -275,7 +275,7 @@ export const destinations: Destination[] = [
     id: "blue-cave",
     title: "Blue Cave",
     eyebrow: "Blue Cave",
-    summary: "Blue Cave.",
+    summary: "Karaburun cave stop with bright blue water, usually paired with the Grama Bay route.",
     image: assetPath("/images/gallery-blue-cave.webp"),
     imageAlt: "Blue Cave water and rock opening on the Albanian Riviera",
     href: sitePath("/destinations/blue-cave/"),
@@ -284,11 +284,11 @@ export const destinations: Destination[] = [
 ];
 
 export const tourComparison: TourComparisonItem[] = [
-  { angle: "Quick adventure", tourId: "gjipe", duration: "1h30", price: "from €35" },
-  { angle: "Best full trip", tourId: "grama", duration: "3h30", price: "from €75" },
-  { angle: "Best for groups", tourId: "private", duration: "custom", price: "€200/hour" },
-  { angle: "Best for couples", tourId: "sunset", duration: "sunset", price: "from €120" },
-  { angle: "Quiet sunrise", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
+  { angle: "1h30 Gjipe route", tourId: "gjipe", duration: "1h30", price: "from €35" },
+  { angle: "3h30 Grama route", tourId: "grama", duration: "3h30", price: "from €75" },
+  { angle: "Private route planning", tourId: "private", duration: "custom", price: "€200/hour" },
+  { angle: "Sunset around Dhërmi", tourId: "sunset", duration: "sunset", price: "from €120" },
+  { angle: "5 AM fishing", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
 ];
 
 export const gallery = [

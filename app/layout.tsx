@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s | Dhermi Boat"
   },
   description:
-    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves. Fast WhatsApp booking with a local skipper.",
+    "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Fast WhatsApp booking with a local skipper.",
   keywords: [
     "Dhermi boat tours",
     "Dhërmi boat tours",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: brandName,
     title: "Boat Tours in Dhërmi",
     description:
-      "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves.",
+      "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
     images: [
       {
         url: socialImageUrl,
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Boat Tours in Dhërmi",
-    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves.",
+    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
     images: [socialImageUrl]
   },
   icons: {
