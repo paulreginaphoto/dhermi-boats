@@ -44,13 +44,14 @@ const satelliteTileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/W
 const seaBendVector = { x: -1, y: 1 };
 const outboundColor = "#f4d39a";
 const returnColor = "#64d7ce";
+const routeLaneGap = 18;
 
 const dhermiBeach: GeoPoint = {
   id: "dhermi",
   label: "Dhërmi beach area",
   labelKey: "map.point.dhermiBeach",
-  lat: 40.14295,
-  lng: 19.62995,
+  lat: 40.14185,
+  lng: 19.6276,
   tone: "start"
 };
 
@@ -58,8 +59,8 @@ const piratesCave: GeoPoint = {
   id: "pirates",
   label: "Pirates Cave",
   labelKey: "tour.gjipe.included.0",
-  lat: 40.12872,
-  lng: 19.64882,
+  lat: 40.1275,
+  lng: 19.64605,
   tone: "stop"
 };
 
@@ -67,8 +68,8 @@ const gjipeBeach: GeoPoint = {
   id: "gjipe",
   label: "Gjipe",
   labelKey: "destination.gjipe.title",
-  lat: 40.1262,
-  lng: 19.66834,
+  lat: 40.12495,
+  lng: 19.66555,
   tone: "end"
 };
 
@@ -76,8 +77,8 @@ const pigeonCave: GeoPoint = {
   id: "pigeon-cave",
   label: "Pigeon Cave",
   labelKey: "tour.gjipe.included.2",
-  lat: 40.12384,
-  lng: 19.67458,
+  lat: 40.12262,
+  lng: 19.67165,
   tone: "stop"
 };
 
@@ -85,8 +86,8 @@ const blueCave: GeoPoint = {
   id: "blue-cave",
   label: "Blue Cave",
   labelKey: "destination.blue-cave.title",
-  lat: 40.21372,
-  lng: 19.47644,
+  lat: 40.21252,
+  lng: 19.4738,
   tone: "end"
 };
 
@@ -94,8 +95,8 @@ const gramaBay: GeoPoint = {
   id: "grama",
   label: "Grama Bay",
   labelKey: "destination.grama.title",
-  lat: 40.21458,
-  lng: 19.47184,
+  lat: 40.21325,
+  lng: 19.46915,
   tone: "end"
 };
 
@@ -263,10 +264,25 @@ function smoothRoutePath(points: ViewPoint[], bendRatio: number, maxBend: number
   return commands.join(" ");
 }
 
-function buildRoundTripPaths(points: ViewPoint[]) {
+function offsetRoutePoints(points: ViewPoint[], distance: number) {
+  const vectorLength = Math.hypot(seaBendVector.x, seaBendVector.y);
+  const offsetX = (seaBendVector.x / vectorLength) * distance;
+  const offsetY = (seaBendVector.y / vectorLength) * distance;
+
+  return points.map((point) => ({
+    ...point,
+    x: clamp(point.x + offsetX, 18, mapWidth - 18),
+    y: clamp(point.y + offsetY, 18, mapHeight - 18)
+  }));
+}
+
+function buildSeparatedRoutePaths(points: ViewPoint[]) {
+  const outboundPoints = offsetRoutePoints(points, -routeLaneGap * 0.55);
+  const returnPoints = offsetRoutePoints([...points].reverse(), routeLaneGap * 0.85);
+
   return {
-    outbound: smoothRoutePath(points, 0.12, 42),
-    returnRoute: smoothRoutePath([...points].reverse(), 0.24, 68)
+    outbound: smoothRoutePath(outboundPoints, 0.1, 34),
+    returnRoute: smoothRoutePath(returnPoints, 0.12, 42)
   };
 }
 
@@ -311,7 +327,7 @@ function PointList({ points, compact = false }: { points: GeoPoint[]; compact?: 
 
 function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: string; descId: string }) {
   const view = buildMap(map.points);
-  const routePaths = buildRoundTripPaths(view.points);
+  const routePaths = buildSeparatedRoutePaths(view.points);
   const outboundArrowId = `${titleId}-outbound-arrow`;
   const returnArrowId = `${titleId}-return-arrow`;
   const routeGlowId = `${titleId}-route-glow`;
@@ -351,12 +367,10 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
             <path d="M2 2 16 7 2 12 5.8 7z" fill={returnColor} stroke="#071b26" strokeWidth="1.35" />
           </marker>
         </defs>
-        <path data-route-layer="return-outer" d={routePaths.returnRoute} fill="none" filter={`url(#${routeGlowId})`} opacity="0.82" stroke="#fffaf0" strokeLinecap="round" strokeLinejoin="round" strokeWidth="13" />
-        <path data-route-layer="return-core" d={routePaths.returnRoute} fill="none" markerEnd={`url(#${returnArrowId})`} opacity="0.95" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
-        <path data-route-layer="return-dash" d={routePaths.returnRoute} fill="none" opacity="0.96" stroke={returnColor} strokeDasharray="9 15" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.5" />
-        <path data-route-layer="outbound-outer" d={routePaths.outbound} fill="none" filter={`url(#${routeGlowId})`} opacity="0.9" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="17" />
-        <path data-route-layer="outbound-core" d={routePaths.outbound} fill="none" markerEnd={`url(#${outboundArrowId})`} stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6.5" />
-        <path data-route-layer="outbound-dash" d={routePaths.outbound} fill="none" stroke={outboundColor} strokeDasharray="2 16" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" />
+        <path data-route-layer="return-track" d={routePaths.returnRoute} fill="none" filter={`url(#${routeGlowId})`} opacity="0.94" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="8.5" />
+        <path data-route-layer="return-line" d={routePaths.returnRoute} fill="none" markerEnd={`url(#${returnArrowId})`} stroke={returnColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.2" />
+        <path data-route-layer="outbound-track" d={routePaths.outbound} fill="none" filter={`url(#${routeGlowId})`} opacity="0.94" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="9.5" />
+        <path data-route-layer="outbound-line" d={routePaths.outbound} fill="none" markerEnd={`url(#${outboundArrowId})`} stroke={outboundColor} strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.8" />
         {view.points.map((point, index) => {
           const badgeX = point.x + (point.badgeDx ?? 0);
           const badgeY = point.y + (point.badgeDy ?? 0);
@@ -372,9 +386,9 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
                   <circle cx={point.x} cy={point.y} fill="#071b26" r="4.5" />
                 </>
               ) : null}
-              <circle cx={badgeX} cy={badgeY} fill="#fffaf0" opacity="0.92" r={point.tone === "end" ? 22 : 20} />
-              <circle cx={badgeX} cy={badgeY} fill={paint.fill} r={point.tone === "end" ? 17 : 15} stroke={paint.stroke} strokeWidth="4" />
-              <text className="text-[17px] font-bold" dominantBaseline="middle" fill={paint.text} textAnchor="middle" x={badgeX} y={badgeY + 1}>
+              <circle cx={badgeX} cy={badgeY} fill="#fffaf0" opacity="0.94" r={point.tone === "end" ? 18 : 17} />
+              <circle cx={badgeX} cy={badgeY} fill={paint.fill} r={point.tone === "end" ? 13 : 12} stroke={paint.stroke} strokeWidth="3" />
+              <text className="text-[14px] font-bold" dominantBaseline="middle" fill={paint.text} textAnchor="middle" x={badgeX} y={badgeY + 0.5}>
                 {index + 1}
               </text>
             </g>
@@ -385,13 +399,13 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
         <MapPin className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={1.75} />
         <LocalizedText id="map.real">Satellite GPS map</LocalizedText>
       </div>
-      <div data-route-legend className="absolute bottom-2 left-2 flex items-center gap-2 rounded-full bg-ink/78 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-pearl shadow-sm backdrop-blur">
-        <span className="inline-flex items-center gap-1.5">
+      <div data-route-legend className="absolute bottom-2 left-2 flex items-center gap-2 rounded-full bg-ink/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-pearl shadow-sm backdrop-blur">
+        <span className="route-label-outbound inline-flex items-center gap-1.5">
           <span className="h-1.5 w-5 rounded-full border border-ink bg-[#f4d39a] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
           <LocalizedText id="map.outbound">Outbound</LocalizedText>
         </span>
         <span className="h-3 w-px bg-pearl/30" />
-        <span className="inline-flex items-center gap-1.5">
+        <span className="route-label-return inline-flex items-center gap-1.5">
           <span className="h-1.5 w-5 rounded-full border border-ink bg-[#64d7ce] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
           <LocalizedText id="map.return">Return</LocalizedText>
         </span>
