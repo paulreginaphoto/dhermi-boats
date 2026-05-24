@@ -215,7 +215,7 @@ export const tours: Tour[] = [
     id: "fishing",
     title: "Morning Fishing Tour from Dhërmi",
     shortTitle: "Morning Fishing Tour",
-    subtitle: "An authentic and peaceful sunrise experience",
+    subtitle: "Fish near Dhërmi before the coast gets busy.",
     type: "experience",
     duration: "5 AM to 8 AM",
     price: "100 € / hour per group (max 5 people)",
@@ -288,7 +288,7 @@ export const tourComparison: TourComparisonItem[] = [
   { angle: "Best full trip", tourId: "grama", duration: "3h30", price: "from €75" },
   { angle: "Best for groups", tourId: "private", duration: "custom", price: "€200/hour" },
   { angle: "Best for couples", tourId: "sunset", duration: "sunset", price: "from €120" },
-  { angle: "Best unique experience", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
+  { angle: "Quiet sunrise", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
 ];
 
 export const gallery = [
@@ -338,8 +338,8 @@ export const reviews = [
 export const whyChooseUs = [
   "Experienced local skipper, passionate about Albanian history, culture and landscapes",
   "Fluent in Albanian and French, with good knowledge of English",
-  "Customizable experiences",
-  "Friendly atmosphere"
+  "Routes adjusted with the skipper",
+  "Simple WhatsApp coordination before departure"
 ];
 
 export const skipper = {

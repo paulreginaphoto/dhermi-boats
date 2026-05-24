@@ -7,6 +7,7 @@ const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".json", ".md", "
 const EXCLUDE_DIRS = new Set([".git", ".next", "out", "node_modules"]);
 
 const FORBIDDEN_DASH = "\u2014";
+const EMOJI_CHARACTER = /[\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
 const REPEATED_WORD = /(?:^|\s)([\p{L}\p{M}][\p{L}\p{M}'’-]{1,})\s+\1(?:\s|$)/giu;
 const LOCALIZED_OPTION_CONTENT = /<option\b(?:(?!<\/option>)[\s\S])*<LocalizedText\b(?:(?!<\/option>)[\s\S])*<\/option>/g;
 const IMAGE_QUALITY_VALUE = /quality=\{(\d+)\}/g;
@@ -31,9 +32,20 @@ function addIssue(file, lineNumber, message, excerpt) {
   });
 }
 
+function isVisibleContentFile(filePath) {
+  const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
+  return /^(app|components|data|lib|public\/locales)\//.test(relative) || relative === "public/llms.txt";
+}
+
 function checkLineForForbiddenDash(file, text, lineNumber) {
   if (text.includes(FORBIDDEN_DASH)) {
     addIssue(file, lineNumber, "Le caractère interdit U+2014 est présent.", text);
+  }
+}
+
+function checkLineForEmoji(file, text, lineNumber) {
+  if (isVisibleContentFile(file) && EMOJI_CHARACTER.test(text)) {
+    addIssue(file, lineNumber, "Emoji détecté dans du contenu visible; utiliser du texte ou des icônes Lucide.", text);
   }
 }
 
@@ -81,6 +93,7 @@ function checkRepeatedPhrase(file, text, lineNumber) {
 
 function scanLine(filePath, text, lineNumber) {
   checkLineForForbiddenDash(filePath, text, lineNumber);
+  checkLineForEmoji(filePath, text, lineNumber);
   checkRepeatedWords(filePath, text, lineNumber);
   checkRepeatedPhrase(filePath, text, lineNumber);
 }
@@ -227,13 +240,63 @@ function checkBookingRequiredFields(filePath, content) {
     );
   }
 
-  if (!content.includes("onSubmit={handleEmailSubmit}")) {
+  if (!content.includes("href={emailHref}")) {
     addIssue(
       filePath,
       1,
-      "Le bouton FormSubmit du formulaire rapide doit vérifier date et nom avant envoi.",
-      "onSubmit={handleEmailSubmit}"
+      "Le backup email du formulaire rapide doit utiliser un lien mailto validé côté client.",
+      "href={emailHref}"
     );
+  }
+
+  if (content.includes("bookingFormEndpoint") || content.includes("formsubmit.co")) {
+    addIssue(
+      filePath,
+      1,
+      "Le formulaire rapide ne doit pas dépendre de FormSubmit, qui peut renvoyer 521.",
+      "bookingFormEndpoint / formsubmit.co"
+    );
+  }
+}
+
+function checkBookingCapacityLimits(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
+
+  const requiredSnippets = [
+    {
+      snippet: "const capacityByTourId",
+      message: "Le formulaire rapide doit connaître la capacité réelle de chaque tour."
+    },
+    {
+      snippet: "fishing: 5",
+      message: "Le tour pêche doit rester limité à 5 personnes."
+    },
+    {
+      snippet: "function capacityForTour",
+      message: "Le formulaire rapide doit appliquer une capacité par tour avant de générer le message."
+    },
+    {
+      snippet: "const activeTourCapacity",
+      message: "Le formulaire rapide doit utiliser la capacité du tour actif dans l’interface."
+    },
+    {
+      snippet: "const maxChildrenForTour",
+      message: "Le compteur enfants doit rester contraint par la capacité restante."
+    },
+    {
+      snippet: "disabled={!canIncrease}",
+      message: "Les boutons de compteur doivent être désactivés quand la capacité est atteinte."
+    },
+    {
+      snippet: "quick.capacity",
+      message: "La capacité active doit être visible près des compteurs."
+    }
+  ];
+
+  for (const { snippet, message } of requiredSnippets) {
+    if (!content.includes(snippet)) {
+      addIssue(filePath, 1, message, snippet);
+    }
   }
 }
 
@@ -342,6 +405,7 @@ function scanFileContent(filePath, content) {
   checkBookingFixedTimeTours(filePath, content);
   checkBookingDateMinimum(filePath, content);
   checkBookingRequiredFields(filePath, content);
+  checkBookingCapacityLimits(filePath, content);
   checkPageHeroAltText(filePath, content);
   checkImportantPageHreflang(filePath, content);
   checkLocaleBrowserDetection(filePath, content);
@@ -376,7 +440,7 @@ for (const target of TARGET_DIRS) {
 
 if (issues.length > 0) {
   const header = [
-    "❌ content-guard: blocage de publication",
+    "content-guard: blocage de publication",
     "Règles non respectées :"
   ].join("\n");
   const body = issues
@@ -386,4 +450,4 @@ if (issues.length > 0) {
   process.exit(1);
 }
 
-console.log("✅ content-guard: OK (pas de tiret long U+2014 ni de répétitions évidentes détectées).");
+console.log("content-guard: OK (contenu, booking et liens statiques protégés).");

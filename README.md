@@ -73,7 +73,6 @@ Contact and booking constants live in `lib/site.ts`:
 - `whatsappNumber`
 - `phoneDisplay`
 - `emailAddress`
-- `bookingFormEndpoint`
 - `instagramHandle`
 - `instagramUrl`
 - `tiktokHandle`
@@ -96,9 +95,9 @@ GitHub Pages is static, so it cannot run a private backend or send email itself.
 The one-minute booking form uses two static-friendly paths:
 
 - Primary: WhatsApp link generated in the browser with tour, date, people, name, phone and notes.
-- Backup: free FormSubmit endpoint from `bookingFormEndpoint`, currently `https://formsubmit.co/58d2000ae13924641d4bc3061af4ca1a`.
+- Backup: `mailto:` email link generated in the browser with the same booking message.
 
-The first FormSubmit email may require the owner to click an activation link. After activation, form submissions are sent to the email address without exposing the naked email in the form action or adding a backend to the site.
+The email backup opens the visitor's email app. A private backend or serverless endpoint can be added later if the owner wants direct form delivery.
 
 ## SEO Files
 

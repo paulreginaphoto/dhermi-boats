@@ -24,10 +24,10 @@ export function SocialFeed() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.social.label">Our latest photos</LocalizedText>
+              <LocalizedText id="section.social.label">Recent sea photos</LocalizedText>
             </p>
             <h2 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
-              <LocalizedText id="section.social.title">Our latest photos</LocalizedText>
+              <LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>
             </h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a

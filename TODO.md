@@ -31,7 +31,7 @@
 - [x] Rework photo overlays and hero title sizing so text stays readable without hiding the photography.
 - [x] Verify the video module loads only near the viewport and keeps the play / pause button accurate if autoplay is blocked.
 - [x] Add a one-minute reservation tunnel that generates a complete WhatsApp message.
-- [x] Add a free static email fallback through FormSubmit and document why GitHub Pages cannot run a backend.
+- [x] Add a static email-app fallback and document why GitHub Pages cannot run a backend.
 - [x] Update the locale bootstrap so client-rendered booking labels translate correctly after hydration.
 - [x] Apply the restored source text through EN / FR / AL selected-language states.
 - [x] Remove visible invented Google-review description copy while keeping the Google Maps link and real review excerpts.
@@ -60,6 +60,8 @@
 - [x] Prevent fixed-time tours from generating incompatible preferred-time WhatsApp messages.
 - [x] Prevent the one-minute booking form from sending past dates in WhatsApp messages.
 - [x] Require date and name before the one-minute form can leave for WhatsApp or email.
+- [x] Keep the quick booking guest counters inside each tour capacity, including the 5-person fishing tour.
+- [x] Replace the unreliable FormSubmit action with a validated mailto backup.
 
 ## Optional Future Improvements
 

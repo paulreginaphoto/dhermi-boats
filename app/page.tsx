@@ -98,8 +98,8 @@ export default function HomePage() {
         <div className="site-band">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <SectionHeading
-              label={<LocalizedText id="section.tours.label">Choose your tour</LocalizedText>}
-              title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+              label={<LocalizedText id="section.tours.label">Tours from Dhërmi</LocalizedText>}
+              title={<LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>}
             />
             <ButtonLink href="/tours/" variant="secondary">
               <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
@@ -119,8 +119,8 @@ export default function HomePage() {
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <SectionHeading
-              label={<LocalizedText id="section.experiences.label">Exclusive Experiences</LocalizedText>}
-              title={<LocalizedText id="section.experiences.title">Exclusive Experiences</LocalizedText>}
+              label={<LocalizedText id="section.experiences.label">Private and early tours</LocalizedText>}
+              title={<LocalizedText id="section.experiences.title">Sunset, fishing and custom routes</LocalizedText>}
             />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/tours/private/" variant="primary">
@@ -165,10 +165,10 @@ export default function HomePage() {
         <div className="site-band">
           <div className="max-w-3xl">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="section.destinations.label">Destinations</LocalizedText>
+              <LocalizedText id="section.destinations.label">Route highlights</LocalizedText>
             </p>
             <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">
-              <LocalizedText id="section.destinations.title">Destinations</LocalizedText>
+              <LocalizedText id="section.destinations.title">Caves, beaches and bays</LocalizedText>
             </h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -183,8 +183,8 @@ export default function HomePage() {
         <div className="site-band grid gap-12 lg:grid-cols-[1fr_0.82fr] lg:items-center">
           <div>
             <SectionHeading
-              label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
-              title={<LocalizedText id="section.social.title">Our latest photos</LocalizedText>}
+              label={<LocalizedText id="section.social.label">Recent sea photos</LocalizedText>}
+              title={<LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>}
             />
           </div>
           <VideoFeature />

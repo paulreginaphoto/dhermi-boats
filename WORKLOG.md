@@ -47,7 +47,7 @@
 - Refined photo overlays and hero typography so French mobile titles stay inside the viewport while the photography remains visible.
 - Verified mobile media rendering at 390px: no horizontal overflow, selected tour images load at 960 x 720, gallery images load at 640 x 480, and the video source loads only when it is near the viewport.
 - Added a one-minute booking tunnel on the home and contact pages: tour choice, date, time, people, name, phone, notes, generated WhatsApp message and email fallback.
-- Added a static-compatible email route through `bookingFormEndpoint` with FormSubmit and documented the GitHub Pages limitation: no private backend can run directly on GitHub Pages.
+- Added a static-compatible email-app fallback and documented the GitHub Pages limitation: no private backend can run directly on GitHub Pages.
 - Improved the locale bootstrap so translated labels inside hydrated client components are translated after they appear in the DOM.
 - Replaced the illustrative sea-route maps with real OpenStreetMap tile maps for Gjipe, Grama Bay and Blue Cave.
 - Added public GPS coordinates for Dhërmi beach area, Pirates Cave, Gjipe, Pigeon Cave, Blue Cave and Grama Bay, plus visible coordinate lists and OpenStreetMap attribution.
@@ -81,7 +81,18 @@
 - Audited local and live mobile booking again and found that the one-minute date field accepted past dates.
 - Added a client-side local minimum date and manual-entry clamp so a past date cannot appear in the generated WhatsApp booking message, then guarded the behavior in `content:guard`.
 - Audited local and live mobile booking again and found that the one-minute form could still send without a date or name, and the WhatsApp / email-app links bypassed the inline validation path.
-- Added required date and name checks across WhatsApp, FormSubmit and email-app actions, kept phone optional for fast WhatsApp contact, and extended `content:guard` so the booking-quality guard cannot silently regress.
+- Added required date and name checks across WhatsApp and email-app actions, kept phone optional for fast WhatsApp contact, and extended `content:guard` so the booking-quality guard cannot silently regress.
+
+## 2026-05-24
+
+- Audited the homepage copy for repeated section labels, vague sales language and visible emoji use.
+- Replaced repeated labels such as duplicate tour, social, destination and experience headings with concrete route and booking copy across EN / FR / AL.
+- Removed visible emojis from Albanian language copy and social card metadata, then added a `content:guard` rule to block future visible emoji regressions.
+- Found that the quick booking counters could exceed the real tour capacity, especially the 5-person fishing tour.
+- Added per-tour capacity limits, disabled counter controls at the limit and a visible tour capacity line in the booking form.
+- Found that the FormSubmit backup endpoint currently returns 521, so the email fallback could send visitors to an unavailable service.
+- Replaced the FormSubmit action with a validated `mailto:` backup using the generated booking message, and updated docs to match the current static behavior.
+- Verified internal base-path links, clickable external links, no-slop content guard, typecheck, lint and production builds.
 
 ## Current Result
 

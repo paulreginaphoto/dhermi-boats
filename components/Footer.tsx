@@ -12,11 +12,11 @@ export function Footer() {
         <div>
           <p className="font-serif text-3xl font-semibold leading-none">Dhermi Boat</p>
           <p className="mt-3 text-sm text-pearl/86">
-            <LocalizedText id="footer.tagline">Discover the Albanian Riviera.</LocalizedText>
+            <LocalizedText id="footer.tagline">Boat trips from Dhërmi.</LocalizedText>
           </p>
           <p className="mt-6 max-w-md text-sm leading-7 text-pearl/86">
             <LocalizedText id="footer.text">
-              Discover the Albanian Riviera.
+              Caves, beaches and private routes along the Albanian Riviera.
             </LocalizedText>
           </p>
         </div>

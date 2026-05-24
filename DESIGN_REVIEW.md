@@ -69,7 +69,7 @@ Fixes applied:
 - Rechecked the curated media pass at 390px: hero title width 350px, page scroll width 390px, no horizontal overflow, tour images loaded from the real 960 x 720 assets, gallery images loaded from the selected real 640 x 480 assets.
 - Updated the video module to lazy-load with `preload="none"`, then load the MP4 only near the viewport and keep the play / pause state correct when autoplay is blocked.
 - Added the one-minute booking tunnel as the main conversion module: tour selector, date, time, adults, children, name, phone, notes, WhatsApp primary action and email backup.
-- Rechecked the booking tunnel at 390px and 1440px: no horizontal overflow, French selected language active, generated message in French, FormSubmit action present and zero console warnings.
+- Rechecked the booking tunnel at 390px and 1440px: no horizontal overflow, French selected language active, generated message in French, validated email-app backup and zero console warnings.
 - Rechecked route maps at 390px mobile: Gjipe, Grama Bay and Blue Cave load real OpenStreetMap tiles, show public GPS coordinates, include attribution, keep the French selected language and fit without horizontal overflow.
 - Rechecked selected-language states across EN / FR / AL and fixed remaining mixed labels in booking CTAs, footer copy, quick booking actions and tour-specific WhatsApp flows.
 - Rechecked PageSpeed media blockers: compressed the flagged tour and hero images, reduced the homepage MP4 to a small muted clip, and removed the video source from initial page load.

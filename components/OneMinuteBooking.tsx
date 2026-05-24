@@ -1,16 +1,24 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent, type MouseEvent } from "react";
-import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, Send, ShieldCheck, UserRound } from "lucide-react";
+import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
-import { bookingFormEndpoint, emailAddress, phoneDisplay, siteUrl, whatsappUrl } from "@/lib/site";
+import { emailAddress, phoneDisplay, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
 const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
+
+const capacityByTourId = {
+  gjipe: 15,
+  grama: 15,
+  private: 15,
+  sunset: 15,
+  fishing: 5
+} as const satisfies Record<string, number>;
 
 const fixedTimeByTourId = {
   sunset: "Sunset",
@@ -209,6 +217,10 @@ function timeOptionsForTour(tourId: string): TimeOption[] {
   return fixedTime ? [fixedTime] : [...flexibleTimeOptions];
 }
 
+function capacityForTour(tourId: string) {
+  return capacityByTourId[tourId as keyof typeof capacityByTourId] ?? 15;
+}
+
 function clampPeople(value: unknown, min: number, max: number, fallback: number) {
   return typeof value === "number" && Number.isFinite(value)
     ? Math.min(max, Math.max(min, Math.round(value)))
@@ -227,13 +239,16 @@ function safeBookingDraft(rawDraft: unknown, minimumDate: string): BookingDraft 
   const savedTime = typeof source.time === "string" && isTimeOption(source.time) && availableDraftTimes.includes(source.time)
     ? source.time
     : availableDraftTimes[0];
+  const tourCapacity = capacityForTour(savedTourId);
+  const savedAdults = clampPeople(source.adults, 1, tourCapacity, Math.min(2, tourCapacity));
+  const savedChildren = clampPeople(source.children, 0, Math.max(0, tourCapacity - savedAdults), 0);
 
   return {
     tourId: savedTourId,
     date: savedDate,
     time: savedTime,
-    adults: clampPeople(source.adults, 1, 15, 2),
-    children: clampPeople(source.children, 0, 14, 0)
+    adults: savedAdults,
+    children: savedChildren
   };
 }
 
@@ -263,9 +278,11 @@ export function OneMinuteBooking() {
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
   const activeTourTitle = tourOptionLabels[locale][activeTour.id] ?? activeTour.shortTitle;
+  const activeTourCapacity = capacityForTour(activeTour.id);
   const availableTimeOptions = useMemo(() => timeOptionsForTour(tourId), [tourId]);
   const selectedTime = availableTimeOptions.includes(time) ? time : availableTimeOptions[0];
   const activeTimeLabel = timeOptionLabels[locale][selectedTime] ?? selectedTime;
+  const maxChildrenForTour = Math.max(0, activeTourCapacity - adults);
   const messages = validationMessages[locale];
 
   useEffect(() => {
@@ -337,25 +354,25 @@ export function OneMinuteBooking() {
     }
   }
 
-  function handleEmailSubmit(event: FormEvent<HTMLFormElement>) {
-    if (!validateRequiredFields()) {
-      event.preventDefault();
-    }
-  }
-
   function changePeople(kind: "adults" | "children", direction: 1 | -1) {
     if (kind === "adults") {
-      setAdults((value) => Math.min(15, Math.max(1, value + direction)));
+      const nextAdults = Math.min(activeTourCapacity, Math.max(1, adults + direction));
+      setAdults(nextAdults);
+      setChildren((value) => Math.min(value, Math.max(0, activeTourCapacity - nextAdults)));
       return;
     }
-    setChildren((value) => Math.min(14, Math.max(0, value + direction)));
+    setChildren((value) => Math.min(maxChildrenForTour, Math.max(0, value + direction)));
   }
 
   function selectTour(nextTourId: string) {
     const nextTimeOptions = timeOptionsForTour(nextTourId);
+    const nextCapacity = capacityForTour(nextTourId);
+    const nextAdults = Math.min(nextCapacity, Math.max(1, adults));
 
     setTourId(nextTourId);
     setTime((currentTime) => (nextTimeOptions.includes(currentTime) ? currentTime : nextTimeOptions[0]));
+    setAdults(nextAdults);
+    setChildren((value) => Math.min(value, Math.max(0, nextCapacity - nextAdults)));
   }
 
   function selectDate(nextDate: string) {
@@ -395,20 +412,9 @@ export function OneMinuteBooking() {
         </div>
 
         <form
-          action={bookingFormEndpoint}
           className="rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6"
-          data-analytics-event="booking_form_submit"
-          method="POST"
-          onSubmit={handleEmailSubmit}
+          onSubmit={(event) => event.preventDefault()}
         >
-          <input type="hidden" name="_subject" value={`Dhermi Boat booking: ${activeTourTitle}`} />
-          <input type="hidden" name="_captcha" value="false" />
-          <input type="hidden" name="_template" value="table" />
-          <input type="hidden" name="_next" value={`${siteUrl}/contact/?booking=sent`} />
-          <input type="hidden" name="Tour selected" value={activeTourTitle} />
-          <input type="hidden" name="Preferred time label" value={activeTimeLabel} />
-          <input type="hidden" name="Booking message" value={bookingMessage} />
-
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
             <div>
               <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-tour">
@@ -521,6 +527,11 @@ export function OneMinuteBooking() {
                   const field = kind as "adults" | "children";
                   const counterName = labels[field].toLocaleLowerCase(locale === "fr" ? "fr" : "en");
                   const actionLabel = counterActionLabels[locale];
+                  const numericValue = Number(value);
+                  const minValue = field === "adults" ? 1 : 0;
+                  const maxValue = field === "adults" ? activeTourCapacity : maxChildrenForTour;
+                  const canDecrease = numericValue > minValue;
+                  const canIncrease = numericValue < maxValue;
 
                   return (
                     <div key={String(kind)} className="grid gap-2">
@@ -530,7 +541,8 @@ export function OneMinuteBooking() {
                       <div className="grid h-12 grid-cols-[2.5rem_1fr_2.5rem] overflow-hidden rounded-md border border-ink/12 bg-white">
                         <button
                           aria-label={`${actionLabel.decrease} ${counterName}`}
-                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50"
+                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50 disabled:cursor-not-allowed disabled:opacity-35"
+                          disabled={!canDecrease}
                           type="button"
                           onClick={() => changePeople(field, -1)}
                         >
@@ -540,13 +552,16 @@ export function OneMinuteBooking() {
                           id={`quick-${field}`}
                           aria-label={labels[field]}
                           className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none"
+                          max={maxValue}
+                          min={minValue}
                           name={String(fallback)}
                           readOnly
                           value={Number(value)}
                         />
                         <button
                           aria-label={`${actionLabel.increase} ${counterName}`}
-                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50"
+                          className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50 disabled:cursor-not-allowed disabled:opacity-35"
+                          disabled={!canIncrease}
                           type="button"
                           onClick={() => changePeople(field, 1)}
                         >
@@ -557,6 +572,9 @@ export function OneMinuteBooking() {
                   );
                 })}
               </div>
+              <p className="text-xs font-semibold text-ink-soft">
+                <LocalizedText id="quick.capacity">Tour capacity</LocalizedText>: {activeTourCapacity}
+              </p>
 
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-name">
@@ -627,7 +645,7 @@ export function OneMinuteBooking() {
             <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft">{bookingMessage}</p>
           </div>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.7fr]">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.7fr]">
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
               data-analytics-event="whatsapp_click"
@@ -640,14 +658,6 @@ export function OneMinuteBooking() {
               <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="quick.whatsapp">Send on WhatsApp</LocalizedText>
             </a>
-            <button
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
-              data-analytics-event="booking_form_submit"
-              type="submit"
-            >
-              <Send className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="quick.email">Send email</LocalizedText>
-            </button>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
               data-analytics-event="email_click"
@@ -655,7 +665,7 @@ export function OneMinuteBooking() {
               onClick={handleMessageLinkClick}
             >
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="quick.mailto">Email app</LocalizedText>
+              <LocalizedText id="quick.email">Send email</LocalizedText>
             </a>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"

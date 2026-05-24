@@ -17,15 +17,9 @@ On every push to `main`, GitHub Actions:
 
 GitHub Pages cannot execute backend code, so it cannot send booking emails by itself.
 
-The site uses a static-compatible backup email path:
+The site uses a static-compatible backup email path: the one-minute booking form generates a `mailto:` link with the same booking message used for WhatsApp. This keeps WhatsApp as the main conversion flow and avoids depending on a third-party form endpoint from GitHub Pages.
 
-```txt
-https://formsubmit.co/58d2000ae13924641d4bc3061af4ca1a
-```
-
-This is configured in `lib/site.ts` as `bookingFormEndpoint`. The first submission can trigger an activation email to the owner. After that, the one-minute booking form can send a copy by email while WhatsApp stays the main conversion flow, without exposing the naked email in the form action.
-
-If the owner later wants a real private backend, use Cloudflare Workers, Google Apps Script or another free serverless endpoint, then replace `bookingFormEndpoint`.
+If the owner later wants direct form delivery, use Cloudflare Workers, Google Apps Script or another free serverless endpoint, then wire the form to that endpoint.
 
 ## Current GitHub Pages URL
 
