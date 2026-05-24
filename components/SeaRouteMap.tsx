@@ -42,6 +42,8 @@ const tileSize = 256;
 const mapPadding = 54;
 const satelliteTileUrl = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile";
 const seaBendVector = { x: -1, y: 1 };
+const outboundColor = "#f4d39a";
+const returnColor = "#64d7ce";
 
 const dhermiBeach: GeoPoint = {
   id: "dhermi",
@@ -281,21 +283,28 @@ function formatCoordinates(point: GeoPoint) {
 function PointList({ points, compact = false }: { points: GeoPoint[]; compact?: boolean }) {
   return (
     <ol className={compact ? "mt-3 grid gap-2 text-xs text-ink-soft" : "mt-6 grid gap-3 text-sm text-ink-soft"}>
-      {points.map((point, index) => (
-        <li key={point.id} className="flex items-start gap-3">
-          <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-ink text-[11px] font-bold text-pearl">
-            {index + 1}
-          </span>
-          <span className="min-w-0">
-            <span className="block font-semibold text-ink">
-              <LocalizedText id={point.labelKey}>{point.label}</LocalizedText>
+      {points.map((point, index) => {
+        const paint = markerPaint(point.tone);
+
+        return (
+          <li key={point.id} className="flex items-start gap-3">
+            <span
+              className="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 text-[11px] font-bold shadow-sm"
+              style={{ backgroundColor: paint.fill, borderColor: paint.stroke, color: paint.text }}
+            >
+              {index + 1}
             </span>
-            <span className="mt-0.5 block font-mono text-[11px] tabular-nums text-ink-soft/80">
-              {formatCoordinates(point)}
+            <span className="min-w-0">
+              <span className="block font-semibold text-ink">
+                <LocalizedText id={point.labelKey}>{point.label}</LocalizedText>
+              </span>
+              <span className="mt-0.5 block font-mono text-[11px] tabular-nums text-ink-soft/80">
+                {formatCoordinates(point)}
+              </span>
             </span>
-          </span>
-        </li>
-      ))}
+          </li>
+        );
+      })}
     </ol>
   );
 }
@@ -303,6 +312,9 @@ function PointList({ points, compact = false }: { points: GeoPoint[]; compact?: 
 function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: string; descId: string }) {
   const view = buildMap(map.points);
   const routePaths = buildRoundTripPaths(view.points);
+  const outboundArrowId = `${titleId}-outbound-arrow`;
+  const returnArrowId = `${titleId}-return-arrow`;
+  const routeGlowId = `${titleId}-route-glow`;
 
   return (
     <div
@@ -326,14 +338,25 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
           />
         ))}
       </div>
-      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,252,246,0.08),rgba(255,252,246,0)),radial-gradient(circle_at_18%_20%,rgba(255,252,246,0.18),transparent_28%)]" />
+      <div aria-hidden className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,252,246,0.08),rgba(255,252,246,0)),linear-gradient(90deg,rgba(7,27,38,0.18),rgba(7,27,38,0)_28%,rgba(7,27,38,0)_72%,rgba(7,27,38,0.14)),radial-gradient(circle_at_18%_20%,rgba(255,252,246,0.18),transparent_28%)]" />
       <svg aria-hidden className="absolute inset-0 h-full w-full" viewBox={`0 0 ${mapWidth} ${mapHeight}`}>
-        <path data-route-layer="return-outer" d={routePaths.returnRoute} fill="none" opacity="0.8" stroke="#fffaf0" strokeLinecap="round" strokeLinejoin="round" strokeWidth="13" />
-        <path data-route-layer="return-core" d={routePaths.returnRoute} fill="none" opacity="0.92" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
-        <path data-route-layer="return-dash" d={routePaths.returnRoute} fill="none" opacity="0.95" stroke="#3aa8a0" strokeDasharray="9 15" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.5" />
-        <path data-route-layer="outbound-outer" d={routePaths.outbound} fill="none" opacity="0.88" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="17" />
-        <path data-route-layer="outbound-core" d={routePaths.outbound} fill="none" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6.5" />
-        <path data-route-layer="outbound-dash" d={routePaths.outbound} fill="none" stroke="#f4d39a" strokeDasharray="2 16" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" />
+        <defs>
+          <filter id={routeGlowId} x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="2" floodColor="#071b26" floodOpacity="0.42" stdDeviation="2.4" />
+          </filter>
+          <marker id={outboundArrowId} markerHeight="14" markerUnits="userSpaceOnUse" markerWidth="18" orient="auto" refX="16" refY="7">
+            <path d="M2 2 16 7 2 12 5.8 7z" fill={outboundColor} stroke="#071b26" strokeWidth="1.35" />
+          </marker>
+          <marker id={returnArrowId} markerHeight="14" markerUnits="userSpaceOnUse" markerWidth="18" orient="auto" refX="16" refY="7">
+            <path d="M2 2 16 7 2 12 5.8 7z" fill={returnColor} stroke="#071b26" strokeWidth="1.35" />
+          </marker>
+        </defs>
+        <path data-route-layer="return-outer" d={routePaths.returnRoute} fill="none" filter={`url(#${routeGlowId})`} opacity="0.82" stroke="#fffaf0" strokeLinecap="round" strokeLinejoin="round" strokeWidth="13" />
+        <path data-route-layer="return-core" d={routePaths.returnRoute} fill="none" markerEnd={`url(#${returnArrowId})`} opacity="0.95" stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="5" />
+        <path data-route-layer="return-dash" d={routePaths.returnRoute} fill="none" opacity="0.96" stroke={returnColor} strokeDasharray="9 15" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.5" />
+        <path data-route-layer="outbound-outer" d={routePaths.outbound} fill="none" filter={`url(#${routeGlowId})`} opacity="0.9" stroke="#ffffff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="17" />
+        <path data-route-layer="outbound-core" d={routePaths.outbound} fill="none" markerEnd={`url(#${outboundArrowId})`} stroke="#071b26" strokeLinecap="round" strokeLinejoin="round" strokeWidth="6.5" />
+        <path data-route-layer="outbound-dash" d={routePaths.outbound} fill="none" stroke={outboundColor} strokeDasharray="2 16" strokeLinecap="round" strokeLinejoin="round" strokeWidth="4.5" />
         {view.points.map((point, index) => {
           const badgeX = point.x + (point.badgeDx ?? 0);
           const badgeY = point.y + (point.badgeDy ?? 0);
@@ -362,8 +385,19 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
         <MapPin className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={1.75} />
         <LocalizedText id="map.real">Satellite GPS map</LocalizedText>
       </div>
+      <div data-route-legend className="absolute bottom-2 left-2 flex items-center gap-2 rounded-full bg-ink/78 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-pearl shadow-sm backdrop-blur">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-1.5 w-5 rounded-full border border-ink bg-[#f4d39a] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
+          <LocalizedText id="map.outbound">Outbound</LocalizedText>
+        </span>
+        <span className="h-3 w-px bg-pearl/30" />
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-1.5 w-5 rounded-full border border-ink bg-[#64d7ce] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
+          <LocalizedText id="map.return">Return</LocalizedText>
+        </span>
+      </div>
       <a
-        className="absolute bottom-2 right-2 inline-flex min-h-8 items-center rounded bg-pearl/92 px-2 text-[10px] font-semibold text-ink-soft underline-offset-2 hover:text-ink hover:underline"
+        className="absolute bottom-2 right-2 inline-flex min-h-8 items-center rounded bg-pearl/88 px-2 text-[10px] font-semibold text-ink-soft underline-offset-2 hover:text-ink hover:underline"
         href="https://www.esri.com/en-us/legal/terms/data-attributions"
         rel="noreferrer"
         target="_blank"
