@@ -74,7 +74,8 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   document.documentElement.lang = locale;
 
-  try {
+  function applyLocaleSwitchers() {
+    try {
     window.document.querySelectorAll("[data-locale-switcher]").forEach(function (button) {
       var nextLocale = button.getAttribute("data-locale");
       var isActive = button.getAttribute("data-locale") === locale;
@@ -90,7 +91,10 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
         button.removeAttribute("aria-current");
       }
     });
-  } catch (_e) {}
+    } catch (_e) {}
+  }
+
+  applyLocaleSwitchers();
 
   function setContent(node) {
     var key = node.getAttribute("data-i18n");
@@ -121,6 +125,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   var observerTimer = null;
 
   function applyLocaleText() {
+    applyLocaleSwitchers();
     try {
       window.document.querySelectorAll("[data-i18n]").forEach(setContent);
     } catch (_e) {}

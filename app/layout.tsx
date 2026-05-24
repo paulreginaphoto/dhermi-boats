@@ -9,6 +9,8 @@ import { LocaleBootstrap } from "@/components/LocaleBootstrap";
 import { LocalizedText } from "@/components/LocalizedText";
 import { assetPath, brandName, canonical, canonicalOrigin, isStagingDeployment, languageAlternates } from "@/lib/site";
 
+const socialImageUrl = canonical("/images/hero-riviera.webp");
+
 export const metadata: Metadata = {
   metadataBase: new URL(canonicalOrigin),
   title: {
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
       "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves.",
     images: [
       {
-        url: assetPath("/images/hero-riviera.webp"),
+        url: socialImageUrl,
         width: 2400,
         height: 1500,
         alt: "Dhermi Boat on the Albanian Riviera coast"
@@ -51,7 +53,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Boat Tours in Dhërmi",
-    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves."
+    description: "Book small-group and private boat tours from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and hidden coves.",
+    images: [socialImageUrl]
   },
   icons: {
     icon: [

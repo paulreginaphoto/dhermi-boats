@@ -71,6 +71,9 @@
 - [x] Clear LCP image warnings on tours, destinations and shared tours pages.
 - [x] Guard PageHero eager image loading and block remaining generic visible copy in EN / FR / AL.
 - [x] Recheck all generated external links and headless FR booking flow before final delivery.
+- [x] Guard exported absolute URLs against duplicated GitHub Pages base paths in social metadata.
+- [x] Keep the EN / FR / AL selector active after React hydration replaces the initial static markup.
+- [x] Recheck final external URLs and rendered FR mobile / desktop / 404 pages after the metadata and language fixes.
 
 ## Optional Future Improvements
 

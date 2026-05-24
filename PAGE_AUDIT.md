@@ -60,6 +60,9 @@ Date: 2026-05-24
 - Rechecked FR mobile and desktop screenshots, plus a headless booking flow: no horizontal overflow, required date/name validation works, fishing capacity remains 5 and no LCP warnings remain on `/tours`, `/destinations` or `/tours/group`.
 - Rechecked after the final delivery polish: PageHero now uses `loading="eager"` with preload/fetchPriority, generic EN / FR / AL phrases are blocked by `content:guard`, and 80 exported external URLs have no 404/5xx hard failures.
 - Rechecked FR desktop `/tours/` and mobile home booking through headless Chrome CDP: no relevant console errors, no framework overlay, no horizontal overflow, visible FR comparison copy, required date/name validation and fishing capacity capped at 5.
+- Rechecked exported social metadata and found a duplicated `/dhermi-boats/dhermi-boats/` OpenGraph/Twitter image URL across static pages; fixed the source URL generation and added export QA coverage.
+- Rechecked the current export in Chrome CDP and found FR text loaded but the language selector was not marked active after hydration; resynced the switcher in the locale bootstrap and guarded the behavior.
+- Final rendered QA passed on FR mobile home, FR desktop tours and FR mobile 404: no horizontal overflow, no console issues, FR active state visible and social images point to the working GitHub Pages URL.
 
 ## Notes
 

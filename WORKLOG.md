@@ -109,7 +109,10 @@
 - Added `content:guard` coverage for PageHero eager loading and a multilingual visible-copy blocklist for generic phrases.
 - Replaced the generic labels with concrete booking/departure copy, added dense gallery placement and rechecked 80 generated external URLs: 79 returned 200 and only GetYourGuide returned an expected bot-block 403.
 - Rechecked FR desktop `/tours/` and mobile home booking with headless Chrome CDP: no framework overlay, no relevant console errors or LCP warnings, no horizontal overflow, validation works and fishing capacity remains capped at 5.
+- Audited the current export again and found global OpenGraph/Twitter image metadata resolving to `https://regina.photo/dhermi-boats/dhermi-boats/images/hero-riviera.webp`; changed the social image URL to a canonical absolute asset URL and added export QA for duplicated base paths.
+- Rechecked rendered FR pages and found the locale bootstrap translated text after hydration but did not reapply the active FR state to the language selector; resynced the switcher in the same observer cycle as localized text.
+- Rechecked the final export with HTTP and Chrome CDP: 101 generated external URLs had no hard failures, FR mobile home / desktop tours / mobile 404 had no overflow, no console issues, working social image metadata and active FR controls.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, GitHub Pages-safe navigation and guarded non-generic visible copy.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, valid social-card image metadata, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, hydration-safe language controls, GitHub Pages-safe navigation and guarded non-generic visible copy.

@@ -87,11 +87,24 @@ const missingInternalTargets = [];
 const nextRedirectPages = [];
 const badCanonicalHrefs = [];
 const badSitemapLocs = [];
+const badDuplicateBaseUrls = [];
 
 function absoluteUrlUsesExpectedCanonicalBase(url) {
   return url === expectedCanonicalBase ||
     url.startsWith(`${expectedCanonicalBase}/`) ||
     url.startsWith(`${expectedCanonicalBase}?`);
+}
+
+function absoluteUrlRepeatsBasePath(url) {
+  if (!basePath) return false;
+
+  try {
+    const parsed = new URL(url);
+    return parsed.pathname === `${basePath}${basePath}` ||
+      parsed.pathname.startsWith(`${basePath}${basePath}/`);
+  } catch {
+    return false;
+  }
 }
 
 for (const file of htmlFiles) {
@@ -104,6 +117,13 @@ for (const file of htmlFiles) {
 
   if (html.includes("NEXT_REDIRECT")) {
     nextRedirectPages.push(relativeFile);
+  }
+
+  for (const match of html.matchAll(/(?:\bhref|\bsrc|\bcontent)="(https?:[^"]+)"/g)) {
+    const url = match[1].replaceAll("&amp;", "&");
+    if (absoluteUrlRepeatsBasePath(url)) {
+      badDuplicateBaseUrls.push({ file: relativeFile, url });
+    }
   }
 
   for (const match of html.matchAll(/<link\b[^>]*>/g)) {
@@ -153,10 +173,14 @@ if (fs.existsSync(sitemapPath)) {
     if (!absoluteUrlUsesExpectedCanonicalBase(loc)) {
       badSitemapLocs.push({ loc, expectedCanonicalBase });
     }
+    if (absoluteUrlRepeatsBasePath(loc)) {
+      badDuplicateBaseUrls.push({ file: "out/sitemap.xml", url: loc });
+    }
   }
 }
 
 fail("Sitemap URLs using the wrong public base:", badSitemapLocs);
+fail("Absolute URLs repeating the configured base path:", badDuplicateBaseUrls);
 
 const failureCount =
   localeKeyGaps.length +
@@ -165,7 +189,8 @@ const failureCount =
   missingInternalTargets.length +
   nextRedirectPages.length +
   badCanonicalHrefs.length +
-  badSitemapLocs.length;
+  badSitemapLocs.length +
+  badDuplicateBaseUrls.length;
 
 if (failureCount > 0) {
   process.exit(1);

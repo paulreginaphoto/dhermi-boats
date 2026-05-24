@@ -404,6 +404,29 @@ function checkLocaleBrowserDetection(filePath, content) {
   }
 }
 
+function checkLocaleSwitcherHydration(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "LocaleBootstrap.tsx"))) return;
+
+  if (!content.includes("function applyLocaleSwitchers()")) {
+    addIssue(
+      filePath,
+      1,
+      "Le bootstrap doit réappliquer l'état actif du sélecteur de langue après l'hydratation React.",
+      "function applyLocaleSwitchers()"
+    );
+  }
+
+  const applyLocaleText = content.match(/function applyLocaleText\(\) \{[\s\S]*?\n  \}/)?.[0] ?? "";
+  if (!applyLocaleText.includes("applyLocaleSwitchers();")) {
+    addIssue(
+      filePath,
+      lineNumberForIndex(content, content.indexOf("function applyLocaleText")),
+      "Le sélecteur FR/AL/EN doit être resynchronisé dans le même cycle que les textes localisés.",
+      "applyLocaleSwitchers();"
+    );
+  }
+}
+
 function checkArrivalComfortSection(filePath, content) {
   if (!filePath.endsWith(path.join("app", "page.tsx"))) return;
 
@@ -479,6 +502,7 @@ function scanFileContent(filePath, content) {
   checkPageHeroImagePriority(filePath, content);
   checkImportantPageHreflang(filePath, content);
   checkLocaleBrowserDetection(filePath, content);
+  checkLocaleSwitcherHydration(filePath, content);
   checkArrivalComfortSection(filePath, content);
   checkBookingDraftComfort(filePath, content);
   checkExternalTrustLinks(filePath, content);

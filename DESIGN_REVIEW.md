@@ -93,6 +93,9 @@ Fixes applied:
 - Rechecked page-hero and above-fold card image loading on `/tours`, `/destinations` and `/tours/group`; duplicate hero/card images no longer produce LCP warnings.
 - Replaced the remaining generic arrival, comparison and sticky-booking phrases with concrete departure/route/budget wording across EN / FR / AL, then guarded those phrases in `content:guard`.
 - Added dense placement to the gallery grid and rechecked FR desktop/mobile renders through headless Chrome CDP: zero relevant console warnings, zero horizontal overflow and the booking form still validates before WhatsApp.
+- Fixed a social-card regression where global OpenGraph/Twitter images doubled the GitHub Pages base path, then added export QA so absolute URLs cannot repeat `/dhermi-boats`.
+- Fixed the language segmented control after hydration so FR / AL / EN remain visually active even after React replaces the static markup.
+- Rechecked the current export through Chrome CDP on FR mobile home, FR desktop tours and FR mobile 404: active language state, WhatsApp links, social metadata, page width and console output all passed.
 
 Final self-review:
 
