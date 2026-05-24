@@ -58,6 +58,8 @@ Date: 2026-05-24
 - Found canonical, hreflang and sitemap URLs pointing to the not-yet-migrated `dhermi.boats` domain while production is on `https://regina.photo/dhermi-boats`; corrected the public URL base and added export QA plus a CI step.
 - Rechecked exported external links after rebuild: no 404 or 5xx hard failures across 74 URLs.
 - Rechecked FR mobile and desktop screenshots, plus a headless booking flow: no horizontal overflow, required date/name validation works, fishing capacity remains 5 and no LCP warnings remain on `/tours`, `/destinations` or `/tours/group`.
+- Rechecked after the final delivery polish: PageHero now uses `loading="eager"` with preload/fetchPriority, generic EN / FR / AL phrases are blocked by `content:guard`, and 80 exported external URLs have no 404/5xx hard failures.
+- Rechecked FR desktop `/tours/` and mobile home booking through headless Chrome CDP: no relevant console errors, no framework overlay, no horizontal overflow, visible FR comparison copy, required date/name validation and fishing capacity capped at 5.
 
 ## Notes
 

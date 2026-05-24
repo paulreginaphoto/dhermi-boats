@@ -91,6 +91,8 @@ Fixes applied:
 - Rechecked exported canonical, hreflang and sitemap URLs against the current GitHub Pages deployment URL and stopped them from pointing at non-migrated `dhermi.boats` paths.
 - Replaced remaining generic "experience" labels in the visible tour cards with concrete route, cruise and fishing language across EN / FR / AL.
 - Rechecked page-hero and above-fold card image loading on `/tours`, `/destinations` and `/tours/group`; duplicate hero/card images no longer produce LCP warnings.
+- Replaced the remaining generic arrival, comparison and sticky-booking phrases with concrete departure/route/budget wording across EN / FR / AL, then guarded those phrases in `content:guard`.
+- Added dense placement to the gallery grid and rechecked FR desktop/mobile renders through headless Chrome CDP: zero relevant console warnings, zero horizontal overflow and the booking form still validates before WhatsApp.
 
 Final self-review:
 

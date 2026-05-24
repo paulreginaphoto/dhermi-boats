@@ -69,6 +69,8 @@
 - [x] Add CI/export QA coverage for canonical and sitemap public base regressions.
 - [x] Remove remaining generic visible tour-card "experience" labels.
 - [x] Clear LCP image warnings on tours, destinations and shared tours pages.
+- [x] Guard PageHero eager image loading and block remaining generic visible copy in EN / FR / AL.
+- [x] Recheck all generated external links and headless FR booking flow before final delivery.
 
 ## Optional Future Improvements
 

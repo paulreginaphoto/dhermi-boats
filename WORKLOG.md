@@ -105,7 +105,11 @@
 - Replaced a few visible generic "experience" labels with concrete route/cruise/fishing wording across EN / FR / AL.
 - Removed the Next image `priority` prop on page heroes in favor of `preload`, and prioritized above-fold duplicate card images on destinations and shared tours so they no longer trigger LCP warnings when they reuse the hero photo.
 - Captured fresh FR mobile and desktop screenshots and ran a headless Chromium booking flow: no mobile overflow, required date/name errors show, fishing capacity stays 5, WhatsApp/email messages include the selected date and name, and `/tours`, `/destinations` and `/tours/group` show zero LCP warnings.
+- Audited the delivered export again and found one remaining PageHero LCP warning plus generic arrival/comparison/sticky copy in EN / FR / AL.
+- Added `content:guard` coverage for PageHero eager loading and a multilingual visible-copy blocklist for generic phrases.
+- Replaced the generic labels with concrete booking/departure copy, added dense gallery placement and rechecked 80 generated external URLs: 79 returned 200 and only GetYourGuide returned an expected bot-block 403.
+- Rechecked FR desktop `/tours/` and mobile home booking with headless Chrome CDP: no framework overlay, no relevant console errors or LCP warnings, no horizontal overflow, validation works and fishing capacity remains capped at 5.
 
 ## Current Result
 
-The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows and GitHub Pages-safe navigation.
+The site is a static, image-led booking website with clear prices, a one-minute WhatsApp booking tunnel, required date and name checks, email backup, fixed-time tour constraints, mobile sticky CTA, floating desktop WhatsApp CTA, semantic pages, search-readable SEO files, official social links, real social thumbnails, sorted Drive media, real mobile GPS maps, localized WhatsApp flows, GitHub Pages-safe navigation and guarded non-generic visible copy.

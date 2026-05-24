@@ -13,7 +13,7 @@ export function TourComparison() {
               <LocalizedText id="comparison.label">Compare tours</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="comparison.title">Which boat tour should you choose?</LocalizedText>
+              <LocalizedText id="comparison.title">Pick by route length, budget and group size</LocalizedText>
             </h2>
           </div>
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="primary" whatsappKey="default" analyticsEvent="whatsapp_click">

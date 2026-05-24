@@ -14,6 +14,23 @@ const IMAGE_QUALITY_VALUE = /quality=\{(\d+)\}/g;
 const MIN_PHRASE_WORDS = 2;
 const MAX_PHRASE_WORDS = 6;
 const MIN_PHRASE_TEXT_LENGTH = 12;
+const GENERIC_VISIBLE_PHRASES = [
+  "Good to know",
+  "Your first steps are simple",
+  "Ready for the sea?",
+  "Easy booking",
+  "Which boat tour should you choose?",
+  "Bon à savoir",
+  "Les premiers pas sont simples",
+  "Prêt pour la mer ?",
+  "Réservation facile",
+  "Quel tour en bateau choisir ?",
+  "Mirë ta dini",
+  "Hapat e parë janë të thjeshtë",
+  "Gati për detin?",
+  "Rezervim i lehtë",
+  "Cilin tur me varkë duhet të zgjedhësh?"
+];
 
 /** @type {Array<{file:string,line:number,message:string,excerpt:string}>} */
 const issues = [];
@@ -91,11 +108,27 @@ function checkRepeatedPhrase(file, text, lineNumber) {
   }
 }
 
+function checkGenericVisiblePhrase(file, text, lineNumber) {
+  if (!isVisibleContentFile(file)) return;
+
+  const normalizedLine = text.toLocaleLowerCase();
+  const phrase = GENERIC_VISIBLE_PHRASES.find((item) => normalizedLine.includes(item.toLocaleLowerCase()));
+  if (phrase) {
+    addIssue(
+      file,
+      lineNumber,
+      "Texte visible trop générique détecté; remplacer par une information concrète liée à Dhërmi, au départ ou à la réservation.",
+      phrase
+    );
+  }
+}
+
 function scanLine(filePath, text, lineNumber) {
   checkLineForForbiddenDash(filePath, text, lineNumber);
   checkLineForEmoji(filePath, text, lineNumber);
   checkRepeatedWords(filePath, text, lineNumber);
   checkRepeatedPhrase(filePath, text, lineNumber);
+  checkGenericVisiblePhrase(filePath, text, lineNumber);
 }
 
 function lineNumberForIndex(content, index) {
@@ -314,6 +347,20 @@ function checkPageHeroAltText(filePath, content) {
   );
 }
 
+function checkPageHeroImagePriority(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "PageHero.tsx"))) return;
+
+  const imageMarkup = content.match(/<Image\b(?:(?!\/>)[\s\S])*\/>/)?.[0] ?? "";
+  if (!imageMarkup.includes("preload") || !imageMarkup.includes("fetchPriority=\"high\"") || !imageMarkup.includes("loading=\"eager\"")) {
+    addIssue(
+      filePath,
+      lineNumberForIndex(content, content.indexOf("<Image")),
+      "Le hero photo PageHero doit charger l’image LCP en eager avec preload et fetchPriority high.",
+      imageMarkup || "<Image ... />"
+    );
+  }
+}
+
 function checkImportantPageHreflang(filePath, content) {
   if (!filePath.endsWith(path.join("page.tsx"))) return;
   if (!content.includes("export const metadata")) return;
@@ -429,6 +476,7 @@ function scanFileContent(filePath, content) {
   checkBookingRequiredFields(filePath, content);
   checkBookingCapacityLimits(filePath, content);
   checkPageHeroAltText(filePath, content);
+  checkPageHeroImagePriority(filePath, content);
   checkImportantPageHreflang(filePath, content);
   checkLocaleBrowserDetection(filePath, content);
   checkArrivalComfortSection(filePath, content);

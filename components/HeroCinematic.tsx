@@ -11,7 +11,7 @@ const heroFacts: Array<[OutlineIconComponent, string, string, string, string]> =
   [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.reply", "Fast WhatsApp reply"],
   [Users, "hero.fact.groupSize", "Max 15 guests", "hero.fact.capacity", "Small groups"],
   [ShieldCheck, "hero.fact.skipper", "Local skipper", "hero.fact.local", "Dhërmi area"],
-  [Languages, "hero.fact.languages", "English • French • Albanian", "hero.fact.easy", "Easy booking"]
+  [Languages, "hero.fact.languages", "English • French • Albanian", "hero.fact.easy", "WhatsApp in 1 min"]
 ];
 
 export function HeroCinematic() {

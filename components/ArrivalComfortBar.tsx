@@ -39,10 +39,10 @@ export function ArrivalComfortBar() {
         <div className="grid gap-5 rounded-lg border border-ink/8 bg-limestone/72 p-4 shadow-sm md:grid-cols-[0.55fr_1.45fr] md:p-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="arrival.label">Good to know</LocalizedText>
+              <LocalizedText id="arrival.label">Before boarding</LocalizedText>
             </p>
             <h2 id="arrival-comfort-title" className="mt-2 font-serif text-2xl font-medium leading-tight text-ink md:text-3xl">
-              <LocalizedText id="arrival.title">Your first steps are simple</LocalizedText>
+              <LocalizedText id="arrival.title">What we confirm before departure</LocalizedText>
             </h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">

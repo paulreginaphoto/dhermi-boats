@@ -38,7 +38,7 @@ export function StickyBookingBar() {
     >
       <div className="mx-auto grid max-w-md grid-cols-[1fr_auto] items-center gap-3 min-[390px]:grid-cols-[1fr_auto_auto]">
         <p className="hidden text-sm font-bold text-ink min-[390px]:block">
-          <LocalizedText id="sticky.text">Ready for the sea?</LocalizedText>
+          <LocalizedText id="sticky.text">Booking Dhërmi today?</LocalizedText>
         </p>
         <a
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl min-[390px]:col-start-2"

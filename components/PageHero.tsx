@@ -22,6 +22,7 @@ export function PageHero({
           alt={imageAlt}
           fill
           preload
+          loading="eager"
           quality={72}
           decoding="async"
           fetchPriority="high"
