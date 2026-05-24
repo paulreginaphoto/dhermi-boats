@@ -194,6 +194,79 @@ function configuredImageQualities() {
 
 const allowedImageQualities = configuredImageQualities();
 
+function parseLocaleTranslations(locale) {
+  const i18nPath = path.join(ROOT_DIR, "lib", "i18n.ts");
+  if (!fs.existsSync(i18nPath)) return {};
+
+  const source = fs.readFileSync(i18nPath, "utf8");
+  const start = source.indexOf(`  ${locale}: {`);
+  if (start < 0) return {};
+
+  const end = source.indexOf("\n  },", start);
+  if (end < 0) return {};
+
+  const block = source.slice(start, end);
+  const entries = {};
+  const pattern = /^\s*"([^"]+)":\s*"((?:\\"|[^"])*)",?\s*$/gm;
+  let match = pattern.exec(block);
+
+  while (match) {
+    entries[match[1]] = match[2].replace(/\\"/g, "\"");
+    match = pattern.exec(block);
+  }
+
+  return entries;
+}
+
+const englishTranslations = parseLocaleTranslations("en");
+
+function normalizeFallbackText(value) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function checkLocalizedTextFallback(filePath, content) {
+  if (![".tsx", ".jsx"].includes(path.extname(filePath))) return;
+
+  const pattern = /<LocalizedText\s+id="([^"]+)"[^>]*>([\s\S]*?)<\/LocalizedText>/g;
+  for (const match of content.matchAll(pattern)) {
+    const key = match[1];
+    const fallbackContent = match[2];
+    if (!Object.hasOwn(englishTranslations, key)) continue;
+    if (/[<>{}]/.test(fallbackContent)) continue;
+
+    const fallback = normalizeFallbackText(fallbackContent);
+    const expected = normalizeFallbackText(englishTranslations[key]);
+    if (fallback && fallback !== expected) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, match.index ?? 0),
+        "Le fallback visible de LocalizedText doit correspondre à la traduction EN pour éviter une copie statique obsolète avant hydratation.",
+        `${key}: "${fallback}" -> "${expected}"`
+      );
+    }
+  }
+}
+
+function checkDynamicTourBookingFallback(filePath, content) {
+  if (![".tsx", ".jsx"].includes(path.extname(filePath))) return;
+
+  const dynamicBookFallbacks = [
+    /<LocalizedText\s+id=\{[^}]*bookKey[^}]*\}[^>]*>\s*Book this tour\s*<\/LocalizedText>/g,
+    /<LocalizedText\s+id=\{[^}]*tour\.private\.book[^}]*\}[^>]*>\s*Book this tour\s*<\/LocalizedText>/g
+  ];
+
+  for (const pattern of dynamicBookFallbacks) {
+    for (const match of content.matchAll(pattern)) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, match.index ?? 0),
+        "Les CTA de réservation dynamiques doivent fournir le fallback EN propre au tour, sinon private/sunset/fishing retombent sur un libellé générique avant hydratation.",
+        match[0].replace(/\s+/g, " ")
+      );
+    }
+  }
+}
+
 function checkOptionContent(filePath, content) {
   if (path.extname(filePath) !== ".tsx") return;
 
@@ -568,6 +641,8 @@ function checkExternalTrustLinks(filePath, content) {
 }
 
 function scanFileContent(filePath, content) {
+  checkLocalizedTextFallback(filePath, content);
+  checkDynamicTourBookingFallback(filePath, content);
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
   checkBookingFixedTimeTours(filePath, content);

@@ -88,6 +88,10 @@
 - [x] Split the quick-booking summary into localized pending and ready states.
 - [x] Keep dynamic post-hydration `data-i18n` changes translated after React interactions.
 - [x] Recheck the local exported FR booking flow after summary and i18n observer fixes.
+- [x] Guard static `LocalizedText` fallbacks so EN no-JS output cannot drift from the translation dictionary.
+- [x] Replace stale generic fallbacks on photos, destinations, reviews and tour selection pages.
+- [x] Use specific pre-hydration booking CTA fallbacks for private, sunset and fishing tour actions.
+- [x] Recheck external links and rendered FR/EN fallback behavior after the fallback-copy pass.
 
 ## Optional Future Improvements
 

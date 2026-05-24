@@ -79,6 +79,9 @@ Date: 2026-05-24
 - Rechecked the local exported FR booking form and found the summary could claim readiness before required fields, then briefly fall back to English after React changed the summary key.
 - Added localized pending/ready summary labels and expanded the locale observer so dynamic `data-i18n` changes stay translated after interaction.
 - Rechecked the local exported FR booking flow: no horizontal overflow, active FR state, pending `#quick-date` action, ready French WhatsApp URL after date/name entry and no relevant console events.
+- Found stale English fallback copy in static/no-JS output on reviews, photos, destinations and tour listing surfaces, then guarded simple `LocalizedText` fallbacks against EN dictionary drift.
+- Found dynamic booking CTAs for private, sunset and fishing offers could pre-render as generic "Book this tour"; centralized tour booking fallback copy so the exported HTML now uses specific CTA labels.
+- Rechecked exported links and rendered pages after the fallback pass: 95 external URL shapes checked with zero hard failures, FR mobile booking passed with formatted date in WhatsApp, and EN private/destinations/tours pages had no stale fallback labels.
 
 ## Notes
 

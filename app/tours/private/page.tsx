@@ -6,14 +6,9 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { TourDetailPage } from "@/components/TourDetailPage";
 import { tours } from "@/data/content";
 import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
+import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
 const privateTour = tours.find((tour) => tour.id === "private")!;
-
-function bookKeyForTour(tourId: string) {
-  if (tourId === "sunset") return "tour.sunset.book";
-  if (tourId === "fishing") return "tour.fishing.book";
-  return "tour.book";
-}
 
 export const metadata: Metadata = {
   title: "Private Boat Tour Albania",
@@ -60,7 +55,7 @@ export default function PrivateTourPage() {
               </ul>
               <div className="mt-7 flex flex-col gap-3 sm:flex-row">
                 <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
-                  <LocalizedText id={bookKeyForTour(tour.id)}>Book this tour</LocalizedText>
+                  <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                 </ButtonLink>
                 <ButtonLink href={tour.href} icon={ArrowRight} variant="secondary" className="flex-1">
                   <LocalizedText id="tour.details">View details</LocalizedText>

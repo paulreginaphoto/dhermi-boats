@@ -21,7 +21,7 @@ export default function BoatPhotosLegacyPage() {
         <div className="site-band">
           <div className="max-w-3xl">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.social.label">Our latest photos</LocalizedText>
+              <LocalizedText id="section.social.label">Recent sea photos</LocalizedText>
             </p>
             <h1 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
               <LocalizedText id="page.photos.title">Boat tour photos in Dhërmi</LocalizedText>

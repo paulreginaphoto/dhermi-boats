@@ -108,6 +108,9 @@ Fixes applied:
 - Tightened the quick-booking summary state so it no longer says the message is ready until date and name are filled.
 - Fixed dynamic post-hydration i18n updates so React state changes keep the selected French copy instead of falling back to English.
 - Rechecked the local exported booking flow at 390px: pending and ready states localize correctly, WhatsApp remains guarded before required fields and no horizontal overflow appears.
+- Removed stale static fallback copy so no-JS/pre-hydration pages show the same concrete English labels as the translation dictionary.
+- Replaced generic dynamic tour booking fallbacks with route-specific private, sunset and fishing CTA wording before hydration.
+- Rechecked FR mobile booking and EN private/destinations/tours pages in Chrome CDP: no horizontal overflow, no console errors and no stale generic CTA labels.
 
 Final self-review:
 

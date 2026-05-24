@@ -23,7 +23,7 @@ export default function DestinationsPage() {
         title={<LocalizedText id="page.destinations.title">Destinations</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
-        label={<LocalizedText id="section.destinations.label">Destinations</LocalizedText>}
+        label={<LocalizedText id="section.destinations.label">Route highlights</LocalizedText>}
       />
       <section className="destination-section py-8 text-pearl md:py-16">
         <div className="site-band grid gap-4 md:gap-5 lg:grid-cols-3">
@@ -48,8 +48,8 @@ export default function DestinationsPage() {
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <SectionHeading
-            label={<LocalizedText id="section.social.label">Our latest photos</LocalizedText>}
-            title={<LocalizedText id="section.social.title">Our latest photos</LocalizedText>}
+            label={<LocalizedText id="section.social.label">Recent sea photos</LocalizedText>}
+            title={<LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>}
           />
           <div className="mt-10">
             <GalleryGrid />

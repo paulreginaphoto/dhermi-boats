@@ -2,13 +2,14 @@ import Image from "next/image";
 import { ArrowRight, Clock3, MessageCircle, Sparkles, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
+import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, iconStrokeWidth } from "@/components/OutlineIcon";
 
 export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePriority?: boolean }) {
   const translationBase = `tour.${tour.id}`;
-  const bookKey =
-    tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
+  const bookKey = tourBookKey(tour.id);
+  const bookFallback = tourBookFallback(tour.id);
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink/8 bg-pearl/92 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
@@ -94,7 +95,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             target="_blank"
           >
             <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />
-            <LocalizedText id={bookKey}>Book this tour</LocalizedText>
+            <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </a>
           <a
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white active:translate-y-px"

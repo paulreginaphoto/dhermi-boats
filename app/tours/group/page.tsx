@@ -22,7 +22,7 @@ export default function GroupToursPage() {
         title={<LocalizedText id="page.group.label">Shared tours</LocalizedText>}
         image={groupTours[0].image}
         imageAlt={groupTours[0].imageAlt}
-        label={<LocalizedText id="section.tours.label">Choose your tour</LocalizedText>}
+        label={<LocalizedText id="section.tours.label">Tours from Dhërmi</LocalizedText>}
       />
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-6 md:grid-cols-2">

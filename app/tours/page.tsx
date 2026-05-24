@@ -32,7 +32,7 @@ export default function ToursPage() {
     <>
       <SEOJsonLd data={schema} />
       <PageHero
-        title={<LocalizedText id="section.tours.title">Choose your tour</LocalizedText>}
+        title={<LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}

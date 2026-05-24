@@ -8,6 +8,7 @@ import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { tours, type Destination } from "@/data/content";
 import { primaryWhatsappHref } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
+import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
   const translationBase = `destination.${destination.id}`;
@@ -80,7 +81,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.tours.title">Choose your tour</LocalizedText>
+            <LocalizedText id="section.tours.title">Choose your boat tour</LocalizedText>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {relatedTours.map((tour) => (
@@ -101,7 +102,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                 ) : null}
                 <div className="mt-6 flex flex-1 flex-col justify-end gap-3 sm:flex-row">
                   <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
-                    <LocalizedText id={tour.id === "private" ? "tour.private.book" : "tour.book"}>Book this tour</LocalizedText>
+                    <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                   </ButtonLink>
                   <ButtonLink href={tour.href} variant="secondary" className="flex-1">
                     <LocalizedText id="tour.details">View details</LocalizedText>
