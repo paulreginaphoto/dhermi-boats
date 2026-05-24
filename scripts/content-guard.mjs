@@ -399,6 +399,28 @@ function checkBookingDraftComfort(filePath, content) {
   }
 }
 
+function checkExternalTrustLinks(filePath, content) {
+  if (content.includes("dhermi-boat-s720012")) {
+    addIssue(
+      filePath,
+      lineNumberForIndex(content, content.indexOf("dhermi-boat-s720012")),
+      "L'ancien lien GetYourGuide ne correspond pas au profil fournisseur actuel.",
+      "dhermi-boat-s720012"
+    );
+  }
+
+  if (!filePath.endsWith(path.join("lib", "site.ts"))) return;
+
+  if (!content.includes("https://www.getyourguide.com/dhermi-boat-tours-s702528/")) {
+    addIssue(
+      filePath,
+      1,
+      "Le lien GetYourGuide doit pointer vers le profil fournisseur Dhermi Boat Tours vérifié.",
+      "https://www.getyourguide.com/dhermi-boat-tours-s702528/"
+    );
+  }
+}
+
 function scanFileContent(filePath, content) {
   checkOptionContent(filePath, content);
   checkImageQualityConfig(filePath, content);
@@ -411,6 +433,7 @@ function scanFileContent(filePath, content) {
   checkLocaleBrowserDetection(filePath, content);
   checkArrivalComfortSection(filePath, content);
   checkBookingDraftComfort(filePath, content);
+  checkExternalTrustLinks(filePath, content);
 }
 
 function walkDir(dir) {

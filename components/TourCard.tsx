@@ -5,7 +5,7 @@ import { whatsappUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, iconStrokeWidth } from "@/components/OutlineIcon";
 
-export function TourCard({ tour }: { tour: Tour }) {
+export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePriority?: boolean }) {
   const translationBase = `tour.${tour.id}`;
   const bookKey =
     tour.id === "private" ? "tour.private.book" : tour.id === "sunset" ? "tour.sunset.book" : tour.id === "fishing" ? "tour.fishing.book" : "tour.book";
@@ -18,8 +18,8 @@ export function TourCard({ tour }: { tour: Tour }) {
             src={tour.image}
             alt={tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`}
             fill
-            loading="lazy"
-            fetchPriority="low"
+            loading={imagePriority ? "eager" : "lazy"}
+            fetchPriority={imagePriority ? "high" : "low"}
             decoding="async"
             quality={58}
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"

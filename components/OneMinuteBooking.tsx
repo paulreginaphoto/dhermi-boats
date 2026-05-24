@@ -282,7 +282,9 @@ export function OneMinuteBooking() {
   const availableTimeOptions = useMemo(() => timeOptionsForTour(tourId), [tourId]);
   const selectedTime = availableTimeOptions.includes(time) ? time : availableTimeOptions[0];
   const activeTimeLabel = timeOptionLabels[locale][selectedTime] ?? selectedTime;
-  const maxChildrenForTour = Math.max(0, activeTourCapacity - adults);
+  const safeAdults = Math.min(activeTourCapacity, Math.max(1, adults));
+  const maxChildrenForTour = Math.max(0, activeTourCapacity - safeAdults);
+  const safeChildren = Math.min(Math.max(0, children), maxChildrenForTour);
   const messages = validationMessages[locale];
 
   useEffect(() => {
@@ -310,12 +312,12 @@ export function OneMinuteBooking() {
   useEffect(() => {
     if (!bookingDraftReady) return;
 
-    const draft = { tourId, date, time: selectedTime, adults, children };
+    const draft = { tourId, date, time: selectedTime, adults: safeAdults, children: safeChildren };
     // name, phone and notes are intentionally not saved because they are personal details.
     try {
       window.localStorage.setItem(bookingDraftStorageKey, JSON.stringify(draft));
     } catch {}
-  }, [adults, bookingDraftReady, children, date, selectedTime, tourId]);
+  }, [bookingDraftReady, date, safeAdults, safeChildren, selectedTime, tourId]);
 
   const bookingMessage = useMemo(() => {
     const lines = [
@@ -323,15 +325,15 @@ export function OneMinuteBooking() {
       `${labels.tour}: ${activeTourTitle}`,
       `${labels.date}: ${cleanValue(date)}`,
       `${labels.time}: ${cleanValue(activeTimeLabel)}`,
-      `${labels.adults}: ${adults}`,
-      `${labels.children}: ${children}`,
+      `${labels.adults}: ${safeAdults}`,
+      `${labels.children}: ${safeChildren}`,
       `${labels.name}: ${cleanValue(name)}`,
       `${labels.phone}: ${cleanValue(phone)}`,
       `${labels.notes}: ${cleanValue(notes)}`
     ];
 
     return lines.join("\n");
-  }, [activeTimeLabel, activeTourTitle, adults, children, date, labels, locale, name, notes, phone]);
+  }, [activeTimeLabel, activeTourTitle, date, labels, locale, name, notes, phone, safeAdults, safeChildren]);
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
   const whatsappHref = whatsappUrl(bookingMessage);
@@ -356,23 +358,25 @@ export function OneMinuteBooking() {
 
   function changePeople(kind: "adults" | "children", direction: 1 | -1) {
     if (kind === "adults") {
-      const nextAdults = Math.min(activeTourCapacity, Math.max(1, adults + direction));
-      setAdults(nextAdults);
-      setChildren((value) => Math.min(value, Math.max(0, activeTourCapacity - nextAdults)));
+      setAdults((currentAdults) => {
+        const nextAdults = Math.min(activeTourCapacity, Math.max(1, currentAdults + direction));
+        setChildren((currentChildren) => Math.min(currentChildren, Math.max(0, activeTourCapacity - nextAdults)));
+        return nextAdults;
+      });
       return;
     }
-    setChildren((value) => Math.min(maxChildrenForTour, Math.max(0, value + direction)));
+    setChildren((currentChildren) => Math.min(Math.max(0, activeTourCapacity - safeAdults), Math.max(0, currentChildren + direction)));
   }
 
   function selectTour(nextTourId: string) {
     const nextTimeOptions = timeOptionsForTour(nextTourId);
     const nextCapacity = capacityForTour(nextTourId);
-    const nextAdults = Math.min(nextCapacity, Math.max(1, adults));
+    const nextAdults = Math.min(nextCapacity, Math.max(1, safeAdults));
 
     setTourId(nextTourId);
     setTime((currentTime) => (nextTimeOptions.includes(currentTime) ? currentTime : nextTimeOptions[0]));
     setAdults(nextAdults);
-    setChildren((value) => Math.min(value, Math.max(0, nextCapacity - nextAdults)));
+    setChildren((value) => Math.min(Math.max(0, value), Math.max(0, nextCapacity - nextAdults)));
   }
 
   function selectDate(nextDate: string) {
@@ -521,8 +525,8 @@ export function OneMinuteBooking() {
 
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  ["adults", "quick.adults", "Adults", adults],
-                  ["children", "quick.children", "Children", children]
+                  ["adults", "quick.adults", "Adults", safeAdults],
+                  ["children", "quick.children", "Children", safeChildren]
                 ].map(([kind, id, fallback, value]) => {
                   const field = kind as "adults" | "children";
                   const counterName = labels[field].toLocaleLowerCase(locale === "fr" ? "fr" : "en");

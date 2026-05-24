@@ -47,6 +47,15 @@ Date: 2026-05-23
 - Prioritized the first gallery image on the photo page when it can become the LCP image.
 - Kept the reliable Next language bootstrap after testing an earlier-start variant that did not execute consistently.
 
+## Overnight Follow-up
+
+Date: 2026-05-24
+
+- Rechecked the current FR homepage at 390 px and 1440 px with Chrome DevTools Protocol: no horizontal overflow, active FR selector and readable mobile menu.
+- Corrected the GetYourGuide supplier link to the verified `dhermi-boat-tours-s702528` profile.
+- Tightened the desktop hero title so long French copy presents as a controlled three-line hero.
+- Reproduced rapid booking counter taps and fixed the fishing tour capacity invariant so display, drafts and generated messages stay capped at 5 people.
+
 ## Notes
 
 - No fake reviews, ratings, licenses or safety claims were added.

@@ -93,6 +93,12 @@
 - Found that the FormSubmit backup endpoint currently returns 521, so the email fallback could send visitors to an unavailable service.
 - Replaced the FormSubmit action with a validated `mailto:` backup using the generated booking message, and updated docs to match the current static behavior.
 - Verified internal base-path links, clickable external links, no-slop content guard, typecheck, lint and production builds.
+- Audited clickable external links again and found the GetYourGuide supplier URL used an obsolete supplier ID.
+- Replaced the GetYourGuide constant with the verified `dhermi-boat-tours-s702528` supplier profile and added a content guard so the old ID cannot return.
+- Rechecked local FR mobile and desktop renders with Chrome DevTools Protocol: no horizontal overflow, FR active, mobile menu visible and the corrected GetYourGuide href present.
+- Tightened the desktop hero typography so the long French headline fits as a clean three-line hero instead of a broken tall stack.
+- Reproduced a rapid-tap booking bug where the fishing tour counters could temporarily exceed the 5-person capacity under batched React updates.
+- Clamped derived booking values for display, saved drafts and generated messages, then rechecked the mobile booking flow: invalid date/name sends are blocked and fishing remains capped at 5.
 
 ## Current Result
 

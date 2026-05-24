@@ -85,6 +85,9 @@ Fixes applied:
 - Rechecked the quick booking logic for fixed-time tours and constrained `Sunset Private Tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
 - Rechecked the live and local quick booking date field and found past dates were still selectable. The form now sets the local date as the minimum and clamps manual past-date entry before WhatsApp/email message generation.
 - Rechecked the live and local quick booking form and found that empty date or name values could still leave through backup email, while WhatsApp and email-app links skipped the inline validation path. The one-minute form now validates date and name before any message or backup-email action opens.
+- Rechecked clickable external trust links and replaced the obsolete GetYourGuide supplier ID with the verified Dhermi Boat Tours supplier profile.
+- Rechecked FR mobile and desktop hero screenshots with Chrome DevTools Protocol: no horizontal overflow, selected FR language visible and the desktop headline now reads as a controlled three-line hero.
+- Reproduced rapid-tap counter batching in the one-minute booking form and clamped the generated booking values so the 5-person fishing capacity cannot be exceeded in display, draft storage or WhatsApp messages.
 
 Final self-review:
 
@@ -98,7 +101,7 @@ Final self-review:
 ## Remaining Intentional Tradeoffs
 
 - One optimized Drive video is used. It loads only after the visitor taps play, keeping the first page load light.
-- GitHub Pages cannot run a private backend. The email backup uses a free static form endpoint and WhatsApp remains the primary booking flow.
+- GitHub Pages cannot run a private backend. The email backup uses the visitor's email app through `mailto:`, and WhatsApp remains the primary booking flow.
 - GitHub Pages currently serves project assets with its own cache policy. A CDN can add longer cache headers later when the custom domain is connected.
 - The header and footer use a pure text logo; a custom vector mark can still be added later if the brand needs it.
 - Instagram media is linked but not mirrored, because the logged-out public page did not expose reliable downloadable post media.

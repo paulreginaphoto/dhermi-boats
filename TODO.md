@@ -62,6 +62,9 @@
 - [x] Require date and name before the one-minute form can leave for WhatsApp or email.
 - [x] Keep the quick booking guest counters inside each tour capacity, including the 5-person fishing tour.
 - [x] Replace the unreliable FormSubmit action with a validated mailto backup.
+- [x] Verify the GetYourGuide supplier URL and guard against the obsolete supplier ID.
+- [x] Prevent rapid booking counter taps from exceeding the 5-person fishing capacity.
+- [x] Recheck FR mobile and desktop hero rendering with no horizontal overflow.
 
 ## Optional Future Improvements
 

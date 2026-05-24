@@ -43,9 +43,9 @@ export function HeroCinematic() {
         <div className="absolute inset-0 bg-gradient-to-b from-navy/14 via-navy/14 to-navy/80 md:hidden" />
       </div>
 
-      <div className="relative mx-auto grid min-h-[calc(76svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[0.95fr_0.75fr]">
-        <div className="max-w-3xl">
-          <h1 className="photo-title max-w-3xl break-words font-serif text-3xl font-medium leading-[1.06] text-pearl sm:text-5xl md:text-6xl lg:text-6xl">
+      <div className="relative mx-auto grid min-h-[calc(76svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[1.08fr_0.72fr] xl:grid-cols-[1.12fr_0.72fr]">
+        <div className="max-w-4xl">
+          <h1 className="photo-title max-w-4xl break-words font-serif text-3xl font-medium leading-[1.04] text-pearl sm:text-5xl md:text-[3.3rem] lg:text-[3.45rem] xl:text-[3.65rem]">
             <LocalizedText id="hero.title">
               Dhërmi boat tours to Gjipe, Grama Bay & hidden caves
             </LocalizedText>

@@ -41,8 +41,8 @@ export default function ToursPage() {
       <section aria-label="Tours" className="bg-pearl py-10 md:py-16">
         <div className="site-band">
           <div className="grid gap-6 lg:grid-cols-3">
-            {tours.map((tour) => (
-              <TourCard key={tour.id} tour={tour} />
+            {tours.map((tour, index) => (
+              <TourCard key={tour.id} tour={tour} imagePriority={index < 3} />
             ))}
           </div>
         </div>
