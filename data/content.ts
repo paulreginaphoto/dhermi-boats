@@ -74,7 +74,7 @@ export const tours: Tour[] = [
     capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-gjipe.webp"),
-    imageAlt: "Gjipe Beach seen from above with turquoise water and limestone cliffs",
+    imageAlt: "Boat approaching a clear beach cove with turquoise water near Dhërmi",
     href: sitePath("/gjipe-boat-tour/"),
     legacyHref: sitePath("/destinations/gjipe/"),
     whatsappText: "Hello Dhermi Boat, I would like to book the Gjipe Tour. Date: __ / Adults: __ / Children: __",
@@ -111,7 +111,7 @@ export const tours: Tour[] = [
     capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-grama.webp"),
-    imageAlt: "Grama Bay seen from above with clear blue water and rocky coastline",
+    imageAlt: "Wide blue bay and rocky Karaburun coastline on a Dhermi boat tour",
     href: sitePath("/grama-bay-boat-tour/"),
     legacyHref: sitePath("/destinations/grama-bay/"),
     whatsappText: "Hello Dhermi Boat, I would like to book the Grama Bay Tour. Date: __ / Adults: __ / Children: __",
@@ -148,7 +148,7 @@ export const tours: Tour[] = [
     capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-private.webp"),
-    imageAlt: "Dhermi Boat beside a sea cave with clear turquoise water",
+    imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
     href: sitePath("/private-boat-tour-albania/"),
     legacyHref: sitePath("/tours/private/"),
     whatsappText: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
@@ -185,7 +185,7 @@ export const tours: Tour[] = [
     capacity: "MAX 15 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-sunset.webp"),
-    imageAlt: "Sunset over the Albanian Riviera from the front of the boat",
+    imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
     legacyHref: sitePath("/tours/private/#sunset"),
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Sunset Private Tour. Date: __ / People: __",
@@ -222,7 +222,7 @@ export const tours: Tour[] = [
     capacity: "MAX 5 GUESTS",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-fishing.webp"),
-    imageAlt: "Fishing rods on Dhermi Boat at sunrise near the Riviera mountains",
+    imageAlt: "Boat helm facing the Dhërmi coastline on calm water",
     href: sitePath("/morning-fishing-tour/"),
     legacyHref: sitePath("/tours/private/#fishing"),
     whatsappText: "Hello Dhermi Boat, I would like to ask about the Morning Fishing Tour. Date: __ / People: __",
@@ -257,7 +257,7 @@ export const destinations: Destination[] = [
     eyebrow: "Gjipe Tour",
     summary: "A short Dhermi boat tour route with Pirates Cave, Gjipe Beach, Pigeon Cave, 2 coves and a 30-minute swimming stop.",
     image: assetPath("/images/tour-gjipe.webp"),
-    imageAlt: "Gjipe Beach seen from above with turquoise water and cliffs",
+    imageAlt: "Clear-water beach cove on the Gjipe route near Dhërmi",
     href: sitePath("/destinations/gjipe/"),
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach"]
   },
@@ -267,7 +267,7 @@ export const destinations: Destination[] = [
     eyebrow: "Grama Tour",
     summary: "A longer Dhermi boat tour route along Karaburun Natural Park, San Andrea Beach, Blue Cave, Grama Beach and Secret Cave.",
     image: assetPath("/images/tour-grama.webp"),
-    imageAlt: "Grama Bay and clear blue water seen from above",
+    imageAlt: "Blue bay and rocky coastline on the longer Karaburun route",
     href: sitePath("/destinations/grama-bay/"),
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave"]
   },
@@ -277,7 +277,7 @@ export const destinations: Destination[] = [
     eyebrow: "Blue Cave",
     summary: "Karaburun cave stop with bright blue water, usually paired with the Dhermi boat tour route to Grama Bay.",
     image: assetPath("/images/gallery-blue-cave.webp"),
-    imageAlt: "Blue Cave water and rock opening on the Albanian Riviera",
+    imageAlt: "Rock arch and bright blue water at a Karaburun cave stop",
     href: sitePath("/destinations/blue-cave/"),
     highlights: ["Blue Cave"]
   }
@@ -292,14 +292,18 @@ export const tourComparison: TourComparisonItem[] = [
 ];
 
 export const gallery = [
-  { src: assetPath("/images/gallery-blue-cove-boat.webp"), alt: "Dhermi Boat entering a clear cove near Dhërmi" },
-  { src: assetPath("/images/gallery-canyon-water.webp"), alt: "Boat approaching a cave between limestone cliffs" },
-  { src: assetPath("/images/gallery-blue-cave.webp"), alt: "Blue Cave water and rock opening on the Albanian Riviera" },
-  { src: assetPath("/images/gallery-clear-water.webp"), alt: "Clear turquoise water beside the boat" },
-  { src: assetPath("/images/gallery-cave-entrance.webp"), alt: "Boat bow facing a sea cave entrance" },
-  { src: assetPath("/images/gallery-boat-beach.webp"), alt: "Quiet beach cove reached by boat" },
+  { src: assetPath("/images/gallery-blue-cove-boat.webp"), alt: "Dhermi Boat entering a sea cave with turquoise water" },
+  { src: assetPath("/images/gallery-blue-cave.webp"), alt: "Rock arch and bright blue water at a Karaburun cave stop" },
+  { src: assetPath("/images/gallery-clear-water.webp"), alt: "Clear turquoise water beside the boat on the Albanian Riviera" },
+  { src: assetPath("/images/gallery-cave-entrance.webp"), alt: "Boat bow facing a sea cave entrance near Dhërmi" },
+  { src: assetPath("/images/tour-gjipe.webp"), alt: "Clear-water beach cove on the Gjipe route near Dhërmi" },
+  { src: assetPath("/images/gallery-boat-beach.webp"), alt: "Dhermi Boat on the beach before a sea tour" },
   { src: assetPath("/images/gallery-sunset-bow.webp"), alt: "Sunset from the bow of Dhermi Boat" },
-  { src: assetPath("/images/gallery-blue-wall.webp"), alt: "Blue water below a rocky cave wall" }
+  { src: assetPath("/images/gallery-canyon-water.webp"), alt: "Limestone cave wall above bright turquoise water" },
+  { src: assetPath("/images/gallery-blue-wall.webp"), alt: "Blue water below a rocky cave wall on the coast" },
+  { src: assetPath("/images/gallery-coastline.webp"), alt: "Calm sea and rocky coastline near Dhërmi" },
+  { src: assetPath("/images/gallery-limestone-cliff.webp"), alt: "Karaburun cliffs and blue water seen from the boat" },
+  { src: assetPath("/images/gallery-boat-view.webp"), alt: "Onboard view from Dhermi Boat toward the coast" }
 ];
 
 export const reviews = [

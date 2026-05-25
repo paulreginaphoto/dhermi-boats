@@ -1,4 +1,5 @@
-import { ArrowRight, Clock3, Euro, HelpCircle, ListChecks, MessageCircle, Users } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight, Clock3, Euro, ListChecks, MessageCircle, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
@@ -32,85 +33,101 @@ export function TourComparison() {
             return (
               <article
                 key={item.tourId}
-                className="group flex min-h-[18rem] flex-col rounded-lg border border-ink/10 bg-limestone/80 p-5 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft"
+                className="group flex min-h-[18rem] flex-col overflow-hidden rounded-lg border border-ink/10 bg-limestone/80 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft"
               >
-                <HelpCircle className="h-5 w-5 text-turquoise" aria-hidden strokeWidth={1.75} />
-                <p className="mt-5 text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                  <LocalizedText id={`comparison.${index}.angle`}>{item.angle}</LocalizedText>
-                </p>
-                <h3 className="mt-2 font-serif text-2xl font-medium leading-tight text-ink">
-                  <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
-                </h3>
-                <dl className="mt-5 grid gap-2 text-sm font-semibold text-ink-soft">
-                  <div className="flex items-center gap-2">
-                    <Clock3 className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
-                    <dt className="sr-only">
-                      <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
-                    </dt>
-                    <dd>
-                      <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
-                    </dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Euro className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
-                    <dt className="sr-only">
-                      <LocalizedText id="tour.priceLabel">Price</LocalizedText>
-                    </dt>
-                    <dd>
-                      <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
-                    </dd>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
-                    <dt className="sr-only">
-                      <LocalizedText id="tour.capacityLabel">Capacity</LocalizedText>
-                    </dt>
-                    <dd>
-                      <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
-                    </dd>
-                  </div>
-                </dl>
-                <div className="mt-4 rounded-md bg-pearl/70 p-3">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                    <LocalizedText id="tour.bestForLabel">Good fit</LocalizedText>
-                  </p>
-                  <p className="mt-1 text-sm font-semibold leading-6 text-ink">
-                    <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                <div className="relative aspect-[4/3] overflow-hidden bg-sand">
+                  <Image
+                    src={tour.image}
+                    alt={tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`}
+                    fill
+                    loading={index < 3 ? "eager" : "lazy"}
+                    fetchPriority={index < 3 ? "high" : "low"}
+                    decoding="async"
+                    quality={52}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/62 via-transparent to-transparent" />
+                  <p className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
+                    <LocalizedText id={`comparison.${index}.angle`}>{item.angle}</LocalizedText>
                   </p>
                 </div>
-                <div className="mt-4">
-                  <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                    <ListChecks className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
-                    <LocalizedText id="comparison.stops">Main stops</LocalizedText>
-                  </p>
-                  <ul className="mt-2 grid gap-1.5 text-sm leading-6 text-ink-soft">
-                    {tour.cardHighlights.slice(0, 3).map((stop, stopIndex) => (
-                      <li key={stop} className="flex gap-2">
-                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
-                        <span>
-                          <LocalizedText id={`tour.${tour.id}.cardHighlight.${stopIndex}`}>{stop}</LocalizedText>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="mt-auto grid gap-2 pt-5">
-                  <a
-                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
-                    data-analytics-event="comparison_book_click"
-                    data-tour-id={tour.id}
-                    data-whatsapp-key={tour.id}
-                    href={whatsappUrl(tour.whatsappText)}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-                    <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
-                  </a>
-                  <a className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/15 px-3 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white" href={tour.href}>
-                    <LocalizedText id="tour.details">See route and price</LocalizedText>
-                    <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-                  </a>
+
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-serif text-2xl font-medium leading-tight text-ink">
+                    <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                  </h3>
+                  <dl className="mt-5 grid gap-2 text-sm font-semibold text-ink-soft">
+                    <div className="flex items-center gap-2">
+                      <Clock3 className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                      <dt className="sr-only">
+                        <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
+                      </dt>
+                      <dd>
+                        <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
+                      </dd>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Euro className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                      <dt className="sr-only">
+                        <LocalizedText id="tour.priceLabel">Price</LocalizedText>
+                      </dt>
+                      <dd>
+                        <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                      </dd>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Users className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                      <dt className="sr-only">
+                        <LocalizedText id="tour.capacityLabel">Capacity</LocalizedText>
+                      </dt>
+                      <dd>
+                        <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
+                      </dd>
+                    </div>
+                  </dl>
+                  <div className="mt-4 rounded-md bg-pearl/70 p-3">
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                      <LocalizedText id="tour.bestForLabel">Good fit</LocalizedText>
+                    </p>
+                    <p className="mt-1 text-sm font-semibold leading-6 text-ink">
+                      <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                    </p>
+                  </div>
+                  <div className="mt-4">
+                    <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                      <ListChecks className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                      <LocalizedText id="comparison.stops">Main stops</LocalizedText>
+                    </p>
+                    <ul className="mt-2 grid gap-1.5 text-sm leading-6 text-ink-soft">
+                      {tour.cardHighlights.slice(0, 3).map((stop, stopIndex) => (
+                        <li key={stop} className="flex gap-2">
+                          <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                          <span>
+                            <LocalizedText id={`tour.${tour.id}.cardHighlight.${stopIndex}`}>{stop}</LocalizedText>
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="mt-auto grid gap-2 pt-5">
+                    <a
+                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
+                      data-analytics-event="comparison_book_click"
+                      data-tour-id={tour.id}
+                      data-whatsapp-key={tour.id}
+                      href={whatsappUrl(tour.whatsappText)}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
+                      <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
+                    </a>
+                    <a className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/15 px-3 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white" href={tour.href}>
+                      <LocalizedText id="tour.details">See route and price</LocalizedText>
+                      <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={1.75} />
+                    </a>
+                  </div>
                 </div>
               </article>
             );

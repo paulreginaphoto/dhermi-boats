@@ -18,11 +18,11 @@ export const metadata: Metadata = {
 };
 
 const photoGroups = [
-  { titleKey: "photos.group.caves", title: "Caves", indexes: [1, 2, 4, 7] },
-  { titleKey: "photos.group.beaches", title: "Beaches", indexes: [5, 6] },
-  { titleKey: "photos.group.onboard", title: "On board", indexes: [0, 3] },
+  { titleKey: "photos.group.caves", title: "Caves", indexes: [0, 1, 3, 7] },
+  { titleKey: "photos.group.beaches", title: "Beaches", indexes: [4, 5, 9, 10] },
+  { titleKey: "photos.group.onboard", title: "On board", indexes: [0, 3, 5, 11] },
   { titleKey: "photos.group.sunset", title: "Sunset", indexes: [6] },
-  { titleKey: "photos.group.clearWater", title: "Clear water", indexes: [0, 2, 3, 7] }
+  { titleKey: "photos.group.clearWater", title: "Clear water", indexes: [1, 2, 8, 9] }
 ];
 
 export default function BoatPhotosLegacyPage() {
@@ -51,19 +51,30 @@ export default function BoatPhotosLegacyPage() {
               <ButtonLink href="/tours/" variant="secondary">
                 <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
               </ButtonLink>
+              <ButtonLink href={googleMapsUrl} icon={MapPin} variant="secondary">
+                <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
+              </ButtonLink>
             </div>
           </div>
-          <div className="mt-8 grid gap-8 md:grid-cols-[1fr_0.5fr] md:items-end">
+          <div className="mt-8 grid gap-4 md:grid-cols-[minmax(260px,390px)_1fr] md:items-stretch">
             <VideoFeature />
-            <a
-              href={googleMapsUrl}
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
-              rel="noreferrer"
-              target="_blank"
-            >
-              <MapPin className="h-4 w-4" aria-hidden />
-              <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
-            </a>
+            <div className="grid grid-cols-2 gap-3">
+              {gallery.slice(0, 4).map((item, index) => (
+                <figure key={`photos-preview-${item.src}`} className="relative min-h-40 overflow-hidden rounded-lg bg-sand shadow-sm sm:min-h-56 md:min-h-0">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "low"}
+                    decoding="async"
+                    quality={52}
+                    sizes="(min-width: 768px) 24vw, 50vw"
+                    className="object-cover"
+                  />
+                </figure>
+              ))}
+            </div>
           </div>
           <div className="mt-10">
             <GalleryGrid priorityFirst />

@@ -5,7 +5,7 @@ import { Pause, Play } from "lucide-react";
 import { assetPath } from "@/lib/site";
 
 const videoSrc = assetPath("/videos/dhermi-sea-moments.mp4");
-const posterSrc = assetPath("/images/gallery-blue-cove-boat.webp");
+const posterSrc = assetPath("/images/video-sea-cave-poster.webp");
 
 export function VideoFeature() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -37,7 +37,7 @@ export function VideoFeature() {
     <div className="relative mx-auto aspect-[9/16] max-h-[620px] w-full max-w-[390px] overflow-hidden rounded-lg border border-ink/10 bg-navy shadow-image">
       <video
         ref={videoRef}
-        aria-label="Short video from a Dhermi Boat sea cave tour"
+        aria-label="Short video from a Dhermi Boat sea cave and clear-water tour"
         className="h-full w-full object-cover"
         loop
         muted

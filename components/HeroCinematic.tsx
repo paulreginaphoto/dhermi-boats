@@ -24,7 +24,7 @@ export function HeroCinematic() {
           <source srcSet={assetPath("/images/hero-riviera-tablet.avif")} type="image/avif" />
           <img
             src={assetPath("/images/hero-riviera-tablet.webp")}
-            alt="Dhermi Boat heading along the Albanian Riviera coast"
+            alt="Dhermi Boat entering a sea cave with turquoise water"
             className="h-full w-full object-cover"
             decoding="sync"
             fetchPriority="high"
@@ -34,7 +34,7 @@ export function HeroCinematic() {
         <noscript>
           <img
             src={assetPath("/images/hero-riviera-tablet.webp")}
-            alt="Dhermi Boat heading along the Albanian Riviera coast"
+            alt="Dhermi Boat entering a sea cave with turquoise water"
             className="h-full w-full object-cover"
           />
         </noscript>
