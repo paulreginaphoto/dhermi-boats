@@ -21,6 +21,39 @@ export default function PrivateTourPage() {
   return (
     <>
       <TourDetailPage tour={privateTour} />
+      <section className="bg-pearl py-16 md:py-24">
+        <div className="site-band grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="private.usecases.label">Private tour fit</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="private.usecases.title">Best when your group wants control of the day</LocalizedText>
+            </h2>
+            <p className="mt-5 text-base leading-8 text-ink-soft">
+              <LocalizedText id="private.usecases.text">
+                Private tours are useful when you want to choose the route, timing and swimming stops instead of joining a fixed shared route.
+              </LocalizedText>
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {[
+              ["private.usecases.families.title", "Families", "private.usecases.families.text", "Set a calmer pace, keep the group together and confirm safe stops with the skipper."],
+              ["private.usecases.couples.title", "Couples", "private.usecases.couples.text", "Plan a quieter route, sunset timing or a shorter private sea escape."],
+              ["private.usecases.groups.title", "Friends and small groups", "private.usecases.groups.text", "Choose your stops and duration while keeping the boat for your group only."]
+            ].map(([titleKey, title, textKey, text]) => (
+              <article key={String(titleKey)} className="rounded-lg border border-ink/8 bg-limestone/75 p-6 shadow-sm">
+                <h3 className="font-serif text-2xl font-medium text-ink">
+                  <LocalizedText id={String(titleKey)}>{title}</LocalizedText>
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-ink-soft">
+                  <LocalizedText id={String(textKey)}>{text}</LocalizedText>
+                </p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
           <div>
@@ -56,7 +89,16 @@ export default function PrivateTourPage() {
         </div>
       </section>
       <section id="sunset" className="bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-6 md:grid-cols-2">
+        <div className="site-band">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="private.related.label">Private extras</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="private.related.title">Sunset and fishing requests</LocalizedText>
+            </h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2">
           {tours.filter((tour) => tour.id === "sunset" || tour.id === "fishing").map((tour) => (
             <article key={tour.id} className="flex h-full flex-col rounded-lg border border-ink/10 bg-limestone/70 p-6 shadow-sm md:p-8">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
@@ -97,6 +139,7 @@ export default function PrivateTourPage() {
               </div>
             </article>
           ))}
+          </div>
         </div>
       </section>
       <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />

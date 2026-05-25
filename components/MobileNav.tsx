@@ -40,7 +40,7 @@ export function MobileNav() {
               target="_blank"
             >
               <MessageCircle className="h-4 w-4" />
-              <LocalizedText id="cta.book">Book now</LocalizedText>
+              <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
             </a>
           </nav>
         </div>

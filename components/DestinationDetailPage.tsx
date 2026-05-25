@@ -6,7 +6,6 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { tours, type Destination } from "@/data/content";
-import { primaryWhatsappHref } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
@@ -20,6 +19,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         ? tour.id === "grama" || tour.id === "private"
         : tour.id === "private"
   );
+  const primaryTour = relatedTours[0];
 
   return (
     <>
@@ -33,8 +33,18 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
           <LocalizedText id={`${translationBase}.summary`}>{destination.summary}</LocalizedText>
         </p>
         <div className="mt-8">
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsEvent="whatsapp_click">
-            <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
+          <ButtonLink
+            href={primaryTour ? whatsappUrl(primaryTour.whatsappText) : "/contact/"}
+            icon={MessageCircle}
+            variant="dark"
+            whatsappKey={primaryTour?.id ?? "default"}
+            analyticsEvent="whatsapp_click"
+          >
+            {primaryTour ? (
+              <LocalizedText id={tourBookKey(primaryTour.id)}>{tourBookFallback(primaryTour.id)}</LocalizedText>
+            ) : (
+              <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
+            )}
           </ButtonLink>
         </div>
       </PageHero>

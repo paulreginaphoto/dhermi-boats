@@ -31,7 +31,7 @@ export function BookingCTA({
         </div>
         <div className="flex flex-col gap-3 sm:flex-row md:flex-col">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsEvent="whatsapp_click">
-            <LocalizedText id="cta.book">Book now</LocalizedText>
+            <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
           </ButtonLink>
           <ButtonLink href={`tel:${phoneDisplay.replace(/\s/g, "")}`} icon={Phone} variant="ghost" className="border border-white/15 text-pearl hover:bg-white/10" analyticsEvent="call_click">
             <LocalizedText id="cta.call">Call now</LocalizedText>

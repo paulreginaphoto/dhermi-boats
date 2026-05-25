@@ -1,4 +1,4 @@
-import { ArrowRight, Clock3, Euro, HelpCircle, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, Clock3, Euro, HelpCircle, ListChecks, MessageCircle, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
@@ -23,7 +23,7 @@ export function TourComparison() {
           </ButtonLink>
         </div>
 
-        <div className="mt-10 grid gap-4 lg:grid-cols-5">
+        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
           {tourComparison.map((item, index) => {
             const tour = tours.find((tourItem) => tourItem.id === item.tourId);
 
@@ -70,9 +70,30 @@ export function TourComparison() {
                     </dd>
                   </div>
                 </dl>
-                <p className="mt-4 text-sm leading-6 text-ink-soft">
-                  <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
-                </p>
+                <div className="mt-4 rounded-md bg-pearl/70 p-3">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                    <LocalizedText id="tour.bestForLabel">Good fit</LocalizedText>
+                  </p>
+                  <p className="mt-1 text-sm font-semibold leading-6 text-ink">
+                    <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                  </p>
+                </div>
+                <div className="mt-4">
+                  <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                    <ListChecks className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                    <LocalizedText id="comparison.stops">Main stops</LocalizedText>
+                  </p>
+                  <ul className="mt-2 grid gap-1.5 text-sm leading-6 text-ink-soft">
+                    {tour.cardHighlights.slice(0, 3).map((stop, stopIndex) => (
+                      <li key={stop} className="flex gap-2">
+                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                        <span>
+                          <LocalizedText id={`tour.${tour.id}.cardHighlight.${stopIndex}`}>{stop}</LocalizedText>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
                 <div className="mt-auto grid gap-2 pt-5">
                   <a
                     className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"

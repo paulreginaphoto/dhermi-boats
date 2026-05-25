@@ -10,7 +10,7 @@ const heroFacts: Array<[OutlineIconComponent, string, string, string, string]> =
   [Euro, "hero.fact.gjipePrice", "From €35", "hero.fact.gjipeShared", "Gjipe Tour"],
   [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.reply", "Fast WhatsApp reply"],
   [Users, "hero.fact.groupSize", "Max 15 guests", "hero.fact.capacity", "Small groups"],
-  [ShieldCheck, "hero.fact.skipper", "Local skipper", "hero.fact.local", "Dhërmi area"],
+  [ShieldCheck, "hero.fact.weather", "Weather-safe routes", "hero.fact.local", "Dhërmi area"],
   [Languages, "hero.fact.languages", "English • French • Albanian", "hero.fact.easy", "WhatsApp in 1 min"]
 ];
 
@@ -47,12 +47,12 @@ export function HeroCinematic() {
         <div className="max-w-4xl">
           <h1 className="photo-title max-w-4xl break-words font-serif text-3xl font-medium leading-[1.04] text-pearl sm:text-5xl md:text-[3.3rem] lg:text-[3.45rem] xl:text-[3.65rem]">
             <LocalizedText id="hero.title">
-              Dhermi boat tours from Dhërmi to Gjipe, Grama Bay & Blue Cave
+              Boat tours from Dhërmi to Gjipe, Grama Bay & Blue Cave
             </LocalizedText>
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">
             <LocalizedText id="hero.text">
-              Book a Dhermi boat tour with a local skipper. Choose small-group or private boat trips from Dhërmi, swim in turquoise coves, visit Pirate’s Cave and Grama Bay, and confirm by WhatsApp in one minute.
+              Swim in turquoise caves, reach beaches only accessible by boat, and book with a local skipper on WhatsApp in under a minute.
             </LocalizedText>
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -77,7 +77,7 @@ export function HeroCinematic() {
             <LocalizedText id="hero.booking.label">Reserve in one minute</LocalizedText>
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium">
-            <LocalizedText id="hero.booking.title">Pick a tour, send WhatsApp, confirm your sea day.</LocalizedText>
+            <LocalizedText id="hero.booking.title">Choose your route, send your date, confirm with the skipper.</LocalizedText>
           </h2>
           <div className="mt-6 grid gap-4">
             {heroFacts.map(([icon, labelKey, label, valueKey, value]) => (

@@ -1,6 +1,8 @@
 import { translations } from "@/lib/i18n";
 
 const bookingKeyByTourId: Record<string, string> = {
+  gjipe: "tour.gjipe.book",
+  grama: "tour.grama.book",
   private: "tour.private.book",
   sunset: "tour.sunset.book",
   fishing: "tour.fishing.book"

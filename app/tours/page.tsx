@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -7,13 +8,14 @@ import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
-import { canonical, languageAlternates } from "@/lib/site";
+import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
 import { breadcrumbSchema, localBusinessSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
+import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
 export const metadata: Metadata = {
-  title: "Dhermi Boat Tours",
+  title: "Compare Dhermi Boat Tours",
   description:
-    "Compare Dhermi boat tours from Dhërmi to Gjipe, Grama Bay, Blue Cave, private routes, sunset trips and morning fishing tours.",
+    "Compare Dhermi boat tours by price, duration, capacity, stops and best fit before booking Gjipe, Grama Bay, private, sunset or fishing by WhatsApp.",
   alternates: { canonical: canonical("/tours/"), languages: languageAlternates("/tours/") }
 };
 
@@ -38,14 +40,32 @@ export default function ToursPage() {
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
       >
         <p>
-          <LocalizedText id="section.tours.text">
-            Choose a Dhermi boat tour for Gjipe, Grama Bay, Blue Cave, a private route, sunset cruise or morning fishing, then confirm the date with the local skipper on WhatsApp.
+          <LocalizedText id="page.tours.heroText">
+            Compare every real Dhermi Boat route by time, price, capacity and swim stops. When you know your date and group size, WhatsApp is the fastest way to confirm availability.
           </LocalizedText>
         </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <ButtonLink href="#compare-tours" variant="dark">
+            <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
+          </ButtonLink>
+          <ButtonLink href="#book" icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+            <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
+          </ButtonLink>
+        </div>
       </PageHero>
+
+      <TourComparison />
 
       <section aria-label="Tours" className="bg-pearl py-10 md:py-16">
         <div className="site-band">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="page.tours.cardsLabel">All offers</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+              <LocalizedText id="page.tours.cardsTitle">Choose the tour that matches your day</LocalizedText>
+            </h2>
+          </div>
           <div className="grid gap-6 lg:grid-cols-3">
             {tours.map((tour, index) => (
               <TourCard key={tour.id} tour={tour} imagePriority={index < 3} />
@@ -53,8 +73,6 @@ export default function ToursPage() {
           </div>
         </div>
       </section>
-
-      <TourComparison />
 
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band">
@@ -96,12 +114,15 @@ export default function ToursPage() {
         <div className="site-band overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-lg bg-pearl text-left text-sm shadow-sm">
             <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
-              <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
+              <LocalizedText id="page.tours.matrixTitle">Quick decision table</LocalizedText>
             </caption>
             <thead className="bg-ink text-pearl">
               <tr>
                 <th className="px-5 py-4 font-semibold">
                   <LocalizedText id="table.tour">Tour</LocalizedText>
+                </th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="tour.bestForLabel">Good fit</LocalizedText>
                 </th>
                 <th className="px-5 py-4 font-semibold">
                   <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
@@ -110,7 +131,13 @@ export default function ToursPage() {
                   <LocalizedText id="tour.priceLabel">Price</LocalizedText>
                 </th>
                 <th className="px-5 py-4 font-semibold">
-                  <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
+                  <LocalizedText id="tour.capacityLabel">Capacity</LocalizedText>
+                </th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="comparison.stops">Main stops</LocalizedText>
+                </th>
+                <th className="px-5 py-4 font-semibold">
+                  <LocalizedText id="booking.panel.label">WhatsApp booking</LocalizedText>
                 </th>
               </tr>
             </thead>
@@ -121,18 +148,37 @@ export default function ToursPage() {
                     <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
                   </td>
                   <td className="px-5 py-4 text-ink-soft">
+                    <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                  </td>
+                  <td className="px-5 py-4 text-ink-soft">
                     {tour.duration ? <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText> : "-"}
                   </td>
                   <td className="px-5 py-4 text-ink-soft">
                     <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
                   </td>
                   <td className="px-5 py-4 text-ink-soft">
-                    {tour.highlights.slice(0, 3).map((item, index) => (
+                    <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
+                  </td>
+                  <td className="px-5 py-4 text-ink-soft">
+                    {tour.cardHighlights.slice(0, 3).map((item, index) => (
                       <span key={item}>
                         {index > 0 ? ", " : null}
-                        <LocalizedText id={`tour.${tour.id}.included.${index}`}>{item}</LocalizedText>
+                        <LocalizedText id={`tour.${tour.id}.cardHighlight.${index}`}>{item}</LocalizedText>
                       </span>
                     ))}
+                  </td>
+                  <td className="px-5 py-4">
+                    <a
+                      className="inline-flex min-h-10 items-center justify-center rounded-md bg-ink px-4 text-xs font-bold text-pearl transition hover:bg-navy"
+                      data-analytics-event="tour_matrix_book_click"
+                      data-tour-id={tour.id}
+                      data-whatsapp-key={tour.id}
+                      href={whatsappUrl(tour.whatsappText)}
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
+                    </a>
                   </td>
                 </tr>
               ))}

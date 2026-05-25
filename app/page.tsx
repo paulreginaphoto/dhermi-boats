@@ -39,9 +39,9 @@ export default function HomePage() {
 
       <ArrivalComfortBar />
 
-      <OneMinuteBooking />
-
       <TourComparison />
+
+      <OneMinuteBooking />
 
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">
@@ -82,7 +82,7 @@ export default function HomePage() {
                 <LocalizedText id="tour.details">See route and price</LocalizedText>
               </ButtonLink>
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsEvent="whatsapp_click">
-                <LocalizedText id="tour.private.book">Request private tour</LocalizedText>
+                <LocalizedText id="tour.private.book">Plan a private tour</LocalizedText>
               </ButtonLink>
             </div>
           </div>

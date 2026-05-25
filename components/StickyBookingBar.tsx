@@ -38,7 +38,7 @@ export function StickyBookingBar() {
     >
       <div className="mx-auto grid max-w-md grid-cols-[1fr_auto] items-center gap-3 min-[390px]:grid-cols-[1fr_auto_auto]">
         <p className="hidden text-sm font-bold text-ink min-[390px]:block">
-          <LocalizedText id="sticky.text">Booking Dhërmi today?</LocalizedText>
+          <LocalizedText id="sticky.text">Date and group ready?</LocalizedText>
         </p>
         <a
           className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl min-[390px]:col-start-2"
@@ -49,7 +49,7 @@ export function StickyBookingBar() {
           target="_blank"
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
-          <LocalizedText id="sticky.book">Book on WhatsApp</LocalizedText>
+          <LocalizedText id="sticky.book">Send on WhatsApp</LocalizedText>
         </a>
         <a
           aria-label="Call Dhermi Boat"

@@ -12,7 +12,7 @@ import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandl
 export const metadata: Metadata = {
   title: "Contact Dhermi Boat Tours",
   description:
-    "Contact Dhermi Boat to book a Dhermi boat tour from Dhërmi, Albania. WhatsApp booking, phone, email, Google Maps, Instagram, TikTok and GetYourGuide.",
+    "Contact Dhermi Boat on WhatsApp with date, group size, preferred tour, name and question. Phone, email, Google Maps and social links are secondary.",
   alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
@@ -42,7 +42,7 @@ export default function ContactPage() {
         </p>
         <div className="mt-8">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsEvent="whatsapp_click">
-            <LocalizedText id="cta.book">Book now</LocalizedText>
+            <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
@@ -58,11 +58,12 @@ export default function ContactPage() {
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
               <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
             </h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-4">
+            <div className="mt-8 grid gap-4 md:grid-cols-5">
               {[
                 ["contact.message.date", "Date"],
                 ["contact.message.group", "Group size"],
                 ["contact.message.tour", "Preferred tour"],
+                ["contact.message.name", "Name"],
                 ["contact.message.question", "Question or timing"]
               ].map(([id, fallback]) => (
                 <div key={id} className="rounded-md border border-ink/8 bg-limestone/70 p-4 text-sm font-semibold text-ink">
@@ -104,27 +105,36 @@ export default function ContactPage() {
             </div>
           </div>
           <div className="grid gap-4">
-            {contacts.map((contact) => (
+            {contacts.map((contact) => {
+              const isWhatsapp = contact.label === "WhatsApp";
+
+              return (
               <a
                 key={contact.label}
-                className="flex items-center gap-5 rounded-lg border border-ink/8 bg-limestone/70 p-5 transition duration-300 hover:-translate-y-1 hover:bg-pearl hover:shadow-soft"
+                className={[
+                  "flex items-center gap-5 rounded-lg border p-5 transition duration-300 hover:-translate-y-1 hover:shadow-soft",
+                  isWhatsapp
+                    ? "border-ink bg-ink text-pearl hover:bg-navy"
+                    : "border-ink/8 bg-limestone/70 text-ink hover:bg-pearl"
+                ].join(" ")}
                 data-analytics-event={contact.analyticsEvent}
                 data-whatsapp-key={contact.whatsappKey}
                 href={contact.href}
                 rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
                 target={contact.href.startsWith("http") ? "_blank" : undefined}
               >
-                <IconFrame icon={contact.icon} variant="soft" size="lg" />
+                <IconFrame icon={contact.icon} variant={isWhatsapp ? "dark" : "soft"} size="lg" />
                 <span>
-                  <span className="block text-xs font-bold uppercase tracking-[0.2em] text-bronze">
+                  <span className={isWhatsapp ? "block text-xs font-bold uppercase tracking-[0.2em] text-sand" : "block text-xs font-bold uppercase tracking-[0.2em] text-bronze"}>
                     <LocalizedText id={contact.labelKey}>{contact.label}</LocalizedText>
                   </span>
-                  <span className="mt-1 block text-base font-semibold text-ink">
+                  <span className={isWhatsapp ? "mt-1 block text-base font-semibold text-pearl" : "mt-1 block text-base font-semibold text-ink"}>
                     {contact.valueKey ? <LocalizedText id={contact.valueKey}>{contact.value}</LocalizedText> : contact.value}
                   </span>
                 </span>
               </a>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

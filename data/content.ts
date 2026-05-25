@@ -400,10 +400,10 @@ export const faqs = [
 
 export const trustBadges = [
   "From €35",
-  "Daily departures",
   "Max 15 guests",
   "Local skipper",
-  "English • French • Albanian"
+  "Daily departures",
+  "Weather-safe routes"
 ];
 
 export const primaryWhatsappHref = whatsappUrl(defaultBookingMessage);
