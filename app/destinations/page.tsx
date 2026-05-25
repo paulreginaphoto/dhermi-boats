@@ -93,14 +93,14 @@ export default function DestinationsPage() {
               <article key={destination.id} className="group flex h-full flex-col overflow-hidden rounded-lg border border-white/14 bg-pearl text-ink shadow-image transition duration-300 hover:-translate-y-1">
                 <div className="relative aspect-[4/3] bg-sand">
                   <Image
-                    src={destination.image}
+                    src={destination.cardImage ?? destination.image}
                     alt={destination.imageAlt ?? `${destination.title} boat tour destination in Albania`}
                     fill
                     loading={index === 0 ? "eager" : "lazy"}
                     fetchPriority={index === 0 ? "high" : "low"}
                     decoding="async"
-                    quality={58}
-                    sizes="(min-width: 1024px) 33vw, 100vw"
+                    quality={52}
+                    sizes="(min-width: 1024px) 31vw, 92vw"
                     className="object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute left-4 top-4 rounded-full bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">

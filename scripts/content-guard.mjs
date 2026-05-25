@@ -73,6 +73,32 @@ const GENERIC_VISIBLE_PHRASES = [
   "Për kë është më i mirë ky tur",
   "Shpella Blu."
 ];
+const WORDPRESS_RESIDUE_FRAGMENTS = [
+  "Partager",
+  "J’aime ça",
+  "J'aime ça",
+  "Chargement…",
+  "Chargement...",
+  "Share this:",
+  "Like this:",
+  "%d"
+];
+const FRENCH_TONE_AND_ROUTE_RESIDUE = [
+  "Choisis ton",
+  "choisis ton",
+  "Réserve ton",
+  "réserve ton",
+  "ton tour",
+  "Tu as une autre question",
+  "contacte-nous",
+  "BEST SELLER",
+  "LONGER ROUTE",
+  "MOST FLEXIBLE",
+  "Morning Fishing Tour",
+  "Pigeon Cave",
+  "Blue Cave",
+  "Gjipe Beach"
+];
 
 /** @type {Array<{file:string,line:number,message:string,excerpt:string}>} */
 const issues = [];
@@ -165,12 +191,27 @@ function checkGenericVisiblePhrase(file, text, lineNumber) {
   }
 }
 
+function checkWordPressResidue(file, text, lineNumber) {
+  if (!isVisibleContentFile(file)) return;
+
+  const residue = WORDPRESS_RESIDUE_FRAGMENTS.find((item) => text.includes(item));
+  if (residue) {
+    addIssue(
+      file,
+      lineNumber,
+      "Résidu WordPress visible détecté; le site doit rester une page de réservation propre.",
+      residue
+    );
+  }
+}
+
 function scanLine(filePath, text, lineNumber) {
   checkLineForForbiddenDash(filePath, text, lineNumber);
   checkLineForEmoji(filePath, text, lineNumber);
   checkRepeatedWords(filePath, text, lineNumber);
   checkRepeatedPhrase(filePath, text, lineNumber);
   checkGenericVisiblePhrase(filePath, text, lineNumber);
+  checkWordPressResidue(filePath, text, lineNumber);
 }
 
 function lineNumberForIndex(content, index) {
@@ -220,6 +261,7 @@ function parseLocaleTranslations(locale) {
 }
 
 const englishTranslations = parseLocaleTranslations("en");
+const frenchTranslations = parseLocaleTranslations("fr");
 
 function normalizeFallbackText(value) {
   return value.replace(/\s+/g, " ").trim();
@@ -590,6 +632,148 @@ function checkArrivalComfortSection(filePath, content) {
   }
 }
 
+function checkHighSeasonHeroCopy(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "HeroCinematic.tsx"))) return;
+
+  for (const snippet of [
+    "Small-group and private boat trips with a local skipper. Clear prices, daily departures, WhatsApp booking.",
+    "5-star guest reviews",
+    "Small groups, max 15 guests",
+    "Departure from Dhërmi area",
+    "Book on WhatsApp in 1 minute",
+    "Routes adapted to sea conditions"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "Le hero doit vendre en 5 secondes avec la promesse et les preuves visibles au-dessus du pli.",
+        snippet
+      );
+    }
+  }
+}
+
+function checkTourChoiceIn30Seconds(filePath, content) {
+  const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
+  const requirements = {
+    "components/TourComparison.tsx": [
+      "Choose your tour in 30 seconds",
+      "comparison.audience",
+      "comparison.ctaLabel"
+    ],
+    "app/tours/page.tsx": [
+      "Choose your tour in 30 seconds",
+      "tour_matrix_book_click"
+    ]
+  };
+  const snippets = requirements[relative];
+  if (!snippets) return;
+
+  for (const snippet of snippets) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "La comparaison des tours doit aider le visiteur à choisir en 30 secondes avec audience, durée, prix et CTA.",
+        snippet
+      );
+    }
+  }
+}
+
+function checkWhatsappMessageTemplates(filePath, content) {
+  const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
+  if (relative !== "lib/whatsappMessages.ts" && relative !== "data/content.ts") return;
+
+  for (const snippet of [
+    "Preferred time",
+    "Number of adults",
+    "Number of children",
+    "Number of people",
+    "Hours",
+    "Route ideas"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "Les messages WhatsApp doivent être préremplis avec les champs nécessaires selon le tour.",
+        snippet
+      );
+    }
+  }
+}
+
+function checkFaqHighSeasonObjections(filePath, content) {
+  if (!filePath.endsWith(path.join("data", "content.ts"))) return;
+
+  for (const snippet of [
+    "Is parking possible",
+    "Can I pay cash or card",
+    "What happens if the sea is not safe",
+    "Are life jackets included",
+    "Can I bring bags and towels",
+    "How long is the swim stop",
+    "Is the tour private or shared",
+    "Can I be dropped off at Gjipe",
+    "Which languages does the skipper speak"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "La FAQ doit répondre aux objections concrètes avant réservation en haute saison.",
+        snippet
+      );
+    }
+  }
+}
+
+function checkStickyMobileConversionBar(filePath, content) {
+  if (!filePath.endsWith(path.join("components", "StickyBookingBar.tsx"))) return;
+
+  for (const snippet of [
+    "grid-cols-4",
+    "sticky.whatsapp",
+    "sticky.tours",
+    "sticky.prices",
+    "sticky.call",
+    "sitePath(\"/tours/\")",
+    "sitePath(\"/tours/#compare-tours\")",
+    "href={`tel:${phoneDisplay.replace(/\\s/g, \"\")}`}"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "La barre mobile doit proposer les quatre actions de conversion: WhatsApp, Tours, Prices, Call.",
+        snippet
+      );
+    }
+  }
+}
+
+function checkFrenchToneAndRouteResidue() {
+  const i18nPath = path.join(ROOT_DIR, "lib", "i18n.ts");
+  if (!fs.existsSync(i18nPath)) return;
+
+  const source = fs.readFileSync(i18nPath, "utf8");
+
+  for (const [key, value] of Object.entries(frenchTranslations)) {
+    const residue = FRENCH_TONE_AND_ROUTE_RESIDUE.find((item) => value.includes(item));
+    if (!residue) continue;
+
+    const keyIndex = source.indexOf(`"${key}"`);
+    addIssue(
+      i18nPath,
+      keyIndex >= 0 ? lineNumberForIndex(source, keyIndex) : 1,
+      "La version française doit rester premium, en vouvoiement, sans restes anglais évitables.",
+      `${key}: ${residue}`
+    );
+  }
+}
+
 function checkBookingDraftComfort(filePath, content) {
   if (!filePath.endsWith(path.join("components", "OneMinuteBooking.tsx"))) return;
 
@@ -875,6 +1059,11 @@ function scanFileContent(filePath, content) {
   checkLocaleBrowserDetection(filePath, content);
   checkLocaleSwitcherHydration(filePath, content);
   checkArrivalComfortSection(filePath, content);
+  checkHighSeasonHeroCopy(filePath, content);
+  checkTourChoiceIn30Seconds(filePath, content);
+  checkWhatsappMessageTemplates(filePath, content);
+  checkFaqHighSeasonObjections(filePath, content);
+  checkStickyMobileConversionBar(filePath, content);
   checkBookingDraftComfort(filePath, content);
   checkExternalTrustLinks(filePath, content);
   checkMobileHeaderControls(filePath, content);
@@ -907,6 +1096,7 @@ for (const target of TARGET_DIRS) {
 }
 
 checkRoundFaviconAssets();
+checkFrenchToneAndRouteResidue();
 
 if (issues.length > 0) {
   const header = [

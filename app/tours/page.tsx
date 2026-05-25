@@ -34,7 +34,7 @@ export default function ToursPage() {
         ]}
       />
       <PageHero
-        title={<LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>}
+        title={<LocalizedText id="comparison.title">Choose your tour in 30 seconds</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
         label={<LocalizedText id="page.tours.label">Tours</LocalizedText>}
@@ -114,7 +114,7 @@ export default function ToursPage() {
         <div className="site-band overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-lg bg-pearl text-left text-sm shadow-sm">
             <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
-              <LocalizedText id="page.tours.matrixTitle">Quick decision table</LocalizedText>
+              <LocalizedText id="page.tours.matrixTitle">Choose your tour in 30 seconds</LocalizedText>
             </caption>
             <thead className="bg-ink text-pearl">
               <tr>

@@ -1,36 +1,36 @@
 import type { Locale } from "@/lib/i18n";
-import { defaultBookingMessage, whatsappUrl } from "@/lib/site";
+import { whatsappUrl } from "@/lib/site";
 
 export const whatsappMessages = {
   default: {
-    en: defaultBookingMessage,
-    fr: "Bonjour Dhermi Boat, je voudrais réserver un tour en bateau. Date : __ / Personnes : __ / Tour souhaité : __",
-    sq: "Përshëndetje Dhermi Boat, dua të rezervoj një tur me varkë. Data: __ / Persona: __ / Turi i preferuar: __"
+    en: "Hello Dhermi Boat, I'd like to book a boat tour. Date: __ / Number of people: __ / Preferred tour: __ / Preferred time: __",
+    fr: "Bonjour Dhermi Boat, je souhaite réserver un tour en bateau. Date : __ / Nombre de personnes : __ / Tour souhaité : __ / Horaire souhaité : __",
+    sq: "Përshëndetje Dhermi Boat, dua të rezervoj një tur me varkë. Data: __ / Numri i personave: __ / Turi i preferuar: __ / Orari i preferuar: __"
   },
   gjipe: {
-    en: "Hello Dhermi Boat, I would like to book the Gjipe Tour. Date: __ / Adults: __ / Children: __",
-    fr: "Bonjour Dhermi Boat, je voudrais réserver le Tour de Gjipe. Date : __ / Adultes : __ / Enfants : __",
-    sq: "Përshëndetje Dhermi Boat, dua të rezervoj Turin e Gjipesë. Data: __ / Të rritur: __ / Fëmijë: __"
+    en: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Date: __ / Number of adults: __ / Number of children: __ / Preferred time: __",
+    fr: "Bonjour Dhermi Boat, je souhaite réserver le tour de Gjipe. Date : __ / Nombre d’adultes : __ / Nombre d’enfants : __ / Horaire souhaité : __",
+    sq: "Përshëndetje Dhermi Boat, dua të rezervoj Turin e Gjipesë. Data: __ / Numri i të rriturve: __ / Numri i fëmijëve: __ / Orari i preferuar: __"
   },
   grama: {
-    en: "Hello Dhermi Boat, I would like to book the Grama Bay Tour. Date: __ / Adults: __ / Children: __",
-    fr: "Bonjour Dhermi Boat, je voudrais réserver le Tour de Grama. Date : __ / Adultes : __ / Enfants : __",
-    sq: "Përshëndetje Dhermi Boat, dua të rezervoj Turin e Gramës. Data: __ / Të rritur: __ / Fëmijë: __"
+    en: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Date: __ / Number of adults: __ / Number of children: __ / Preferred time: __",
+    fr: "Bonjour Dhermi Boat, je souhaite vérifier la disponibilité du tour de Grama. Date : __ / Nombre d’adultes : __ / Nombre d’enfants : __ / Horaire souhaité : __",
+    sq: "Përshëndetje Dhermi Boat, dua të pyes për disponueshmërinë e Gramës. Data: __ / Numri i të rriturve: __ / Numri i fëmijëve: __ / Orari i preferuar: __"
   },
   private: {
-    en: "Hello Dhermi Boat, I would like a private boat tour. Date: __ / People: __ / Hours: __ / Places: __",
-    fr: "Bonjour Dhermi Boat, je voudrais un tour privé en bateau. Date : __ / Personnes : __ / Heures : __ / Lieux : __",
-    sq: "Përshëndetje Dhermi Boat, dua një tur privat me varkë. Data: __ / Persona: __ / Orë: __ / Vende: __"
+    en: "Hello Dhermi Boat, I'd like to plan a private boat tour. Date: __ / Number of people: __ / Hours: __ / Route ideas: __",
+    fr: "Bonjour Dhermi Boat, je souhaite planifier un tour privé en bateau. Date : __ / Nombre de personnes : __ / Heures : __ / Idées de route : __",
+    sq: "Përshëndetje Dhermi Boat, dua të planifikoj një tur privat me varkë. Data: __ / Numri i personave: __ / Orë: __ / Ide për itinerarin: __"
   },
   sunset: {
-    en: "Hello Dhermi Boat, I would like to ask about the Sunset Private Tour. Date: __ / People: __",
-    fr: "Bonjour Dhermi Boat, je voudrais demander le tour privé au coucher du soleil. Date : __ / Personnes : __",
-    sq: "Përshëndetje Dhermi Boat, dua të pyes për turin privat në perëndim. Data: __ / Persona: __"
+    en: "Hello Dhermi Boat, I'd like to ask about the sunset tour. Date: __ / Number of people: __ / Preferred time: sunset / Route ideas: __",
+    fr: "Bonjour Dhermi Boat, je souhaite demander le tour coucher de soleil. Date : __ / Nombre de personnes : __ / Horaire souhaité : coucher de soleil / Idées de route : __",
+    sq: "Përshëndetje Dhermi Boat, dua të pyes për turin në perëndim. Data: __ / Numri i personave: __ / Orari i preferuar: perëndim / Ide për itinerarin: __"
   },
   fishing: {
-    en: "Hello Dhermi Boat, I would like to ask about the Morning Fishing Tour. Date: __ / People: __",
-    fr: "Bonjour Dhermi Boat, je voudrais demander le tour pêche du matin. Date : __ / Personnes : __",
-    sq: "Përshëndetje Dhermi Boat, dua të pyes për turin e peshkimit në mëngjes. Data: __ / Persona: __"
+    en: "Hello Dhermi Boat, I'd like to ask about the morning fishing tour. Date: __ / Number of people: __ / Preferred time: 5 AM to 8 AM / Route ideas: __",
+    fr: "Bonjour Dhermi Boat, je souhaite demander le tour pêche du matin. Date : __ / Nombre de personnes : __ / Horaire souhaité : 5 h à 8 h / Idées de route : __",
+    sq: "Përshëndetje Dhermi Boat, dua të pyes për turin e peshkimit në mëngjes. Data: __ / Numri i personave: __ / Orari i preferuar: 5:00 - 8:00 / Ide për itinerarin: __"
   }
 } as const satisfies Record<string, Record<Locale, string>>;
 

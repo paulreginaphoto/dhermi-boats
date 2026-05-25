@@ -1,17 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowRight, CalendarDays, Euro, Languages, MessageCircle, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, MapPin, MessageCircle, ShieldCheck, Star, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
-import { primaryWhatsappHref, trustBadges } from "@/data/content";
+import { primaryWhatsappHref } from "@/data/content";
 import { assetPath } from "@/lib/site";
 
 const heroFacts: Array<[OutlineIconComponent, string, string, string, string]> = [
-  [Euro, "hero.fact.gjipePrice", "From €35", "hero.fact.gjipeShared", "Gjipe Tour"],
-  [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.reply", "Fast WhatsApp reply"],
-  [Users, "hero.fact.groupSize", "Max 15 guests", "hero.fact.capacity", "Small groups"],
-  [ShieldCheck, "hero.fact.weather", "Weather-safe routes", "hero.fact.local", "Dhërmi area"],
-  [Languages, "hero.fact.languages", "English • French • Albanian", "hero.fact.easy", "WhatsApp in 1 min"]
+  [Star, "hero.fact.reviews", "5-star guest reviews", "hero.fact.languages", "French, English and Albanian"],
+  [Users, "hero.fact.groupSize", "Small groups, max 15 guests", "hero.fact.capacity", "Limited seats"],
+  [MapPin, "hero.fact.departure", "Departure from Dhërmi area", "hero.fact.local", "Exact point on WhatsApp"],
+  [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.easy", "Book on WhatsApp in 1 minute"],
+  [ShieldCheck, "hero.fact.weather", "Routes adapted to sea conditions", "hero.fact.reply", "Confirmed by skipper"]
+];
+
+const heroProofs = [
+  "5-star guest reviews",
+  "Small groups, max 15 guests",
+  "Departure from Dhërmi area",
+  "Book on WhatsApp in 1 minute",
+  "Routes adapted to sea conditions"
 ];
 
 export function HeroCinematic() {
@@ -19,9 +27,9 @@ export function HeroCinematic() {
     <section className="relative overflow-hidden bg-limestone text-pearl">
       <div className="absolute inset-0">
         <picture className="block h-full w-full">
-          <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile.avif")} type="image/avif" />
+          <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile-lcp.avif")} type="image/avif" />
           <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile.webp")} type="image/webp" />
-          <source srcSet={assetPath("/images/hero-riviera-tablet.avif")} type="image/avif" />
+          <source srcSet={assetPath("/images/hero-riviera-tablet-lcp.avif")} type="image/avif" />
           <img
             src={assetPath("/images/hero-riviera-tablet.webp")}
             alt="Dhermi Boat entering a sea cave with turquoise water"
@@ -52,11 +60,11 @@ export function HeroCinematic() {
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">
             <LocalizedText id="hero.text">
-              Swim in turquoise caves, reach beaches only accessible by boat, and book with a local skipper on WhatsApp in under a minute.
+              Small-group and private boat trips with a local skipper. Clear prices, daily departures, WhatsApp booking.
             </LocalizedText>
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {trustBadges.map((badge, index) => (
+            {heroProofs.map((badge, index) => (
               <span key={badge} className="rounded-full border border-white/18 bg-white/12 px-3 py-2 text-xs font-bold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur">
                 <LocalizedText id={`hero.trust.${index}`}>{badge}</LocalizedText>
               </span>

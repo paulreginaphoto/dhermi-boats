@@ -193,7 +193,7 @@ export default function HomePage() {
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
               label={<LocalizedText id="section.reviews.label">Guest reviews</LocalizedText>}
-              title={<LocalizedText id="section.reviews.title">Loved by guests on the Albanian Riviera</LocalizedText>}
+              title={<LocalizedText id="section.reviews.title">Loved by French, Albanian and international guests</LocalizedText>}
             />
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"

@@ -16,14 +16,14 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
       <a className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
         <div className="relative aspect-[4/3] overflow-hidden bg-sand">
           <Image
-            src={tour.image}
+            src={tour.cardImage ?? tour.image}
             alt={tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`}
             fill
             loading={imagePriority ? "eager" : "lazy"}
             fetchPriority={imagePriority ? "high" : "low"}
             decoding="async"
-            quality={58}
-            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            quality={52}
+            sizes="(min-width: 1280px) 31vw, (min-width: 768px) 46vw, 92vw"
             className="object-cover transition duration-700 group-hover:scale-105"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-navy/55 via-transparent to-transparent" />

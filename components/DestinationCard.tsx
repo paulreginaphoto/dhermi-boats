@@ -19,14 +19,14 @@ export function DestinationCard({
     >
       <article className="relative min-h-[320px] md:min-h-[420px]">
         <Image
-          src={destination.image}
+          src={destination.cardImage ?? destination.image}
           alt={destination.imageAlt ?? `${destination.title} boat tour destination in Albania`}
           fill
           loading={imagePriority ? "eager" : "lazy"}
           fetchPriority={imagePriority ? "high" : "low"}
           decoding="async"
-          quality={52}
-          sizes="(min-width: 1024px) 33vw, 100vw"
+          quality={50}
+          sizes="(min-width: 1024px) 31vw, 92vw"
           className="object-cover transition duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-navy/92 via-navy/48 to-navy/10" />

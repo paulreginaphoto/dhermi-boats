@@ -13,10 +13,10 @@ export function TourComparison() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="comparison.label">Compare tours</LocalizedText>
+              <LocalizedText id="comparison.label">Tour chooser</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="comparison.title">Pick by route length, budget and group size</LocalizedText>
+              <LocalizedText id="comparison.title">Choose your tour in 30 seconds</LocalizedText>
             </h2>
           </div>
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="primary" whatsappKey="default" analyticsEvent="whatsapp_click">
@@ -37,14 +37,14 @@ export function TourComparison() {
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-sand">
                   <Image
-                    src={tour.image}
+                    src={tour.cardImage ?? tour.image}
                     alt={tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`}
                     fill
-                    loading={index < 3 ? "eager" : "lazy"}
-                    fetchPriority={index < 3 ? "high" : "low"}
+                    loading="lazy"
+                    fetchPriority="low"
                     decoding="async"
-                    quality={52}
-                    sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 100vw"
+                    quality={50}
+                    sizes="(min-width: 1280px) 20vw, (min-width: 768px) 50vw, 92vw"
                     className="object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/62 via-transparent to-transparent" />
@@ -88,7 +88,7 @@ export function TourComparison() {
                   </dl>
                   <div className="mt-4 rounded-md bg-pearl/70 p-3">
                     <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                      <LocalizedText id="tour.bestForLabel">Good fit</LocalizedText>
+                      <LocalizedText id="comparison.audience">For who</LocalizedText>
                     </p>
                     <p className="mt-1 text-sm font-semibold leading-6 text-ink">
                       <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
@@ -111,6 +111,9 @@ export function TourComparison() {
                     </ul>
                   </div>
                   <div className="mt-auto grid gap-2 pt-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                      <LocalizedText id="comparison.ctaLabel">Next step</LocalizedText>
+                    </p>
                     <a
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
                       data-analytics-event="comparison_book_click"
