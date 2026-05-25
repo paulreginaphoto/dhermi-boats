@@ -7,7 +7,6 @@ const pages: Array<{ path: string; priority: number; changefreq: MetadataRoute.S
   { path: "/", priority: 1, changefreq: "weekly" },
   { path: "/boat-photos/", priority: 0.75, changefreq: "weekly" },
   { path: "/tours/", priority: 0.9, changefreq: "weekly" },
-  { path: "/tours/private/", priority: 0.9, changefreq: "weekly" },
   { path: "/tours/group/", priority: 0.85, changefreq: "weekly" },
   { path: "/destinations/", priority: 0.85, changefreq: "weekly" },
   { path: "/destinations/gjipe/", priority: 0.85, changefreq: "weekly" },

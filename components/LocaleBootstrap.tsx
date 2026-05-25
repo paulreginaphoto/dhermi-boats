@@ -16,7 +16,8 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   var whatsappNumber = ${bootstrapWhatsappNumber};
   var whatsappMessages = ${bootstrapWhatsappMessages};
   var translationsUrl = (basePath ? basePath : "") + "/locales/translations.json";
-  var searchParams = (new URL(window.location.href)).searchParams;
+  var currentUrl = new URL(window.location.href);
+  var searchParams = currentUrl.searchParams;
   var urlLocale = searchParams.get("dlang") || searchParams.get("lang");
   var storedLocale = null;
   var browserLocales = [];
@@ -67,6 +68,19 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   var locale = activeLocale();
+
+  function normalizeUrlLocale() {
+    if (!searchParams.has("dlang") && !searchParams.has("lang")) return;
+    var previous = currentUrl.search;
+    searchParams.set("dlang", locale);
+    searchParams.delete("lang");
+    if (currentUrl.search !== previous) {
+      window.history.replaceState(null, "", currentUrl.pathname + currentUrl.search + currentUrl.hash);
+    }
+  }
+
+  normalizeUrlLocale();
+
   try {
     window.localStorage.setItem("dhermi-language", locale);
   } catch (_e) {}
@@ -82,6 +96,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       if (isLocale(nextLocale)) {
         var target = new URL(window.location.href);
         target.searchParams.set("dlang", nextLocale);
+        target.searchParams.delete("lang");
         button.setAttribute("href", target.pathname + target.search + target.hash);
       }
       if (isActive) {

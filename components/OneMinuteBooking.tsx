@@ -214,7 +214,8 @@ function browserLocale(): FormLocale {
 
 function readLocale(): FormLocale {
   if (typeof window === "undefined") return "en";
-  const urlLocale = new URL(window.location.href).searchParams.get("dlang");
+  const params = new URL(window.location.href).searchParams;
+  const urlLocale = params.get("dlang") || params.get("lang");
   const normalizedUrlLocale = normalizeLocale(urlLocale);
   if (normalizedUrlLocale === "fr" || normalizedUrlLocale === "sq" || normalizedUrlLocale === "en") return normalizedUrlLocale;
   try {

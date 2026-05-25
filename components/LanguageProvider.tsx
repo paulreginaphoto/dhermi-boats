@@ -42,11 +42,13 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLocaleState(nextLocale);
     const url = new URL(window.location.href);
     url.searchParams.set("dlang", nextLocale);
+    url.searchParams.delete("lang");
     window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
   }, []);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
     const requested = params.get("dlang") || params.get("lang");
     const stored = window.localStorage.getItem("dhermi-language");
     const normalizedRequested = normalizeLocale(requested);
@@ -56,6 +58,11 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       : isLocale(normalizedStored)
         ? normalizedStored
         : browserLocale();
+    if (params.has("dlang") || params.has("lang")) {
+      params.set("dlang", nextLocale);
+      params.delete("lang");
+      window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+    }
     const frame = window.requestAnimationFrame(() => setLocaleState(nextLocale));
     return () => window.cancelAnimationFrame(frame);
   }, []);

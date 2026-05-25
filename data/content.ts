@@ -14,7 +14,6 @@ export type Tour = {
   cardImage?: string;
   imageAlt?: string;
   href: string;
-  legacyHref?: string;
   whatsappText: string;
   bestFor: string;
   highlights: string[];
@@ -56,7 +55,7 @@ export type TourComparisonItem = {
 export const navItems = [
   { label: "Tours", href: sitePath("/tours/") },
   { label: "Photos", href: sitePath("/boat-photos/") },
-  { label: "Private", href: sitePath("/tours/private/") },
+  { label: "Private", href: sitePath("/private-boat-tour-albania/") },
   { label: "Destinations", href: sitePath("/destinations/") },
   { label: "FAQ", href: sitePath("/faq/") },
   { label: "Contact", href: sitePath("/contact/") }
@@ -79,7 +78,6 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-gjipe-card.avif"),
     imageAlt: "Boat approaching a clear beach cove with turquoise water near Dhërmi",
     href: sitePath("/gjipe-boat-tour/"),
-    legacyHref: sitePath("/destinations/gjipe/"),
     whatsappText: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Date: __ / Number of adults: __ / Number of children: __ / Preferred time: __",
     bestFor: "Best value / short trip",
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
@@ -117,7 +115,6 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-grama-card.avif"),
     imageAlt: "Wide blue bay and rocky Karaburun coastline on a Dhermi boat tour",
     href: sitePath("/grama-bay-boat-tour/"),
-    legacyHref: sitePath("/destinations/grama-bay/"),
     whatsappText: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Date: __ / Number of adults: __ / Number of children: __ / Preferred time: __",
     bestFor: "Most complete route",
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
@@ -155,7 +152,6 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-private-card.avif"),
     imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
     href: sitePath("/private-boat-tour-albania/"),
-    legacyHref: sitePath("/tours/private/"),
     whatsappText: "Hello Dhermi Boat, I'd like to plan a private boat tour. Date: __ / Number of people: __ / Hours: __ / Route ideas: __",
     bestFor: "Families & groups",
     highlights: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
@@ -193,7 +189,6 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-sunset-card.avif"),
     imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
-    legacyHref: sitePath("/tours/private/#sunset"),
     whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset tour. Date: __ / Number of people: __ / Preferred time: sunset / Route ideas: __",
     bestFor: "Couples",
     highlights: ["Around Dhërmi"],
@@ -231,7 +226,6 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-fishing-card.avif"),
     imageAlt: "Boat helm facing the Dhërmi coastline on calm water",
     href: sitePath("/morning-fishing-tour/"),
-    legacyHref: sitePath("/tours/private/#fishing"),
     whatsappText: "Hello Dhermi Boat, I'd like to ask about the morning fishing tour. Date: __ / Number of people: __ / Preferred time: 5 AM to 8 AM / Route ideas: __",
     bestFor: "Quiet sunrise fishing",
     highlights: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"],

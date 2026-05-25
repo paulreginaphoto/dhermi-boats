@@ -3,17 +3,25 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { sitePath } from "@/lib/site";
 
-export function LegacyRedirectPage() {
-  const destination = sitePath("/");
+export function LegacyRedirectPage({ destination = "/" }: { destination?: string }) {
+  const targetPath = sitePath(destination);
+  const redirectScript = [
+    `var target = new URL(${JSON.stringify(targetPath)}, window.location.href);`,
+    "var current = new URL(window.location.href);",
+    "var params = current.searchParams;",
+    'var requested = params.get("dlang") || params.get("lang");',
+    'if (requested) target.searchParams.set("dlang", requested);',
+    "window.location.replace(target.href);"
+  ].join(" ");
 
   return (
     <section className="bg-limestone py-16 md:py-24">
       <script
         dangerouslySetInnerHTML={{
-          __html: `var target = new URL(${JSON.stringify(destination)}, window.location.href); var current = new URL(window.location.href); var dlang = current.searchParams.get("dlang"); if (dlang) target.searchParams.set("dlang", dlang); window.location.replace(target.href);`
+          __html: redirectScript
         }}
       />
-      <meta content={`0;url=${destination}`} httpEquiv="refresh" />
+      <meta content={`0;url=${targetPath}`} httpEquiv="refresh" />
       <div className="site-band">
         <div className="max-w-2xl rounded-lg border border-ink/10 bg-pearl p-6 shadow-sm md:p-8">
           <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
@@ -28,7 +36,7 @@ export function LegacyRedirectPage() {
             </LocalizedText>
           </p>
           <div className="mt-7">
-            <ButtonLink href="/" icon={ArrowRight}>
+            <ButtonLink href={targetPath} icon={ArrowRight}>
               <LocalizedText id="legacy.redirect.home">Go to home page</LocalizedText>
             </ButtonLink>
           </div>

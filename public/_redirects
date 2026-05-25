@@ -1,5 +1,7 @@
 # 301 migration rules for hosts that support Netlify/Cloudflare Pages-style redirects.
 # GitHub Pages ignores this file; use Cloudflare redirect rules if production stays on GitHub Pages.
+/tours/private/ /private-boat-tour-albania/ 301
+/tours/private /private-boat-tour-albania/ 301
 /2026/02/28/hello-world/ / 301
 /sample-page/ / 301
 /boutique/ / 301

@@ -19,6 +19,14 @@ export default function robots(): MetadataRoute.Robots {
     "/wp-content/uploads/woocommerce_uploads/",
     "/*?add-to-cart=",
     "/*?*add-to-cart=",
+    "/*?section=",
+    "/*?*section=",
+    "/*?elementor",
+    "/*?*elementor",
+    "/*?p=",
+    "/*?*p=",
+    "/*?page_id=",
+    "/*?*page_id=",
     "/wp-admin/"
   ];
 

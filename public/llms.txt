@@ -19,7 +19,11 @@ Google Maps: https://maps.app.goo.gl/NRsVPEKAqkKfoHmn6
 
 - Home: https://dhermi.boats/
 - Dhermi boat tours: https://dhermi.boats/tours/
-- Private tours: https://dhermi.boats/tours/private/
+- Gjipe tour: https://dhermi.boats/gjipe-boat-tour/
+- Grama Bay tour: https://dhermi.boats/grama-bay-boat-tour/
+- Private tour: https://dhermi.boats/private-boat-tour-albania/
+- Sunset tour: https://dhermi.boats/sunset-boat-tour/
+- Morning fishing tour: https://dhermi.boats/morning-fishing-tour/
 - Shared tours: https://dhermi.boats/tours/group/
 - Destinations: https://dhermi.boats/destinations/
 - Gjipe: https://dhermi.boats/destinations/gjipe/

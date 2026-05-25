@@ -78,7 +78,7 @@ export default function HomePage() {
               title={<LocalizedText id="section.experiences.title">Sunset, fishing and custom routes</LocalizedText>}
             />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/tours/private/" variant="primary">
+              <ButtonLink href="/private-boat-tour-albania/" variant="primary">
                 <LocalizedText id="tour.details">See route and price</LocalizedText>
               </ButtonLink>
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsEvent="whatsapp_click">

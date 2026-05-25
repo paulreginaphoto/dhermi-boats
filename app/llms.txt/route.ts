@@ -16,7 +16,11 @@ Dhermi Boat is a local Dhermi boat tour operator on the Albanian Riviera near Dh
 Main pages:
 - ${canonical("/")}
 - ${canonical("/tours/")}
-- ${canonical("/tours/private/")}
+- ${canonical("/gjipe-boat-tour/")}
+- ${canonical("/grama-bay-boat-tour/")}
+- ${canonical("/private-boat-tour-albania/")}
+- ${canonical("/sunset-boat-tour/")}
+- ${canonical("/morning-fishing-tour/")}
 - ${canonical("/destinations/")}
 - ${canonical("/faq/")}
 - ${canonical("/contact/")}
