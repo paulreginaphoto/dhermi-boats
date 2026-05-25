@@ -295,6 +295,7 @@ export function OneMinuteBooking() {
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
   const [bookingDraftReady, setBookingDraftReady] = useState(false);
+  const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(false);
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
@@ -312,7 +313,10 @@ export function OneMinuteBooking() {
   const shortBookingDate = date ? formatDateShort(date) : "";
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLocale(readLocale()), 0);
+    const timer = window.setTimeout(() => {
+      setDateDisplayEnhanced(true);
+      setLocale(readLocale());
+    }, 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -511,27 +515,41 @@ export function OneMinuteBooking() {
                   <LocalizedText id="quick.date">Date</LocalizedText>
                 </label>
                 <div
-                  className={[
-                    "relative h-12 rounded-md border bg-white transition focus-within:border-ink",
-                    errors.date ? "border-bronze" : "border-ink/12"
-                  ].join(" ")}
+                  className={
+                    dateDisplayEnhanced
+                      ? [
+                          "relative h-12 rounded-md border bg-white transition focus-within:border-ink",
+                          errors.date ? "border-bronze" : "border-ink/12"
+                        ].join(" ")
+                      : "relative"
+                  }
                 >
                   <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
-                  <span
-                    aria-hidden
-                    className={[
-                      "pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-base font-semibold",
-                      shortBookingDate ? "text-ink" : "text-ink-soft"
-                    ].join(" ")}
-                  >
-                    {shortBookingDate || dateDisplayFormat}
-                  </span>
+                  {dateDisplayEnhanced ? (
+                    <span
+                      aria-hidden
+                      className={[
+                        "pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-base font-semibold",
+                        shortBookingDate ? "text-ink" : "text-ink-soft"
+                      ].join(" ")}
+                    >
+                      {shortBookingDate || dateDisplayFormat}
+                    </span>
+                  ) : null}
                   <input
                     id="quick-date"
                     aria-label={`${labels.date} ${dateDisplayFormat}`}
                     aria-describedby={errors.date ? "quick-date-error" : undefined}
                     aria-invalid={errors.date || undefined}
-                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                    className={
+                      dateDisplayEnhanced
+                        ? "absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        : [
+                            "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
+                            errors.date ? "border-bronze" : "border-ink/12"
+                          ].join(" ")
+                    }
+                    lang="en-GB"
                     name="Date"
                     type="date"
                     min={minimumDate || undefined}
