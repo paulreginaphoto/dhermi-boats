@@ -2,15 +2,18 @@ import type { Metadata } from "next";
 import { MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
+import { conversionAttrs } from "@/lib/conversion";
 import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
 import { breadcrumbSchema, localBusinessSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
+import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
 export const metadata: Metadata = {
   title: "Compare Dhermi Boat Tours",
@@ -48,11 +51,13 @@ export default function ToursPage() {
           <ButtonLink href="#compare-tours" variant="dark">
             <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
           </ButtonLink>
-          <ButtonLink href="#book" icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+          <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18" whatsappKey="default" analyticsPlacement="tours_hero">
             <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
+
+      <ConversionTrustBlock />
 
       <TourComparison />
 
@@ -84,12 +89,13 @@ export default function ToursPage() {
               <LocalizedText id="decision.title">Choose by time, swim stops and group style</LocalizedText>
             </h2>
           </div>
-          <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
             {[
-              ["decision.gjipe.title", "Gjipe: value and shorter route", "decision.gjipe.text", "Choose Gjipe for caves, Gjipe Beach and a 30-minute swim stop when you want a clear, easy sea trip.", "gjipe"],
-              ["decision.grama.title", "Grama: most complete shared route", "decision.grama.text", "Choose Grama when you want Karaburun, Blue Cave, San Andrea Beach and Grama Beach in one longer tour.", "grama"],
-              ["decision.private.title", "Private: families and groups", "decision.private.text", "Choose private when your group wants custom timing, destinations and swimming stops with the skipper.", "private"],
-              ["decision.weather.title", "Sea-safe planning", "decision.weather.text", "Choose WhatsApp if you are unsure: routes and cave access depend on wind, waves and skipper safety decisions.", "default"]
+              ["decision.gjipe.title", "Best value: Gjipe", "decision.gjipe.text", "Choose Gjipe for caves, Gjipe Beach and a 30-minute swim stop when you want a clear, easy sea trip.", "gjipe"],
+              ["decision.grama.title", "Most complete: Grama", "decision.grama.text", "Choose Grama when you want Karaburun, Blue Cave, San Andrea Beach and Grama Beach in one longer tour.", "grama"],
+              ["decision.private.title", "Private/family", "decision.private.text", "Choose private when your group wants custom timing, destinations and swimming stops with the skipper.", "private"],
+              ["decision.sunset.title", "Sunset/couple", "decision.sunset.text", "Choose sunset for a private evening cruise around the Dhërmi coast.", "sunset"],
+              ["decision.fishing.title", "Fishing/morning", "decision.fishing.text", "Choose fishing for a quiet early route from 5 AM to 8 AM with 2 fishing rods included.", "fishing"]
             ].map(([titleKey, title, textKey, text, tourId]) => {
               const tour = tours.find((item) => item.id === tourId) ?? tours[0];
               return (
@@ -170,12 +176,12 @@ export default function ToursPage() {
                   <td className="px-5 py-4">
                     <a
                       className="inline-flex min-h-10 items-center justify-center rounded-md bg-ink px-4 text-xs font-bold text-pearl transition hover:bg-navy"
-                      data-analytics-event="tour_matrix_book_click"
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
                       href={whatsappUrl(tour.whatsappText)}
                       rel="noreferrer"
                       target="_blank"
+                      {...conversionAttrs({ tourId: tour.id, placement: "tour_matrix" })}
                     >
                       <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                     </a>
@@ -189,7 +195,7 @@ export default function ToursPage() {
 
       <BookingCTA
         title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>}
-        text={<LocalizedText id="booking.text">Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.</LocalizedText>}
+        text={<LocalizedText id="booking.text">Send a WhatsApp message with the tour, date, adults, children, preferred time and questions. We confirm availability together.</LocalizedText>}
       />
     </>
   );

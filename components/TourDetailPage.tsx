@@ -1,6 +1,7 @@
 import { ArrowLeft, CheckCircle2, Clock3, CloudSun, Euro, ListChecks, Luggage, MapPin, MessageCircle, Sparkles, Users } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -47,7 +48,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
+          <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_hero">
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </ButtonLink>
           <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
@@ -55,6 +56,8 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           </ButtonLink>
         </div>
       </PageHero>
+
+      <ConversionTrustBlock />
 
       <section className="bg-limestone py-8 md:py-14">
         <div className="site-band">
@@ -163,12 +166,12 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
                 </div>
               ))}
             </dl>
-            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
+            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_panel">
               <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
             </ButtonLink>
             <p className="mt-4 text-sm leading-7 text-pearl/88">
               <LocalizedText id="booking.panel.text">
-                Send your date, number of people and preferred tour. We confirm availability together.
+                Send your tour, date, adults, children, preferred time and questions. We confirm availability together.
               </LocalizedText>
             </p>
           </aside>
@@ -195,7 +198,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         </div>
       </section>
 
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} whatsappKey={tour.id as "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="tour_final" />
     </>
   );
 }

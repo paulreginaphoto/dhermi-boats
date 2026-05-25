@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
@@ -57,11 +58,12 @@ export default function FAQPage() {
           <ButtonLink href="/tours/" variant="dark">
             <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
           </ButtonLink>
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18" whatsappKey="default" analyticsEvent="faq_whatsapp_click">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18" whatsappKey="default" analyticsPlacement="faq_hero">
             <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
+      <ConversionTrustBlock />
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-8">
           {faqGroups.map((group) => (

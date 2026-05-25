@@ -1,4 +1,5 @@
 import { LocalizedText } from "@/components/LocalizedText";
+import { conversionAttrs } from "@/lib/conversion";
 import { defaultBookingMessage, whatsappUrl } from "@/lib/site";
 
 const fallbackWhatsappHref = whatsappUrl(defaultBookingMessage);
@@ -22,11 +23,11 @@ export function LazyOneMinuteBooking() {
         </div>
         <a
           className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-pearl px-5 text-sm font-semibold text-ink shadow-soft transition hover:bg-white lg:w-auto"
-          data-analytics-event="whatsapp_click"
           data-whatsapp-key="default"
           href={fallbackWhatsappHref}
           rel="noreferrer"
           target="_blank"
+          {...conversionAttrs({ tourId: "default", placement: "quick_fallback" })}
         >
           <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
         </a>

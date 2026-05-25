@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
+import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
 import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
 import { emailAddress, phoneDisplay, whatsappUrl } from "@/lib/site";
 
@@ -48,32 +49,32 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
   en: {
     tour: "Tour",
     date: "Date",
-    time: "Time",
+    time: "Preferred time",
     adults: "Adults",
     children: "Children",
     name: "Name",
     phone: "Phone",
-    notes: "Notes"
+    notes: "Questions"
   },
   fr: {
     tour: "Tour",
     date: "Date",
-    time: "Heure",
+    time: "Horaire souhaité",
     adults: "Adultes",
     children: "Enfants",
     name: "Nom",
     phone: "Téléphone",
-    notes: "Notes"
+    notes: "Questions"
   },
   sq: {
     tour: "Turi",
     date: "Data",
-    time: "Ora",
+    time: "Ora e preferuar",
     adults: "Të rritur",
     children: "Fëmijë",
     name: "Emri",
     phone: "Telefoni",
-    notes: "Shënime"
+    notes: "Pyetje"
   }
 };
 
@@ -348,25 +349,23 @@ export function OneMinuteBooking() {
     } catch {}
   }, [bookingDraftReady, date, safeAdults, safeChildren, selectedTime, tourId]);
 
-  const bookingMessage = useMemo(() => {
-    const lines = [
-      messageIntro[locale],
-      `${labels.tour}: ${activeTourTitle}`,
-      `${labels.date}: ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
-      `${labels.time}: ${cleanValue(activeTimeLabel)}`,
-      `${labels.adults}: ${safeAdults}`,
-      `${labels.children}: ${safeChildren}`,
-      `${labels.name}: ${requiredValue(name, requiredPrompts.name)}`,
-      `${labels.phone}: ${cleanValue(phone)}`,
-      `${labels.notes}: ${cleanValue(notes)}`
-    ];
-
-    return lines.join("\n");
-  }, [activeTimeLabel, activeTourTitle, formattedBookingDate, labels, locale, name, notes, phone, requiredPrompts, safeAdults, safeChildren]);
+  const bookingMessage = [
+    messageIntro[locale],
+    `${labels.tour}: ${activeTourTitle}`,
+    `${labels.date}: ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
+    `${labels.time}: ${cleanValue(activeTimeLabel)}`,
+    `${labels.adults}: ${safeAdults}`,
+    `${labels.children}: ${safeChildren}`,
+    `${labels.name}: ${requiredValue(name, requiredPrompts.name)}`,
+    `${labels.phone}: ${cleanValue(phone)}`,
+    `${labels.notes}: ${cleanValue(notes)}`
+  ].join("\n");
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
   const whatsappHref = whatsappUrl(bookingMessage);
   const phoneHref = `tel:${phoneDisplay.replace(/\s/g, "")}`;
+  const whatsappAnalyticsPlacement = "quick_form";
+  const whatsappAnalyticsTour = analyticsSegment(activeTour.id);
   const firstMissingRequiredFieldId = !date ? "quick-date" : !name.trim() ? "quick-name" : null;
   const bookingLinksReady = firstMissingRequiredFieldId === null;
   const bookingFallbackHref = firstMissingRequiredFieldId ? `#${firstMissingRequiredFieldId}` : "#book";
@@ -701,7 +700,7 @@ export function OneMinuteBooking() {
 
           <div className="mt-5 grid gap-2">
             <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-notes">
-              <LocalizedText id="quick.notes">Notes</LocalizedText>
+              <LocalizedText id="quick.notes">Questions</LocalizedText>
             </label>
             <textarea
               id="quick-notes"
@@ -725,7 +724,10 @@ export function OneMinuteBooking() {
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
               aria-disabled={!bookingLinksReady}
-              data-analytics-event="whatsapp_click"
+              data-analytics-event={conversionEvent(activeTour.id, locale, whatsappAnalyticsPlacement)}
+              data-analytics-event-template={whatsappEventTemplate}
+              data-analytics-tour={whatsappAnalyticsTour}
+              data-analytics-placement={whatsappAnalyticsPlacement}
               data-tour-id={activeTour.id}
               href={whatsappActionHref}
               rel={bookingLinksReady ? "noreferrer" : undefined}

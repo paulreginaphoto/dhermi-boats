@@ -1,5 +1,6 @@
 import { Euro, ListChecks, MessageCircle, Phone } from "lucide-react";
 import { primaryWhatsappHref } from "@/data/content";
+import { conversionAttrs } from "@/lib/conversion";
 import { phoneDisplay, sitePath } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
 
@@ -12,11 +13,11 @@ export function StickyBookingBar() {
       <div className="mx-auto grid max-w-md grid-cols-4 items-center gap-2">
         <a
           className="inline-flex min-h-12 flex-col items-center justify-center gap-1 rounded-md bg-ink px-2 text-[0.68rem] font-bold leading-none text-pearl"
-          data-analytics-event="sticky_mobile_cta_click"
           data-whatsapp-key="default"
           href={primaryWhatsappHref}
           rel="noreferrer"
           target="_blank"
+          {...conversionAttrs({ tourId: "default", placement: "sticky_mobile" })}
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
           <LocalizedText id="sticky.whatsapp">WhatsApp</LocalizedText>

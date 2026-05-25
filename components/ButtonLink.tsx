@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from "react";
 import { iconStrokeWidth } from "@/components/OutlineIcon";
+import { conversionAttrs } from "@/lib/conversion";
 import { sitePath } from "@/lib/site";
 
 type ButtonLinkProps = {
@@ -11,6 +12,8 @@ type ButtonLinkProps = {
   ariaLabel?: string;
   whatsappKey?: string;
   analyticsEvent?: string;
+  analyticsPlacement?: string;
+  analyticsTour?: string;
 };
 
 const variants = {
@@ -32,9 +35,14 @@ export function ButtonLink({
   icon: Icon,
   ariaLabel,
   whatsappKey,
-  analyticsEvent
+  analyticsEvent,
+  analyticsPlacement,
+  analyticsTour
 }: ButtonLinkProps) {
   const resolvedHref = sitePath(href);
+  const analyticsData = analyticsPlacement
+    ? conversionAttrs({ tourId: analyticsTour ?? whatsappKey ?? "default", placement: analyticsPlacement })
+    : { "data-analytics-event": analyticsEvent };
   const classes = [
     "inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 text-sm font-semibold leading-none transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:translate-y-px",
     variants[variant],
@@ -53,11 +61,11 @@ export function ButtonLink({
       <a
         aria-label={ariaLabel}
         className={classes}
-        data-analytics-event={analyticsEvent}
         data-whatsapp-key={whatsappKey}
         href={resolvedHref}
         rel={resolvedHref.startsWith("http") ? "noreferrer" : undefined}
         target={resolvedHref.startsWith("http") ? "_blank" : undefined}
+        {...analyticsData}
       >
         {content}
       </a>
@@ -65,7 +73,7 @@ export function ButtonLink({
   }
 
   return (
-    <a aria-label={ariaLabel} className={classes} data-analytics-event={analyticsEvent} data-whatsapp-key={whatsappKey} href={resolvedHref}>
+    <a aria-label={ariaLabel} className={classes} data-whatsapp-key={whatsappKey} href={resolvedHref} {...analyticsData}>
       {content}
     </a>
   );

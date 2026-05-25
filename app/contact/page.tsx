@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Camera, Mail, MapPin, MessageCircle, Phone, Ticket, Video } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { LocalizedText } from "@/components/LocalizedText";
 import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
+import { conversionAttrs } from "@/lib/conversion";
 import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, languageAlternates, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 };
 
 const contacts = [
-  { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle, whatsappKey: "default", analyticsEvent: "whatsapp_click" },
+  { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle, whatsappKey: "default" },
   { label: "Phone", labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: Phone, analyticsEvent: "call_click" },
   { label: "Email", labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: Mail, analyticsEvent: "email_click" },
   { label: "Google Maps", labelKey: "contact.google.label", value: "Google Maps", valueKey: "contact.google.value", href: googleMapsUrl, icon: MapPin },
@@ -37,15 +39,17 @@ export default function ContactPage() {
       >
         <p>
           <LocalizedText id="contact.hero.text">
-            Send a WhatsApp message with your date, number of people and preferred tour. We confirm availability together.
+            Send a WhatsApp message with your tour, date, adults, children, preferred time and questions. We confirm availability together.
           </LocalizedText>
         </p>
         <div className="mt-8">
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsEvent="whatsapp_click">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="contact_hero">
             <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
+
+      <ConversionTrustBlock />
 
       <OneMinuteBooking />
 
@@ -72,7 +76,7 @@ export default function ContactPage() {
               ))}
             </div>
             <div className="mt-8">
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsEvent="whatsapp_click">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="contact_panel">
                 <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
               </ButtonLink>
             </div>
@@ -107,6 +111,9 @@ export default function ContactPage() {
           <div className="grid gap-4">
             {contacts.map((contact) => {
               const isWhatsapp = contact.label === "WhatsApp";
+              const analyticsData = contact.whatsappKey
+                ? conversionAttrs({ tourId: contact.whatsappKey, placement: "contact_card" })
+                : { "data-analytics-event": contact.analyticsEvent };
 
               return (
               <a
@@ -117,11 +124,11 @@ export default function ContactPage() {
                     ? "border-ink bg-ink text-pearl hover:bg-navy"
                     : "border-ink/8 bg-limestone/70 text-ink hover:bg-pearl"
                 ].join(" ")}
-                data-analytics-event={contact.analyticsEvent}
                 data-whatsapp-key={contact.whatsappKey}
                 href={contact.href}
                 rel={contact.href.startsWith("http") ? "noreferrer" : undefined}
                 target={contact.href.startsWith("http") ? "_blank" : undefined}
+                {...analyticsData}
               >
                 <IconFrame icon={contact.icon} variant={isWhatsapp ? "dark" : "soft"} size="lg" />
                 <span>

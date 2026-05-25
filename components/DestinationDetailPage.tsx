@@ -1,6 +1,7 @@
-import { MessageCircle } from "lucide-react";
+import { ArrowRight, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
@@ -32,13 +33,14 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         <p>
           <LocalizedText id={`${translationBase}.summary`}>{destination.summary}</LocalizedText>
         </p>
-        <div className="mt-8">
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <ButtonLink
             href={primaryTour ? whatsappUrl(primaryTour.whatsappText) : "/contact/"}
             icon={MessageCircle}
             variant="dark"
             whatsappKey={primaryTour?.id ?? "default"}
-            analyticsEvent="whatsapp_click"
+            analyticsTour={primaryTour?.id ?? "default"}
+            analyticsPlacement="destination_detail_hero"
           >
             {primaryTour ? (
               <LocalizedText id={tourBookKey(primaryTour.id)}>{tourBookFallback(primaryTour.id)}</LocalizedText>
@@ -46,8 +48,15 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
               <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
             )}
           </ButtonLink>
+          {primaryTour ? (
+            <ButtonLink href={primaryTour.href} icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+              <LocalizedText id="tour.details">See route and price</LocalizedText>
+            </ButtonLink>
+          ) : null}
         </div>
       </PageHero>
+
+      <ConversionTrustBlock />
 
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-8 lg:grid-cols-[0.7fr_1.1fr]">
@@ -111,7 +120,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                   </p>
                 ) : null}
                 <div className="mt-6 flex flex-1 flex-col justify-end gap-3 sm:flex-row">
-                  <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsEvent="whatsapp_click">
+                  <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_detail_card">
                     <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                   </ButtonLink>
                   <ButtonLink href={tour.href} variant="secondary" className="flex-1">
@@ -124,7 +133,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         </div>
       </section>
 
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
+      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} whatsappKey={(primaryTour?.id ?? "default") as "default" | "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="destination_detail_final" />
     </>
   );
 }

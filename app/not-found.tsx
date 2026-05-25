@@ -31,7 +31,7 @@ export default function NotFound() {
               <ButtonLink href="/tours/" icon={ArrowRight}>
                 <LocalizedText id="notfound.tours">Compare tours</LocalizedText>
               </ButtonLink>
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="default" analyticsEvent="whatsapp_click">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="default" analyticsPlacement="not_found">
                 <LocalizedText id="notfound.whatsapp">Ask on WhatsApp</LocalizedText>
               </ButtonLink>
               <ButtonLink href="/" icon={Home} variant="ghost" className="border border-ink/10 bg-pearl/70">

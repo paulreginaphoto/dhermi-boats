@@ -664,7 +664,7 @@ function checkTourChoiceIn30Seconds(filePath, content) {
     ],
     "app/tours/page.tsx": [
       "Choose your tour in 30 seconds",
-      "tour_matrix_book_click"
+      "tour_matrix"
     ]
   };
   const snippets = requirements[relative];
@@ -687,12 +687,12 @@ function checkWhatsappMessageTemplates(filePath, content) {
   if (relative !== "lib/whatsappMessages.ts" && relative !== "data/content.ts") return;
 
   for (const snippet of [
+    "Tour:",
+    "Date:",
+    "Adults:",
+    "Children:",
     "Preferred time",
-    "Number of adults",
-    "Number of children",
-    "Number of people",
-    "Hours",
-    "Route ideas"
+    "Questions:"
   ]) {
     if (!content.includes(snippet)) {
       addIssue(

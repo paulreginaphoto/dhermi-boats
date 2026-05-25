@@ -9,7 +9,7 @@ import { assetPath } from "@/lib/site";
 
 const heroFacts: Array<[OutlineIconComponent, string, string, string, string]> = [
   [Star, "hero.fact.reviews", "5-star guest reviews", "hero.fact.languages", "French, English and Albanian"],
-  [Users, "hero.fact.groupSize", "Small groups, max 15 guests", "hero.fact.capacity", "Limited seats"],
+  [Users, "hero.fact.groupSize", "Small groups, max 15 guests", "hero.fact.capacity", "Max 15 guests"],
   [MapPin, "hero.fact.departure", "Departure from Dhërmi area", "hero.fact.local", "Exact point on WhatsApp"],
   [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.easy", "Book on WhatsApp in 1 minute"],
   [ShieldCheck, "hero.fact.weather", "Routes adapted to sea conditions", "hero.fact.reply", "Confirmed by skipper"]
@@ -83,7 +83,7 @@ export function HeroCinematic() {
             ))}
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsEvent="hero_cta_click">
+            <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="home_hero">
               <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
             </ButtonLink>
             <ButtonLink href="#compare-tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md hover:bg-white/18" analyticsEvent="hero_cta_click">

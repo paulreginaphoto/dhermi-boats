@@ -4,6 +4,7 @@ import { MapPin, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ArrivalComfortBar } from "@/components/ArrivalComfortBar";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { DestinationCard } from "@/components/DestinationCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
@@ -18,9 +19,10 @@ import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
-import { destinations, faqs, primaryWhatsappHref, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
+import { destinations, faqs, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
 import { faqSchema, homePageSchema, localBusinessSchema, touristTripSchema, websiteSchema } from "@/lib/seo";
+import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
 export const metadata: Metadata = {
   title: {
@@ -38,6 +40,8 @@ export default function HomePage() {
       <HeroCinematic />
 
       <ArrivalComfortBar />
+
+      <ConversionTrustBlock />
 
       <TourComparison />
 
@@ -81,7 +85,7 @@ export default function HomePage() {
               <ButtonLink href="/private-boat-tour-albania/" variant="primary">
                 <LocalizedText id="tour.details">See route and price</LocalizedText>
               </ButtonLink>
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsEvent="whatsapp_click">
+              <ButtonLink href={whatsappHrefForKey("private")} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsTour="private" analyticsPlacement="home_private">
                 <LocalizedText id="tour.private.book">Plan a private tour</LocalizedText>
               </ButtonLink>
             </div>

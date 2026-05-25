@@ -2,6 +2,7 @@ import { Menu, MessageCircle, X } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { LocalizedText } from "@/components/LocalizedText";
 import { navKeyByLabel } from "@/components/navigationConfig";
+import { conversionAttrs } from "@/lib/conversion";
 
 export function MobileNav() {
   return (
@@ -29,11 +30,11 @@ export function MobileNav() {
           ))}
           <a
             className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
-            data-analytics-event="whatsapp_click"
             data-whatsapp-key="default"
             href={primaryWhatsappHref}
             rel="noreferrer"
             target="_blank"
+            {...conversionAttrs({ tourId: "default", placement: "mobile_menu" })}
           >
             <MessageCircle className="h-4 w-4" aria-hidden />
             <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>

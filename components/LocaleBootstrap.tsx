@@ -135,6 +135,24 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     } catch (_e) {}
   }
 
+  function applyAnalyticsEvents() {
+    try {
+      window.document.querySelectorAll("[data-analytics-event-template][data-analytics-tour][data-analytics-placement]").forEach(function (node) {
+        var template = node.getAttribute("data-analytics-event-template");
+        var tour = node.getAttribute("data-analytics-tour");
+        var placement = node.getAttribute("data-analytics-placement");
+        if (!template || !tour || !placement) return;
+        node.setAttribute(
+          "data-analytics-event",
+          template
+            .replace("{tour}", tour)
+            .replace("{language}", locale)
+            .replace("{placement}", placement)
+        );
+      });
+    } catch (_e) {}
+  }
+
   var translationsStore = null;
   var observerTimer = null;
 
@@ -144,6 +162,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       window.document.querySelectorAll("[data-i18n]").forEach(setContent);
     } catch (_e) {}
     applyWhatsappLinks();
+    applyAnalyticsEvents();
   }
 
   function scheduleLocaleText() {
@@ -195,6 +214,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   updateTranslations();
   applyWhatsappLinks();
+  applyAnalyticsEvents();
 })();`;
 }
 

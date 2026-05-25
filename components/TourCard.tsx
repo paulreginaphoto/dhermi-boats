@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowRight, Clock3, MessageCircle, Sparkles, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
+import { conversionAttrs } from "@/lib/conversion";
 import { whatsappUrl } from "@/lib/site";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -87,12 +88,12 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
           <a
             className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl transition hover:bg-navy active:translate-y-px"
-            data-analytics-event="tour_card_book_click"
             data-tour-id={tour.id}
             data-whatsapp-key={tour.id}
             href={whatsappUrl(tour.whatsappText)}
             rel="noreferrer"
             target="_blank"
+            {...conversionAttrs({ tourId: tour.id, placement: "tour_card" })}
           >
             <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
@@ -80,6 +81,7 @@ export default function DestinationsPage() {
           </ButtonLink>
         </div>
       </PageHero>
+      <ConversionTrustBlock />
       <section className="destination-section py-8 text-pearl md:py-16" id="choose-destination">
         <div className="site-band grid gap-5 lg:grid-cols-3">
           {destinationInsights.map((insight, index) => {
@@ -131,10 +133,10 @@ export default function DestinationsPage() {
                     </div>
                   </dl>
                   <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row">
-                    <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsEvent="destination_whatsapp_click">
+                    <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_card">
                       <LocalizedText id={insight.ctaKey}>{insight.cta}</LocalizedText>
                     </ButtonLink>
-                    <ButtonLink href={destination.href} variant="secondary" className="flex-1">
+                    <ButtonLink href={tour.href} variant="secondary" className="flex-1">
                       <LocalizedText id="tour.details">See route and price</LocalizedText>
                     </ButtonLink>
                   </div>

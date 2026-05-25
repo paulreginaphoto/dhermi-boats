@@ -3,6 +3,7 @@ import { ArrowRight, Clock3, Euro, ListChecks, MessageCircle, Users } from "luci
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
+import { conversionAttrs } from "@/lib/conversion";
 import { whatsappUrl } from "@/lib/site";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
@@ -19,7 +20,7 @@ export function TourComparison() {
               <LocalizedText id="comparison.title">Choose your tour in 30 seconds</LocalizedText>
             </h2>
           </div>
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="primary" whatsappKey="default" analyticsEvent="whatsapp_click">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="primary" whatsappKey="default" analyticsPlacement="comparison_help">
             <LocalizedText id="comparison.cta">Not sure? Ask us on WhatsApp</LocalizedText>
           </ButtonLink>
         </div>
@@ -116,12 +117,12 @@ export function TourComparison() {
                     </p>
                     <a
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
-                      data-analytics-event="comparison_book_click"
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
                       href={whatsappUrl(tour.whatsappText)}
                       rel="noreferrer"
                       target="_blank"
+                      {...conversionAttrs({ tourId: tour.id, placement: "comparison_card" })}
                     >
                       <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
                       <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>

@@ -36,7 +36,7 @@ export function Header() {
 
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsEvent="whatsapp_click">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="header">
             <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
           </ButtonLink>
         </div>

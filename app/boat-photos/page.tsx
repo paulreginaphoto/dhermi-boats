@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { MapPin, MessageCircle } from "lucide-react";
+import { ArrowRight, MapPin, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
+import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { SocialFeed } from "@/components/SocialFeed";
 import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
-import { gallery, primaryWhatsappHref } from "@/data/content";
+import { gallery, primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
+import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour Photos",
@@ -17,13 +19,48 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/boat-photos/"), languages: languageAlternates("/boat-photos/") }
 };
 
-const photoGroups = [
-  { titleKey: "photos.group.caves", title: "Caves", indexes: [0, 1, 3, 7] },
-  { titleKey: "photos.group.beaches", title: "Beaches", indexes: [4, 5, 9, 10] },
-  { titleKey: "photos.group.onboard", title: "On board", indexes: [0, 3, 5, 11] },
-  { titleKey: "photos.group.sunset", title: "Sunset", indexes: [6] },
-  { titleKey: "photos.group.clearWater", title: "Clear water", indexes: [1, 2, 8, 9] }
-];
+const photoConversionGroups = [
+  {
+    tourId: "gjipe",
+    titleKey: "photos.conversion.gjipe.title",
+    title: "Gjipe caves and beach",
+    textKey: "photos.conversion.gjipe.text",
+    text: "Use these photos to judge the shorter cave-and-beach route with a swim stop.",
+    indexes: [0, 3, 4, 2]
+  },
+  {
+    tourId: "grama",
+    titleKey: "photos.conversion.grama.title",
+    title: "Grama Bay and Blue Cave",
+    textKey: "photos.conversion.grama.text",
+    text: "Choose this set if you want the longer Karaburun route and bright cave water.",
+    indexes: [1, 7, 8, 10]
+  },
+  {
+    tourId: "private",
+    titleKey: "photos.conversion.private.title",
+    title: "Private route ideas",
+    textKey: "photos.conversion.private.text",
+    text: "Useful when your group wants to choose timing, coves and swimming stops with the skipper.",
+    indexes: [0, 5, 9, 11]
+  },
+  {
+    tourId: "sunset",
+    titleKey: "photos.conversion.sunset.title",
+    title: "Sunset from the boat",
+    textKey: "photos.conversion.sunset.text",
+    text: "A simple preview for the private sunset tour around the Dhërmi coast.",
+    indexes: [6, 11, 9, 2]
+  },
+  {
+    tourId: "fishing",
+    titleKey: "photos.conversion.fishing.title",
+    title: "Quiet morning at sea",
+    textKey: "photos.conversion.fishing.text",
+    text: "Use the calm-water photos to decide if the early fishing tour fits your morning.",
+    indexes: [11, 9, 2, 5]
+  }
+] as const;
 
 export default function BoatPhotosLegacyPage() {
   return (
@@ -45,7 +82,7 @@ export default function BoatPhotosLegacyPage() {
               </span>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsEvent="photos_whatsapp_click">
+              <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="photos_hero">
                 <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
               </ButtonLink>
               <ButtonLink href="/tours/" variant="secondary">
@@ -82,6 +119,8 @@ export default function BoatPhotosLegacyPage() {
         </div>
       </section>
 
+      <ConversionTrustBlock />
+
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <div className="max-w-3xl">
@@ -93,7 +132,11 @@ export default function BoatPhotosLegacyPage() {
             </h2>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
-            {photoGroups.map((group) => (
+            {photoConversionGroups.map((group) => {
+              const tour = tours.find((item) => item.id === group.tourId);
+              if (!tour) return null;
+
+              return (
               <article key={group.titleKey} className="overflow-hidden rounded-lg border border-ink/8 bg-limestone shadow-sm">
                 <div className="grid grid-cols-2 gap-1 p-1">
                   {group.indexes.slice(0, 4).map((itemIndex) => {
@@ -120,9 +163,21 @@ export default function BoatPhotosLegacyPage() {
                   <h3 className="font-serif text-2xl font-medium text-ink">
                     <LocalizedText id={group.titleKey}>{group.title}</LocalizedText>
                   </h3>
+                  <p className="mt-3 text-sm leading-7 text-ink-soft">
+                    <LocalizedText id={group.textKey}>{group.text}</LocalizedText>
+                  </p>
+                  <div className="mt-5 grid gap-2">
+                    <ButtonLink href={tour.href} icon={ArrowRight} variant="secondary" className="w-full">
+                      <LocalizedText id="tour.details">See route and price</LocalizedText>
+                    </ButtonLink>
+                    <ButtonLink href={whatsappHrefForKey(group.tourId)} icon={MessageCircle} className="w-full" whatsappKey={group.tourId} analyticsTour={group.tourId} analyticsPlacement="photos_card">
+                      <LocalizedText id={`tour.${group.tourId}.book`}>Ask about this tour</LocalizedText>
+                    </ButtonLink>
+                  </div>
                 </div>
               </article>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

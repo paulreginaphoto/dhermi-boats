@@ -4,6 +4,7 @@ import { emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagra
 import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
+import { conversionAttrs } from "@/lib/conversion";
 
 export function Footer() {
   return (
@@ -45,7 +46,7 @@ export function Footer() {
             <LocalizedText id="footer.contact">Contact</LocalizedText>
           </p>
           <div className="mt-5 grid gap-3 text-sm text-pearl/88">
-            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="whatsapp_click" data-whatsapp-key="default" href={primaryWhatsappHref} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-whatsapp-key="default" href={primaryWhatsappHref} rel="noreferrer" target="_blank" {...conversionAttrs({ tourId: "default", placement: "footer" })}>
               <MessageCircle className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.whatsapp">WhatsApp booking</LocalizedText>
             </a>
