@@ -10,6 +10,7 @@ type ActiveNavLinkProps = {
   className?: string;
   activeClassName?: string;
   activePaths?: string[];
+  onClick?: () => void;
 };
 
 function stripBasePath(pathname: string) {
@@ -39,7 +40,8 @@ export function ActiveNavLink({
   children,
   className = "",
   activeClassName = "",
-  activePaths
+  activePaths,
+  onClick
 }: ActiveNavLinkProps) {
   const pathname = usePathname() || "/";
   const currentPath = normalizePath(pathname);
@@ -54,7 +56,12 @@ export function ActiveNavLink({
   });
 
   return (
-    <a aria-current={isActive ? "page" : undefined} className={[className, isActive ? activeClassName : ""].filter(Boolean).join(" ")} href={href}>
+    <a
+      aria-current={isActive ? "page" : undefined}
+      className={[className, isActive ? activeClassName : ""].filter(Boolean).join(" ")}
+      href={href}
+      onClick={onClick}
+    >
       {children}
     </a>
   );

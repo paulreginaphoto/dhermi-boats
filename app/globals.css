@@ -236,10 +236,6 @@ section {
 }
 
 @media (max-width: 767px) {
-  .language-switcher-compact {
-    display: none;
-  }
-
   header > div {
     width: 100%;
     max-width: 100vw;
@@ -272,5 +268,14 @@ section {
   .photo-overlay-dark-strong {
     background:
       linear-gradient(180deg, transparent 20%, rgb(7 27 38 / 0.66) 100%);
+  }
+}
+
+@media (max-width: 359px) {
+  .language-option,
+  .language-switcher-compact .language-option {
+    min-width: 1.75rem;
+    height: 2.25rem;
+    font-size: 0.58rem;
   }
 }

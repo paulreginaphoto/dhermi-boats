@@ -1,9 +1,10 @@
 import fs from "node:fs";
 import path from "node:path";
+import zlib from "node:zlib";
 
 const ROOT_DIR = process.cwd();
 const TARGET_DIRS = ["app", "components", "data", "lib", "public", "scripts"];
-const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".json", ".md", ".txt"]);
+const FILE_EXTENSIONS = new Set([".ts", ".tsx", ".js", ".jsx", ".css", ".json", ".md", ".txt"]);
 const EXCLUDE_DIRS = new Set([".git", ".next", "out", "node_modules"]);
 
 const FORBIDDEN_DASH = "\u2014";
@@ -619,24 +620,203 @@ function checkBookingDraftComfort(filePath, content) {
 }
 
 function checkExternalTrustLinks(filePath, content) {
-  if (content.includes("dhermi-boat-s720012")) {
+  if (content.includes("dhermi-boat-tours-s702528")) {
     addIssue(
       filePath,
-      lineNumberForIndex(content, content.indexOf("dhermi-boat-s720012")),
+      lineNumberForIndex(content, content.indexOf("dhermi-boat-tours-s702528")),
       "L'ancien lien GetYourGuide ne correspond pas au profil fournisseur actuel.",
-      "dhermi-boat-s720012"
+      "dhermi-boat-tours-s702528"
     );
   }
 
   if (!filePath.endsWith(path.join("lib", "site.ts"))) return;
 
-  if (!content.includes("https://www.getyourguide.com/dhermi-boat-tours-s702528/")) {
+  if (!content.includes("https://www.getyourguide.com/dhermi-boat-s720012/")) {
     addIssue(
       filePath,
       1,
       "Le lien GetYourGuide doit pointer vers le profil fournisseur Dhermi Boat Tours vérifié.",
-      "https://www.getyourguide.com/dhermi-boat-tours-s702528/"
+      "https://www.getyourguide.com/dhermi-boat-s720012/"
     );
+  }
+}
+
+function checkMobileHeaderControls(filePath, content) {
+  const normalizedPath = filePath.replace(/\\/g, "/");
+
+  if (normalizedPath.endsWith("app/globals.css")) {
+    if (/\.language-switcher-compact\s*\{[^}]*display:\s*none/i.test(content)) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, content.indexOf(".language-switcher-compact")),
+        "Le sélecteur de langue compact doit rester visible dans la topbar mobile.",
+        ".language-switcher-compact { display: none; }"
+      );
+    }
+  }
+
+  if (normalizedPath.endsWith("components/Header.tsx")) {
+    if (content.includes("absolute right-2 top-1/2")) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, content.indexOf("absolute right-2 top-1/2")),
+        "Les contrôles mobiles de la topbar doivent participer au layout flex pour éviter les chevauchements.",
+        "absolute right-2 top-1/2"
+      );
+    }
+  }
+
+  if (normalizedPath.endsWith("components/MobileNav.tsx")) {
+    if (content.includes("<details")) {
+      addIssue(
+        filePath,
+        lineNumberForIndex(content, content.indexOf("<details")),
+        "Le menu mobile doit être piloté par un bouton avec état React, pas par details/summary fragile.",
+        "<details"
+      );
+    }
+
+    for (const snippet of ["useState", "aria-expanded={isOpen}", "setIsOpen(false)"]) {
+      if (!content.includes(snippet)) {
+        addIssue(
+          filePath,
+          1,
+          "Le menu mobile doit exposer un état ouvert/fermé fiable et se refermer après action.",
+          snippet
+        );
+      }
+    }
+  }
+}
+
+function parsePng(filePath) {
+  const buffer = fs.readFileSync(filePath);
+  const signature = "89504e470d0a1a0a";
+  if (buffer.subarray(0, 8).toString("hex") !== signature) {
+    throw new Error("signature PNG invalide");
+  }
+
+  let offset = 8;
+  let width = 0;
+  let height = 0;
+  let bitDepth = 0;
+  let colorType = 0;
+  const idatChunks = [];
+
+  while (offset < buffer.length) {
+    const length = buffer.readUInt32BE(offset);
+    const type = buffer.subarray(offset + 4, offset + 8).toString("ascii");
+    const data = buffer.subarray(offset + 8, offset + 8 + length);
+
+    if (type === "IHDR") {
+      width = data.readUInt32BE(0);
+      height = data.readUInt32BE(4);
+      bitDepth = data.readUInt8(8);
+      colorType = data.readUInt8(9);
+    }
+
+    if (type === "IDAT") {
+      idatChunks.push(data);
+    }
+
+    if (type === "IEND") break;
+    offset += length + 12;
+  }
+
+  return {
+    width,
+    height,
+    bitDepth,
+    colorType,
+    inflated: () => zlib.inflateSync(Buffer.concat(idatChunks))
+  };
+}
+
+function unfilterPngRows(png, bytesPerPixel) {
+  const raw = png.inflated();
+  const stride = png.width * bytesPerPixel;
+  const rows = [];
+  let offset = 0;
+
+  for (let y = 0; y < png.height; y += 1) {
+    const filter = raw[offset];
+    offset += 1;
+    const row = Buffer.from(raw.subarray(offset, offset + stride));
+    offset += stride;
+    const previous = rows[y - 1];
+
+    for (let x = 0; x < row.length; x += 1) {
+      const left = x >= bytesPerPixel ? row[x - bytesPerPixel] : 0;
+      const up = previous ? previous[x] : 0;
+      const upLeft = previous && x >= bytesPerPixel ? previous[x - bytesPerPixel] : 0;
+
+      if (filter === 1) row[x] = (row[x] + left) & 0xff;
+      if (filter === 2) row[x] = (row[x] + up) & 0xff;
+      if (filter === 3) row[x] = (row[x] + Math.floor((left + up) / 2)) & 0xff;
+      if (filter === 4) {
+        const p = left + up - upLeft;
+        const pa = Math.abs(p - left);
+        const pb = Math.abs(p - up);
+        const pc = Math.abs(p - upLeft);
+        const predictor = pa <= pb && pa <= pc ? left : pb <= pc ? up : upLeft;
+        row[x] = (row[x] + predictor) & 0xff;
+      }
+    }
+
+    rows.push(row);
+  }
+
+  return rows;
+}
+
+function rgbaAlphaAt(rows, width, x, y) {
+  const row = rows[y];
+  const index = x * 4 + 3;
+  if (!row || index >= width * 4) return 255;
+  return row[index];
+}
+
+function checkRoundFaviconAssets() {
+  const iconPaths = ["favicon-32.png", "icon-192.png", "icon-512.png"].map((file) => path.join(ROOT_DIR, "public", file));
+
+  for (const filePath of iconPaths) {
+    if (!fs.existsSync(filePath)) {
+      addIssue(filePath, 1, "Le favicon rond doit exister dans les tailles publiques attendues.", path.basename(filePath));
+      continue;
+    }
+
+    try {
+      const png = parsePng(filePath);
+      if (png.width !== png.height || png.bitDepth !== 8 || png.colorType !== 6) {
+        addIssue(
+          filePath,
+          1,
+          "Le favicon rond doit être un PNG RGBA carré pour garder des coins transparents.",
+          `${png.width}x${png.height}, bitDepth=${png.bitDepth}, colorType=${png.colorType}`
+        );
+        continue;
+      }
+
+      const rows = unfilterPngRows(png, 4);
+      const corners = [
+        rgbaAlphaAt(rows, png.width, 0, 0),
+        rgbaAlphaAt(rows, png.width, png.width - 1, 0),
+        rgbaAlphaAt(rows, png.width, 0, png.height - 1),
+        rgbaAlphaAt(rows, png.width, png.width - 1, png.height - 1)
+      ];
+      const center = rgbaAlphaAt(rows, png.width, Math.floor(png.width / 2), Math.floor(png.height / 2));
+
+      if (corners.some((alpha) => alpha > 8) || center < 200) {
+        addIssue(
+          filePath,
+          1,
+          "Le favicon rond doit avoir les coins transparents et un centre opaque.",
+          `corners=${corners.join(",")} center=${center}`
+        );
+      }
+    } catch (error) {
+      addIssue(filePath, 1, "Impossible de vérifier le favicon rond.", error instanceof Error ? error.message : String(error));
+    }
   }
 }
 
@@ -697,6 +877,7 @@ function scanFileContent(filePath, content) {
   checkArrivalComfortSection(filePath, content);
   checkBookingDraftComfort(filePath, content);
   checkExternalTrustLinks(filePath, content);
+  checkMobileHeaderControls(filePath, content);
   checkSEOFocus(filePath, content);
 }
 
@@ -724,6 +905,8 @@ for (const target of TARGET_DIRS) {
     walkDir(absTarget);
   }
 }
+
+checkRoundFaviconAssets();
 
 if (issues.length > 0) {
   const header = [
