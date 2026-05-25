@@ -6,6 +6,7 @@ export type Tour = {
   shortTitle: string;
   subtitle: string;
   type: "shared" | "private" | "experience";
+  offerTier: "bestSeller" | "premiumRoute" | "private" | "experience";
   duration: string;
   price: string;
   capacity: string;
@@ -70,6 +71,7 @@ export const tours: Tour[] = [
     shortTitle: "Gjipe Tour",
     subtitle: "A 1h30 Dhermi boat tour to Pirates Cave, Pigeon Cave, Gjipe Beach and a clear-water swim stop.",
     type: "shared",
+    offerTier: "bestSeller",
     duration: "1h30",
     price: "35 € / adult • 20 € / child (5-10 years)",
     capacity: "MAX 15 GUESTS",
@@ -107,6 +109,7 @@ export const tours: Tour[] = [
     shortTitle: "Grama Tour",
     subtitle: "A 3h30 Dhermi boat tour through Karaburun toward Blue Cave, San Andrea Beach and Grama Bay.",
     type: "shared",
+    offerTier: "premiumRoute",
     duration: "3h30",
     price: "75 € / adult • 50 € / child (5-10 years)",
     capacity: "MAX 15 GUESTS",
@@ -144,6 +147,7 @@ export const tours: Tour[] = [
     shortTitle: "Tailor-made private tour",
     subtitle: "A private Dhermi boat tour where your group chooses the route, timing and swimming stops.",
     type: "private",
+    offerTier: "private",
     duration: "Custom, minimum 2 hours",
     price: "200 € / hour per group (minimum 2 hours)",
     capacity: "MAX 15 GUESTS",
@@ -181,6 +185,7 @@ export const tours: Tour[] = [
     shortTitle: "Sunset Private Tour",
     subtitle: "A private sunset boat tour around the Dhërmi coast.",
     type: "experience",
+    offerTier: "experience",
     duration: "Sunset timing",
     price: "From 120 € for 2 people",
     capacity: "MAX 15 GUESTS",
@@ -218,6 +223,7 @@ export const tours: Tour[] = [
     shortTitle: "Morning Fishing Tour",
     subtitle: "A quiet morning Dhermi boat tour for fishing near the coast before the beaches get busy.",
     type: "experience",
+    offerTier: "experience",
     duration: "5 AM to 8 AM",
     price: "100 € / hour per group (max 5 people)",
     capacity: "MAX 5 GUESTS",

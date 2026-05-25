@@ -18,11 +18,15 @@ import { SocialFeed } from "@/components/SocialFeed";
 import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { VideoFeature } from "@/components/VideoFeature";
+import { TourDetailsText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
+import { translations } from "@/lib/i18n";
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export const metadata: Metadata = {
   title: {
@@ -51,17 +55,15 @@ export default function HomePage() {
         <div className="site-band">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <SectionHeading
-              label={<LocalizedText id="section.tours.label">Tours from Dhërmi</LocalizedText>}
-              title={<LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>}
+              label={<LocalizedText id="section.tours.label">{enText("section.tours.label")}</LocalizedText>}
+              title={<LocalizedText id="section.tours.title">{enText("section.tours.title")}</LocalizedText>}
             >
               <p>
-                <LocalizedText id="section.tours.text">
-                  Choose a Dhermi boat tour for Gjipe, Grama Bay, Blue Cave, a private route, sunset cruise or morning fishing, then confirm the date with the local skipper on WhatsApp.
-                </LocalizedText>
+                <LocalizedText id="section.tours.text">{enText("section.tours.text")}</LocalizedText>
               </p>
             </SectionHeading>
             <ButtonLink href="/tours/" variant="secondary">
-              <LocalizedText id="cta.viewTours">VIEW TOURS</LocalizedText>
+              <LocalizedText id="cta.viewTours">{enText("cta.viewTours")}</LocalizedText>
             </ButtonLink>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
@@ -78,15 +80,15 @@ export default function HomePage() {
         <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <SectionHeading
-              label={<LocalizedText id="section.experiences.label">Private and early tours</LocalizedText>}
-              title={<LocalizedText id="section.experiences.title">Sunset, fishing and custom routes</LocalizedText>}
+              label={<LocalizedText id="section.experiences.label">{enText("section.experiences.label")}</LocalizedText>}
+              title={<LocalizedText id="section.experiences.title">{enText("section.experiences.title")}</LocalizedText>}
             />
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/private-boat-tour-albania/" variant="primary">
-                <LocalizedText id="tour.details">See route and price</LocalizedText>
+                <TourDetailsText />
               </ButtonLink>
               <ButtonLink href={whatsappHrefForKey("private")} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsTour="private" analyticsPlacement="home_private">
-                <LocalizedText id="tour.private.book">Plan a private tour</LocalizedText>
+                <LocalizedText id="tour.private.book">{enText("tour.private.book")}</LocalizedText>
               </ButtonLink>
             </div>
           </div>
@@ -122,12 +124,12 @@ export default function HomePage() {
 
       <section className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band">
-          <div className="max-w-3xl">
+        <div className="max-w-3xl">
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="section.destinations.label">Route highlights</LocalizedText>
+              <LocalizedText id="section.destinations.label">{enText("section.destinations.label")}</LocalizedText>
             </p>
             <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">
-              <LocalizedText id="section.destinations.title">Caves, beaches and bays</LocalizedText>
+              <LocalizedText id="section.destinations.title">{enText("section.destinations.title")}</LocalizedText>
             </h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -142,8 +144,8 @@ export default function HomePage() {
         <div className="site-band grid gap-12 lg:grid-cols-[1fr_0.82fr] lg:items-center">
           <div>
             <SectionHeading
-              label={<LocalizedText id="section.social.label">Recent sea photos</LocalizedText>}
-              title={<LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>}
+              label={<LocalizedText id="section.social.label">{enText("section.social.label")}</LocalizedText>}
+              title={<LocalizedText id="section.social.title">{enText("section.social.title")}</LocalizedText>}
             />
           </div>
           <VideoFeature />
@@ -170,10 +172,10 @@ export default function HomePage() {
           </div>
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.skipper.label">Meet your skipper</LocalizedText>
+              <LocalizedText id="section.skipper.label">{enText("section.skipper.label")}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="section.skipper.title">Meet Isuf, your local skipper</LocalizedText>
+              <LocalizedText id="section.skipper.title">{enText("section.skipper.title")}</LocalizedText>
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
               <LocalizedText id="section.skipper.text">{skipper.text}</LocalizedText>
@@ -196,8 +198,8 @@ export default function HomePage() {
         <div className="site-band">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
-              label={<LocalizedText id="section.reviews.label">Guest reviews</LocalizedText>}
-              title={<LocalizedText id="section.reviews.title">Loved by French, Albanian and international guests</LocalizedText>}
+              label={<LocalizedText id="section.reviews.label">{enText("section.reviews.label")}</LocalizedText>}
+              title={<LocalizedText id="section.reviews.title">{enText("section.reviews.title")}</LocalizedText>}
             />
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
@@ -207,7 +209,7 @@ export default function HomePage() {
               target="_blank"
             >
               <MapPin className="h-4 w-4" aria-hidden />
-              <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
+              <LocalizedText id="section.reviews.cta">{enText("section.reviews.cta")}</LocalizedText>
             </a>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -221,7 +223,7 @@ export default function HomePage() {
       <section className="below-fold bg-pearl py-16 md:py-20">
         <div className="site-band">
           <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.info.title">Departure, weather and payment</LocalizedText>
+            <LocalizedText id="section.info.title">{enText("section.info.title")}</LocalizedText>
           </h2>
           <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft md:grid-cols-3">
             {usefulInformation.map((item, index) => (
@@ -236,13 +238,11 @@ export default function HomePage() {
       <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
           <SectionHeading
-            label={<LocalizedText id="section.faq.label">Before booking</LocalizedText>}
-            title={<LocalizedText id="section.faq.title">Frequently asked questions</LocalizedText>}
+            label={<LocalizedText id="section.faq.label">{enText("section.faq.label")}</LocalizedText>}
+            title={<LocalizedText id="section.faq.title">{enText("section.faq.title")}</LocalizedText>}
           >
             <p>
-              <LocalizedText id="section.faq.text">
-                Quick answers to prepare your boat tour in Dhërmi without making the booking complicated.
-              </LocalizedText>
+              <LocalizedText id="section.faq.text">{enText("section.faq.text")}</LocalizedText>
             </p>
           </SectionHeading>
           <FAQAccordion items={faqs} />

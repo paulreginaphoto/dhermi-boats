@@ -5,6 +5,7 @@ import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, Use
 import { LocalizedText } from "@/components/LocalizedText";
 import { tours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
+import { translations } from "@/lib/i18n";
 import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
 import { emailAddress, phoneDisplay, whatsappUrl } from "@/lib/site";
 
@@ -30,6 +31,7 @@ const fixedTimeByTourId = {
 
 type FormLocale = "en" | "fr" | "sq";
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
+const enText = (key: string) => translations.en[key] ?? "";
 
 type BookingDraft = {
   tourId: string;
@@ -429,26 +431,24 @@ export function OneMinuteBooking() {
       <div className="site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-sand">
-            <LocalizedText id="quick.label">Fast booking</LocalizedText>
+            <LocalizedText id="quick.label">{enText("quick.label")}</LocalizedText>
           </p>
           <h2 className="mt-4 font-serif text-4xl font-medium leading-[1.02] md:text-6xl">
-            <LocalizedText id="quick.title">Reserve in one minute</LocalizedText>
+            <LocalizedText id="quick.title">{enText("quick.title")}</LocalizedText>
           </h2>
           <p className="mt-5 text-base leading-8 text-pearl/88 md:text-lg">
-            <LocalizedText id="quick.text">
-              Choose a tour, add date and people, then send the ready message on WhatsApp.
-            </LocalizedText>
+            <LocalizedText id="quick.text">{enText("quick.text")}</LocalizedText>
           </p>
           <div className="mt-8 grid gap-3 text-sm text-pearl/90 sm:grid-cols-3">
             {[
-              ["quick.promise.whatsapp", "WhatsApp first"],
-              ["quick.promise.reply", "Fast reply"],
-              ["quick.promise.email", "Email backup"]
-            ].map(([id, fallback]) => (
+              "quick.promise.whatsapp",
+              "quick.promise.reply",
+              "quick.promise.email"
+            ].map((id) => (
               <div key={id} className="flex items-center gap-2 rounded-full border border-white/12 bg-white/8 px-4 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                 <ShieldCheck className="h-4 w-4 shrink-0 text-sand" aria-hidden strokeWidth={1.75} />
                 <span className="font-semibold">
-                  <LocalizedText id={id}>{fallback}</LocalizedText>
+                  <LocalizedText id={id}>{translations.en[id] ?? ""}</LocalizedText>
                 </span>
               </div>
             ))}
@@ -462,7 +462,7 @@ export function OneMinuteBooking() {
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
             <div>
               <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-tour">
-                <LocalizedText id="quick.tour">Tour</LocalizedText>
+                <LocalizedText id="quick.tour">{enText("quick.tour")}</LocalizedText>
               </label>
               <div className="mt-3 grid gap-2">
                 {selectableTours.map((tour) => {
@@ -512,7 +512,7 @@ export function OneMinuteBooking() {
             <div className="grid gap-4">
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-date">
-                  <LocalizedText id="quick.date">Date</LocalizedText>
+                  <LocalizedText id="quick.date">{enText("quick.date")}</LocalizedText>
                 </label>
                 <div
                   className={
@@ -572,7 +572,7 @@ export function OneMinuteBooking() {
 
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-time">
-                  <LocalizedText id="quick.time">Preferred time</LocalizedText>
+                  <LocalizedText id="quick.time">{enText("quick.time")}</LocalizedText>
                 </label>
                 <select
                   id="quick-time"
@@ -594,9 +594,9 @@ export function OneMinuteBooking() {
 
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  ["adults", "quick.adults", "Adults", safeAdults],
-                  ["children", "quick.children", "Children", safeChildren]
-                ].map(([kind, id, fallback, value]) => {
+                  ["adults", "quick.adults", safeAdults],
+                  ["children", "quick.children", safeChildren]
+                ].map(([kind, id, value]) => {
                   const field = kind as "adults" | "children";
                   const counterName = labels[field].toLocaleLowerCase(locale === "fr" ? "fr" : "en");
                   const actionLabel = counterActionLabels[locale];
@@ -608,8 +608,8 @@ export function OneMinuteBooking() {
 
                   return (
                     <div key={String(kind)} className="grid gap-2">
-                      <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor={`quick-${field}`}>
-                        <LocalizedText id={String(id)}>{fallback}</LocalizedText>
+                    <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor={`quick-${field}`}>
+                        <LocalizedText id={String(id)}>{translations.en[String(id)] ?? ""}</LocalizedText>
                       </label>
                       <div className="grid h-12 grid-cols-[2.5rem_1fr_2.5rem] overflow-hidden rounded-md border border-ink/12 bg-white">
                         <button
@@ -627,7 +627,7 @@ export function OneMinuteBooking() {
                           className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none"
                           max={maxValue}
                           min={minValue}
-                          name={String(fallback)}
+                          name={String(translations.en[String(id)] ?? String(id))}
                           readOnly
                           value={Number(value)}
                         />
@@ -646,12 +646,12 @@ export function OneMinuteBooking() {
                 })}
               </div>
               <p className="text-xs font-semibold text-ink-soft">
-                <LocalizedText id="quick.capacity">Tour capacity</LocalizedText>: {activeTourCapacity}
+                <LocalizedText id="quick.capacity">{enText("quick.capacity")}</LocalizedText>: {activeTourCapacity}
               </p>
 
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-name">
-                  <LocalizedText id="quick.name">Name</LocalizedText>
+                  <LocalizedText id="quick.name">{enText("quick.name")}</LocalizedText>
                 </label>
                 <div className="relative">
                   <UserRound className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
@@ -682,7 +682,7 @@ export function OneMinuteBooking() {
 
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-phone">
-                  <LocalizedText id="quick.phone">WhatsApp or phone</LocalizedText>
+                  <LocalizedText id="quick.phone">{enText("quick.phone")}</LocalizedText>
                 </label>
                 <input
                   id="quick-phone"
@@ -700,7 +700,7 @@ export function OneMinuteBooking() {
 
           <div className="mt-5 grid gap-2">
             <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-notes">
-              <LocalizedText id="quick.notes">Questions</LocalizedText>
+              <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
             </label>
             <textarea
               id="quick-notes"
@@ -713,9 +713,7 @@ export function OneMinuteBooking() {
 
           <div className="mt-5 rounded-md border border-ink/10 bg-limestone/75 p-4">
             <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-              <LocalizedText id={bookingSummaryKey}>
-                {bookingLinksReady ? "Message ready" : "Date and name needed"}
-              </LocalizedText>
+              <LocalizedText id={bookingSummaryKey}>{translations.en[bookingSummaryKey] ?? ""}</LocalizedText>
             </p>
             <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft">{bookingMessage}</p>
           </div>
@@ -735,7 +733,7 @@ export function OneMinuteBooking() {
               onClick={handleMessageLinkClick}
             >
               <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="quick.whatsapp">Send on WhatsApp</LocalizedText>
+              <LocalizedText id="quick.whatsapp">{enText("quick.whatsapp")}</LocalizedText>
             </a>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
@@ -745,7 +743,7 @@ export function OneMinuteBooking() {
               onClick={handleMessageLinkClick}
             >
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="quick.email">Send email</LocalizedText>
+              <LocalizedText id="quick.email">{enText("quick.email")}</LocalizedText>
             </a>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
@@ -753,7 +751,7 @@ export function OneMinuteBooking() {
               href={phoneHref}
             >
               <Phone className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="cta.call">Call now</LocalizedText>
+              <LocalizedText id="cta.call">{enText("cta.call")}</LocalizedText>
             </a>
           </div>
         </form>

@@ -1,34 +1,29 @@
 import { CreditCard, MapPinned, MessageCircle, Waves } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
+import { translations } from "@/lib/i18n";
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 const comfortItems = [
   {
     icon: MessageCircle,
     titleKey: "arrival.whatsapp.title",
-    textKey: "arrival.whatsapp.text",
-    title: "WhatsApp first",
-    text: "Ask availability and send the booking details in one minute."
+    textKey: "arrival.whatsapp.text"
   },
   {
     icon: MapPinned,
     titleKey: "arrival.meeting.title",
-    textKey: "arrival.meeting.text",
-    title: "Meeting point confirmed",
-    text: "We send the exact Dhërmi meeting point on WhatsApp."
+    textKey: "arrival.meeting.text"
   },
   {
     icon: Waves,
     titleKey: "arrival.sea.title",
-    textKey: "arrival.sea.text",
-    title: "Sea conditions checked",
-    text: "Routes and timing may change depending on wind and waves."
+    textKey: "arrival.sea.text"
   },
   {
     icon: CreditCard,
     titleKey: "arrival.payment.title",
-    textKey: "arrival.payment.text",
-    title: "Payment after availability",
-    text: "Payment details are confirmed on WhatsApp when availability is checked."
+    textKey: "arrival.payment.text"
   }
 ];
 
@@ -39,10 +34,10 @@ export function ArrivalComfortBar() {
         <div className="grid gap-5 rounded-lg border border-ink/8 bg-limestone/72 p-4 shadow-sm md:grid-cols-[0.55fr_1.45fr] md:p-5">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="arrival.label">Before boarding</LocalizedText>
+              <LocalizedText id="arrival.label">{enText("arrival.label")}</LocalizedText>
             </p>
             <h2 id="arrival-comfort-title" className="mt-2 font-serif text-2xl font-medium leading-tight text-ink md:text-3xl">
-              <LocalizedText id="arrival.title">What we confirm before departure</LocalizedText>
+              <LocalizedText id="arrival.title">{enText("arrival.title")}</LocalizedText>
             </h2>
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
@@ -56,10 +51,10 @@ export function ArrivalComfortBar() {
                   </span>
                   <div>
                     <h3 className="text-sm font-bold leading-5 text-ink">
-                      <LocalizedText id={item.titleKey}>{item.title}</LocalizedText>
+                      <LocalizedText id={item.titleKey}>{enText(item.titleKey)}</LocalizedText>
                     </h3>
                     <p className="mt-1 text-sm leading-6 text-ink-soft">
-                      <LocalizedText id={item.textKey}>{item.text}</LocalizedText>
+                      <LocalizedText id={item.textKey}>{enText(item.textKey)}</LocalizedText>
                     </p>
                   </div>
                 </article>

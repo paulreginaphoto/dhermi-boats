@@ -3,6 +3,9 @@ import { primaryWhatsappHref } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { phoneDisplay, sitePath } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
+import { translations } from "@/lib/i18n";
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export function StickyBookingBar() {
   return (
@@ -20,7 +23,7 @@ export function StickyBookingBar() {
           {...conversionAttrs({ tourId: "default", placement: "sticky_mobile" })}
         >
           <MessageCircle className="h-4 w-4" aria-hidden />
-          <LocalizedText id="sticky.whatsapp">WhatsApp</LocalizedText>
+          <LocalizedText id="sticky.whatsapp">{enText("sticky.whatsapp")}</LocalizedText>
         </a>
         <a
           className="inline-flex min-h-12 flex-col items-center justify-center gap-1 rounded-md border border-ink/12 bg-white px-2 text-[0.68rem] font-bold leading-none text-ink"
@@ -28,7 +31,7 @@ export function StickyBookingBar() {
           href={sitePath("/tours/")}
         >
           <ListChecks className="h-4 w-4" aria-hidden />
-          <LocalizedText id="sticky.tours">Tours</LocalizedText>
+          <LocalizedText id="sticky.tours">{enText("sticky.tours")}</LocalizedText>
         </a>
         <a
           className="inline-flex min-h-12 flex-col items-center justify-center gap-1 rounded-md border border-ink/12 bg-white px-2 text-[0.68rem] font-bold leading-none text-ink"
@@ -36,16 +39,19 @@ export function StickyBookingBar() {
           href={sitePath("/tours/#compare-tours")}
         >
           <Euro className="h-4 w-4" aria-hidden />
-          <LocalizedText id="sticky.prices">Prices</LocalizedText>
+          <LocalizedText id="sticky.prices">{enText("sticky.prices")}</LocalizedText>
         </a>
         <a
-          aria-label="Call Dhermi Boat"
+          aria-labelledby="sticky-call-action-label"
           className="inline-flex min-h-12 flex-col items-center justify-center gap-1 rounded-md border border-ink/12 bg-white px-2 text-[0.68rem] font-bold leading-none text-ink"
           data-analytics-event="call_click"
           href={`tel:${phoneDisplay.replace(/\s/g, "")}`}
         >
+          <span id="sticky-call-action-label" className="sr-only">
+            <LocalizedText id="a11y.callAction">{enText("a11y.callAction")}</LocalizedText>
+          </span>
           <Phone className="h-4 w-4" aria-hidden />
-          <LocalizedText id="sticky.call">Call</LocalizedText>
+          <LocalizedText id="sticky.call">{enText("sticky.call")}</LocalizedText>
         </a>
       </div>
     </div>

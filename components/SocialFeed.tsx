@@ -3,6 +3,7 @@ import { AtSign, ExternalLink, Music2 } from "lucide-react";
 import tiktokItems from "@/data/tiktok-media.json";
 import { assetPath, instagramUrl, tiktokUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
+import { translations } from "@/lib/i18n";
 
 type TikTokItem = {
   id: string;
@@ -24,10 +25,10 @@ export function SocialFeed() {
         <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
           <div>
             <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.social.label">Recent sea photos</LocalizedText>
+              <LocalizedText id="section.social.label">{translations.en["section.social.label"] ?? ""}</LocalizedText>
             </p>
             <h2 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
-              <LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>
+              <LocalizedText id="section.social.title">{translations.en["section.social.title"] ?? ""}</LocalizedText>
             </h2>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <a
@@ -38,7 +39,7 @@ export function SocialFeed() {
                 target="_blank"
               >
                 <AtSign className="h-4 w-4" aria-hidden />
-                <LocalizedText id="social.instagram">Follow on Instagram</LocalizedText>
+                <LocalizedText id="social.instagram">{translations.en["social.instagram"] ?? ""}</LocalizedText>
               </a>
               <a
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
@@ -48,14 +49,14 @@ export function SocialFeed() {
                 target="_blank"
               >
                 <Music2 className="h-4 w-4" aria-hidden />
-                <LocalizedText id="social.tiktok">Watch on TikTok</LocalizedText>
+                <LocalizedText id="social.tiktok">{translations.en["social.tiktok"] ?? ""}</LocalizedText>
               </a>
             </div>
           </div>
 
           <div>
             <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="social.latest">Latest TikTok clips</LocalizedText>
+              <LocalizedText id="social.latest">{translations.en["social.latest"] ?? ""}</LocalizedText>
             </p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {items.map((item) => (

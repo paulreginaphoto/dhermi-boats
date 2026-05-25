@@ -5,7 +5,9 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { whatsappUrl } from "@/lib/site";
+import { TourDetailsText } from "@/components/MicroCopy";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
+import { translations } from "@/lib/i18n";
 
 export function TourComparison() {
   return (
@@ -14,14 +16,14 @@ export function TourComparison() {
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="comparison.label">Tour chooser</LocalizedText>
+              <LocalizedText id="comparison.label">{translations.en["comparison.label"] ?? ""}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="comparison.title">Choose your tour in 30 seconds</LocalizedText>
+              <LocalizedText id="comparison.title">{translations.en["comparison.title"] ?? ""}</LocalizedText>
             </h2>
           </div>
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="primary" whatsappKey="default" analyticsPlacement="comparison_help">
-            <LocalizedText id="comparison.cta">Not sure? Ask us on WhatsApp</LocalizedText>
+            <LocalizedText id="comparison.cta">{translations.en["comparison.cta"] ?? ""}</LocalizedText>
           </ButtonLink>
         </div>
 
@@ -62,7 +64,7 @@ export function TourComparison() {
                     <div className="flex items-center gap-2">
                       <Clock3 className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
-                        <LocalizedText id="tour.durationLabel">Duration</LocalizedText>
+                        <LocalizedText id="tour.durationLabel">{translations.en["tour.durationLabel"] ?? ""}</LocalizedText>
                       </dt>
                       <dd>
                         <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
@@ -71,7 +73,7 @@ export function TourComparison() {
                     <div className="flex items-center gap-2">
                       <Euro className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
-                        <LocalizedText id="tour.priceLabel">Price</LocalizedText>
+                        <LocalizedText id="tour.priceLabel">{translations.en["tour.priceLabel"] ?? ""}</LocalizedText>
                       </dt>
                       <dd>
                         <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
@@ -80,7 +82,7 @@ export function TourComparison() {
                     <div className="flex items-center gap-2">
                       <Users className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
-                        <LocalizedText id="tour.capacityLabel">Capacity</LocalizedText>
+                        <LocalizedText id="tour.capacityLabel">{translations.en["tour.capacityLabel"] ?? ""}</LocalizedText>
                       </dt>
                       <dd>
                         <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
@@ -89,7 +91,7 @@ export function TourComparison() {
                   </dl>
                   <div className="mt-4 rounded-md bg-pearl/70 p-3">
                     <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                      <LocalizedText id="comparison.audience">For who</LocalizedText>
+                      <LocalizedText id="comparison.audience">{translations.en["comparison.audience"] ?? ""}</LocalizedText>
                     </p>
                     <p className="mt-1 text-sm font-semibold leading-6 text-ink">
                       <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
@@ -98,7 +100,7 @@ export function TourComparison() {
                   <div className="mt-4">
                     <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] text-bronze">
                       <ListChecks className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
-                      <LocalizedText id="comparison.stops">Main stops</LocalizedText>
+                      <LocalizedText id="comparison.stops">{translations.en["comparison.stops"] ?? ""}</LocalizedText>
                     </p>
                     <ul className="mt-2 grid gap-1.5 text-sm leading-6 text-ink-soft">
                       {tour.cardHighlights.slice(0, 3).map((stop, stopIndex) => (
@@ -113,7 +115,7 @@ export function TourComparison() {
                   </div>
                   <div className="mt-auto grid gap-2 pt-5">
                     <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                      <LocalizedText id="comparison.ctaLabel">Next step</LocalizedText>
+                      <LocalizedText id="comparison.ctaLabel">{translations.en["comparison.ctaLabel"] ?? ""}</LocalizedText>
                     </p>
                     <a
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
@@ -128,7 +130,7 @@ export function TourComparison() {
                       <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                     </a>
                     <a className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/15 px-3 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white" href={tour.href}>
-                      <LocalizedText id="tour.details">See route and price</LocalizedText>
+                      <TourDetailsText />
                       <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={1.75} />
                     </a>
                   </div>

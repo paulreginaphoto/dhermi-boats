@@ -3,12 +3,14 @@ import { Camera, Mail, MapPin, MessageCircle, Phone, Ticket, Video } from "lucid
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
+import { HeroWhatsappText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { primaryWhatsappHref, tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
+import { translations } from "@/lib/i18n";
 import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, languageAlternates, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -18,33 +20,42 @@ export const metadata: Metadata = {
   alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
+const enText = (key: string) => translations.en[key] ?? "";
+
 const contacts = [
-  { label: "WhatsApp", labelKey: "contact.whatsapp.label", value: "Book or ask availability", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle, whatsappKey: "default" },
-  { label: "Phone", labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.replace(/\s/g, "")}`, icon: Phone, analyticsEvent: "call_click" },
-  { label: "Email", labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: Mail, analyticsEvent: "email_click" },
-  { label: "Google Maps", labelKey: "contact.google.label", value: "Google Maps", valueKey: "contact.google.value", href: googleMapsUrl, icon: MapPin, analyticsEvent: "maps_click" },
-  { label: "Instagram", labelKey: "contact.instagram.label", value: instagramHandle, href: instagramUrl, icon: Camera, analyticsEvent: "instagram_click" },
-  { label: "TikTok", labelKey: "contact.tiktok.label", value: tiktokHandle, href: tiktokUrl, icon: Video, analyticsEvent: "tiktok_click" },
-  { label: "GetYourGuide", labelKey: "contact.getyourguide.label", value: "GetYourGuide", valueKey: "contact.getyourguide.value", href: getYourGuideUrl, icon: Ticket, analyticsEvent: "getyourguide_click" }
-] satisfies Array<{ label: string; labelKey: string; value: string; valueKey?: string; href: string; icon: OutlineIconComponent; whatsappKey?: string; analyticsEvent?: string }>;
+  { labelKey: "contact.whatsapp.label", value: "", valueKey: "contact.whatsapp.value", href: primaryWhatsappHref, icon: MessageCircle, whatsappKey: "default", isWhatsapp: true },
+  { labelKey: "contact.phone.label", value: phoneDisplay, href: `tel:${phoneDisplay.split(" ").join("")}`, icon: Phone, analyticsEvent: "call_click" },
+  { labelKey: "contact.email.label", value: emailAddress, href: `mailto:${emailAddress}`, icon: Mail, analyticsEvent: "email_click" },
+  { labelKey: "contact.google.label", value: "", valueKey: "contact.google.value", href: googleMapsUrl, icon: MapPin, analyticsEvent: "maps_click" },
+  { labelKey: "contact.instagram.label", value: instagramHandle, href: instagramUrl, icon: Camera, analyticsEvent: "instagram_click" },
+  { labelKey: "contact.tiktok.label", value: tiktokHandle, href: tiktokUrl, icon: Video, analyticsEvent: "tiktok_click" },
+  { labelKey: "contact.getyourguide.label", value: "", valueKey: "contact.getyourguide.value", href: getYourGuideUrl, icon: Ticket, analyticsEvent: "getyourguide_click" }
+] satisfies Array<{
+  labelKey: string;
+  value: string;
+  valueKey?: string;
+  href: string;
+  icon: OutlineIconComponent;
+  whatsappKey?: string;
+  isWhatsapp?: boolean;
+  analyticsEvent?: string;
+}>;
 
 export default function ContactPage() {
   return (
     <>
       <PageHero
-        title={<LocalizedText id="page.contact.title">Contact Dhermi Boat Tours</LocalizedText>}
+        title={<LocalizedText id="page.contact.title">{enText("page.contact.title")}</LocalizedText>}
         image={tours[2].image}
         imageAlt={tours[2].imageAlt}
-        label={<LocalizedText id="contact.hero.label">Booking</LocalizedText>}
+        label={<LocalizedText id="contact.hero.label">{enText("contact.hero.label")}</LocalizedText>}
       >
         <p>
-          <LocalizedText id="contact.hero.text">
-            Send a WhatsApp message with your tour, date, adults, children, preferred time and questions. We confirm availability together.
-          </LocalizedText>
+          <LocalizedText id="contact.hero.text">{enText("contact.hero.text")}</LocalizedText>
         </p>
         <div className="mt-8">
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="contact_hero">
-            <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+            <HeroWhatsappText />
           </ButtonLink>
         </div>
       </PageHero>
@@ -57,27 +68,21 @@ export default function ContactPage() {
         <div className="site-band">
           <div className="rounded-lg border border-ink/8 bg-pearl p-6 shadow-sm md:p-8">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="contact.message.label">Fastest way to book</LocalizedText>
+              <LocalizedText id="contact.message.label">{enText("contact.message.label")}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="contact.message.title">Send date, group size and preferred tour</LocalizedText>
+              <LocalizedText id="contact.message.title">{enText("contact.message.title")}</LocalizedText>
             </h2>
             <div className="mt-8 grid gap-4 md:grid-cols-5">
-              {[
-                ["contact.message.date", "Date"],
-                ["contact.message.group", "Group size"],
-                ["contact.message.tour", "Preferred tour"],
-                ["contact.message.name", "Name"],
-                ["contact.message.question", "Question or timing"]
-              ].map(([id, fallback]) => (
+              {["contact.message.date", "contact.message.group", "contact.message.tour", "contact.message.name", "contact.message.question"].map((id) => (
                 <div key={id} className="rounded-md border border-ink/8 bg-limestone/70 p-4 text-sm font-semibold text-ink">
-                  <LocalizedText id={id}>{fallback}</LocalizedText>
+                  <LocalizedText id={id}>{translations.en[id] ?? ""}</LocalizedText>
                 </div>
               ))}
             </div>
             <div className="mt-8">
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="contact_panel">
-                <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+                <HeroWhatsappText />
               </ButtonLink>
             </div>
           </div>
@@ -88,36 +93,34 @@ export default function ContactPage() {
         <div className="site-band grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="contact.info.label">Before departure</LocalizedText>
+              <LocalizedText id="contact.info.label">{enText("contact.info.label")}</LocalizedText>
             </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="contact.info.title">Departure, weather and payment</LocalizedText>
+              <LocalizedText id="contact.info.title">{enText("contact.info.title")}</LocalizedText>
             </h2>
             <p className="mt-5 text-base leading-8 text-ink-soft">
-              <LocalizedText id="contact.info.text">
-                Departure from the Dhërmi area. Booking recommended in high season. Routes may change depending on sea conditions.
-              </LocalizedText>
+              <LocalizedText id="contact.info.text">{enText("contact.info.text")}</LocalizedText>
             </p>
             <div className="mt-8 rounded-lg border border-ink/8 bg-limestone/70 p-6">
               <p className="flex items-center gap-3 text-base font-semibold text-ink">
                 <IconFrame icon={MapPin} variant="soft" size="sm" />
-                <LocalizedText id="contact.departure.title">Departure from the Dhërmi area</LocalizedText>
+                <LocalizedText id="contact.departure.title">{enText("contact.departure.title")}</LocalizedText>
               </p>
               <p className="mt-3 text-sm leading-7 text-ink-soft">
-                <LocalizedText id="contact.departure.text">Routes may change depending on sea conditions.</LocalizedText>
+                <LocalizedText id="contact.departure.text">{enText("contact.departure.text")}</LocalizedText>
               </p>
             </div>
           </div>
           <div className="grid gap-4">
             {contacts.map((contact) => {
-              const isWhatsapp = contact.label === "WhatsApp";
+              const isWhatsapp = contact.isWhatsapp === true;
               const analyticsData = contact.whatsappKey
                 ? conversionAttrs({ tourId: contact.whatsappKey, placement: "contact_card" })
                 : { "data-analytics-event": contact.analyticsEvent };
 
               return (
               <a
-                key={contact.label}
+                key={contact.labelKey}
                 className={[
                   "flex items-center gap-5 rounded-lg border p-5 transition duration-300 hover:-translate-y-1 hover:shadow-soft",
                   isWhatsapp
@@ -133,7 +136,7 @@ export default function ContactPage() {
                 <IconFrame icon={contact.icon} variant={isWhatsapp ? "dark" : "soft"} size="lg" />
                 <span>
                   <span className={isWhatsapp ? "block text-xs font-bold uppercase tracking-[0.2em] text-sand" : "block text-xs font-bold uppercase tracking-[0.2em] text-bronze"}>
-                    <LocalizedText id={contact.labelKey}>{contact.label}</LocalizedText>
+                    <LocalizedText id={contact.labelKey}>{translations.en[contact.labelKey] ?? ""}</LocalizedText>
                   </span>
                   <span className={isWhatsapp ? "mt-1 block text-base font-semibold text-pearl" : "mt-1 block text-base font-semibold text-ink"}>
                     {contact.valueKey ? <LocalizedText id={contact.valueKey}>{contact.value}</LocalizedText> : contact.value}

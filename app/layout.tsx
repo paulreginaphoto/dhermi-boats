@@ -10,6 +10,7 @@ import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
 import { LocalizedText } from "@/components/LocalizedText";
 import { assetPath, brandName, canonical, canonicalOrigin, isStagingDeployment, languageAlternates } from "@/lib/site";
+import { translations } from "@/lib/i18n";
 import { localBusinessSchema, websiteSchema } from "@/lib/seo";
 
 const socialImageUrl = canonical("/images/hero-riviera.webp");
@@ -75,7 +76,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="pb-20 md:pb-0">
         <a className="skip-link" href="#main-content">
-          <LocalizedText id="a11y.skip">Skip to content</LocalizedText>
+          <LocalizedText id="a11y.skip">{translations.en["a11y.skip"] ?? "Skip to content"}</LocalizedText>
         </a>
         <Header />
         <main id="main-content">{children}</main>

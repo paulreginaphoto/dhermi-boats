@@ -1,28 +1,37 @@
 import { Languages } from "lucide-react";
-import { locales, type Locale } from "@/lib/i18n";
+import { locales, type Locale, translations, localeLabels, localeAriaNames } from "@/lib/i18n";
 import { LocalizedText } from "@/components/LocalizedText";
-import { localeLabels, localeAriaNames } from "@/lib/i18n";
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
+  const baseId = compact ? "language-switcher-mobile" : "language-switcher-desktop";
+
   return (
-    <div className={compact ? "language-switcher language-switcher-compact" : "language-switcher"} role="group" aria-label="Language selector">
+    <div className={compact ? "language-switcher language-switcher-compact" : "language-switcher"} role="group" aria-labelledby={`${baseId}-label`}>
+      <span id={`${baseId}-label`} className="sr-only">
+        <LocalizedText id="a11y.languageSwitcher">{enText("a11y.languageSwitcher")}</LocalizedText>
+      </span>
       {!compact ? (
         <span className="hidden items-center gap-1 text-xs font-bold uppercase tracking-[0.18em] text-ink-soft xl:flex">
           <Languages className="h-4 w-4" aria-hidden />
-          <LocalizedText id="language.label">Language</LocalizedText>
-        </span>
+            <LocalizedText id="language.label">{enText("language.label")}</LocalizedText>
+          </span>
       ) : null}
       <div className={compact ? "language-switcher-shell language-switcher-shell-compact" : "language-switcher-shell"}>
         {locales.map((item: Locale) => (
           <a
             key={item}
             href={`?dlang=${item}`}
-            aria-label={`Switch language to ${localeAriaNames[item]}`}
+            aria-labelledby={`${baseId}-language-option-label-${item}`}
             data-analytics-event="language_switch_click"
             data-locale={item}
             data-locale-switcher
             className="language-option"
           >
+            <span id={`${baseId}-language-option-label-${item}`} className="sr-only">
+              <LocalizedText id="a11y.switchLanguage">{enText("a11y.switchLanguage")}</LocalizedText> {localeAriaNames[item]}
+            </span>
             <span>{localeLabels[item]}</span>
           </a>
         ))}

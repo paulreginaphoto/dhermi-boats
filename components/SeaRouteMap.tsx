@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { Anchor, Compass, MapPin, Navigation } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import type { Destination } from "@/data/content";
+import { translations } from "@/lib/i18n";
 
 type GeoPoint = {
   id: string;
@@ -45,10 +46,11 @@ const seaBendVector = { x: -1, y: 1 };
 const outboundColor = "#f4d39a";
 const returnColor = "#64d7ce";
 const routeLaneGap = 18;
+const enText = (key: string) => translations.en[key] ?? "";
 
 const dhermiBeach: GeoPoint = {
   id: "dhermi",
-  label: "Dhërmi beach area",
+  label: enText("map.point.dhermiBeach"),
   labelKey: "map.point.dhermiBeach",
   lat: 40.14185,
   lng: 19.6276,
@@ -57,7 +59,7 @@ const dhermiBeach: GeoPoint = {
 
 const piratesCave: GeoPoint = {
   id: "pirates",
-  label: "Pirates Cave",
+  label: enText("tour.gjipe.included.0"),
   labelKey: "tour.gjipe.included.0",
   lat: 40.1275,
   lng: 19.64605,
@@ -66,7 +68,7 @@ const piratesCave: GeoPoint = {
 
 const gjipeBeach: GeoPoint = {
   id: "gjipe",
-  label: "Gjipe",
+  label: enText("destination.gjipe.title"),
   labelKey: "destination.gjipe.title",
   lat: 40.12495,
   lng: 19.66555,
@@ -75,7 +77,7 @@ const gjipeBeach: GeoPoint = {
 
 const pigeonCave: GeoPoint = {
   id: "pigeon-cave",
-  label: "Pigeon Cave",
+  label: enText("tour.gjipe.included.2"),
   labelKey: "tour.gjipe.included.2",
   lat: 40.12262,
   lng: 19.67165,
@@ -84,7 +86,7 @@ const pigeonCave: GeoPoint = {
 
 const blueCave: GeoPoint = {
   id: "blue-cave",
-  label: "Blue Cave",
+  label: enText("destination.blue-cave.title"),
   labelKey: "destination.blue-cave.title",
   lat: 40.21252,
   lng: 19.4738,
@@ -93,7 +95,7 @@ const blueCave: GeoPoint = {
 
 const gramaBay: GeoPoint = {
   id: "grama",
-  label: "Grama Bay",
+  label: enText("destination.grama.title"),
   labelKey: "destination.grama.title",
   lat: 40.21325,
   lng: 19.46915,
@@ -109,45 +111,45 @@ const blueCaveNearGrama: GeoPoint = {
 
 const routeMaps: Record<string, RouteMap> = {
   gjipe: {
-    area: "Dhërmi coast",
+    area: enText("map.area.dhermiCoast"),
     areaKey: "map.area.dhermiCoast",
-    distance: "Short coastal route",
+    distance: enText("map.route.short"),
     distanceKey: "map.route.short",
-    note: "Satellite imagery with sea GPS waypoints. The skipper may adjust the exact sea path.",
+    note: enText("map.note.gjipe"),
     noteKey: "map.note.gjipe",
     points: [dhermiBeach, piratesCave, gjipeBeach, pigeonCave],
     highlights: [
-      { label: "Pirates Cave", labelKey: "tour.gjipe.included.0" },
-      { label: "Gjipe Beach", labelKey: "tour.gjipe.included.1" },
-      { label: "Pigeon Cave", labelKey: "tour.gjipe.included.2" }
+      { label: enText("tour.gjipe.included.0"), labelKey: "tour.gjipe.included.0" },
+      { label: enText("tour.gjipe.included.1"), labelKey: "tour.gjipe.included.1" },
+      { label: enText("tour.gjipe.included.2"), labelKey: "tour.gjipe.included.2" }
     ]
   },
   grama: {
-    area: "Karaburun coast",
+    area: enText("map.area.karaburunCoast"),
     areaKey: "map.area.karaburunCoast",
-    distance: "Long coastal route",
+    distance: enText("map.route.long"),
     distanceKey: "map.route.long",
-    note: "Satellite imagery with sea GPS waypoints. The skipper may adjust the exact sea path.",
+    note: enText("map.note.grama"),
     noteKey: "map.note.grama",
     points: [dhermiBeach, blueCaveNearGrama, gramaBay],
     highlights: [
-      { label: "Karaburun coast", labelKey: "map.area.karaburunCoast" },
-      { label: "Blue Cave", labelKey: "destination.blue-cave.title" },
-      { label: "Grama Beach", labelKey: "tour.grama.included.3" }
+      { label: enText("map.area.karaburunCoast"), labelKey: "map.area.karaburunCoast" },
+      { label: enText("destination.blue-cave.title"), labelKey: "destination.blue-cave.title" },
+      { label: enText("tour.grama.included.3"), labelKey: "tour.grama.included.3" }
     ]
   },
   "blue-cave": {
-    area: "Karaburun caves",
+    area: enText("map.area.karaburunCaves"),
     areaKey: "map.area.karaburunCaves",
-    distance: "Cave route",
+    distance: enText("map.route.cave"),
     distanceKey: "map.route.cave",
-    note: "Satellite imagery with sea GPS waypoints. Cave entry depends on sea conditions.",
+    note: enText("map.note.blueCave"),
     noteKey: "map.note.blueCave",
     points: [dhermiBeach, blueCave],
     highlights: [
-      { label: "Karaburun coast", labelKey: "map.area.karaburunCoast" },
-      { label: "Blue Cave", labelKey: "destination.blue-cave.title" },
-      { label: "Clear water stop", labelKey: "map.stop.clearWater" }
+      { label: enText("map.area.karaburunCoast"), labelKey: "map.area.karaburunCoast" },
+      { label: enText("destination.blue-cave.title"), labelKey: "destination.blue-cave.title" },
+      { label: enText("map.stop.clearWater"), labelKey: "map.stop.clearWater" }
     ]
   }
 };
@@ -399,17 +401,17 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
       </svg>
       <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full bg-pearl/92 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur">
         <MapPin className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={1.75} />
-        <LocalizedText id="map.real">Satellite GPS map</LocalizedText>
+        <LocalizedText id="map.real">{enText("map.real")}</LocalizedText>
       </div>
       <div data-route-legend className="absolute bottom-2 left-2 flex items-center gap-2 rounded-full bg-ink/82 px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-[0.14em] text-pearl shadow-sm backdrop-blur">
         <span className="route-label-outbound inline-flex items-center gap-1.5">
           <span className="h-1.5 w-5 rounded-full border border-ink bg-[#f4d39a] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
-          <LocalizedText id="map.outbound">Outbound</LocalizedText>
+          <LocalizedText id="map.outbound">{enText("map.outbound")}</LocalizedText>
         </span>
         <span className="h-3 w-px bg-pearl/30" />
         <span className="route-label-return inline-flex items-center gap-1.5">
           <span className="h-1.5 w-5 rounded-full border border-ink bg-[#64d7ce] shadow-[0_0_0_1px_rgba(255,250,240,0.7)]" />
-          <LocalizedText id="map.return">Return</LocalizedText>
+          <LocalizedText id="map.return">{enText("map.return")}</LocalizedText>
         </span>
       </div>
       <a
@@ -441,7 +443,7 @@ export function SeaRouteMap({ destination, compact = false }: { destination: Des
             </span>
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                <LocalizedText id="map.label">Sea route</LocalizedText>
+                <LocalizedText id="map.label">{enText("map.label")}</LocalizedText>
               </p>
               <h2 id={titleId} className="mt-1 font-serif text-2xl font-medium leading-tight text-ink md:text-3xl">
                 <LocalizedText id={`destination.${destination.id}.title`}>{destination.title}</LocalizedText>
@@ -455,7 +457,7 @@ export function SeaRouteMap({ destination, compact = false }: { destination: Des
                   <Compass className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                   <div>
                     <dt className="font-bold uppercase tracking-[0.14em] text-bronze">
-                      <LocalizedText id="map.area">Area</LocalizedText>
+                      <LocalizedText id="map.area">{enText("map.area")}</LocalizedText>
                     </dt>
                     <dd className="mt-1 font-semibold text-ink">
                       <LocalizedText id={map.areaKey}>{map.area}</LocalizedText>
@@ -466,7 +468,7 @@ export function SeaRouteMap({ destination, compact = false }: { destination: Des
                   <Anchor className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                   <div>
                     <dt className="font-bold uppercase tracking-[0.14em] text-bronze">
-                      <LocalizedText id="map.route">Route</LocalizedText>
+                      <LocalizedText id="map.route">{enText("map.route")}</LocalizedText>
                     </dt>
                     <dd className="mt-1 font-semibold text-ink">
                       <LocalizedText id={map.distanceKey}>{map.distance}</LocalizedText>
@@ -479,7 +481,7 @@ export function SeaRouteMap({ destination, compact = false }: { destination: Des
               </p>
               <div className="mt-6 border-t border-ink/10 pt-5">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                  <LocalizedText id="map.points">GPS points</LocalizedText>
+                  <LocalizedText id="map.points">{enText("map.points")}</LocalizedText>
                 </p>
                 <PointList points={map.points} />
               </div>

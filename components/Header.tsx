@@ -3,9 +3,13 @@ import { MessageCircle } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { HeroWhatsappText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { MobileNav } from "@/components/MobileNav";
 import { navKeyByLabel } from "@/components/navigationConfig";
+import { translations } from "@/lib/i18n";
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export function Header() {
   return (
@@ -17,12 +21,15 @@ export function Header() {
               Dhermi Boat
             </span>
             <span className="mt-1 hidden text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft sm:block">
-              <LocalizedText id="brand.region">Albania Riviera</LocalizedText>
+              <LocalizedText id="brand.region">{enText("brand.region")}</LocalizedText>
             </span>
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
+        <span id="main-navigation-label" className="sr-only">
+          <LocalizedText id="a11y.mainNavigation">{enText("a11y.mainNavigation")}</LocalizedText>
+        </span>
+        <nav className="hidden items-center gap-1 lg:flex" aria-labelledby="main-navigation-label">
           {navItems.map((item) => (
             <a
               key={item.href}
@@ -37,7 +44,7 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="header">
-            <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+            <HeroWhatsappText />
           </ButtonLink>
         </div>
 

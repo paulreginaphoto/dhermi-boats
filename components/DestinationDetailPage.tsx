@@ -6,13 +6,16 @@ import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
+import { BookingTitleText, TourDetailsText } from "@/components/MicroCopy";
 import { tours, type Destination } from "@/data/content";
+import { translations } from "@/lib/i18n";
 import { whatsappUrl } from "@/lib/site";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
   const translationBase = `destination.${destination.id}`;
   const heroImageAlt = destination.imageAlt ?? `${destination.title} on the Albanian Riviera`;
+  const enText = (key: string) => translations.en[key] ?? "";
   const relatedTours = tours.filter((tour) =>
     destination.id === "gjipe"
       ? tour.id === "gjipe"
@@ -45,12 +48,12 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
             {primaryTour ? (
               <LocalizedText id={tourBookKey(primaryTour.id)}>{tourBookFallback(primaryTour.id)}</LocalizedText>
             ) : (
-              <LocalizedText id="cta.askAvailability">Ask availability</LocalizedText>
+              <LocalizedText id="cta.askAvailability">{enText("cta.askAvailability")}</LocalizedText>
             )}
           </ButtonLink>
           {primaryTour ? (
             <ButtonLink href={primaryTour.href} icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-              <LocalizedText id="tour.details">See route and price</LocalizedText>
+              <TourDetailsText />
             </ButtonLink>
           ) : null}
         </div>
@@ -62,7 +65,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         <div className="site-band grid gap-8 lg:grid-cols-[0.7fr_1.1fr]">
           <div>
             <h2 className="font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>
+              <LocalizedText id="tour.detailsLabel">{enText("tour.detailsLabel")}</LocalizedText>
             </h2>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -80,11 +83,11 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
       <section id="route" className="scroll-mt-24 bg-navy py-16 text-pearl md:scroll-mt-28 md:py-24">
         <div className="site-band">
           <div className="mb-8 max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="map.label">Sea route</LocalizedText>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="map.label">{enText("map.label")}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-5xl">
-              <LocalizedText id="map.title">Route from Dhërmi by boat</LocalizedText>
+              <LocalizedText id="map.title">{enText("map.title")}</LocalizedText>
             </h2>
           </div>
           <SeaRouteMap destination={destination} />
@@ -100,7 +103,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.tours.title">Compare Dhermi boat tours by route and price</LocalizedText>
+            <LocalizedText id="section.tours.title">{enText("section.tours.title")}</LocalizedText>
           </h2>
           <div className="mt-8 grid gap-4 md:grid-cols-2">
             {relatedTours.map((tour) => (
@@ -124,7 +127,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                     <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                   </ButtonLink>
                   <ButtonLink href={tour.href} variant="secondary" className="flex-1">
-                    <LocalizedText id="tour.details">See route and price</LocalizedText>
+                    <TourDetailsText />
                   </ButtonLink>
                 </div>
               </article>
@@ -133,7 +136,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         </div>
       </section>
 
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} whatsappKey={(primaryTour?.id ?? "default") as "default" | "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="destination_detail_final" />
+      <BookingCTA title={<BookingTitleText />} whatsappKey={(primaryTour?.id ?? "default") as "default" | "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="destination_detail_final" />
     </>
   );
 }

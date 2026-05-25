@@ -2,6 +2,7 @@ import { Star } from "lucide-react";
 import type { Review } from "@/data/content";
 import { googleMapsUrl } from "@/lib/site";
 import { LocalizedText } from "@/components/LocalizedText";
+import { translations } from "@/lib/i18n";
 
 export function ReviewCard({ review }: { review: Review }) {
   return (
@@ -26,7 +27,7 @@ export function ReviewCard({ review }: { review: Review }) {
           rel="noreferrer"
           target="_blank"
         >
-          <LocalizedText id="review.source">Read on Google Maps</LocalizedText>
+          <LocalizedText id="review.source">{translations.en["review.source"] ?? ""}</LocalizedText>
         </a>
       </figcaption>
     </article>

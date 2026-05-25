@@ -3,14 +3,20 @@ import { ArrowRight, Clock3, MessageCircle, Sparkles, Users } from "lucide-react
 import type { Tour } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { whatsappUrl } from "@/lib/site";
+import { translations } from "@/lib/i18n";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { LocalizedText } from "@/components/LocalizedText";
+import { TourDetailsText } from "@/components/MicroCopy";
 import { IconFrame, iconStrokeWidth } from "@/components/OutlineIcon";
 
 export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePriority?: boolean }) {
+  const enText = (key: string) => translations.en[key] ?? "";
   const translationBase = `tour.${tour.id}`;
   const bookKey = tourBookKey(tour.id);
   const bookFallback = tourBookFallback(tour.id);
+  const offerTierLabel = `tour.tier.${tour.offerTier}`;
+  const offerTierDefault = enText(offerTierLabel);
+  const tourDetailsFallback = enText("tour.details");
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink/8 bg-pearl/92 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
@@ -36,6 +42,9 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
       <div className="flex flex-1 flex-col p-5 md:p-6">
         <div className="flex items-start justify-between gap-4">
           <div>
+            <p className="inline-flex items-center gap-2 rounded-full bg-navy px-3 py-1.5 text-xs font-bold text-pearl">
+              <LocalizedText id={offerTierLabel}>{offerTierDefault}</LocalizedText>
+            </p>
             <p className="inline-flex items-center gap-2 rounded-full bg-turquoise-soft px-3 py-1.5 text-xs font-bold text-ink">
               <Sparkles className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={iconStrokeWidth} />
               <LocalizedText id={`${translationBase}.bestFor`}>{tour.bestFor}</LocalizedText>
@@ -44,10 +53,10 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
               <LocalizedText id={`${translationBase}.shortTitle`}>{tour.shortTitle}</LocalizedText>
             </h3>
           </div>
-          <a
+            <a
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
             href={tour.href}
-            aria-label={`See route and price for ${tour.shortTitle}`}
+            aria-label={`${tourDetailsFallback}: ${tour.shortTitle}`}
           >
             <ArrowRight className="h-4 w-4" strokeWidth={iconStrokeWidth} />
           </a>
@@ -63,7 +72,9 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
           {tour.duration ? (
             <p className="flex items-center gap-2">
               <IconFrame icon={Clock3} variant="soft" size="sm" />
-              <LocalizedText id={`${translationBase}.durationDisplay`}>Duration • {tour.duration}</LocalizedText>
+              <LocalizedText id={`${translationBase}.durationDisplay`}>
+                {translations.en[`${translationBase}.durationDisplay`] ?? `Duration • ${tour.duration}`}
+              </LocalizedText>
             </p>
           ) : null}
           {tour.capacity ? (
@@ -102,7 +113,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             className="inline-flex min-h-11 flex-1 items-center justify-center rounded-md border border-ink/15 px-4 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white active:translate-y-px"
             href={tour.href}
           >
-            <LocalizedText id="tour.details">See route and price</LocalizedText>
+            <TourDetailsText />
           </a>
         </div>
       </div>

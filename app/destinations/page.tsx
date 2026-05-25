@@ -5,12 +5,14 @@ import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { CompareToursText, TourDetailsText, BookingTitleText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { SectionHeading } from "@/components/SectionHeading";
 import { destinations, tours } from "@/data/content";
 import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
+import { translations } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour Destinations",
@@ -24,60 +26,53 @@ const destinationInsights = [
     destinationId: "gjipe",
     tourId: "gjipe",
     oneLinerKey: "destinations.card.gjipe.oneLiner",
-    oneLiner: "Caves, cliffs and a beach swim without spending the whole day at sea.",
     practicalKey: "destinations.card.gjipe.practical",
-    practical: "Best when you want a shorter route with a 30-minute swimming stop.",
     bestForKey: "destinations.card.gjipe.bestFor",
-    bestFor: "Best value / shorter route",
     ctaKey: "tour.gjipe.book",
-    cta: "Book Gjipe Tour"
   },
   {
     destinationId: "grama",
     tourId: "grama",
     oneLinerKey: "destinations.card.grama.oneLiner",
-    oneLiner: "The fuller Karaburun route with Grama Beach, Blue Cave and San Andrea Beach.",
     practicalKey: "destinations.card.grama.practical",
-    practical: "Best when you want the longest shared route and more coastline.",
     bestForKey: "destinations.card.grama.bestFor",
-    bestFor: "Most complete shared route",
     ctaKey: "tour.grama.book",
-    cta: "Ask about Grama availability"
   },
   {
     destinationId: "blue-cave",
     tourId: "grama",
     oneLinerKey: "destinations.card.blue.oneLiner",
-    oneLiner: "Bright cave water on the Grama Bay route, when the sea allows safe access.",
     practicalKey: "destinations.card.blue.practical",
-    practical: "Usually paired with Grama Bay, with access adjusted to wind and waves.",
     bestForKey: "destinations.card.blue.bestFor",
-    bestFor: "Turquoise cave water",
     ctaKey: "tour.grama.book",
-    cta: "Ask about Grama availability"
   }
 ];
+const chooseDestinationCards = [
+  { eyebrowKey: "destination.gjipe.title", titleKey: "destination.gjipe.title", textKey: "destinations.choose.gjipe", href: tours[0].href },
+  { eyebrowKey: "destination.grama.title", titleKey: "destination.grama.title", textKey: "destinations.choose.grama", href: tours[1].href },
+  { eyebrowKey: "destination.blue-cave.title", titleKey: "destination.blue-cave.title", textKey: "destinations.choose.blue", href: tours[1].href }
+];
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export default function DestinationsPage() {
   return (
     <>
-      <PageHero
-        title={<LocalizedText id="page.destinations.title">Dhermi boat tour destinations</LocalizedText>}
+        <PageHero
+        title={<LocalizedText id="page.destinations.title">{enText("page.destinations.title")}</LocalizedText>}
         image={tours[1].image}
         imageAlt={tours[1].imageAlt}
-        label={<LocalizedText id="section.destinations.label">Route highlights</LocalizedText>}
+        label={<LocalizedText id="section.destinations.label">{enText("section.destinations.label")}</LocalizedText>}
       >
         <p>
-          <LocalizedText id="destinations.hero.text">
-            Choose between quick caves and Gjipe Beach, the longer Grama Bay route, or Blue Cave as part of the Grama tour.
-          </LocalizedText>
+          <LocalizedText id="destinations.hero.text">{enText("destinations.hero.text")}</LocalizedText>
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="#choose-destination" variant="dark">
-            <LocalizedText id="destinations.choose.title">Which destination should I choose?</LocalizedText>
+            <LocalizedText id="destinations.choose.title">{enText("destinations.choose.title")}</LocalizedText>
           </ButtonLink>
           <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-            <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
+            <CompareToursText />
           </ButtonLink>
         </div>
       </PageHero>
@@ -106,38 +101,38 @@ export default function DestinationsPage() {
                     className="object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute left-4 top-4 rounded-full bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
-                    <LocalizedText id={insight.bestForKey}>{insight.bestFor}</LocalizedText>
+                    <LocalizedText id={insight.bestForKey}>{enText(insight.bestForKey)}</LocalizedText>
                   </div>
                 </div>
                 <div className="flex flex-1 flex-col p-6">
                   <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
-                    <LocalizedText id={`${translationBase}.eyebrow`}>{destination.eyebrow}</LocalizedText>
+                    <LocalizedText id={`${translationBase}.eyebrow`}>{enText(`${translationBase}.eyebrow`)}</LocalizedText>
                   </p>
                   <h2 className="mt-3 font-serif text-3xl font-medium text-ink">
-                    <LocalizedText id={`${translationBase}.title`}>{destination.title}</LocalizedText>
+                    <LocalizedText id={`${translationBase}.title`}>{enText(`${translationBase}.title`)}</LocalizedText>
                   </h2>
                   <p className="mt-3 text-base font-semibold leading-7 text-ink">
-                    <LocalizedText id={insight.oneLinerKey}>{insight.oneLiner}</LocalizedText>
+                    <LocalizedText id={insight.oneLinerKey}>{enText(insight.oneLinerKey)}</LocalizedText>
                   </p>
                   <p className="mt-3 text-sm leading-7 text-ink-soft">
-                    <LocalizedText id={insight.practicalKey}>{insight.practical}</LocalizedText>
+                    <LocalizedText id={insight.practicalKey}>{enText(insight.practicalKey)}</LocalizedText>
                   </p>
                   <dl className="mt-5 grid gap-2 rounded-md bg-limestone/75 p-4 text-sm">
                     <div>
-                      <dt className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                        <LocalizedText id="destinations.card.includedTour">Included tour</LocalizedText>
+                    <dt className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                        <LocalizedText id="destinations.card.includedTour">{enText("destinations.card.includedTour")}</LocalizedText>
                       </dt>
                       <dd className="mt-1 font-semibold text-ink">
-                        <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                        <LocalizedText id={`tour.${tour.id}.shortTitle`}>{enText(`tour.${tour.id}.shortTitle`)}</LocalizedText>
                       </dd>
                     </div>
                   </dl>
                   <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row">
                     <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_card">
-                      <LocalizedText id={insight.ctaKey}>{insight.cta}</LocalizedText>
+                      <LocalizedText id={insight.ctaKey}>{enText(insight.ctaKey)}</LocalizedText>
                     </ButtonLink>
                     <ButtonLink href={tour.href} variant="secondary" className="flex-1">
-                      <LocalizedText id="tour.details">See route and price</LocalizedText>
+                      <TourDetailsText />
                     </ButtonLink>
                   </div>
                 </div>
@@ -149,30 +144,27 @@ export default function DestinationsPage() {
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:items-start">
           <SectionHeading
-            label={<LocalizedText id="destinations.choose.label">Choose your destination</LocalizedText>}
-            title={<LocalizedText id="destinations.choose.title">Which destination should I choose?</LocalizedText>}
+            label={<LocalizedText id="destinations.choose.label">{enText("destinations.choose.label")}</LocalizedText>}
+            title={<LocalizedText id="destinations.choose.title">{enText("destinations.choose.title")}</LocalizedText>}
           >
             <p>
-              <LocalizedText id="destinations.choose.text">
-                Start with the feeling you want: quick swim, longer coastline, or cave-blue water. The skipper confirms the safest route on WhatsApp.
-              </LocalizedText>
+              <LocalizedText id="destinations.choose.text">{enText("destinations.choose.text")}</LocalizedText>
             </p>
           </SectionHeading>
           <div className="grid gap-4 md:grid-cols-3">
-            {[
-              ["destination.gjipe.title", "Gjipe", "destinations.choose.gjipe", "Short Dhërmi trip with caves, beach time and a 30-minute swim stop.", tours[0].href],
-              ["destination.grama.title", "Grama Bay", "destinations.choose.grama", "The most complete shared route along Karaburun with Grama Beach.", tours[1].href],
-              ["destination.blue-cave.title", "Blue Cave", "destinations.choose.blue", "Choose Blue Cave if you want bright cave water, usually as part of the Grama Bay route.", tours[1].href]
-            ].map(([titleKey, title, textKey, text, href]) => (
-              <article key={String(titleKey)} className="rounded-lg border border-ink/8 bg-limestone/70 p-6 shadow-sm">
+            {chooseDestinationCards.map(({ eyebrowKey, titleKey, textKey, href }) => (
+              <article key={titleKey} className="rounded-lg border border-ink/8 bg-limestone/70 p-6 shadow-sm">
+                <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                  <LocalizedText id={eyebrowKey}>{enText(eyebrowKey)}</LocalizedText>
+                </p>
                 <h3 className="font-serif text-3xl font-medium text-ink">
-                  <LocalizedText id={String(titleKey)}>{title}</LocalizedText>
+                  <LocalizedText id={titleKey}>{enText(titleKey)}</LocalizedText>
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-ink-soft">
-                  <LocalizedText id={String(textKey)}>{text}</LocalizedText>
+                  <LocalizedText id={textKey}>{enText(textKey)}</LocalizedText>
                 </p>
-                <ButtonLink href={String(href)} variant="secondary" className="mt-5">
-                  <LocalizedText id="tour.details">See route and price</LocalizedText>
+                <ButtonLink href={href} variant="secondary" className="mt-5">
+                  <TourDetailsText />
                 </ButtonLink>
               </article>
             ))}
@@ -181,14 +173,12 @@ export default function DestinationsPage() {
       </section>
       <section id="routes" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
         <div className="site-band">
-          <SectionHeading
-            label={<LocalizedText id="map.label">Sea route</LocalizedText>}
-            title={<LocalizedText id="map.overviewTitle">Routes from Dhërmi</LocalizedText>}
+                <SectionHeading
+            label={<LocalizedText id="map.label">{enText("map.label")}</LocalizedText>}
+            title={<LocalizedText id="map.overviewTitle">{enText("map.overviewTitle")}</LocalizedText>}
           >
             <p>
-              <LocalizedText id="map.safety.note">
-                Approximate sea route. Exact stops depend on wind, waves and skipper safety decisions.
-              </LocalizedText>
+              <LocalizedText id="map.safety.note">{enText("map.safety.note")}</LocalizedText>
             </p>
           </SectionHeading>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -201,15 +191,15 @@ export default function DestinationsPage() {
       <section className="bg-pearl py-16 md:py-24">
         <div className="site-band">
           <SectionHeading
-            label={<LocalizedText id="section.social.label">Recent sea photos</LocalizedText>}
-            title={<LocalizedText id="section.social.title">Real moments from the boat</LocalizedText>}
+            label={<LocalizedText id="section.social.label">{enText("section.social.label")}</LocalizedText>}
+            title={<LocalizedText id="section.social.title">{enText("section.social.title")}</LocalizedText>}
           />
           <div className="mt-10">
             <GalleryGrid />
           </div>
         </div>
       </section>
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
+      <BookingCTA title={<BookingTitleText />} />
     </>
   );
 }

@@ -1,29 +1,27 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowRight, CalendarDays, MapPin, MessageCircle, ShieldCheck, Star, Users } from "lucide-react";
-import type { CSSProperties } from "react";
+import { ArrowRight, CalendarDays, MapPin, MessageCircle, ShieldCheck, Users } from "lucide-react";
+import type { CSSProperties, ComponentType } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
-import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
-import { primaryWhatsappHref } from "@/data/content";
+import { CompareToursText, HeroWhatsappText } from "@/components/MicroCopy";
+import { TrustBadges } from "@/components/TrustBadges";
+import { primaryWhatsappHref, reviews } from "@/data/content";
 import { assetPath } from "@/lib/site";
+import { translations } from "@/lib/i18n";
 
-const heroFacts: Array<[OutlineIconComponent, string, string, string, string]> = [
-  [Star, "hero.fact.reviews", "5-star guest reviews", "hero.fact.languages", "French, English and Albanian"],
-  [Users, "hero.fact.groupSize", "Small groups, max 15 guests", "hero.fact.capacity", "Max 15 guests"],
-  [MapPin, "hero.fact.departure", "Departure from Dhërmi area", "hero.fact.local", "Exact point on WhatsApp"],
-  [CalendarDays, "hero.fact.departures", "Daily departures", "hero.fact.easy", "Book on WhatsApp in 1 minute"],
-  [ShieldCheck, "hero.fact.weather", "Routes adapted to sea conditions", "hero.fact.reply", "Confirmed by skipper"]
+const enText = (key: string) => translations.en[key] ?? "";
+
+type HeroFactIcon = ComponentType<{ className?: string; strokeWidth?: number; "aria-hidden"?: boolean }>;
+
+const heroFacts: Array<[HeroFactIcon, string, string, string, string]> = [
+  [ShieldCheck, "hero.fact.reviews", enText("hero.fact.reviews"), "hero.fact.languages", enText("hero.fact.languages")],
+  [Users, "hero.fact.groupSize", enText("hero.fact.groupSize"), "hero.fact.capacity", enText("hero.fact.capacity")],
+  [MapPin, "hero.fact.departure", enText("hero.fact.departure"), "hero.fact.local", enText("hero.fact.local")],
+  [CalendarDays, "hero.fact.departures", enText("hero.fact.departures"), "hero.fact.easy", enText("hero.fact.easy")],
+  [MapPin, "hero.fact.weather", enText("hero.fact.weather"), "hero.fact.reply", enText("hero.fact.reply")]
 ];
 
-const heroProofs = [
-  "5-star guest reviews",
-  "Small groups, max 15 guests",
-  "Departure from Dhërmi area",
-  "Book on WhatsApp in 1 minute",
-  "Routes adapted to sea conditions"
-];
-
-const mobileHeroTiles = Array.from({ length: 12 }, (_, index) => index);
+const featuredReviews = reviews.slice(0, 2);
 
 export function HeroCinematic() {
   return (
@@ -34,8 +32,8 @@ export function HeroCinematic() {
           aria-hidden
           style={{ "--hero-mobile-image": `url("${assetPath("/images/hero-riviera-mobile-lcp.avif")}")` } as CSSProperties}
         >
-          {mobileHeroTiles.map((tile) => (
-            <span key={tile} className="hero-mobile-tile" />
+          {Array.from({ length: 12 }, (_, index) => (
+            <span key={index} className="hero-mobile-tile" />
           ))}
         </div>
         <picture className="hidden h-full w-full sm:block">
@@ -62,52 +60,75 @@ export function HeroCinematic() {
             width={1600}
           />
         </noscript>
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/14 via-navy/14 to-navy/80 md:hidden" />
         <div className="absolute inset-0 photo-overlay-dark" />
         <div className="absolute inset-0 photo-overlay-dark-strong" />
-        <div className="absolute inset-0 bg-gradient-to-b from-navy/14 via-navy/14 to-navy/80 md:hidden" />
       </div>
 
       <div className="relative mx-auto grid min-h-[calc(76svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[1.08fr_0.72fr] xl:grid-cols-[1.12fr_0.72fr]">
         <div className="max-w-4xl">
           <h1 className="photo-title max-w-4xl break-words font-serif text-3xl font-medium leading-[1.04] text-pearl sm:text-5xl md:text-[3.3rem] lg:text-[3.45rem] xl:text-[3.65rem]">
-            <LocalizedText id="hero.title">
-              Boat tours from Dhërmi to Gjipe, Grama Bay & Blue Cave
-            </LocalizedText>
+            <LocalizedText id="hero.title">{enText("hero.title")}</LocalizedText>
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">
-            <LocalizedText id="hero.text">
-              Small-group and private boat trips with a local skipper. Clear prices, daily departures, WhatsApp booking.
-            </LocalizedText>
+            <LocalizedText id="hero.text">{enText("hero.text")}</LocalizedText>
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
-            {heroProofs.map((badge, index) => (
-              <span key={badge} className="rounded-full border border-white/18 bg-white/12 px-3 py-2 text-xs font-bold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur">
-                <LocalizedText id={`hero.trust.${index}`}>{badge}</LocalizedText>
+            {heroFacts.map(([, , , , value], index) => (
+              <span
+                key={`hero-proof-${index}`}
+                className="rounded-full border border-white/18 bg-white/12 px-3 py-2 text-xs font-bold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur"
+              >
+                <LocalizedText id={`hero.trust.${index}`}>{value}</LocalizedText>
               </span>
             ))}
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="home_hero">
-              <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+              <HeroWhatsappText />
             </ButtonLink>
             <ButtonLink href="#compare-tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md hover:bg-white/18" analyticsEvent="hero_cta_click">
-              <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
+              <CompareToursText />
             </ButtonLink>
           </div>
         </div>
 
         <aside className="hidden self-end rounded-lg border border-white/18 bg-white/12 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-xl lg:block">
-          <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
-            <LocalizedText id="hero.booking.label">Reserve in one minute</LocalizedText>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+            <LocalizedText id="hero.booking.label">{enText("hero.booking.label")}</LocalizedText>
           </p>
           <h2 className="mt-3 font-serif text-3xl font-medium">
-            <LocalizedText id="hero.booking.title">Choose your route, send your date, confirm with the skipper.</LocalizedText>
+            <LocalizedText id="hero.booking.title">{enText("hero.booking.title")}</LocalizedText>
           </h2>
+          <div className="mt-5 rounded-md border border-white/20 bg-white/10 p-4">
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">
+              <LocalizedText id="section.why.title">{enText("section.why.title")}</LocalizedText>
+            </p>
+            <p className="mt-2 text-sm leading-7 text-pearl/90">
+              <LocalizedText id="section.skipper.text">{enText("section.skipper.text")}</LocalizedText>
+            </p>
+            <div className="mt-4">
+              <TrustBadges />
+            </div>
+          </div>
+          <div className="mt-4 grid gap-3">
+            {featuredReviews.map((review) => (
+              <blockquote key={review.name} className="rounded-md bg-ink/70 p-3 text-sm leading-7 text-pearl/88">
+                <span aria-hidden>★★★★★</span>
+                <span aria-hidden>&quot;</span>
+                <span>{review.text}</span>
+                <span aria-hidden>&quot;</span>
+                <p className="mt-2 text-xs font-semibold">{review.name}</p>
+              </blockquote>
+            ))}
+          </div>
           <div className="mt-6 grid gap-4">
-            {heroFacts.map(([icon, labelKey, label, valueKey, value]) => (
+            {heroFacts.map(([HeroIcon, labelKey, label, valueKey, value]) => (
               <div key={labelKey} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <div className="flex items-center gap-4">
-                  <IconFrame icon={icon} variant="glass" size="lg" />
+                  <span className="grid place-items-center rounded-md bg-white/12 p-2">
+                    <HeroIcon className="h-4 w-4 text-pearl" aria-hidden strokeWidth={1.75} />
+                  </span>
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">
                       <LocalizedText id={labelKey}>{label}</LocalizedText>
@@ -121,7 +142,7 @@ export function HeroCinematic() {
             ))}
           </div>
           <ButtonLink href="#book" icon={ArrowRight} variant="dark" className="mt-6 w-full" analyticsEvent="hero_cta_click">
-            <LocalizedText id="hero.booking.cta">Use fast booking form</LocalizedText>
+            <LocalizedText id="hero.booking.cta">{enText("hero.booking.cta")}</LocalizedText>
           </ButtonLink>
         </aside>
       </div>

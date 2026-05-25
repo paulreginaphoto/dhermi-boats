@@ -5,6 +5,7 @@ import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { LocalizedText } from "@/components/LocalizedText";
+import { BookingTitleText } from "@/components/MicroCopy";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -12,24 +13,27 @@ import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
 import { breadcrumbSchema, faqSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
+import { translations } from "@/lib/i18n";
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
   const translationBase = `tour.${tour.id}`;
   const heroImageAlt = tour.imageAlt ?? `${tour.shortTitle} on the Albanian Riviera`;
+  const enText = (key: string) => translations.en[key] ?? "";
   const bookKey = tourBookKey(tour.id);
   const bookFallback = tourBookFallback(tour.id);
   const facts = ([
-    { label: "Duration", labelKey: "tour.durationLabel", value: tour.duration, valueKey: `${translationBase}.duration`, icon: Clock3 },
-    { label: "Price", labelKey: "tour.priceLabel", value: tour.price, valueKey: `${translationBase}.price`, icon: Euro },
-    { label: "Capacity", labelKey: "tour.capacityLabel", value: tour.capacity, valueKey: `${translationBase}.capacity`, icon: Users },
-    { label: "Good fit", labelKey: "tour.bestForLabel", value: tour.bestFor, valueKey: `${translationBase}.bestFor`, icon: Sparkles },
-    { label: "Departure", labelKey: "tour.departureLabel", value: tour.departure, valueKey: `${translationBase}.departure`, icon: MapPin }
-  ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
+    { labelKey: "tour.durationLabel", value: tour.duration, valueKey: `${translationBase}.duration`, icon: Clock3 },
+    { labelKey: "tour.priceLabel", value: tour.price, valueKey: `${translationBase}.price`, icon: Euro },
+    { labelKey: "tour.capacityLabel", value: tour.capacity, valueKey: `${translationBase}.capacity`, icon: Users },
+    { labelKey: "tour.bestForLabel", value: tour.bestFor, valueKey: `${translationBase}.bestFor`, icon: Sparkles },
+    { labelKey: "tour.departureLabel", value: tour.departure, valueKey: `${translationBase}.departure`, icon: MapPin }
+  ] satisfies Array<{ labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
+  const toursBreadcrumbLabel = translations.en["tour.backAll"] ?? "All Dhermi boat tours";
 
   const schema = [
     touristTripSchema(tour),
     breadcrumbSchema([
-      { name: "Dhermi boat tours", url: "/" },
+      { name: toursBreadcrumbLabel, url: "/" },
       { name: tour.shortTitle, url: tour.href }
     ]),
     faqSchema(tour.detailFaqs)
@@ -42,7 +46,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         title={<LocalizedText id={`${translationBase}.title`}>{tour.title}</LocalizedText>}
         image={tour.image}
         imageAlt={heroImageAlt}
-        label={<LocalizedText id="tour.detailsLabel">Route facts</LocalizedText>}
+        label={<LocalizedText id="tour.detailsLabel">{enText("tour.detailsLabel")}</LocalizedText>}
       >
         <p>
           <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
@@ -52,7 +56,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </ButtonLink>
           <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-            <LocalizedText id="tour.backAll">All Dhermi boat tours</LocalizedText>
+            <LocalizedText id="tour.backAll">{enText("tour.backAll")}</LocalizedText>
           </ButtonLink>
         </div>
       </PageHero>
@@ -63,12 +67,12 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         <div className="site-band">
           <div className="grid gap-3 md:grid-cols-5">
             {facts.map((fact) => (
-              <div key={fact.label} className="rounded-lg border border-ink/8 bg-pearl/90 p-4 shadow-sm md:p-5">
+              <div key={fact.labelKey} className="rounded-lg border border-ink/8 bg-pearl/90 p-4 shadow-sm md:p-5">
                 <div className="flex items-center gap-4 md:block">
                   <IconFrame icon={fact.icon} variant="soft" size="lg" />
                   <div>
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze md:mt-4 md:tracking-[0.2em]">
-                      <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
+                      <LocalizedText id={fact.labelKey}>{translations.en[fact.labelKey] ?? ""}</LocalizedText>
                     </p>
                     <p className="mt-1 text-base font-semibold leading-6 text-ink md:mt-2">
                       <LocalizedText id={fact.valueKey}>{fact.value}</LocalizedText>
@@ -86,7 +90,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           <div className="grid gap-6">
             <article className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
               <h2 className="font-serif text-3xl font-medium text-ink">
-                <LocalizedText id="tour.itineraryTitle">Itinerary</LocalizedText>
+                <LocalizedText id="tour.itineraryTitle">{enText("tour.itineraryTitle")}</LocalizedText>
               </h2>
               <ol className="mt-6 grid gap-4 text-base leading-7 text-ink-soft">
                 {tour.itinerary.map((item, index) => (
@@ -104,7 +108,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <article className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
                 <IconFrame icon={ListChecks} variant="soft" size="lg" />
                 <h2 className="mt-4 font-serif text-3xl font-medium text-ink">
-                  <LocalizedText id="tour.includedTitle">What’s included</LocalizedText>
+                  <LocalizedText id="tour.includedTitle">{enText("tour.includedTitle")}</LocalizedText>
                 </h2>
                 <ul className="mt-5 grid gap-3 text-base leading-7 text-ink-soft">
                   {tour.included.map((item, index) => (
@@ -121,7 +125,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <article className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
                 <IconFrame icon={Luggage} variant="soft" size="lg" />
                 <h2 className="mt-4 font-serif text-3xl font-medium text-ink">
-                  <LocalizedText id="tour.bringTitle">What to bring</LocalizedText>
+                  <LocalizedText id="tour.bringTitle">{enText("tour.bringTitle")}</LocalizedText>
                 </h2>
                 <ul className="mt-5 grid gap-3 text-base leading-7 text-ink-soft">
                   {tour.bring.map((item, index) => (
@@ -139,7 +143,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
             <article className="rounded-lg border border-ink/8 bg-limestone/70 p-6 md:p-8">
               <IconFrame icon={CloudSun} variant="soft" size="lg" />
               <h2 className="mt-4 font-serif text-3xl font-medium text-ink">
-                <LocalizedText id="tour.safetyTitle">Safety and weather</LocalizedText>
+                <LocalizedText id="tour.safetyTitle">{enText("tour.safetyTitle")}</LocalizedText>
               </h2>
               <p className="mt-4 text-base leading-8 text-ink-soft">
                 <LocalizedText id={`${translationBase}.safetyNote`}>{tour.safetyNote}</LocalizedText>
@@ -149,16 +153,16 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
 
           <aside className="rounded-lg border border-white/10 bg-ink p-6 text-pearl shadow-image lg:sticky lg:top-28">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="booking.panel.label">WhatsApp booking</LocalizedText>
+              <LocalizedText id="booking.panel.label">{enText("booking.panel.label")}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-3xl font-medium">
-              <LocalizedText id="booking.panel.title">Send your date and group size</LocalizedText>
+              <LocalizedText id="booking.panel.title">{enText("booking.panel.title")}</LocalizedText>
             </h2>
             <dl className="mt-6 grid gap-4 border-y border-white/10 py-5">
               {facts.slice(0, 4).map((fact) => (
-                <div key={fact.label} className="grid grid-cols-[0.42fr_1fr] gap-4">
+                <div key={fact.labelKey} className="grid grid-cols-[0.42fr_1fr] gap-4">
                   <dt className="text-xs font-bold uppercase tracking-[0.18em] text-sand">
-                    <LocalizedText id={fact.labelKey}>{fact.label}</LocalizedText>
+                    <LocalizedText id={fact.labelKey}>{translations.en[fact.labelKey] ?? ""}</LocalizedText>
                   </dt>
                   <dd className="text-sm font-semibold leading-6 text-pearl">
                     <LocalizedText id={fact.valueKey}>{fact.value}</LocalizedText>
@@ -170,9 +174,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
             </ButtonLink>
             <p className="mt-4 text-sm leading-7 text-pearl/88">
-              <LocalizedText id="booking.panel.text">
-                Send your tour, date, adults, children, preferred time and questions. We confirm availability together.
-              </LocalizedText>
+              <LocalizedText id="booking.panel.text">{enText("booking.panel.text")}</LocalizedText>
             </p>
           </aside>
         </div>
@@ -185,7 +187,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
               <LocalizedText id={`${translationBase}.bestFor`}>{tour.bestFor}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="tour.bestForTitle">Choose by route pace</LocalizedText>
+              <LocalizedText id="tour.bestForTitle">{enText("tour.bestForTitle")}</LocalizedText>
             </h2>
           </div>
           <FAQAccordion items={tour.detailFaqs} translationPrefix={`${translationBase}.faq`} />
@@ -198,7 +200,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
         </div>
       </section>
 
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} whatsappKey={tour.id as "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="tour_final" />
+      <BookingCTA title={<BookingTitleText />} whatsappKey={tour.id as "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="tour_final" />
     </>
   );
 }

@@ -7,10 +7,12 @@ import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { SocialFeed } from "@/components/SocialFeed";
 import { VideoFeature } from "@/components/VideoFeature";
+import { BookingTitleText, CompareToursText, HeroWhatsappText, TourDetailsText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { gallery, primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
+import { translations } from "@/lib/i18n";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour Photos",
@@ -23,44 +25,36 @@ const photoConversionGroups = [
   {
     tourId: "gjipe",
     titleKey: "photos.conversion.gjipe.title",
-    title: "Gjipe caves and beach",
     textKey: "photos.conversion.gjipe.text",
-    text: "Use these photos to judge the shorter cave-and-beach route with a swim stop.",
     indexes: [0, 3, 4, 2]
   },
   {
     tourId: "grama",
     titleKey: "photos.conversion.grama.title",
-    title: "Grama Bay and Blue Cave",
     textKey: "photos.conversion.grama.text",
-    text: "Choose this set if you want the longer Karaburun route and bright cave water.",
     indexes: [1, 7, 8, 10]
   },
   {
     tourId: "private",
     titleKey: "photos.conversion.private.title",
-    title: "Private route ideas",
     textKey: "photos.conversion.private.text",
-    text: "Useful when your group wants to choose timing, coves and swimming stops with the skipper.",
     indexes: [0, 5, 9, 11]
   },
   {
     tourId: "sunset",
     titleKey: "photos.conversion.sunset.title",
-    title: "Sunset from the boat",
     textKey: "photos.conversion.sunset.text",
-    text: "A simple preview for the private sunset tour around the Dhërmi coast.",
     indexes: [6, 11, 9, 2]
   },
   {
     tourId: "fishing",
     titleKey: "photos.conversion.fishing.title",
-    title: "Quiet morning at sea",
     textKey: "photos.conversion.fishing.text",
-    text: "Use the calm-water photos to decide if the early fishing tour fits your morning.",
     indexes: [11, 9, 2, 5]
   }
 ] as const;
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export default function BoatPhotosLegacyPage() {
   return (
@@ -68,28 +62,26 @@ export default function BoatPhotosLegacyPage() {
       <section className="bg-limestone py-12 md:py-16">
         <div className="site-band">
           <div className="max-w-3xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.social.label">Recent sea photos</LocalizedText>
+              <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="section.social.label">{enText("section.social.label")}</LocalizedText>
             </p>
             <h1 className="font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
-              <LocalizedText id="page.photos.title">Boat tour photos in Dhërmi</LocalizedText>
+              <LocalizedText id="page.photos.title">{enText("page.photos.title")}</LocalizedText>
             </h1>
             <p>
               <span className="mt-5 block text-base leading-8 text-ink-soft md:text-lg">
-                <LocalizedText id="page.photos.text">
-                  Browse real Dhermi boat tour photos from Gjipe, Grama Bay, Blue Cave, Karaburun coves and onboard sea clips.
-                </LocalizedText>
+                <LocalizedText id="page.photos.text">{enText("page.photos.text")}</LocalizedText>
               </span>
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="photos_hero">
-                <LocalizedText id="cta.heroWhatsapp">Check availability on WhatsApp</LocalizedText>
+                <HeroWhatsappText />
               </ButtonLink>
               <ButtonLink href="/tours/" variant="secondary">
-                <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
+                <CompareToursText />
               </ButtonLink>
               <ButtonLink href={googleMapsUrl} icon={MapPin} variant="secondary" analyticsEvent="maps_click">
-                <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
+                <LocalizedText id="section.reviews.cta">{enText("section.reviews.cta")}</LocalizedText>
               </ButtonLink>
             </div>
           </div>
@@ -125,10 +117,10 @@ export default function BoatPhotosLegacyPage() {
         <div className="site-band">
           <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="photos.group.label">Photo guide</LocalizedText>
+              <LocalizedText id="photos.group.label">{enText("photos.group.label")}</LocalizedText>
             </p>
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="photos.group.title">See the water, caves and boat before you choose</LocalizedText>
+              <LocalizedText id="photos.group.title">{enText("photos.group.title")}</LocalizedText>
             </h2>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-5">
@@ -161,17 +153,17 @@ export default function BoatPhotosLegacyPage() {
                 </div>
                 <div className="p-5">
                   <h3 className="font-serif text-2xl font-medium text-ink">
-                    <LocalizedText id={group.titleKey}>{group.title}</LocalizedText>
+                    <LocalizedText id={group.titleKey}>{enText(group.titleKey)}</LocalizedText>
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-ink-soft">
-                    <LocalizedText id={group.textKey}>{group.text}</LocalizedText>
+                    <LocalizedText id={group.textKey}>{enText(group.textKey)}</LocalizedText>
                   </p>
                   <div className="mt-5 grid gap-2">
                     <ButtonLink href={tour.href} icon={ArrowRight} variant="secondary" className="w-full">
-                      <LocalizedText id="tour.details">See route and price</LocalizedText>
+                      <TourDetailsText />
                     </ButtonLink>
                     <ButtonLink href={whatsappHrefForKey(group.tourId)} icon={MessageCircle} className="w-full" whatsappKey={group.tourId} analyticsTour={group.tourId} analyticsPlacement="photos_card">
-                      <LocalizedText id={`tour.${group.tourId}.book`}>Ask about this tour</LocalizedText>
+                      <LocalizedText id={`tour.${group.tourId}.book`}>{translations.en[`tour.${group.tourId}.book`] ?? "Ask about this tour"}</LocalizedText>
                     </ButtonLink>
                   </div>
                 </div>
@@ -183,7 +175,7 @@ export default function BoatPhotosLegacyPage() {
       </section>
 
       <SocialFeed />
-      <BookingCTA title={<LocalizedText id="booking.title">Book your boat tour in Dhërmi</LocalizedText>} />
+      <BookingCTA title={<BookingTitleText />} />
     </>
   );
 }
