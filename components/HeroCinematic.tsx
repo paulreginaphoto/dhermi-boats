@@ -48,7 +48,9 @@ export function HeroCinematic() {
             className="h-full w-full object-cover"
             decoding="sync"
             fetchPriority="high"
+            height={1000}
             loading="eager"
+            width={1600}
           />
         </picture>
         <noscript>
@@ -56,6 +58,8 @@ export function HeroCinematic() {
             src={assetPath("/images/hero-riviera-tablet.webp")}
             alt="Dhermi Boat entering a sea cave with turquoise water"
             className="h-full w-full object-cover"
+            height={1000}
+            width={1600}
           />
         </noscript>
         <div className="absolute inset-0 photo-overlay-dark" />

@@ -48,11 +48,11 @@ export function ConversionTrustBlock({ className = "" }: { className?: string })
             ))}
           </div>
           <div className="flex flex-col gap-2 sm:flex-row md:flex-col">
-            <a className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl" href={googleMapsUrl} rel="noreferrer" target="_blank">
+            <a className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl" data-analytics-event="maps_click" href={googleMapsUrl} rel="noreferrer" target="_blank">
               <MapPin className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="trust.google">Google Maps</LocalizedText>
             </a>
-            <a className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl" href={getYourGuideUrl} rel="noreferrer" target="_blank">
+            <a className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl" data-analytics-event="getyourguide_click" href={getYourGuideUrl} rel="noreferrer" target="_blank">
               <TicketCheck className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="trust.getyourguide">GetYourGuide</LocalizedText>
             </a>

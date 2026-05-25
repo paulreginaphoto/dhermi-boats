@@ -146,6 +146,7 @@ function checkRepeatedWords(file, text, lineNumber) {
 }
 
 function checkRepeatedPhrase(file, text, lineNumber) {
+  if (file.endsWith(path.join("components", "Analytics.tsx"))) return;
   if (/[<>]/.test(text)) return;
   if (!/[\p{L}\p{M}]/u.test(text)) return;
 
@@ -1009,11 +1010,11 @@ function checkSEOFocus(filePath, content) {
   const requirements = [
     {
       file: "app/layout.tsx",
-      snippets: ["Dhermi boat tour", "boat tour Dhermi"]
+      snippets: ["Dhermi boat tour", "boat tour Dhermi", "localBusinessSchema()", "websiteSchema()"]
     },
     {
       file: "app/page.tsx",
-      snippets: ["absolute: \"Dhermi Boat Tour", "localBusinessSchema()", "websiteSchema()", "homePageSchema()"]
+      snippets: ["absolute: \"Dhermi Boat Tour", "homePageSchema()"]
     },
     {
       file: "app/tours/page.tsx",

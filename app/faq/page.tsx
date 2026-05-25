@@ -9,25 +9,13 @@ import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
+import { faqSchema } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour FAQ",
   description:
     "Practical answers for booking a Dhermi boat tour: departure point, weather, private tours, what to bring, children, payment and group size.",
   alternates: { canonical: canonical("/faq/"), languages: languageAlternates("/faq/") }
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map((faq) => ({
-    "@type": "Question",
-    name: faq.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: faq.answer
-    }
-  }))
 };
 
 const faqGroups = [
@@ -39,10 +27,14 @@ const faqGroups = [
   { titleKey: "faq.group.bring", title: "What to bring", indexes: [4] }
 ];
 
+const visibleFaqs = Array.from(new Set(faqGroups.flatMap((group) => group.indexes)))
+  .map((index) => faqs[index])
+  .filter((item) => item?.question);
+
 export default function FAQPage() {
   return (
     <>
-      <SEOJsonLd data={faqSchema} />
+      <SEOJsonLd data={faqSchema(visibleFaqs)} />
       <PageHero
         title={<LocalizedText id="section.faq.title">Frequently asked questions</LocalizedText>}
         image={tours[0].image}

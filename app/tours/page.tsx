@@ -11,7 +11,7 @@ import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
-import { breadcrumbSchema, localBusinessSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
+import { breadcrumbSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
@@ -27,7 +27,6 @@ export default function ToursPage() {
     <>
       <SEOJsonLd
         data={[
-          localBusinessSchema(),
           tourCollectionSchema(),
           ...tours.map((tour) => touristTripSchema(tour)),
           breadcrumbSchema([

@@ -21,7 +21,7 @@ import { VideoFeature } from "@/components/VideoFeature";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
 import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
-import { faqSchema, homePageSchema, localBusinessSchema, touristTripSchema, websiteSchema } from "@/lib/seo";
+import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
 export const metadata: Metadata = {
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <>
-      <SEOJsonLd data={[localBusinessSchema(), websiteSchema(), homePageSchema(), ...tours.map((tour) => touristTripSchema(tour)), faqSchema(faqs)]} />
+      <SEOJsonLd data={[homePageSchema(), ...tours.map((tour) => touristTripSchema(tour)), faqSchema(faqs)]} />
       <HeroCinematic />
 
       <ArrivalComfortBar />
@@ -201,6 +201,7 @@ export default function HomePage() {
             />
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
+              data-analytics-event="maps_click"
               href={googleMapsUrl}
               rel="noreferrer"
               target="_blank"

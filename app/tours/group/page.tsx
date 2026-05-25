@@ -6,7 +6,7 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
 import { TourCard } from "@/components/TourCard";
 import { tours } from "@/data/content";
-import { canonical, languageAlternates } from "@/lib/site";
+import { canonical } from "@/lib/site";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 
 const groupTours = tours.filter((tour) => tour.type === "shared");
@@ -15,7 +15,8 @@ export const metadata: Metadata = {
   title: "Shared Dhermi Boat Tours",
   description:
     "Small-group Dhermi boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave, with clear prices and WhatsApp booking.",
-  alternates: { canonical: canonical("/tours/group/"), languages: languageAlternates("/tours/group/") }
+  alternates: { canonical: canonical("/tours/") },
+  robots: { index: false, follow: true }
 };
 
 export default function GroupToursPage() {

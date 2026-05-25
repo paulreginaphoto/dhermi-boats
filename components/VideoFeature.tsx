@@ -12,6 +12,7 @@ export function VideoFeature() {
         loop
         muted
         playsInline
+        poster={assetPath("/images/video-sea-cave-poster.webp")}
         preload="none"
       >
         <source src={videoSrc} type="video/mp4" />

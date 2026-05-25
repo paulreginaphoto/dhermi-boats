@@ -58,7 +58,7 @@ export function Footer() {
               <Mail className="h-4 w-4 text-turquoise" />
               {emailAddress}
             </a>
-            <a className="flex items-center gap-3 transition hover:text-white" href={googleMapsUrl} rel="noreferrer" target="_blank">
+            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="maps_click" href={googleMapsUrl} rel="noreferrer" target="_blank">
               <MapPin className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.google">Google Maps</LocalizedText>
             </a>

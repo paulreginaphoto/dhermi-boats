@@ -347,10 +347,12 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
             alt=""
             className="absolute max-w-none"
             decoding="async"
+            height={tileSize}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             src={tile.src}
             style={tile.style}
+            width={tileSize}
           />
         ))}
       </div>

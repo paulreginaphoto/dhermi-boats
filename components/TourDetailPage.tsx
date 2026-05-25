@@ -10,7 +10,7 @@ import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import type { Tour } from "@/data/content";
 import { whatsappUrl } from "@/lib/site";
-import { breadcrumbSchema, localBusinessSchema, touristTripSchema } from "@/lib/seo";
+import { breadcrumbSchema, faqSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
@@ -27,12 +27,12 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
   ] satisfies Array<{ label: string; labelKey: string; value: string; valueKey: string; icon: OutlineIconComponent }>).filter((fact) => fact.value);
 
   const schema = [
-    localBusinessSchema(),
     touristTripSchema(tour),
     breadcrumbSchema([
       { name: "Dhermi boat tours", url: "/" },
       { name: tour.shortTitle, url: tour.href }
-    ])
+    ]),
+    faqSchema(tour.detailFaqs)
   ];
 
   return (

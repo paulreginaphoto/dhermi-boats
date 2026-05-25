@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import "./globals.css";
+import { Analytics } from "@/components/Analytics";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
 import { LocalizedText } from "@/components/LocalizedText";
 import { assetPath, brandName, canonical, canonicalOrigin, isStagingDeployment, languageAlternates } from "@/lib/site";
+import { localBusinessSchema, websiteSchema } from "@/lib/seo";
 
 const socialImageUrl = canonical("/images/hero-riviera.webp");
 
@@ -79,6 +82,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <WhatsAppFloatingButton />
         <StickyBookingBar />
+        <SEOJsonLd data={[localBusinessSchema(), websiteSchema()]} />
+        <Analytics />
         <LocaleBootstrap />
       </body>
     </html>

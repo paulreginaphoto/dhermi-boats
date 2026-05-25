@@ -88,7 +88,7 @@ export default function BoatPhotosLegacyPage() {
               <ButtonLink href="/tours/" variant="secondary">
                 <LocalizedText id="cta.compareTours">Compare tours</LocalizedText>
               </ButtonLink>
-              <ButtonLink href={googleMapsUrl} icon={MapPin} variant="secondary">
+              <ButtonLink href={googleMapsUrl} icon={MapPin} variant="secondary" analyticsEvent="maps_click">
                 <LocalizedText id="section.reviews.cta">Google Maps</LocalizedText>
               </ButtonLink>
             </div>

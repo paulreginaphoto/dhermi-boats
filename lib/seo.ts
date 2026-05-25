@@ -29,7 +29,6 @@ function tourOffer(tour: Tour) {
     price: tourPriceFrom[tour.id],
     priceCurrency: "EUR",
     description: tour.price,
-    availability: "https://schema.org/InStock",
     url: canonical(tour.href),
     seller: { "@id": businessId }
   };

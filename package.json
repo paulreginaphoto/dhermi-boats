@@ -9,6 +9,7 @@
     "test:date-format": "node ./scripts/booking-date-format.test.mjs",
     "translations": "node ./scripts/build-translations.mjs",
     "qa:conversion-ux": "node ./scripts/qa-conversion-ux.mjs",
+    "qa:final-release": "node ./scripts/qa-final-release.mjs",
     "qa:i18n-links": "node ./scripts/qa-i18n-links.mjs",
     "qa:url-canonicals": "node ./scripts/qa-url-canonicals.mjs",
     "content:guard": "node ./scripts/content-guard.mjs",
