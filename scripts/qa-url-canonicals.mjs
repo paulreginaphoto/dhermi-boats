@@ -284,8 +284,10 @@ function checkExportedHtml() {
     const file = htmlPathForRoute(from);
     if (!fs.existsSync(file)) continue;
     const html = fs.readFileSync(file, "utf8");
-    assertIncludes(relative(file), html, `noindex`, "legacy redirect page must be noindex");
-    assertIncludes(relative(file), html, to, `legacy redirect page must point to ${to}`);
+    const routeLabel = relative(file);
+    assertIncludes(routeLabel, html, `noindex`, "legacy redirect page must be noindex");
+    assertIncludes(routeLabel, html, `rel="canonical" href="${canonicalUrl(to)}"`, `legacy redirect page must canonicalize to ${to}`);
+    assertIncludes(routeLabel, html, `content="0;url=${to}"`, `legacy redirect page must meta-refresh to ${to}`);
   }
 
   for (const file of htmlFiles) {
