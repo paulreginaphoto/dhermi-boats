@@ -2,9 +2,12 @@
 # GitHub Pages ignores this file; use Cloudflare redirect rules if production stays on GitHub Pages.
 /tours/private/ /private-boat-tour-albania/ 301
 /tours/private /private-boat-tour-albania/ 301
+/20250721_103929/ /boat-photos/ 301
+/20250721_103929 /boat-photos/ 301
 /2026/02/28/hello-world/ / 301
 /sample-page/ / 301
 /boutique/ / 301
 /panier/ / 301
 /mon-compte/ / 301
 /commander/ /contact/ 301
+/wp-content/uploads/2026/02/20250721_103929.mp4 /videos/dhermi-sea-moments.mp4 301

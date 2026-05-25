@@ -42,6 +42,7 @@ Legacy or non-booking URLs should not be indexed and should point users to the c
 | Legacy URL | Destination | Notes |
 | --- | --- | --- |
 | `/tours/private/` | `/private-boat-tour-albania/` | Removed duplicate private-tour template |
+| `/20250721_103929/` | `/boat-photos/` | WordPress media attachment artifact |
 | `/2026/02/28/hello-world/` | `/` | WordPress blog artifact |
 | `/sample-page/` | `/` | WordPress sample artifact |
 | `/boutique/` | `/` | WooCommerce artifact |
@@ -50,6 +51,8 @@ Legacy or non-booking URLs should not be indexed and should point users to the c
 | `/commander/` | `/contact/` | WooCommerce checkout artifact |
 
 The static app renders noindex redirect pages for legacy routes. `public/_redirects` also includes 301 rules for hosts that support Netlify or Cloudflare Pages-style redirects.
+
+The old WordPress video URL `/wp-content/uploads/2026/02/20250721_103929.mp4` is also kept as a static media file so Google and users do not hit a 404 while the old attachment result drops out of search.
 
 ## Language Routing
 

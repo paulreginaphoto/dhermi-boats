@@ -25,6 +25,14 @@ const legacyRedirects = new Map([
   ["/commander/", "/contact/"]
 ]);
 
+const legacyAttachmentRedirects = new Map([
+  ["/20250721_103929/", "/boat-photos/"]
+]);
+
+const legacyMediaFiles = [
+  "/wp-content/uploads/2026/02/20250721_103929.mp4"
+];
+
 const publicFilesWithoutLegacyTourLinks = [
   "data/content.ts",
   "components/navigationConfig.ts",
@@ -162,7 +170,9 @@ function checkLegacyRedirectSources() {
     fail("public/_redirects: file is missing");
   }
 
-  for (const [from, to] of legacyRedirects) {
+  const allLegacyRedirects = new Map([...legacyRedirects, ...legacyAttachmentRedirects]);
+
+  for (const [from, to] of allLegacyRedirects) {
     const normalizedRule = `${from} ${to} 301`;
     if (!redirects.includes(normalizedRule)) {
       fail(`public/_redirects: missing redirect rule ${normalizedRule}`);
@@ -175,6 +185,20 @@ function checkLegacyRedirectSources() {
   assertIncludes("app/tours/private/page.tsx", privateLegacy, 'destination="/private-boat-tour-albania/"', "legacy private URL must redirect to the canonical private tour");
   assertNotIncludes("app/tours/private/page.tsx", privateLegacy, "TourDetailPage", "legacy private URL must not render the tour template");
   assertNotIncludes("app/tours/private/page.tsx", privateLegacy, "languageAlternates(", "legacy private URL must not advertise hreflang alternates");
+
+  for (const [from, to] of legacyAttachmentRedirects) {
+    const file = `app${from}page.tsx`;
+    if (!exists(file)) {
+      fail(`${file}: legacy media attachment URL must render a static noindex fallback`);
+      continue;
+    }
+
+    const content = read(file);
+    assertIncludes(file, content, "LegacyRedirectPage", "legacy media attachment URL must render a redirect page");
+    assertIncludes(file, content, "robots: { index: false, follow: true }", "legacy media attachment URL must be noindex");
+    assertIncludes(file, content, `canonical("${to}")`, `legacy media attachment URL must canonicalize to ${to}`);
+    assertIncludes(file, content, `destination="${to}"`, `legacy media attachment URL must redirect to ${to}`);
+  }
 }
 
 function checkPublicLinks() {
@@ -280,14 +304,32 @@ function checkExportedHtml() {
     assertNotIncludes(routeLabel, html, "NEXT_REDIRECT", "canonical route must not be a Next redirect shell");
   }
 
-  for (const [from, to] of legacyRedirects) {
+  const allLegacyRedirects = new Map([...legacyRedirects, ...legacyAttachmentRedirects]);
+
+  for (const [from, to] of allLegacyRedirects) {
     const file = htmlPathForRoute(from);
-    if (!fs.existsSync(file)) continue;
+    if (!fs.existsSync(file)) {
+      fail(`${relative(file)}: exported legacy route is missing`);
+      continue;
+    }
     const html = fs.readFileSync(file, "utf8");
     const routeLabel = relative(file);
     assertIncludes(routeLabel, html, `noindex`, "legacy redirect page must be noindex");
     assertIncludes(routeLabel, html, `rel="canonical" href="${canonicalUrl(to)}"`, `legacy redirect page must canonicalize to ${to}`);
     assertIncludes(routeLabel, html, `content="0;url=${to}"`, `legacy redirect page must meta-refresh to ${to}`);
+  }
+
+  for (const mediaPath of legacyMediaFiles) {
+    const file = path.join(outDir, mediaPath.replace(/^\//, ""));
+    if (!fs.existsSync(file)) {
+      fail(`${relative(file)}: exported legacy media file is missing`);
+      continue;
+    }
+
+    const size = fs.statSync(file).size;
+    if (size < 1024) {
+      fail(`${relative(file)}: exported legacy media file looks empty (${size} bytes)`);
+    }
   }
 
   for (const file of htmlFiles) {
@@ -328,5 +370,7 @@ if (issues.length) {
 }
 
 console.log(
-  `qa-url-canonicals: OK (${canonicalTourPaths.length} canonical tours, ${legacyRedirects.size} legacy redirects checked)`
+  `qa-url-canonicals: OK (${canonicalTourPaths.length} canonical tours, ${
+    legacyRedirects.size + legacyAttachmentRedirects.size
+  } legacy redirects checked, ${legacyMediaFiles.length} legacy media files checked)`
 );

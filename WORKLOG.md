@@ -152,3 +152,10 @@ The site is a static, image-led booking website with clear prices, a one-minute 
 - Tightened homepage, tours, destination, FAQ, contact and photo metadata so the exact non-accented query and route-specific variants appear naturally in titles and descriptions.
 - Expanded structured data with reusable LocalBusiness, WebSite, WebPage, TouristTrip, CollectionPage, ItemList, Offer and breadcrumb schema across home, tours and detail pages.
 - Strengthened visible copy and internal CTA labels around route, price, local skipper, WhatsApp booking, Gjipe, Grama Bay, Blue Cave and private Dhermi boat tours without adding thin SEO-only pages.
+
+## 2026-05-25 Search Console 404 Fix
+
+- Reproduced the new Search Console 404 pattern against the live site: old WordPress attachment `/20250721_103929/` and media file `/wp-content/uploads/2026/02/20250721_103929.mp4` returned 404.
+- Added a static noindex fallback for `/20250721_103929/` that canonicalizes and redirects visitors to `/boat-photos/`.
+- Restored the old MP4 upload path as a static file so crawlers and users no longer hit a missing resource while the old WordPress result drops out of search.
+- Extended URL canonical QA to check legacy media attachment routes and restored media files after every export.
