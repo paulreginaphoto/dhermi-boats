@@ -38,6 +38,9 @@ const excludedSitemapUrls = [
   "/mon-compte/"
 ];
 
+const googleAdsId = "AW-18050141389";
+const googleAdsContactSendTo = "AW-18050141389/5E84COKT_5EcEM2Z_Z5D";
+
 function fail(message) {
   failures.push(message);
 }
@@ -62,6 +65,10 @@ function stripTags(html) {
     .replace(/<[^>]+>/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function extractHead(html) {
+  return html.match(/<head[^>]*>([\s\S]*?)<\/head>/i)?.[1] || "";
 }
 
 function extractJsonLd(html) {
@@ -98,7 +105,6 @@ if (!exists("components/Analytics.tsx")) {
 } else {
   const analytics = read("components/Analytics.tsx");
   for (const snippet of [
-    "NEXT_PUBLIC_GA_MEASUREMENT_ID",
     "NEXT_PUBLIC_GTM_ID",
     "dataLayer",
     "data-analytics-event",
@@ -106,6 +112,17 @@ if (!exists("components/Analytics.tsx")) {
   ]) {
     if (!analytics.includes(snippet)) fail(`components/Analytics.tsx missing ${snippet}`);
   }
+}
+
+const staticExportSource = read("scripts/strip-next-runtime.mjs");
+for (const snippet of [
+  "NEXT_PUBLIC_GA_MEASUREMENT_ID",
+  googleAdsId,
+  googleAdsContactSendTo,
+  `gtag/js?id=\${googleAdsId}`,
+  "google-ads-contact-conversion"
+]) {
+  if (!staticExportSource.includes(snippet)) fail(`scripts/strip-next-runtime.mjs missing ${snippet}`);
 }
 
 const layout = read("app/layout.tsx");
@@ -125,6 +142,7 @@ if (fs.existsSync(outDir)) {
     }
 
     const html = fs.readFileSync(filePath, "utf8");
+    const head = extractHead(html);
     const title = html.match(/<title>([^<]+)<\/title>/i)?.[1]?.trim();
     const description = html.match(/<meta name="description" content="([^"]+)"/i)?.[1]?.trim();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
@@ -137,6 +155,19 @@ if (fs.existsSync(outDir)) {
     if (title) titles.set(title, routePath);
     if (description) descriptions.set(description, routePath);
     if (!canonical?.endsWith(routePath)) fail(`${routePath} canonical mismatch: ${canonical || "missing"}`);
+    if (!head.includes(`https://www.googletagmanager.com/gtag/js?id=${googleAdsId}`)) {
+      fail(`${routePath} missing Google Ads tag in <head>`);
+    }
+    if (!head.includes(`gtag("config",${JSON.stringify(googleAdsId)}`)) {
+      fail(`${routePath} missing Google Ads config in <head>`);
+    }
+    if (routePath === "/contact/") {
+      if (!head.includes(googleAdsContactSendTo) || !head.includes(`gtag("event","conversion"`)) {
+        fail("/contact/ missing Contact conversion event snippet in <head>");
+      }
+    } else if (head.includes(googleAdsContactSendTo)) {
+      fail(`${routePath} should not include the Contact conversion event snippet`);
+    }
     for (const lang of hreflangs) {
       if (!["en", "fr", "sq", "x-default"].includes(lang)) fail(`${routePath} exposes unsupported hreflang ${lang}`);
     }

@@ -67,6 +67,8 @@ Commercial facts were not changed: prices, tour durations, routes, phone, WhatsA
 
 - GA4 support: PASS, uses `NEXT_PUBLIC_GA_MEASUREMENT_ID` when configured.
 - GTM support: PASS, uses `NEXT_PUBLIC_GTM_ID` when configured.
+- Google Ads tag: PASS, `AW-18050141389` is injected in the `<head>` of exported HTML pages.
+- Google Ads contact conversion: PASS, `/contact/` includes the `AW-18050141389/5E84COKT_5EcEM2Z_Z5D` event snippet in `<head>`.
 - No analytics ID invented: PASS.
 - `dataLayer` click events: PASS, emitted for tracked links even before GA/GTM is configured.
 - WhatsApp click tracking: PASS with `whatsapp_click_{tour}_{language}_{placement}` event names.
@@ -108,7 +110,7 @@ Final command results:
 | `npm run typecheck` | PASS - TypeScript clean. |
 | `npm run content:guard` | PASS - content, booking, and static links protected. |
 | `npm run test:date-format` | PASS - booking date format test clean. |
-| `npm run build` | PASS - translations generated, Next static export built, 27 pages generated, runtime stripped from 25 HTML files. |
+| `npm run build` | PASS - translations generated, Next static export built, 27 pages generated, runtime stripped from 25 HTML files, Google Ads injected into 25 HTML files. |
 | `npm run qa:final-release` | PASS - 12 public URLs checked. |
 | `npm run qa:conversion-ux` | PASS - CTA and conversion UX guard clean. |
 | `npm run qa:i18n-links` | PASS - 25 HTML files, 480 used i18n keys, 545 translation keys. |
@@ -126,6 +128,8 @@ Local static export served from `out/` and checked in Chromium:
 | Language variants | PASS - `?dlang=fr`, `?dlang=sq`, and `?dlang=al` kept the same template; `al` normalized to `sq`. |
 | French formality | PASS - checked French variants for informal `tu/ton/ta/tes/toi`; none found. |
 | Analytics click event | PASS - synthetic WhatsApp clicks pushed the expected event into `dataLayer`. |
+| Google Ads head tag | PASS - every checked public URL includes `AW-18050141389` in `<head>`. |
+| Google Ads contact conversion | PASS - only `/contact/` includes the `AW-18050141389/5E84COKT_5EcEM2Z_Z5D` conversion snippet. |
 
 ## Remaining Manual Checks
 
