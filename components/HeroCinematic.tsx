@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowRight, CalendarDays, MapPin, MessageCircle, ShieldCheck, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, Euro, Languages, MessageCircle, ShieldCheck, Star, Users } from "lucide-react";
 import type { CSSProperties, ComponentType } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
-import { CompareToursText, HeroWhatsappText } from "@/components/MicroCopy";
+import { CompareToursText } from "@/components/MicroCopy";
 import { TrustBadges } from "@/components/TrustBadges";
 import { primaryWhatsappHref, reviews } from "@/data/content";
 import { assetPath } from "@/lib/site";
@@ -14,11 +14,11 @@ const enText = (key: string) => translations.en[key] ?? "";
 type HeroFactIcon = ComponentType<{ className?: string; strokeWidth?: number; "aria-hidden"?: boolean }>;
 
 const heroFacts: Array<[HeroFactIcon, string, string, string, string]> = [
-  [ShieldCheck, "hero.fact.reviews", enText("hero.fact.reviews"), "hero.fact.languages", enText("hero.fact.languages")],
-  [Users, "hero.fact.groupSize", enText("hero.fact.groupSize"), "hero.fact.capacity", enText("hero.fact.capacity")],
-  [MapPin, "hero.fact.departure", enText("hero.fact.departure"), "hero.fact.local", enText("hero.fact.local")],
-  [CalendarDays, "hero.fact.departures", enText("hero.fact.departures"), "hero.fact.easy", enText("hero.fact.easy")],
-  [MapPin, "hero.fact.weather", enText("hero.fact.weather"), "hero.fact.reply", enText("hero.fact.reply")]
+  [Euro, "hero.fact.price", "Starting price", "hero.fact.priceValue", "From 35 €"],
+  [Users, "hero.fact.groupSize", enText("hero.fact.groupSize"), "hero.fact.capacity", "Max 15 guests"],
+  [Languages, "hero.fact.languages", "Languages", "hero.fact.languagesValue", "French, English, Albanian"],
+  [CalendarDays, "hero.fact.departures", enText("hero.fact.departures"), "hero.fact.easy", "Fast WhatsApp availability"],
+  [ShieldCheck, "hero.fact.weather", enText("hero.fact.weather"), "hero.fact.reply", "Sea checked before departure"]
 ];
 
 const featuredReviews = reviews.slice(0, 2);
@@ -65,19 +65,22 @@ export function HeroCinematic() {
         <div className="absolute inset-0 photo-overlay-dark-strong" />
       </div>
 
-      <div className="relative mx-auto grid min-h-[calc(76svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[1.08fr_0.72fr] xl:grid-cols-[1.12fr_0.72fr]">
+      <div className="relative mx-auto grid min-h-[calc(80svh-5rem)] max-w-site items-center gap-10 px-5 py-10 md:min-h-[calc(100svh-8rem)] md:px-8 md:py-16 lg:grid-cols-[1.05fr_0.75fr] xl:grid-cols-[1.15fr_0.72fr]">
         <div className="max-w-4xl">
-          <h1 className="photo-title max-w-4xl break-words font-serif text-3xl font-medium leading-[1.04] text-pearl sm:text-5xl md:text-[3.3rem] lg:text-[3.45rem] xl:text-[3.65rem]">
-            <LocalizedText id="hero.title">{enText("hero.title")}</LocalizedText>
+          <p className="photo-label mb-4 text-xs font-extrabold uppercase tracking-[0.24em] text-sand">
+            2026 Dhërmi high season bookings are open
+          </p>
+          <h1 className="photo-title max-w-4xl break-words font-serif text-4xl font-medium leading-[1.02] text-pearl sm:text-6xl md:text-[4.15rem] lg:text-[4.45rem] xl:text-[4.85rem]">
+            Book today&apos;s Dhërmi boat trip to Gjipe, Grama Bay &amp; Blue Cave
           </h1>
           <p className="photo-copy mt-6 max-w-xl text-lg leading-8 text-pearl/96 md:text-xl">
-            <LocalizedText id="hero.text">{enText("hero.text")}</LocalizedText>
+            Small-group and private boat tours with Isuf, a local French-speaking skipper. Clear prices, fast WhatsApp booking, routes adapted to the sea.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             {heroFacts.map(([, , , , value], index) => (
               <span
-                key={`hero-proof-${index}`}
-                className="rounded-full border border-white/18 bg-white/12 px-3 py-2 text-xs font-bold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur"
+              key={`hero-proof-${index}`}
+                className="rounded-full border border-white/18 bg-white/14 px-3 py-2 text-xs font-extrabold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur"
               >
                 <LocalizedText id={`hero.trust.${index}`}>{value}</LocalizedText>
               </span>
@@ -85,7 +88,7 @@ export function HeroCinematic() {
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="home_hero">
-              <HeroWhatsappText />
+              Check availability now
             </ButtonLink>
             <ButtonLink href="#compare-tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md hover:bg-white/18" analyticsEvent="hero_cta_click">
               <CompareToursText />
@@ -97,15 +100,15 @@ export function HeroCinematic() {
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
             <LocalizedText id="hero.booking.label">{enText("hero.booking.label")}</LocalizedText>
           </p>
-          <h2 className="mt-3 font-serif text-3xl font-medium">
-            <LocalizedText id="hero.booking.title">{enText("hero.booking.title")}</LocalizedText>
+          <h2 className="mt-3 font-serif text-4xl font-medium leading-tight">
+            Send your date. Get the best route for today&apos;s sea.
           </h2>
           <div className="mt-5 rounded-md border border-white/20 bg-white/10 p-4">
             <p className="text-xs font-bold uppercase tracking-[0.2em] text-sand">
-              <LocalizedText id="section.why.title">{enText("section.why.title")}</LocalizedText>
+              French-speaking local skipper
             </p>
             <p className="mt-2 text-sm leading-7 text-pearl/90">
-              <LocalizedText id="section.skipper.text">{enText("section.skipper.text")}</LocalizedText>
+              Isuf confirms meeting point, availability, weather safety and the route directly on WhatsApp.
             </p>
             <div className="mt-4">
               <TrustBadges />
@@ -114,7 +117,7 @@ export function HeroCinematic() {
           <div className="mt-4 grid gap-3">
             {featuredReviews.map((review) => (
               <blockquote key={review.name} className="rounded-md bg-ink/70 p-3 text-sm leading-7 text-pearl/88">
-                <span aria-hidden>★★★★★</span>
+                <Star className="mb-2 h-4 w-4 fill-sand text-sand" aria-hidden strokeWidth={1.75} />
                 <span aria-hidden>&quot;</span>
                 <span>{review.text}</span>
                 <span aria-hidden>&quot;</span>
@@ -142,7 +145,7 @@ export function HeroCinematic() {
             ))}
           </div>
           <ButtonLink href="#book" icon={ArrowRight} variant="dark" className="mt-6 w-full" analyticsEvent="hero_cta_click">
-            <LocalizedText id="hero.booking.cta">{enText("hero.booking.cta")}</LocalizedText>
+            Choose my tour in one minute
           </ButtonLink>
         </aside>
       </div>

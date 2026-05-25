@@ -8,16 +8,19 @@ import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { DestinationCard } from "@/components/DestinationCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
+import { HighSeasonOfferLadder } from "@/components/HighSeasonOfferLadder";
 import { HeroCinematic } from "@/components/HeroCinematic";
 import { MotionReveal } from "@/components/MotionReveal";
 import { LazyOneMinuteBooking } from "@/components/LazyOneMinuteBooking";
 import { ReviewCard } from "@/components/ReviewCard";
 import { SectionHeading } from "@/components/SectionHeading";
+import { SeasonAvailabilityStrip } from "@/components/SeasonAvailabilityStrip";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { SocialFeed } from "@/components/SocialFeed";
 import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { VideoFeature } from "@/components/VideoFeature";
+import { WhyBookLocal } from "@/components/WhyBookLocal";
 import { TourDetailsText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { destinations, faqs, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
@@ -43,6 +46,8 @@ export default function HomePage() {
       <SEOJsonLd data={[homePageSchema(), ...tours.map((tour) => touristTripSchema(tour)), faqSchema(faqs)]} />
       <HeroCinematic />
 
+      <SeasonAvailabilityStrip />
+
       <ArrivalComfortBar />
 
       <ConversionTrustBlock />
@@ -50,6 +55,8 @@ export default function HomePage() {
       <TourComparison />
 
       <LazyOneMinuteBooking />
+
+      <HighSeasonOfferLadder />
 
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">
@@ -156,6 +163,8 @@ export default function HomePage() {
       </section>
 
       <SocialFeed />
+
+      <WhyBookLocal />
 
       <section className="below-fold bg-pearl py-16 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
