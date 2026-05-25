@@ -1,18 +1,17 @@
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { LocalizedText } from "@/components/LocalizedText";
 import { MobileNav } from "@/components/MobileNav";
-import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
+import { navKeyByLabel } from "@/components/navigationConfig";
 
 export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-ink/10 bg-pearl/90 backdrop-blur-xl">
       <div className="relative mx-auto flex h-20 max-w-site items-center justify-between gap-2 px-2 sm:gap-3 sm:px-4 md:px-8">
-        <Link className="flex min-h-11 min-w-0 flex-1 items-center leading-none lg:flex-none" href="/" aria-label="Dhermi Boat home" prefetch={false}>
+        <Link className="flex min-h-11 min-w-0 flex-1 items-center leading-none lg:flex-none" href="/" prefetch={false}>
           <span className="flex min-w-0 flex-col leading-none">
             <span className="truncate whitespace-nowrap font-serif text-[0.95rem] font-semibold tracking-wide text-ink min-[360px]:text-base sm:text-2xl">
               Dhermi Boat
@@ -25,15 +24,13 @@ export function Header() {
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main navigation">
           {navItems.map((item) => (
-            <ActiveNavLink
+            <a
               key={item.href}
-              activeClassName="bg-turquoise-soft text-ink shadow-[inset_0_0_0_1px_rgba(16,34,45,0.06)]"
-              activePaths={navActivePathsByLabel[item.label]}
               className="rounded-full px-3 py-2 text-sm font-semibold text-ink-soft transition hover:bg-white/70 hover:text-ink"
               href={item.href}
             >
               <LocalizedText id={navKeyByLabel[item.label] ?? item.label}>{item.label}</LocalizedText>
-            </ActiveNavLink>
+            </a>
           ))}
         </nav>
 

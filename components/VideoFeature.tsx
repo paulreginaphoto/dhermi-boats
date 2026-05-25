@@ -1,7 +1,6 @@
 import { assetPath } from "@/lib/site";
 
 const videoSrc = assetPath("/videos/dhermi-sea-moments.mp4");
-const posterSrc = assetPath("/images/video-sea-cave-poster-small.webp");
 
 export function VideoFeature() {
   return (
@@ -13,7 +12,6 @@ export function VideoFeature() {
         loop
         muted
         playsInline
-        poster={posterSrc}
         preload="none"
       >
         <source src={videoSrc} type="video/mp4" />

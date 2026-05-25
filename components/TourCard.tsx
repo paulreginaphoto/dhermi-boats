@@ -13,7 +13,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
 
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-lg border border-ink/8 bg-pearl/92 shadow-sm transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft">
-      <a className="block" href={tour.href} aria-label={`View ${tour.shortTitle}`}>
+      <a className="block" href={tour.href}>
         <div className="relative aspect-[4/3] overflow-hidden bg-sand">
           <Image
             src={tour.cardImage ?? tour.image}

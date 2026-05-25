@@ -851,24 +851,24 @@ function checkMobileHeaderControls(filePath, content) {
   }
 
   if (normalizedPath.endsWith("components/MobileNav.tsx")) {
-    if (content.includes("<details")) {
-      addIssue(
-        filePath,
-        lineNumberForIndex(content, content.indexOf("<details")),
-        "Le menu mobile doit être piloté par un bouton avec état React, pas par details/summary fragile.",
-        "<details"
-      );
-    }
-
-    for (const snippet of ["useState", "aria-expanded={isOpen}", "setIsOpen(false)"]) {
+    for (const snippet of ["<details", "<summary", "aria-label=\"Navigation menu\"", "group-open:hidden", "group-open:block"]) {
       if (!content.includes(snippet)) {
         addIssue(
           filePath,
           1,
-          "Le menu mobile doit exposer un état ouvert/fermé fiable et se refermer après action.",
+          "Le menu mobile doit rester natif, accessible et sans hydratation React pour préserver PageSpeed.",
           snippet
         );
       }
+    }
+
+    if (content.includes("\"use client\"") || content.includes("useState")) {
+      addIssue(
+        filePath,
+        1,
+        "Le menu mobile ne doit pas réintroduire de JavaScript client dans l'en-tête.",
+        "use client / useState"
+      );
     }
   }
 }

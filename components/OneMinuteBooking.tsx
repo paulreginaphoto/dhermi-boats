@@ -12,6 +12,7 @@ const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as co
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
+const dateDisplayFormat = "DD MM YYYY";
 
 const capacityByTourId = {
   gjipe: 15,
@@ -509,16 +510,28 @@ export function OneMinuteBooking() {
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-date">
                   <LocalizedText id="quick.date">Date</LocalizedText>
                 </label>
-                <div className="relative">
+                <div
+                  className={[
+                    "relative h-12 rounded-md border bg-white transition focus-within:border-ink",
+                    errors.date ? "border-bronze" : "border-ink/12"
+                  ].join(" ")}
+                >
                   <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
+                  <span
+                    aria-hidden
+                    className={[
+                      "pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-base font-semibold",
+                      shortBookingDate ? "text-ink" : "text-ink-soft"
+                    ].join(" ")}
+                  >
+                    {shortBookingDate || dateDisplayFormat}
+                  </span>
                   <input
                     id="quick-date"
+                    aria-label={`${labels.date} ${dateDisplayFormat}`}
                     aria-describedby={errors.date ? "quick-date-error" : undefined}
                     aria-invalid={errors.date || undefined}
-                    className={[
-                      "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
-                      errors.date ? "border-bronze" : "border-ink/12"
-                    ].join(" ")}
+                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
                     name="Date"
                     type="date"
                     min={minimumDate || undefined}
@@ -534,11 +547,9 @@ export function OneMinuteBooking() {
                     {messages.date}
                   </p>
                 ) : null}
-                {shortBookingDate ? (
-                  <p className="text-xs font-semibold text-ink-soft" aria-live="polite">
-                    {shortBookingDate} · {formattedBookingDate}
-                  </p>
-                ) : null}
+                <p className="text-xs font-semibold text-ink-soft" aria-live="polite">
+                  {shortBookingDate || dateDisplayFormat}
+                </p>
               </div>
 
               <div className="grid gap-2">

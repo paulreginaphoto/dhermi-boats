@@ -9,7 +9,7 @@ import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryGrid } from "@/components/GalleryGrid";
 import { HeroCinematic } from "@/components/HeroCinematic";
 import { MotionReveal } from "@/components/MotionReveal";
-import { OneMinuteBooking } from "@/components/OneMinuteBooking";
+import { LazyOneMinuteBooking } from "@/components/LazyOneMinuteBooking";
 import { ReviewCard } from "@/components/ReviewCard";
 import { SectionHeading } from "@/components/SectionHeading";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -41,7 +41,7 @@ export default function HomePage() {
 
       <TourComparison />
 
-      <OneMinuteBooking />
+      <LazyOneMinuteBooking />
 
       <section className="bg-pearl py-16 md:py-24" id="tours">
         <div className="site-band">

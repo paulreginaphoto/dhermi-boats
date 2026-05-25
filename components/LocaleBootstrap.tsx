@@ -2,7 +2,6 @@ import { basePath } from "@/lib/site";
 import { whatsappNumber } from "@/lib/site";
 import { defaultLocale, locales } from "@/lib/i18n";
 import { whatsappMessages } from "@/lib/whatsappMessages";
-import Script from "next/script";
 
 const supportedLocaleSet = JSON.stringify(locales);
 const bootstrapBasePath = JSON.stringify(basePath || "");
@@ -186,9 +185,8 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
 export function LocaleBootstrap() {
   return (
-    <Script
+    <script
       id="dhermi-locale-bootstrap"
-      strategy="afterInteractive"
       dangerouslySetInnerHTML={{
         __html: toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages)
       }}

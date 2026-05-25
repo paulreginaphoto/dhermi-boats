@@ -21,7 +21,7 @@ export function ReviewCard({ review }: { review: Review }) {
         <p className="font-semibold text-ink">{review.name}</p>
         <p className="mt-1 text-sm text-ink-soft">{review.detail}</p>
         <a
-          className="mt-4 inline-flex min-h-10 items-center text-sm font-semibold text-turquoise transition hover:text-ink"
+          className="mt-4 inline-flex min-h-10 items-center text-sm font-semibold text-ink transition hover:text-turquoise"
           href={googleMapsUrl}
           rel="noreferrer"
           target="_blank"

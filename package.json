@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "node ./scripts/build-translations.mjs && next build",
+    "build": "node ./scripts/build-translations.mjs && next build && node ./scripts/strip-next-runtime.mjs",
     "export": "npm run build",
     "test:date-format": "node ./scripts/booking-date-format.test.mjs",
     "translations": "node ./scripts/build-translations.mjs",

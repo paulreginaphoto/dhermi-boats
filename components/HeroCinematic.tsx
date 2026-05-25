@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { ArrowRight, CalendarDays, MapPin, MessageCircle, ShieldCheck, Star, Users } from "lucide-react";
+import type { CSSProperties } from "react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
@@ -22,11 +23,22 @@ const heroProofs = [
   "Routes adapted to sea conditions"
 ];
 
+const mobileHeroTiles = Array.from({ length: 12 }, (_, index) => index);
+
 export function HeroCinematic() {
   return (
     <section className="relative overflow-hidden bg-limestone text-pearl">
       <div className="absolute inset-0">
-        <picture className="block h-full w-full">
+        <div
+          className="hero-mobile-backdrop sm:hidden"
+          aria-hidden
+          style={{ "--hero-mobile-image": `url("${assetPath("/images/hero-riviera-mobile-lcp.avif")}")` } as CSSProperties}
+        >
+          {mobileHeroTiles.map((tile) => (
+            <span key={tile} className="hero-mobile-tile" />
+          ))}
+        </div>
+        <picture className="hidden h-full w-full sm:block">
           <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile-lcp.avif")} type="image/avif" />
           <source media="(max-width: 640px)" srcSet={assetPath("/images/hero-riviera-mobile.webp")} type="image/webp" />
           <source srcSet={assetPath("/images/hero-riviera-tablet-lcp.avif")} type="image/avif" />
