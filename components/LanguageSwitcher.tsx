@@ -23,15 +23,12 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
           <a
             key={item}
             href={`?dlang=${item}`}
-            aria-labelledby={`${baseId}-language-option-label-${item}`}
+            aria-label={`${localeLabels[item]} - ${localeAriaNames[item]}`}
             data-analytics-event="language_switch_click"
             data-locale={item}
             data-locale-switcher
             className="language-option"
           >
-            <span id={`${baseId}-language-option-label-${item}`} className="sr-only">
-              <LocalizedText id="a11y.switchLanguage">{enText("a11y.switchLanguage")}</LocalizedText> {localeAriaNames[item]}
-            </span>
             <span>{localeLabels[item]}</span>
           </a>
         ))}

@@ -20,7 +20,7 @@ export default function DhermiToGramaBayBoatPage() {
       image={gramaTour.image}
       primaryTourId="grama"
       bullets={[
-        "Best for guests who want more than a short swim stop.",
+        "Choose this for guests who want more than a short swim stop.",
         "Includes the strongest destination mix: Karaburun, Blue Cave and Grama Bay.",
         "Availability and cave access depend on the sea, so WhatsApp confirmation matters.",
         "A strong upgrade from the 35 € Gjipe route for guests with more time."

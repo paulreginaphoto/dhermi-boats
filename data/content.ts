@@ -74,14 +74,14 @@ export const tours: Tour[] = [
     offerTier: "bestSeller",
     duration: "1h30",
     price: "35 € / adult • 20 € / child (5-10 years)",
-    capacity: "MAX 15 GUESTS",
+    capacity: "Max 15 guests",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-gjipe.webp"),
     cardImage: assetPath("/images/tour-gjipe-card.avif"),
     imageAlt: "Boat approaching a clear beach cove with turquoise water near Dhërmi",
     href: sitePath("/gjipe-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Tour: Gjipe Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Questions: __",
-    bestFor: "Best value / short trip",
+    whatsappText: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Tour: Gjipe Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    bestFor: "Short trip, caves and swim stop",
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
     cardHighlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "30-minute swim stop"],
     included: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
@@ -112,14 +112,14 @@ export const tours: Tour[] = [
     offerTier: "premiumRoute",
     duration: "3h30",
     price: "75 € / adult • 50 € / child (5-10 years)",
-    capacity: "MAX 15 GUESTS",
+    capacity: "Max 15 guests",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-grama.webp"),
     cardImage: assetPath("/images/tour-grama-card.avif"),
     imageAlt: "Wide blue bay and rocky Karaburun coastline on a Dhermi boat tour",
     href: sitePath("/grama-bay-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Tour: Grama Bay Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Questions: __",
-    bestFor: "Most complete route",
+    whatsappText: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Tour: Grama Bay Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    bestFor: "Longest shared route and Blue Cave",
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
     cardHighlights: ["Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach"],
     included: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
@@ -150,14 +150,14 @@ export const tours: Tour[] = [
     offerTier: "private",
     duration: "Custom, minimum 2 hours",
     price: "200 € / hour per group (minimum 2 hours)",
-    capacity: "MAX 15 GUESTS",
+    capacity: "Max 15 guests",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-private.webp"),
     cardImage: assetPath("/images/tour-private-card.avif"),
     imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
     href: sitePath("/private-boat-tour-albania/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to plan a private boat tour. Tour: Private Boat Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Questions: __",
-    bestFor: "Families & groups",
+    whatsappText: "Hello Dhermi Boat, I'd like to plan a private boat tour. Tour: Private Boat Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    bestFor: "Families, friends and custom stops",
     highlights: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
     cardHighlights: ["Custom duration", "Custom itinerary", "Swimming stops", "1 drink included / person"],
     included: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
@@ -188,14 +188,14 @@ export const tours: Tour[] = [
     offerTier: "experience",
     duration: "Sunset timing",
     price: "From 120 € for 2 people",
-    capacity: "MAX 15 GUESTS",
+    capacity: "Max 15 guests",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-sunset.webp"),
     cardImage: assetPath("/images/tour-sunset-card.avif"),
     imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset tour. Tour: Sunset Private Tour / Date: __ / Adults: __ / Children: __ / Preferred time: sunset / Questions: __",
-    bestFor: "Couples",
+    whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset tour. Tour: Sunset Private Tour / Date: __ / Adults: __ / Children: __ / Preferred time: sunset / Language: __ / Questions: __",
+    bestFor: "Couples and quiet evenings",
     highlights: ["Around Dhërmi"],
     cardHighlights: ["Romantic sunset cruise", "Around Dhërmi", "Private cruise"],
     included: ["Around Dhërmi", "Romantic sunset cruise around Dhërmi", "Private timing confirmed on WhatsApp"],
@@ -226,13 +226,13 @@ export const tours: Tour[] = [
     offerTier: "experience",
     duration: "5 AM to 8 AM",
     price: "100 € / hour per group (max 5 people)",
-    capacity: "MAX 5 GUESTS",
+    capacity: "Max 5 guests",
     departure: "Dhërmi area",
     image: assetPath("/images/tour-fishing.webp"),
     cardImage: assetPath("/images/tour-fishing-card.avif"),
     imageAlt: "Boat helm facing the Dhërmi coastline on calm water",
     href: sitePath("/morning-fishing-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about the morning fishing tour. Tour: Morning Fishing Tour / Date: __ / Adults: __ / Children: __ / Preferred time: 5 AM to 8 AM / Questions: __",
+    whatsappText: "Hello Dhermi Boat, I'd like to ask about the morning fishing tour. Tour: Morning Fishing Tour / Date: __ / Adults: __ / Children: __ / Preferred time: 5 AM to 8 AM / Language: __ / Questions: __",
     bestFor: "Quiet sunrise fishing",
     highlights: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"],
     cardHighlights: ["5 AM to 8 AM", "2 fishing rods included", "Around Dhërmi", "Max 5 people"],
@@ -294,11 +294,11 @@ export const destinations: Destination[] = [
 ];
 
 export const tourComparison: TourComparisonItem[] = [
-  { angle: "Best value / short trip", tourId: "gjipe", duration: "1h30", price: "from €35" },
+  { angle: "Best value", tourId: "gjipe", duration: "1h30", price: "from €35" },
   { angle: "Most complete route", tourId: "grama", duration: "3h30", price: "from €75" },
-  { angle: "Families and groups", tourId: "private", duration: "custom", price: "€200/hour" },
-  { angle: "Couples at sunset", tourId: "sunset", duration: "sunset", price: "from €120" },
-  { angle: "Quiet early trip", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
+  { angle: "Private option", tourId: "private", duration: "custom", price: "€200/hour" },
+  { angle: "Sunset private", tourId: "sunset", duration: "sunset", price: "from €120" },
+  { angle: "Morning fishing", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
 ];
 
 export const gallery = [
@@ -350,23 +350,23 @@ export const reviews = [
 ] satisfies Review[];
 
 export const whyChooseUs = [
-  "Experienced local skipper, passionate about Albanian history, culture and landscapes",
-  "Fluent in Albanian and French, with good knowledge of English",
-  "Routes adjusted with the skipper",
-  "Simple WhatsApp coordination before departure"
+  "Local skipper from the Dhërmi area",
+  "Albanian and French, with good English for guest communication",
+  "Routes adjusted with the skipper for sea conditions",
+  "Meeting point and timing confirmed on WhatsApp"
 ];
 
 export const skipper = {
   name: "Isuf",
   image: assetPath("/images/gallery-blue-cove-boat.webp"),
   imageAlt: "Dhermi Boat in a turquoise cove near Dhërmi",
-  text: "Isuf is a local skipper who loves sharing Albanian history, culture and landscapes. He speaks Albanian and French, with good English for guest communication."
+  text: "Isuf is a local skipper from the Dhërmi area. He keeps the booking simple, confirms the meeting point on WhatsApp and adapts the route to the sea."
 };
 
 export const usefulInformation = [
   "Departure from the Dhërmi area",
-  "Small boat, capacity depends on the tour",
-  "Safety-first routes confirmed by the skipper"
+  "Small groups, up to 15 guests depending on the tour",
+  "Routes confirmed by the skipper after checking sea conditions"
 ];
 
 export const faqs = [
@@ -447,9 +447,9 @@ export const faqs = [
 export const trustBadges = [
   "5-star guest reviews",
   "Small groups, max 15 guests",
-  "Departure from Dhërmi area",
-  "Book on WhatsApp in 1 minute",
-  "Routes adapted to sea conditions"
+  "Local skipper",
+  "Daily departures",
+  "Sea-condition routes"
 ];
 
 export const primaryWhatsappHref = whatsappUrl(defaultBookingMessage);

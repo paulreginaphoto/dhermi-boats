@@ -18,7 +18,7 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
       image={heroImage}
       primaryTourId="private"
       bullets={[
-        "Best for French families, couples and groups who want clear communication.",
+        "Choose this for French families, couples and groups who want clear communication.",
         "The skipper confirms route, timing and sea conditions directly.",
         "Private tours are ideal if your group wants a calmer rhythm.",
         "WhatsApp makes the booking simple before you arrive at the beach."

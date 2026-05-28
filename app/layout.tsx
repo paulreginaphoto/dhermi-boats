@@ -18,11 +18,11 @@ const socialImageUrl = canonical("/images/hero-riviera.webp");
 export const metadata: Metadata = {
   metadataBase: new URL(canonicalOrigin),
   title: {
-    default: "Dhermi Boat Tours | Gjipe, Grama Bay & Private Trips",
+    default: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     template: "%s | Dhermi Boat"
   },
   description:
-    "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops. Small-group and private trips with a local skipper.",
+    "Book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Small groups, clear prices and WhatsApp booking with local skipper Isuf.",
   keywords: [
     "Dhermi boat tour",
     "Dhermi boat tours",
@@ -33,7 +33,8 @@ export const metadata: Metadata = {
     "Gjipe boat tour",
     "Blue Cave Albania",
     "Grama Bay tour",
-    "private boat Albania"
+    "private boat Albania",
+    "Albanian Riviera boat tour"
   ],
   alternates: {
     canonical: canonical("/"),
@@ -44,9 +45,9 @@ export const metadata: Metadata = {
     type: "website",
     url: canonical("/"),
     siteName: brandName,
-    title: "Dhermi Boat Tours",
+    title: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     description:
-      "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
+      "Small-group and private boat tours from Dhërmi with local skipper Isuf. Gjipe, Grama Bay, Blue Cave and sea-condition routes.",
     images: [
       {
         url: socialImageUrl,
@@ -58,8 +59,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhermi Boat Tours",
-    description: "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun stops.",
+    title: "Dhërmi Boat Tours",
+    description: "Boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave with local skipper Isuf.",
     images: [socialImageUrl]
   },
   icons: {
@@ -74,7 +75,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="pb-20 md:pb-0">
+      <body className="pb-24 md:pb-0">
         <a className="skip-link" href="#main-content">
           <LocalizedText id="a11y.skip">{translations.en["a11y.skip"] ?? "Skip to content"}</LocalizedText>
         </a>

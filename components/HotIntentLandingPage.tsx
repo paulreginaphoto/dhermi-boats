@@ -4,11 +4,14 @@ import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { HighSeasonOfferLadder } from "@/components/HighSeasonOfferLadder";
+import { LocalizedText } from "@/components/LocalizedText";
+import { TourDetailsText } from "@/components/MicroCopy";
 import { PageHero } from "@/components/PageHero";
 import { SeasonAvailabilityStrip } from "@/components/SeasonAvailabilityStrip";
 import { WhyBookLocal } from "@/components/WhyBookLocal";
 import { primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
+import { translations } from "@/lib/i18n";
 
 type LandingPageProps = {
   slug: string;
@@ -21,6 +24,8 @@ type LandingPageProps = {
   bullets: string[];
   primaryTourId?: string;
 };
+
+const enText = (key: string) => translations.en[key] ?? "";
 
 export function hotIntentMetadata({ slug, title, description }: Pick<LandingPageProps, "slug" | "title" | "description">): Metadata {
   return {
@@ -53,10 +58,10 @@ export function HotIntentLandingPage({
             whatsappKey="default"
             analyticsPlacement={`landing_${primaryTour.id}`}
           >
-            Check availability on WhatsApp
+            <LocalizedText id="cta.heroWhatsapp">{enText("cta.heroWhatsapp")}</LocalizedText>
           </ButtonLink>
           <ButtonLink href={primaryTour.href} icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
-            See {primaryTour.shortTitle}
+            <TourDetailsText />
           </ButtonLink>
         </div>
       </PageHero>
@@ -67,9 +72,11 @@ export function HotIntentLandingPage({
       <section className="bg-pearl py-14 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-bronze">Fast decision guide</p>
+            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-bronze">
+              <LocalizedText id="landing.guide.label">{enText("landing.guide.label")}</LocalizedText>
+            </p>
             <h2 className="mt-4 font-serif text-4xl font-medium leading-[1.04] text-ink md:text-5xl">
-              What to know before you book.
+              <LocalizedText id="landing.guide.title">{enText("landing.guide.title")}</LocalizedText>
             </h2>
           </div>
           <div className="grid gap-4 md:grid-cols-2">

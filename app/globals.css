@@ -286,6 +286,36 @@ section {
   stroke-width: 1.75;
 }
 
+[data-booking-tour-option][aria-pressed="true"] {
+  border-color: #10222d !important;
+  background: #10222d !important;
+  color: #fff9ef !important;
+}
+
+[data-booking-tour-option][aria-pressed="false"] {
+  border-color: rgb(16 34 45 / 0.1) !important;
+  background: rgb(247 244 235 / 0.7) !important;
+  color: #10222d !important;
+}
+
+[data-booking-tour-option][aria-pressed="true"] [data-booking-tour-price] {
+  color: #e5c37c !important;
+}
+
+[data-booking-tour-option][aria-pressed="false"] [data-booking-tour-price] {
+  color: #80654d !important;
+}
+
+[data-booking-tour-option][aria-pressed="true"] [data-booking-tour-dot] {
+  border-color: transparent !important;
+  background: #e5c37c !important;
+}
+
+[data-booking-tour-option][aria-pressed="false"] [data-booking-tour-dot] {
+  border: 1px solid rgb(16 34 45 / 0.25) !important;
+  background: #fff !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

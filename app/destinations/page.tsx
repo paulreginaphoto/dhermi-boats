@@ -11,8 +11,9 @@ import { PageHero } from "@/components/PageHero";
 import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { SectionHeading } from "@/components/SectionHeading";
 import { destinations, tours } from "@/data/content";
-import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 import { translations } from "@/lib/i18n";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour Destinations",
@@ -128,7 +129,7 @@ export default function DestinationsPage() {
                     </div>
                   </dl>
                   <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row">
-                    <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_card">
+                    <ButtonLink href={whatsappHrefForKey(tour.id as WhatsappMessageKey)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_card">
                       <LocalizedText id={insight.ctaKey}>{enText(insight.ctaKey)}</LocalizedText>
                     </ButtonLink>
                     <ButtonLink href={tour.href} variant="secondary" className="flex-1">

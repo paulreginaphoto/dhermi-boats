@@ -4,7 +4,7 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
-import { whatsappUrl } from "@/lib/site";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 import { TourDetailsText } from "@/components/MicroCopy";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { translations } from "@/lib/i18n";
@@ -37,6 +37,7 @@ export function TourComparison() {
               <article
                 key={item.tourId}
                 className="group flex min-h-[18rem] flex-col overflow-hidden rounded-lg border border-ink/10 bg-limestone/80 transition duration-300 hover:-translate-y-1 hover:bg-white hover:shadow-soft"
+                data-tour-card={tour.id}
               >
                 <div className="relative aspect-[4/3] overflow-hidden bg-sand">
                   <Image
@@ -121,7 +122,7 @@ export function TourComparison() {
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
-                      href={whatsappUrl(tour.whatsappText)}
+                      href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
                       rel="noreferrer"
                       target="_blank"
                       {...conversionAttrs({ tourId: tour.id, placement: "comparison_card" })}
@@ -129,7 +130,7 @@ export function TourComparison() {
                       <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />
                       <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                     </a>
-                    <a className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/15 px-3 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white" href={tour.href}>
+                    <a className="inline-flex min-h-10 items-center justify-center gap-2 rounded-md border border-ink/15 px-3 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white" data-analytics-event="tour_card_click" data-tour-id={tour.id} href={tour.href}>
                       <TourDetailsText />
                       <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={1.75} />
                     </a>

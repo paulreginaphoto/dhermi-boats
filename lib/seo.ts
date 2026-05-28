@@ -42,7 +42,7 @@ export function localBusinessSchema() {
     name: brandName,
     alternateName: ["Dhermi Boat Tours", "Dhermi boat tour operator"],
     description:
-      "Local Dhermi boat tour operator for Gjipe Beach, Grama Bay, Blue Cave, private boat trips, sunset cruises and morning fishing tours from the Dhërmi area.",
+      "Local Dhërmi boat tour operator for Gjipe Beach, Grama Bay, Blue Cave, private boat trips, sunset cruises and morning fishing tours from the Dhërmi area.",
     url: canonical("/"),
     telephone: phoneDisplay,
     email: emailAddress,
@@ -88,7 +88,7 @@ export function websiteSchema() {
     name: "Dhermi Boat Tours",
     alternateName: brandName,
     url: canonical("/"),
-    description: "Dhermi boat tour booking site for Gjipe, Grama Bay, Blue Cave and private boat trips.",
+    description: "Dhërmi boat tour booking site for Gjipe, Grama Bay, Blue Cave and private boat trips.",
     publisher: { "@id": businessId },
     inLanguage: ["en", "fr", "sq"]
   };
@@ -100,8 +100,8 @@ export function homePageSchema() {
     "@type": "WebPage",
     "@id": `${canonical("/")}#webpage`,
     url: canonical("/"),
-    name: "Dhermi Boat Tour",
-    description: "Compare and book Dhermi boat tours from Dhërmi to Gjipe, Grama Bay, Blue Cave and private routes.",
+    name: "Dhërmi Boat Tours to Gjipe, Grama Bay and Blue Cave",
+    description: "Compare and book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and private routes.",
     isPartOf: { "@id": websiteId },
     about: { "@id": businessId },
     mainEntity: { "@id": businessId }

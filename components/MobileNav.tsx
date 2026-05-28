@@ -13,6 +13,7 @@ export function MobileNav() {
         <LocalizedText id="a11y.mobileNavigation">{translations.en["a11y.mobileNavigation"] ?? ""}</LocalizedText>
       </span>
       <summary
+        aria-label="Navigation menu"
         aria-labelledby="mobile-navigation-label"
         className="inline-flex h-11 w-11 list-none items-center justify-center rounded-lg border border-ink/12 bg-pearl text-ink shadow-sm transition hover:border-ink/22 hover:bg-white active:translate-y-px [&::-webkit-details-marker]:hidden"
       >

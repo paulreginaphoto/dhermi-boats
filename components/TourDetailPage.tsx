@@ -10,10 +10,10 @@ import { IconFrame, type OutlineIconComponent } from "@/components/OutlineIcon";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import type { Tour } from "@/data/content";
-import { whatsappUrl } from "@/lib/site";
 import { breadcrumbSchema, faqSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
 import { translations } from "@/lib/i18n";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 export function TourDetailPage({ tour }: { tour: Tour }) {
   const translationBase = `tour.${tour.id}`;
@@ -52,7 +52,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_hero">
+          <ButtonLink href={whatsappHrefForKey(tour.id as WhatsappMessageKey)} icon={MessageCircle} variant="dark" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_hero">
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </ButtonLink>
           <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
@@ -170,7 +170,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
                 </div>
               ))}
             </dl>
-            <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} variant="dark" className="mt-6 w-full" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_panel">
+            <ButtonLink href={whatsappHrefForKey(tour.id as WhatsappMessageKey)} icon={MessageCircle} variant="dark" className="mt-6 w-full" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_panel">
               <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
             </ButtonLink>
             <p className="mt-4 text-sm leading-7 text-pearl/88">

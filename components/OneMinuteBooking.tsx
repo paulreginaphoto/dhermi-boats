@@ -7,7 +7,7 @@ import { tours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
 import { translations } from "@/lib/i18n";
 import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
-import { emailAddress, phoneDisplay, whatsappUrl } from "@/lib/site";
+import { emailAddress, phoneDisplay, whatsappNumber, whatsappUrl } from "@/lib/site";
 
 const selectableTours = tours.slice(0, 5);
 const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
@@ -54,6 +54,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     time: "Preferred time",
     adults: "Adults",
     children: "Children",
+    language: "Language",
     name: "Name",
     phone: "Phone",
     notes: "Questions"
@@ -64,6 +65,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     time: "Horaire souhaité",
     adults: "Adultes",
     children: "Enfants",
+    language: "Langue",
     name: "Nom",
     phone: "Téléphone",
     notes: "Questions"
@@ -74,6 +76,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     time: "Ora e preferuar",
     adults: "Të rritur",
     children: "Fëmijë",
+    language: "Gjuha",
     name: "Emri",
     phone: "Telefoni",
     notes: "Pyetje"
@@ -128,6 +131,12 @@ const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
   }
 };
 
+const localeMessageLabels: Record<FormLocale, string> = {
+  en: "English",
+  fr: "French",
+  sq: "Albanian"
+};
+
 const counterActionLabels: Record<FormLocale, { decrease: string; increase: string }> = {
   en: {
     decrease: "Decrease",
@@ -175,6 +184,344 @@ const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> =
     name: "shtoni emrin"
   }
 };
+
+function scriptJson(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+const staticBookingEnhancerConfig = {
+  whatsappNumber,
+  emailAddress,
+  storageKey: bookingDraftStorageKey,
+  messageIntro,
+  fieldLabels,
+  requiredFieldPrompts,
+  tourOptionLabels,
+  timeOptionLabels,
+  localeMessageLabels,
+  summaryLabels: {
+    en: {
+      pending: translations.en["quick.summary.pending"] ?? "Ready after date and name",
+      ready: translations.en["quick.summary.ready"] ?? "Ready to send"
+    },
+    fr: {
+      pending: translations.fr["quick.summary.pending"] ?? "Prêt après la date et le nom",
+      ready: translations.fr["quick.summary.ready"] ?? "Prêt à envoyer"
+    },
+    sq: {
+      pending: translations.sq["quick.summary.pending"] ?? "Gati pas dates dhe emrit",
+      ready: translations.sq["quick.summary.ready"] ?? "Gati per dergim"
+    }
+  },
+  counterLabels: counterActionLabels,
+  flexibleTimeOptions,
+  fixedTimeByTourId,
+  capacityByTourId,
+  defaultTourId: selectableTours[0]?.id ?? "gjipe"
+};
+
+const staticBookingEnhancerScript = String.raw`
+(function () {
+  var config = ${scriptJson(staticBookingEnhancerConfig)};
+
+  function normalizeLocale(value) {
+    if (!value) return "";
+    var normalized = String(value).toLowerCase().replace("_", "-");
+    if (normalized === "al" || normalized === "sq-al") return "sq";
+    var primary = normalized.split("-")[0];
+    return primary === "al" ? "sq" : primary;
+  }
+
+  function isSupportedLocale(value) {
+    return value === "fr" || value === "sq" || value === "en";
+  }
+
+  function readLocale() {
+    try {
+      var params = new URL(window.location.href).searchParams;
+      var fromUrl = normalizeLocale(params.get("dlang") || params.get("lang"));
+      if (isSupportedLocale(fromUrl)) return fromUrl;
+      var localStorageRef = window.localStorage;
+      var storageValue = localStorageRef ? localStorageRef.getItem("dhermi-language") : "";
+      var fromStorage = normalizeLocale(storageValue);
+      if (isSupportedLocale(fromStorage)) return fromStorage;
+      var fromHtml = normalizeLocale(document.documentElement.lang);
+      if (isSupportedLocale(fromHtml)) return fromHtml;
+      var navLanguages = navigator.languages;
+      var languages = navLanguages && navLanguages.length ? navLanguages : [navigator.language || "en"];
+      for (var index = 0; index < languages.length; index += 1) {
+        var browserLocale = normalizeLocale(languages[index]);
+        if (isSupportedLocale(browserLocale)) return browserLocale;
+      }
+    } catch (error) {}
+    return "en";
+  }
+
+  function localeCode(locale) {
+    if (locale === "fr") return "fr-FR";
+    if (locale === "sq") return "sq-AL";
+    return "en-GB";
+  }
+
+  function todayInputValue() {
+    var today = new Date();
+    var year = today.getFullYear();
+    var month = String(today.getMonth() + 1).padStart(2, "0");
+    var day = String(today.getDate()).padStart(2, "0");
+    return year + "-" + month + "-" + day;
+  }
+
+  function formatBookingDate(value, locale) {
+    var parts = String(value || "").split("-");
+    if (parts.length !== 3) return value || "";
+    var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    if (Number.isNaN(date.getTime())) return value || "";
+    try {
+      return new Intl.DateTimeFormat(localeCode(locale), { day: "numeric", month: "long", year: "numeric" }).format(date);
+    } catch (error) {
+      return parts[2] + " " + parts[1] + " " + parts[0];
+    }
+  }
+
+  function formatDateShort(value) {
+    var parts = String(value || "").split("-");
+    return parts.length === 3 ? parts[2] + " " + parts[1] + " " + parts[0] : "DD MM YYYY";
+  }
+
+  function cleanValue(value) {
+    var clean = String(value || "").trim();
+    return clean || "-";
+  }
+
+  function requiredValue(value, fallback) {
+    var clean = String(value || "").trim();
+    return clean || fallback;
+  }
+
+  function analyticsSegment(value) {
+    return String(value || "default").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "default";
+  }
+
+  function whatsappUrl(message) {
+    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(message);
+  }
+
+  function mailtoUrl(title, message) {
+    return "mailto:" + config.emailAddress + "?subject=" + encodeURIComponent("Dhermi Boat booking: " + title) + "&body=" + encodeURIComponent(message);
+  }
+
+  function initBookingForm(root) {
+    var locale = readLocale();
+    var labels = config.fieldLabels[locale] || config.fieldLabels.en;
+    var prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
+    var summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
+    var selectedTourId = config.defaultTourId;
+    var selectedTime = "Flexible";
+    var adults = 2;
+    var children = 0;
+
+    var tourSelect = root.querySelector("#quick-tour");
+    var dateInput = root.querySelector("#quick-date");
+    var timeSelect = root.querySelector("#quick-time");
+    var nameInput = root.querySelector("#quick-name");
+    var phoneInput = root.querySelector("#quick-phone");
+    var notesInput = root.querySelector("#quick-notes");
+    var adultInput = root.querySelector("[data-booking-counter-value='adults']");
+    var childInput = root.querySelector("[data-booking-counter-value='children']");
+    var capacityText = root.querySelector("[data-booking-capacity]");
+    var summaryTitle = root.querySelector("[data-booking-summary-title]");
+    var summaryMessage = root.querySelector("[data-booking-summary-message]");
+    var dateHint = root.querySelector("[data-booking-date-short]");
+    var whatsappAction = root.querySelector("[data-booking-action='whatsapp']");
+    var emailAction = root.querySelector("[data-booking-action='email']");
+
+    if (!dateInput || !nameInput || !timeSelect || !whatsappAction || !emailAction) return;
+
+    var minimumDate = todayInputValue();
+    if (!dateInput.getAttribute("min")) dateInput.setAttribute("min", minimumDate);
+
+    try {
+      var saved = JSON.parse(window.localStorage.getItem(config.storageKey) || "null");
+      if (saved && config.capacityByTourId[saved.tourId]) {
+        selectedTourId = saved.tourId;
+        if (typeof saved.date === "string" && saved.date >= minimumDate) dateInput.value = saved.date;
+        if (typeof saved.time === "string") selectedTime = saved.time;
+        if (typeof saved.adults === "number") adults = saved.adults;
+        if (typeof saved.children === "number") children = saved.children;
+      }
+    } catch (error) {}
+
+    function capacity() {
+      return config.capacityByTourId[selectedTourId] || 15;
+    }
+
+    function availableTimes() {
+      var fixedTime = config.fixedTimeByTourId[selectedTourId];
+      return fixedTime ? [fixedTime] : config.flexibleTimeOptions.slice();
+    }
+
+    function clampPeople() {
+      var max = capacity();
+      adults = Math.min(max, Math.max(1, Math.round(Number(adults) || 1)));
+      children = Math.min(Math.max(0, max - adults), Math.max(0, Math.round(Number(children) || 0)));
+    }
+
+    function updateTourButtons() {
+      root.querySelectorAll("[data-booking-tour-option]").forEach(function (button) {
+        var selected = button.getAttribute("data-tour-id") === selectedTourId;
+        button.setAttribute("aria-pressed", selected ? "true" : "false");
+      });
+      if (tourSelect) tourSelect.value = selectedTourId;
+    }
+
+    function updateTimeOptions() {
+      var times = availableTimes();
+      if (times.indexOf(selectedTime) === -1) selectedTime = times[0] || "Flexible";
+      while (timeSelect.firstChild) timeSelect.removeChild(timeSelect.firstChild);
+      times.forEach(function (option) {
+        var node = document.createElement("option");
+        var localizedTimes = config.timeOptionLabels[locale] || {};
+        node.value = option;
+        node.textContent = localizedTimes[option] || option;
+        timeSelect.appendChild(node);
+      });
+      timeSelect.value = selectedTime;
+    }
+
+    function updateCounters() {
+      clampPeople();
+      if (adultInput) adultInput.value = String(adults);
+      if (childInput) childInput.value = String(children);
+      if (capacityText) capacityText.textContent = String(capacity());
+      root.querySelectorAll("[data-booking-counter]").forEach(function (button) {
+        var field = button.getAttribute("data-booking-counter");
+        var delta = Number(button.getAttribute("data-booking-counter-delta") || 0);
+        var disabled = false;
+        if (field === "adults") disabled = delta < 0 ? adults <= 1 : adults >= capacity();
+        if (field === "children") disabled = delta < 0 ? children <= 0 : children >= capacity() - adults;
+        button.disabled = disabled;
+      });
+    }
+
+    function bookingMessage() {
+      var tourLabels = config.tourOptionLabels[locale] || config.tourOptionLabels.en;
+      var timeLabels = config.timeOptionLabels[locale] || config.timeOptionLabels.en;
+      var languageLabels = config.localeMessageLabels || {};
+      return [
+        (config.messageIntro[locale] || config.messageIntro.en),
+        labels.tour + ": " + (tourLabels[selectedTourId] || selectedTourId),
+        labels.date + ": " + requiredValue(formatBookingDate(dateInput.value, locale), prompts.date),
+        labels.time + ": " + cleanValue(timeLabels[selectedTime] || selectedTime),
+        labels.language + ": " + (languageLabels[locale] || locale),
+        labels.adults + ": " + adults,
+        labels.children + ": " + children,
+        labels.name + ": " + requiredValue(nameInput.value, prompts.name),
+        labels.phone + ": " + cleanValue(phoneInput ? phoneInput.value : ""),
+        labels.notes + ": " + cleanValue(notesInput ? notesInput.value : "")
+      ].join("\n");
+    }
+
+    function updateLinks() {
+      updateTourButtons();
+      updateTimeOptions();
+      updateCounters();
+
+      var ready = Boolean(dateInput.value && nameInput.value.trim());
+      var missingTarget = !dateInput.value ? "#quick-date" : !nameInput.value.trim() ? "#quick-name" : "#book";
+      var message = bookingMessage();
+      var tourLabels = config.tourOptionLabels[locale] || config.tourOptionLabels.en;
+      var tourTitle = tourLabels[selectedTourId] || selectedTourId;
+      var analyticsTour = analyticsSegment(selectedTourId);
+      var analyticsLocale = analyticsSegment(locale);
+      var whatsappPlacement = analyticsSegment(whatsappAction.getAttribute("data-analytics-placement") || "quick_form");
+
+      var nextSummaryLabel = summaryLabels.pending;
+      if (ready) nextSummaryLabel = summaryLabels.ready;
+      if (summaryTitle) summaryTitle.textContent = nextSummaryLabel;
+      if (summaryMessage) summaryMessage.textContent = message;
+      if (dateHint) dateHint.textContent = dateInput.value ? formatDateShort(dateInput.value) : "DD MM YYYY";
+
+      whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
+      whatsappAction.setAttribute("aria-disabled", ready ? "false" : "true");
+      whatsappAction.setAttribute("data-tour-id", selectedTourId);
+      whatsappAction.setAttribute("data-analytics-tour", analyticsTour);
+      whatsappAction.setAttribute("data-analytics-event", "whatsapp_click_" + analyticsTour + "_" + analyticsLocale + "_" + whatsappPlacement);
+      if (ready) {
+        whatsappAction.setAttribute("target", "_blank");
+        whatsappAction.setAttribute("rel", "noreferrer");
+      } else {
+        whatsappAction.removeAttribute("target");
+        whatsappAction.removeAttribute("rel");
+      }
+
+      emailAction.setAttribute("href", ready ? mailtoUrl(tourTitle, message) : missingTarget);
+      emailAction.setAttribute("aria-disabled", ready ? "false" : "true");
+
+      try {
+        window.localStorage.setItem(config.storageKey, JSON.stringify({
+          tourId: selectedTourId,
+          date: dateInput.value,
+          time: selectedTime,
+          adults: adults,
+          children: children
+        }));
+      } catch (error) {}
+    }
+
+    root.querySelectorAll("[data-booking-tour-option]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        selectedTourId = button.getAttribute("data-tour-id") || selectedTourId;
+        selectedTime = availableTimes()[0] || "Flexible";
+        clampPeople();
+        updateLinks();
+      });
+    });
+
+    root.querySelectorAll("[data-booking-counter]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var field = button.getAttribute("data-booking-counter");
+        var delta = Number(button.getAttribute("data-booking-counter-delta") || 0);
+        if (field === "adults") adults += delta;
+        if (field === "children") children += delta;
+        updateLinks();
+      });
+    });
+
+    timeSelect.addEventListener("change", function () {
+      selectedTime = timeSelect.value;
+      updateLinks();
+    });
+
+    [dateInput, nameInput, phoneInput, notesInput].forEach(function (input) {
+      if (!input) return;
+      input.addEventListener("input", updateLinks);
+      input.addEventListener("change", updateLinks);
+    });
+
+    [whatsappAction, emailAction].forEach(function (link) {
+      link.addEventListener("click", function (event) {
+        if (dateInput.value && nameInput.value.trim()) return;
+        event.preventDefault();
+        var target = !dateInput.value ? dateInput : nameInput;
+        target.scrollIntoView({ block: "center", behavior: "smooth" });
+        target.focus({ preventScroll: true });
+      });
+    });
+
+    updateLinks();
+  }
+
+  function init() {
+    document.querySelectorAll("[data-booking-form='true']").forEach(initBookingForm);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
+})();
+`;
 
 function cleanValue(value: string) {
   return value.trim() || "-";
@@ -356,6 +703,7 @@ export function OneMinuteBooking() {
     `${labels.tour}: ${activeTourTitle}`,
     `${labels.date}: ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
     `${labels.time}: ${cleanValue(activeTimeLabel)}`,
+    `${labels.language}: ${localeMessageLabels[locale]}`,
     `${labels.adults}: ${safeAdults}`,
     `${labels.children}: ${safeChildren}`,
     `${labels.name}: ${requiredValue(name, requiredPrompts.name)}`,
@@ -457,6 +805,7 @@ export function OneMinuteBooking() {
 
         <form
           className="rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6"
+          data-booking-form="true"
           onSubmit={(event) => event.preventDefault()}
         >
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
@@ -475,6 +824,8 @@ export function OneMinuteBooking() {
                         "group flex w-full items-center justify-between gap-4 rounded-md border px-4 py-3 text-left transition duration-300 active:translate-y-px",
                         selected ? "border-ink bg-ink text-pearl" : "border-ink/10 bg-limestone/70 text-ink hover:border-ink/25 hover:bg-white"
                       ].join(" ")}
+                      data-booking-tour-option="true"
+                      data-tour-id={tour.id}
                       type="button"
                       onClick={() => selectTour(tour.id)}
                     >
@@ -482,11 +833,17 @@ export function OneMinuteBooking() {
                         <span className="block font-serif text-xl font-medium">
                           <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
                         </span>
-                        <span className={selected ? "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-sand" : "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-bronze"}>
+                        <span
+                          className={selected ? "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-sand" : "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-bronze"}
+                          data-booking-tour-price="true"
+                        >
                           <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
                         </span>
                       </span>
-                      <span className={selected ? "h-3 w-3 rounded-full bg-sand" : "h-3 w-3 rounded-full border border-ink/25 bg-white group-hover:bg-turquoise-soft"} />
+                      <span
+                        className={selected ? "h-3 w-3 rounded-full bg-sand" : "h-3 w-3 rounded-full border border-ink/25 bg-white group-hover:bg-turquoise-soft"}
+                        data-booking-tour-dot="true"
+                      />
                     </button>
                   );
                 })}
@@ -565,7 +922,7 @@ export function OneMinuteBooking() {
                     {messages.date}
                   </p>
                 ) : null}
-                <p className="text-xs font-semibold text-ink-soft" aria-live="polite">
+                <p className="text-xs font-semibold text-ink-soft" aria-live="polite" data-booking-date-short="true">
                   {shortBookingDate || dateDisplayFormat}
                 </p>
               </div>
@@ -615,6 +972,8 @@ export function OneMinuteBooking() {
                         <button
                           aria-label={`${actionLabel.decrease} ${counterName}`}
                           className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50 disabled:cursor-not-allowed disabled:opacity-35"
+                          data-booking-counter={field}
+                          data-booking-counter-delta="-1"
                           disabled={!canDecrease}
                           type="button"
                           onClick={() => changePeople(field, -1)}
@@ -625,6 +984,7 @@ export function OneMinuteBooking() {
                           id={`quick-${field}`}
                           aria-label={labels[field]}
                           className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none"
+                          data-booking-counter-value={field}
                           max={maxValue}
                           min={minValue}
                           name={String(translations.en[String(id)] ?? String(id))}
@@ -634,6 +994,8 @@ export function OneMinuteBooking() {
                         <button
                           aria-label={`${actionLabel.increase} ${counterName}`}
                           className="grid place-items-center text-ink-soft transition hover:bg-limestone active:bg-sand/50 disabled:cursor-not-allowed disabled:opacity-35"
+                          data-booking-counter={field}
+                          data-booking-counter-delta="1"
                           disabled={!canIncrease}
                           type="button"
                           onClick={() => changePeople(field, 1)}
@@ -646,7 +1008,7 @@ export function OneMinuteBooking() {
                 })}
               </div>
               <p className="text-xs font-semibold text-ink-soft">
-                <LocalizedText id="quick.capacity">{enText("quick.capacity")}</LocalizedText>: {activeTourCapacity}
+                <LocalizedText id="quick.capacity">{enText("quick.capacity")}</LocalizedText>: <span data-booking-capacity="true">{activeTourCapacity}</span>
               </p>
 
               <div className="grid gap-2">
@@ -712,16 +1074,17 @@ export function OneMinuteBooking() {
           </div>
 
           <div className="mt-5 rounded-md border border-ink/10 bg-limestone/75 p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+            <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" data-booking-summary-title="true">
               <LocalizedText id={bookingSummaryKey}>{translations.en[bookingSummaryKey] ?? ""}</LocalizedText>
             </p>
-            <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft">{bookingMessage}</p>
+            <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft" data-booking-summary-message="true">{bookingMessage}</p>
           </div>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.7fr]">
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
               aria-disabled={!bookingLinksReady}
+              data-booking-action="whatsapp"
               data-analytics-event={conversionEvent(activeTour.id, locale, whatsappAnalyticsPlacement)}
               data-analytics-event-template={whatsappEventTemplate}
               data-analytics-tour={whatsappAnalyticsTour}
@@ -738,6 +1101,7 @@ export function OneMinuteBooking() {
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
               aria-disabled={!bookingLinksReady}
+              data-booking-action="email"
               data-analytics-event="email_click"
               href={emailActionHref}
               onClick={handleMessageLinkClick}
@@ -755,6 +1119,7 @@ export function OneMinuteBooking() {
             </a>
           </div>
         </form>
+        <script dangerouslySetInnerHTML={{ __html: staticBookingEnhancerScript }} />
       </div>
     </section>
   );

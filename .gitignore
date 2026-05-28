@@ -11,6 +11,7 @@ playwright-report/
 test-results/
 tsconfig.tsbuildinfo
 .tmp-lh*.json
+.tmp-dhermi-qa/
 .tmp_reopt/
 chromewebdata_*.report.html
 $log

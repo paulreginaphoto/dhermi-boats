@@ -9,8 +9,8 @@ import { SeaRouteMap } from "@/components/SeaRouteMap";
 import { BookingTitleText, TourDetailsText } from "@/components/MicroCopy";
 import { tours, type Destination } from "@/data/content";
 import { translations } from "@/lib/i18n";
-import { whatsappUrl } from "@/lib/site";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 export function DestinationDetailPage({ destination }: { destination: Destination }) {
   const translationBase = `destination.${destination.id}`;
@@ -38,7 +38,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
         </p>
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <ButtonLink
-            href={primaryTour ? whatsappUrl(primaryTour.whatsappText) : "/contact/"}
+            href={primaryTour ? whatsappHrefForKey(primaryTour.id as WhatsappMessageKey) : "/contact/"}
             icon={MessageCircle}
             variant="dark"
             whatsappKey={primaryTour?.id ?? "default"}
@@ -123,7 +123,7 @@ export function DestinationDetailPage({ destination }: { destination: Destinatio
                   </p>
                 ) : null}
                 <div className="mt-6 flex flex-1 flex-col justify-end gap-3 sm:flex-row">
-                  <ButtonLink href={whatsappUrl(tour.whatsappText)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_detail_card">
+                  <ButtonLink href={whatsappHrefForKey(tour.id as WhatsappMessageKey)} icon={MessageCircle} className="flex-1" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="destination_detail_card">
                     <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
                   </ButtonLink>
                   <ButtonLink href={tour.href} variant="secondary" className="flex-1">

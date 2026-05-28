@@ -33,10 +33,10 @@ const enText = (key: string) => translations.en[key] ?? "";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhermi Boat Tour | Boat Tours from Dhërmi to Gjipe & Grama Bay"
+    absolute: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave | Dhermi Boat"
   },
   description:
-    "Book a Dhermi boat tour from Dhërmi to Gjipe Beach, Grama Bay, Blue Cave and Karaburun. Small-group and private boat trips by WhatsApp.",
+    "Compare Dhërmi boat tours to Gjipe, Grama Bay and the Blue Cave route. Small groups, clear prices, local skipper Isuf and WhatsApp booking.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 

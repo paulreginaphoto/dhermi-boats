@@ -11,10 +11,10 @@ import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
-import { canonical, languageAlternates, whatsappUrl } from "@/lib/site";
+import { canonical, languageAlternates } from "@/lib/site";
 import { breadcrumbSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
-import { whatsappHrefForKey } from "@/lib/whatsappMessages";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 import { translations } from "@/lib/i18n";
 
 export const metadata: Metadata = {
@@ -206,7 +206,7 @@ export default function ToursPage() {
                       className="inline-flex min-h-10 items-center justify-center rounded-md bg-ink px-4 text-xs font-bold text-pearl transition hover:bg-navy"
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
-                      href={whatsappUrl(tour.whatsappText)}
+                      href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
                       rel="noreferrer"
                       target="_blank"
                       {...conversionAttrs({ tourId: tour.id, placement: "tour_matrix" })}

@@ -637,12 +637,11 @@ function checkHighSeasonHeroCopy(filePath, content) {
   if (!filePath.endsWith(path.join("components", "HeroCinematic.tsx"))) return;
 
   for (const snippet of [
-    "Small-group and private boat trips with a local skipper. Clear prices, daily departures, WhatsApp booking.",
-    "5-star guest reviews",
-    "Small groups, max 15 guests",
-    "Departure from Dhërmi area",
-    "Book on WhatsApp in 1 minute",
-    "Routes adapted to sea conditions"
+    "hero.title",
+    "hero.text",
+    "hero.trust.${index}",
+    "hero.reassurance.payment",
+    "hero.reassurance.meeting"
   ]) {
     if (!content.includes(snippet)) {
       addIssue(
@@ -659,12 +658,12 @@ function checkTourChoiceIn30Seconds(filePath, content) {
   const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
   const requirements = {
     "components/TourComparison.tsx": [
-      "Choose your tour in 30 seconds",
+      "comparison.title",
       "comparison.audience",
       "comparison.ctaLabel"
     ],
     "app/tours/page.tsx": [
-      "Choose your tour in 30 seconds",
+      "page.tours.matrixTitle",
       "tour_matrix"
     ]
   };
@@ -1014,7 +1013,7 @@ function checkSEOFocus(filePath, content) {
     },
     {
       file: "app/page.tsx",
-      snippets: ["absolute: \"Dhermi Boat Tour", "homePageSchema()"]
+      snippets: ["absolute: \"Dhërmi Boat Tours", "homePageSchema()"]
     },
     {
       file: "app/tours/page.tsx",
