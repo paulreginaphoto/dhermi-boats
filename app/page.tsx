@@ -446,7 +446,7 @@ export default function HomePage() {
                 <LocalizedText id="cta.compareTours">{enText("cta.compareTours")}</LocalizedText>
               </ButtonLink>
             </div>
-            <p className="mt-4 flex max-w-xl items-start gap-2 text-sm font-semibold leading-6 text-pearl/92">
+            <p className="mt-4 inline-flex max-w-xl items-start gap-2 rounded-md border border-white/15 bg-ink/90 px-3.5 py-2.5 text-sm font-semibold leading-6 text-pearl shadow-sm backdrop-blur-md">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sand" aria-hidden />
               <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
             </p>
