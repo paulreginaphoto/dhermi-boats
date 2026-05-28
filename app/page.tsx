@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, CalendarDays, Clock3, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock3, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users, X } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { GalleryViewerRuntime } from "@/components/GalleryViewerRuntime";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
@@ -284,6 +285,116 @@ const tourRailScrollScript = String.raw`
 })();
 `;
 
+const galleryViewerScript = String.raw`
+(function () {
+  var root = document.querySelector("[data-gallery-viewer]");
+  if (!root) return;
+  if (root.getAttribute("data-gallery-bound") === "true") return;
+
+  var links = Array.prototype.slice.call(root.querySelectorAll("[data-gallery-open]"));
+  var modal = root.querySelector("[data-gallery-modal]");
+  var image = root.querySelector("[data-gallery-modal-image]");
+  var counter = root.querySelector("[data-gallery-counter]");
+  var thumbs = Array.prototype.slice.call(root.querySelectorAll("[data-gallery-thumb]"));
+  var lastFocus = null;
+  var currentIndex = 0;
+
+  if (!links.length || !modal || !image || !counter) return;
+  root.setAttribute("data-gallery-bound", "true");
+
+  var items = links.map(function (link, index) {
+    return {
+      src: link.getAttribute("data-gallery-src") || link.getAttribute("href") || "",
+      alt: link.getAttribute("data-gallery-alt") || "",
+      index: index
+    };
+  });
+  var totalItems = items.length;
+
+  function setBodyLock(locked) {
+    document.body.toggleAttribute("data-gallery-open", locked);
+  }
+
+  function update(index) {
+    currentIndex = (index + totalItems) % totalItems;
+    var item = items[currentIndex];
+    image.src = item.src;
+    image.alt = item.alt;
+    counter.textContent = String(currentIndex + 1) + " / " + String(totalItems);
+    thumbs.forEach(function (thumb, thumbIndex) {
+      var active = thumbIndex === currentIndex;
+      thumb.toggleAttribute("data-active", active);
+      if (active) thumb.setAttribute("aria-current", "true");
+      else thumb.removeAttribute("aria-current");
+    });
+  }
+
+  function open(index, focusTarget) {
+    lastFocus = focusTarget || document.activeElement;
+    update(index);
+    modal.hidden = false;
+    modal.setAttribute("aria-hidden", "false");
+    setBodyLock(true);
+    var closeButton = modal.querySelector("[data-gallery-close]");
+    if (closeButton && typeof closeButton.focus === "function") closeButton.focus({ preventScroll: true });
+  }
+
+  function close() {
+    modal.hidden = true;
+    modal.setAttribute("aria-hidden", "true");
+    setBodyLock(false);
+    if (lastFocus && typeof lastFocus.focus === "function") lastFocus.focus({ preventScroll: true });
+  }
+
+  function closestTarget(event, selector) {
+    var source = event.target;
+    if (!source || !source.closest) return null;
+    return source.closest(selector);
+  }
+
+  root.addEventListener("click", function (event) {
+    var openLink = closestTarget(event, "[data-gallery-open]");
+    if (openLink && root.contains(openLink)) {
+      event.preventDefault();
+      open(Number(openLink.getAttribute("data-gallery-index") || "0"), openLink);
+      return;
+    }
+
+    var thumbButton = closestTarget(event, "[data-gallery-thumb]");
+    if (thumbButton && root.contains(thumbButton)) {
+      var thumbIndex = thumbs.indexOf(thumbButton);
+      if (thumbIndex >= 0) update(thumbIndex);
+      return;
+    }
+
+    if (closestTarget(event, "[data-gallery-close]")) {
+      close();
+      return;
+    }
+
+    if (closestTarget(event, "[data-gallery-next]")) {
+      update(currentIndex + 1);
+      return;
+    }
+
+    if (closestTarget(event, "[data-gallery-prev]")) {
+      update(currentIndex - 1);
+      return;
+    }
+
+    var clickTarget = event.target;
+    if (clickTarget && clickTarget.hasAttribute("data-gallery-backdrop")) close();
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (modal.hidden) return;
+    if (event.key === "Escape") close();
+    if (event.key === "ArrowRight") update(currentIndex + 1);
+    if (event.key === "ArrowLeft") update(currentIndex - 1);
+  });
+})();
+`;
+
 export const metadata: Metadata = {
   title: {
     absolute: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave"
@@ -457,30 +568,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section data-home-section="gallery" id="gallery" className="bg-limestone py-16 md:py-24">
+      <section data-home-section="gallery" id="gallery" className="bg-limestone py-14 md:py-20">
         <div className="site-band">
-          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
             <div className="max-w-2xl">
               <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
                 <LocalizedText id="minimal.gallery.label">{enText("minimal.gallery.label")}</LocalizedText>
               </p>
-              <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+              <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
                 <LocalizedText id="minimal.gallery.title">{enText("minimal.gallery.title")}</LocalizedText>
               </h2>
             </div>
-            <p className="max-w-sm text-sm leading-7 text-ink-soft">
+            <p className="max-w-xs text-sm font-semibold leading-6 text-ink-soft">
               <LocalizedText id="minimal.gallery.text">{enText("minimal.gallery.text")}</LocalizedText>
             </p>
           </div>
-          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {featuredGallery.map((item, index) => (
-              <a key={item.src} href={item.src} target="_blank" rel="noreferrer" data-gallery-zoom="true" className={index === 0 ? "group relative aspect-[4/5] overflow-hidden rounded-lg bg-sand sm:col-span-2 lg:row-span-2" : "group relative aspect-[4/5] overflow-hidden rounded-lg bg-sand"}>
-                <Image src={item.src} alt={item.alt} fill loading="lazy" quality={52} sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover transition duration-500 group-hover:scale-105" />
-                <span className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-md bg-pearl/90 text-ink shadow-sm">
-                  <Maximize2 className="h-4 w-4" aria-hidden />
-                </span>
-              </a>
-            ))}
+
+          <div className="gallery-viewer mt-8" data-gallery-viewer>
+            <div className="gallery-feed" aria-label="Sea photo gallery">
+              {featuredGallery.map((item, index) => (
+                <a
+                  key={item.src}
+                  href={item.src}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-gallery-open
+                  data-gallery-zoom="true"
+                  data-gallery-src={item.src}
+                  data-gallery-alt={item.alt}
+                  data-gallery-index={index}
+                  data-analytics-event="gallery_open_click"
+                  className="gallery-feed-item group"
+                  aria-label={`Open gallery photo ${index + 1}`}
+                >
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    loading="lazy"
+                    quality={52}
+                    sizes={index === 0 ? "(min-width: 768px) 48vw, 78vw" : "(min-width: 1024px) 24vw, (min-width: 768px) 25vw, 78vw"}
+                    className="object-cover transition duration-500 group-hover:scale-[1.035]"
+                  />
+                  <span className="gallery-feed-shade" aria-hidden />
+                  <span className="gallery-feed-count">{index + 1}/{featuredGallery.length}</span>
+                  <span className="gallery-feed-expand">
+                    <Maximize2 className="h-4 w-4" aria-hidden />
+                  </span>
+                </a>
+              ))}
+            </div>
+
+            <div className="gallery-modal" data-gallery-modal data-gallery-backdrop hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Sea photo viewer">
+              <div className="gallery-modal-top">
+                <span className="gallery-modal-counter" data-gallery-counter>1 / {featuredGallery.length}</span>
+                <button className="gallery-modal-icon" type="button" data-gallery-close aria-label="Close gallery">
+                  <X className="h-5 w-5" aria-hidden />
+                </button>
+              </div>
+
+              <div className="gallery-modal-stage" data-gallery-backdrop>
+                <button className="gallery-modal-arrow gallery-modal-arrow-left" type="button" data-gallery-prev aria-label="Previous photo">
+                  <ChevronLeft className="h-6 w-6" aria-hidden />
+                </button>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className="gallery-modal-image" data-gallery-modal-image src={featuredGallery[0]?.src} alt={featuredGallery[0]?.alt ?? ""} />
+                <button className="gallery-modal-arrow gallery-modal-arrow-right" type="button" data-gallery-next aria-label="Next photo">
+                  <ChevronRight className="h-6 w-6" aria-hidden />
+                </button>
+              </div>
+
+              <div className="gallery-modal-thumbs" aria-label="Gallery thumbnails">
+                {featuredGallery.map((item, index) => (
+                  <button key={`gallery-thumb-${item.src}`} className="gallery-modal-thumb" type="button" data-gallery-thumb aria-label={`Show photo ${index + 1}`}>
+                    <Image src={item.src} alt="" fill loading="lazy" quality={50} sizes="5rem" className="object-cover" />
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -608,6 +773,7 @@ export default function HomePage() {
 
       <InlineRuntimeScript id="minimal-availability-form" code={minimalAvailabilityFormScript} />
       <InlineRuntimeScript id="tour-rail-scroll" code={tourRailScrollScript} />
+      <GalleryViewerRuntime code={galleryViewerScript} />
     </>
   );
 }
