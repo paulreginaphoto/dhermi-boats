@@ -7,6 +7,7 @@ const outDir = resolve(process.cwd(), "out");
 const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
 const googleAdsId = "AW-18050141389";
 const googleAdsContactSendTo = "AW-18050141389/5E84COKT_5EcEM2Z_Z5D";
+const googleAdsContactConversionId = "google-ads-contact-conversion";
 
 function scriptValue(value) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -47,10 +48,10 @@ function googleAdsHeadMarkup(filePath) {
       ? `\ngtag("config",${scriptValue(gaMeasurementId)},{"send_page_view":true});`
       : "";
   const contactConversion = isContactPage(filePath)
-    ? `\n<!-- Event snippet for Contact conversion page -->\n<script id="google-ads-contact-conversion">gtag("event","conversion",{"send_to":${scriptValue(googleAdsContactSendTo)}});</script>`
+    ? `\n/* ${googleAdsContactConversionId} */gtag("event","conversion",{"send_to":${scriptValue(googleAdsContactSendTo)}});`
     : "";
 
-  return `<!-- Google tag (gtag.js) -->\n<script async src="https://www.googletagmanager.com/gtag/js?id=${googleAdsId}"></script>\n<script id="google-ads-tag">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;gtag("js",new Date());gtag("config",${scriptValue(googleAdsId)});${ga4Config}</script>${contactConversion}`;
+  return `<!-- Google tag (gtag.js) -->\n<script id="google-ads-tag">window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=window.gtag||gtag;(function(){var loaded=false;function load(){if(loaded)return;loaded=true;var s=document.createElement("script");s.async=true;s.src="https://www.googletagmanager.com/gtag/js?id=${googleAdsId}";document.head.appendChild(s);gtag("js",new Date());gtag("config",${scriptValue(googleAdsId)});${ga4Config}${contactConversion}}["pointerdown","keydown","touchstart","scroll"].forEach(function(eventName){window.addEventListener(eventName,load,{once:true,passive:true});});window.addEventListener("pagehide",load,{once:true});})();</script>`;
 }
 
 function injectGoogleAds(html, filePath) {

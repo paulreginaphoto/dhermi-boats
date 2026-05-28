@@ -77,7 +77,7 @@ export function HeroCinematic() {
             {heroFacts.map(([, , , , value], index) => (
               <span
               key={`hero-proof-${index}`}
-                className="rounded-full border border-white/18 bg-white/14 px-3 py-2 text-xs font-extrabold text-pearl shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur"
+                className="rounded-full border border-white/15 bg-ink/80 px-3 py-2 text-xs font-extrabold text-pearl shadow-sm backdrop-blur"
               >
                 <LocalizedText id={`hero.trust.${index}`}>{value}</LocalizedText>
               </span>
@@ -87,7 +87,7 @@ export function HeroCinematic() {
             <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="home_hero">
               <LocalizedText id="cta.heroWhatsapp">{enText("cta.heroWhatsapp")}</LocalizedText>
             </ButtonLink>
-            <ButtonLink href="#compare-tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.16)] backdrop-blur-md hover:bg-white/18" analyticsEvent="compare_tours_click">
+            <ButtonLink href="#compare-tours" icon={ArrowRight} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white" analyticsEvent="compare_tours_click">
               <CompareToursText />
             </ButtonLink>
           </div>

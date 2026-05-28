@@ -21,7 +21,7 @@ export function TrustBadges() {
           return (
             <li
               key={badge}
-              className="flex min-h-12 items-center gap-3 rounded-md border border-white/12 bg-white/12 px-3 py-2 text-sm font-semibold leading-snug text-pearl shadow-sm"
+              className="flex min-h-12 items-center gap-3 rounded-md border border-white/12 bg-ink/80 px-3 py-2 text-sm font-semibold leading-snug text-pearl shadow-sm"
             >
               <IconFrame icon={icon} variant="soft" />
               <LocalizedText id={badgeKey}>{enText(badgeKey) || badge}</LocalizedText>

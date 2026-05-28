@@ -50,7 +50,7 @@ export default function FAQPage() {
           <ButtonLink href="/tours/" variant="dark">
             <CompareToursText />
           </ButtonLink>
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18" whatsappKey="default" analyticsPlacement="faq_hero">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white" whatsappKey="default" analyticsPlacement="faq_hero">
             <LocalizedText id="contact.message.title">{translations.en["contact.message.title"] ?? ""}</LocalizedText>
           </ButtonLink>
         </div>

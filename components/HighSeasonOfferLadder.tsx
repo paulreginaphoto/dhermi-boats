@@ -84,7 +84,7 @@ export function HighSeasonOfferLadder() {
                     <LocalizedText id={item.badgeKey}>{enText(item.badgeKey)}</LocalizedText>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4">
-                    <p className="inline-flex items-center gap-2 rounded-full bg-white/14 px-3 py-2 text-xs font-extrabold text-white backdrop-blur">
+                    <p className="inline-flex items-center gap-2 rounded-full bg-ink/80 px-3 py-2 text-xs font-extrabold text-pearl shadow-sm backdrop-blur">
                       <Euro className="h-4 w-4" aria-hidden strokeWidth={1.75} />
                       <LocalizedText id={item.priceKey}>{enText(item.priceKey)}</LocalizedText>
                     </p>

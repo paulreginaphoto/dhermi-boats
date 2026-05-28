@@ -30,7 +30,7 @@ export function DestinationCard({
           sizes="(min-width: 1024px) 31vw, 92vw"
           className="object-cover transition duration-700 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy/92 via-navy/48 to-navy/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-navy/90 via-navy/50 to-navy/10" />
         <div className="absolute inset-x-0 bottom-0 p-4 md:p-6">
           <div className="photo-panel-overlay rounded-lg p-4 md:p-5">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">

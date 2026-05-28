@@ -399,7 +399,7 @@ function RealMapCanvas({ map, titleId, descId }: { map: RouteMap; titleId: strin
           );
         })}
       </svg>
-      <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full bg-pearl/92 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur">
+      <div className="absolute right-2 top-2 inline-flex items-center gap-2 rounded-full bg-pearl px-3 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-ink shadow-sm backdrop-blur">
         <MapPin className="h-3.5 w-3.5 text-turquoise" aria-hidden strokeWidth={1.75} />
         <LocalizedText id="map.real">{enText("map.real")}</LocalizedText>
       </div>

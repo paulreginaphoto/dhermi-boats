@@ -60,7 +60,7 @@ export default function ToursPage() {
           <ButtonLink href="#compare-tours" variant="dark">
             <CompareToursText />
           </ButtonLink>
-          <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18" whatsappKey="default" analyticsPlacement="tours_hero">
+          <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white" whatsappKey="default" analyticsPlacement="tours_hero">
             <LocalizedText id="contact.message.title">{enText("contact.message.title")}</LocalizedText>
           </ButtonLink>
         </div>

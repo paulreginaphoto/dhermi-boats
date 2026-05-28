@@ -55,7 +55,7 @@ export function TourDetailPage({ tour }: { tour: Tour }) {
           <ButtonLink href={whatsappHrefForKey(tour.id as WhatsappMessageKey)} icon={MessageCircle} variant="dark" whatsappKey={tour.id} analyticsTour={tour.id} analyticsPlacement="tour_hero">
             <LocalizedText id={bookKey}>{bookFallback}</LocalizedText>
           </ButtonLink>
-          <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+          <ButtonLink href="/tours/" icon={ArrowLeft} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white">
             <LocalizedText id="tour.backAll">{enText("tour.backAll")}</LocalizedText>
           </ButtonLink>
         </div>

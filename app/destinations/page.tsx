@@ -72,7 +72,7 @@ export default function DestinationsPage() {
           <ButtonLink href="#choose-destination" variant="dark">
             <LocalizedText id="destinations.choose.title">{enText("destinations.choose.title")}</LocalizedText>
           </ButtonLink>
-          <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+          <ButtonLink href="/tours/" icon={ArrowRight} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white">
             <CompareToursText />
           </ButtonLink>
         </div>

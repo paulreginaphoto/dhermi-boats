@@ -33,7 +33,7 @@ export function SeasonAvailabilityStrip() {
                 </span>
                 <div>
                   <h2 className="text-sm font-extrabold leading-5 text-white">{item.title}</h2>
-                  <p className="mt-1 text-sm leading-6 text-pearl/78">{item.text}</p>
+                  <p className="mt-1 text-sm leading-6 text-pearl/80">{item.text}</p>
                 </div>
               </article>
             ))}

@@ -57,7 +57,7 @@ export function HotIntentLandingPage({
           >
             <LocalizedText id="cta.heroWhatsapp">{enText("cta.heroWhatsapp")}</LocalizedText>
           </ButtonLink>
-          <ButtonLink href={primaryTour.href} icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-white hover:bg-white/18">
+          <ButtonLink href={primaryTour.href} icon={ArrowRight} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white">
             <TourDetailsText />
           </ButtonLink>
         </div>

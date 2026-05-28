@@ -228,7 +228,7 @@ export default function HomePage() {
 
       <section data-home-section="hero" data-sticky-relief-target className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-pearl">
         <Image
-          src="/images/hero-riviera-tablet.webp"
+          src="/images/hero-riviera-tablet-lcp.avif"
           alt="Dhermi Boat on turquoise water below cliffs near Dhërmi"
           fill
           priority
@@ -250,7 +250,7 @@ export default function HomePage() {
             </p>
             <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-pearl">
               {["minimal.hero.badge.local", "minimal.hero.badge.capacity", "minimal.hero.badge.daily"].map((key) => (
-                <span key={key} className="rounded-md border border-white/20 bg-white/12 px-3 py-2 backdrop-blur">
+                <span key={key} className="rounded-md border border-white/15 bg-ink/80 px-3 py-2 text-pearl shadow-sm backdrop-blur">
                   <LocalizedText id={key}>{enText(key)}</LocalizedText>
                 </span>
               ))}
@@ -259,7 +259,7 @@ export default function HomePage() {
               <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="minimal_hero">
                 <LocalizedText id="minimal.cta.whatsapp">{enText("minimal.cta.whatsapp")}</LocalizedText>
               </ButtonLink>
-              <ButtonLink href="#tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-pearl hover:bg-white/18 focus-visible:ring-pearl">
+              <ButtonLink href="#tours" icon={ArrowRight} variant="secondary" className="border-white/0 bg-pearl text-ink shadow-sm hover:bg-white focus-visible:ring-pearl">
                 <LocalizedText id="cta.compareTours">{enText("cta.compareTours")}</LocalizedText>
               </ButtonLink>
             </div>
@@ -315,7 +315,7 @@ export default function HomePage() {
                           className="object-cover"
                         />
                         {comparisonLabel ? (
-                          <span className="absolute left-4 top-4 rounded-md bg-pearl/92 px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
+                          <span className="absolute left-4 top-4 rounded-md bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
                             <LocalizedText id={`comparison.${labelIndex}.angle`}>{comparisonLabel.angle}</LocalizedText>
                           </span>
                         ) : null}
