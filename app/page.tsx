@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, CalendarDays, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -16,7 +16,9 @@ const featuredTours = tours.filter((tour) => ["gjipe", "grama", "private", "suns
 const featuredTourLabelIndexes = new Map([
   ["gjipe", 0],
   ["grama", 1],
-  ["private", 2]
+  ["private", 2],
+  ["sunset", 3],
+  ["fishing", 4]
 ]);
 const featuredGallery = gallery.slice(0, 8);
 const featuredReviews = reviews.slice(0, 4);
@@ -162,34 +164,92 @@ const tourRailScrollScript = String.raw`
     return Math.max(0, Math.min(1, value));
   }
 
-  function updateRail(rail) {
+  function headerOffset() {
+    var header = document.querySelector("header");
+    return header ? Math.ceil(header.getBoundingClientRect().height) : 80;
+  }
+
+  function railGeometry(rail) {
     var track = rail.querySelector("[data-tour-track]");
     var windowEl = rail.querySelector("[data-tour-window]");
-    var progress = rail.querySelector("[data-tour-progress]");
-    if (!track) return;
+    var cards = track ? Array.prototype.slice.call(track.querySelectorAll(".tour-rail-card")) : [];
+    if (!track || !windowEl || !cards.length) return null;
+    var trackStyle = window.getComputedStyle(track);
+    var windowStyle = window.getComputedStyle(windowEl);
+    var gap = parseFloat(trackStyle.columnGap || trackStyle.gap || "0") || 0;
+    var padding = (parseFloat(windowStyle.paddingLeft || "0") || 0) + (parseFloat(windowStyle.paddingRight || "0") || 0);
+    var visibleWidth = Math.max(1, windowEl.clientWidth - padding);
+    var cardWidth = cards[0].getBoundingClientRect().width || cards[0].offsetWidth || visibleWidth;
+    var visibleCount = Math.max(1, Math.min(cards.length, Math.floor((visibleWidth + gap) / (cardWidth + gap))));
+    var steps = Math.max(0, cards.length - visibleCount);
+    var stepSize = cardWidth + gap;
+    return {
+      track: track,
+      windowEl: windowEl,
+      maxTranslate: steps * stepSize,
+      steps: steps,
+      stepSize: stepSize
+    };
+  }
 
-    if (window.innerWidth < 768 || reduceMotion) {
-      track.style.transform = "";
+  function measureRail(rail) {
+    var geometry = railGeometry(rail);
+    if (!geometry) return;
+
+    if (reduceMotion) {
+      rail.style.height = "";
+      rail.removeAttribute("data-tour-rail-enhanced");
+      rail.style.removeProperty("--tour-rail-shift");
+      return;
+    }
+
+    rail.setAttribute("data-tour-rail-enhanced", "true");
+    var viewport = Math.max(1, window.innerHeight - headerOffset());
+    var breathingRoom = window.innerWidth < 768 ? 220 : 300;
+    var minScreens = window.innerWidth < 768 ? 3.8 : 2.7;
+    var sectionHeight = Math.max(viewport * minScreens, viewport + geometry.maxTranslate + breathingRoom);
+    rail.style.height = Math.ceil(sectionHeight) + "px";
+    rail.style.setProperty("--tour-rail-shift", geometry.maxTranslate.toFixed(2) + "px");
+  }
+
+  function updateRail(rail) {
+    var geometry = railGeometry(rail);
+    var progress = rail.querySelector("[data-tour-progress]");
+    if (!geometry) return;
+
+    if (reduceMotion) {
+      geometry.track.style.transform = "";
       if (progress) progress.style.transform = "scaleX(0)";
       return;
     }
 
-    var maxTranslate = Math.max(0, track.scrollWidth - (windowEl ? windowEl.clientWidth : rail.clientWidth));
-    var scrollRange = Math.max(1, rail.offsetHeight - window.innerHeight);
+    var stickyTop = headerOffset();
+    var scrollRange = Math.max(1, rail.offsetHeight - window.innerHeight + stickyTop);
     var rect = rail.getBoundingClientRect();
-    var amount = clamp(-rect.top / scrollRange);
-    track.style.transform = "translate3d(" + Math.round(maxTranslate * amount * -1) + "px,0,0)";
+    var amount = clamp((stickyTop - rect.top) / scrollRange);
+    var snappedStep = geometry.steps ? Math.round(amount * geometry.steps) : 0;
+    var translate = Math.min(geometry.maxTranslate, snappedStep * geometry.stepSize);
+    geometry.track.style.transform = "translate3d(" + Math.round(translate * -1) + "px,0,0)";
     if (progress) progress.style.transform = "scaleX(" + amount.toFixed(3) + ")";
+  }
+
+  function measureAll() {
+    rails.forEach(measureRail);
   }
 
   function update() {
     rails.forEach(updateRail);
   }
 
+  function refresh() {
+    measureAll();
+    update();
+  }
+
   window.addEventListener("scroll", update, { passive: true });
-  window.addEventListener("resize", update);
-  window.addEventListener("load", update, { once: true });
-  update();
+  window.addEventListener("resize", refresh);
+  window.addEventListener("load", refresh, { once: true });
+  requestAnimationFrame(refresh);
 
   function initStickyRelief() {
     if (!reliefTargets.length || !("IntersectionObserver" in window)) return;
@@ -279,7 +339,7 @@ export default function HomePage() {
                 <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
                   <LocalizedText id="minimal.tours.label">{enText("minimal.tours.label")}</LocalizedText>
                 </p>
-                <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+                <h2 className="mt-3 max-w-xl font-serif text-3xl font-medium leading-[1.05] text-ink sm:text-4xl md:text-5xl">
                   <LocalizedText id="minimal.tours.title">{enText("minimal.tours.title")}</LocalizedText>
                 </h2>
               </div>
@@ -287,16 +347,16 @@ export default function HomePage() {
                 <p className="text-sm font-bold uppercase tracking-[0.2em] text-turquoise">
                   <LocalizedText id="minimal.tours.kicker">{enText("minimal.tours.kicker")}</LocalizedText>
                 </p>
-                <p className="mt-2 max-w-sm text-sm leading-7 text-ink-soft md:ml-auto">
+                <p className="mt-2 hidden max-w-sm text-sm leading-6 text-ink-soft md:ml-auto md:block md:leading-7">
                   <LocalizedText id="minimal.tours.hint">{enText("minimal.tours.hint")}</LocalizedText>
                 </p>
-                <div className="mt-5 h-1 overflow-hidden rounded-full bg-ink/10" aria-hidden>
+                <div className="mt-4 h-1 overflow-hidden rounded-full bg-ink/10 md:mt-5" aria-hidden>
                   <span data-tour-progress className="block h-full origin-left scale-x-0 rounded-full bg-turquoise" />
                 </div>
               </div>
             </div>
 
-            <div data-tour-window className="tour-rail-window mt-10">
+            <div data-tour-window className="tour-rail-window mt-6 md:mt-10">
               <div data-tour-track className="tour-rail-track">
                 {featuredTours.map((tour) => {
                   const labelIndex = featuredTourLabelIndexes.get(tour.id);
@@ -304,7 +364,7 @@ export default function HomePage() {
 
                   return (
                     <article key={tour.id} data-tour-id={tour.id} className="tour-rail-card grid overflow-hidden rounded-lg bg-limestone shadow-sm">
-                      <div className="tour-rail-image relative aspect-[4/3]">
+                      <div className="tour-rail-image relative">
                         <Image
                           src={tour.cardImage ?? tour.image}
                           alt={tour.imageAlt ?? tour.title}
@@ -320,31 +380,33 @@ export default function HomePage() {
                           </span>
                         ) : null}
                       </div>
-                      <div className="grid gap-5 p-5 md:p-6">
+                      <div className="tour-rail-body grid gap-4 p-4 md:gap-5 md:p-6">
                         <div>
-                          <h3 className="font-serif text-3xl font-medium leading-tight text-ink md:text-4xl">
+                          <h3 className="font-serif text-2xl font-medium leading-tight text-ink sm:text-3xl">
                             <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
                           </h3>
-                          <p className="mt-2 text-sm font-semibold leading-6 text-ink-soft">
+                          <p className="mt-2 text-sm font-semibold leading-5 text-ink-soft md:leading-6">
                             <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
                           </p>
                         </div>
-                        <div className="grid gap-3 text-sm font-semibold text-ink sm:grid-cols-3">
-                          <p className="flex gap-2">
+                        <div className="grid grid-cols-[1fr_auto] gap-2 text-xs font-semibold text-ink md:text-sm">
+                          <p className="flex min-w-0 gap-2 rounded-md bg-pearl/70 px-3 py-2">
                             <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
-                            <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
+                            <span className="min-w-0">
+                              {comparisonLabel && labelIndex !== undefined ? (
+                                <LocalizedText id={`comparison.${labelIndex}.meta`}>{`${comparisonLabel.duration} • ${comparisonLabel.price}`}</LocalizedText>
+                              ) : (
+                                <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
+                              )}
+                            </span>
                           </p>
-                          <p className="flex gap-2">
-                            <Euro className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
-                            <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
-                          </p>
-                          <p className="flex gap-2">
+                          <p className="flex gap-2 rounded-md bg-pearl/70 px-3 py-2">
                             <Users className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
                             <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
                           </p>
                         </div>
-                        <ul className="grid gap-2 text-sm leading-6 text-ink-soft sm:grid-cols-2">
-                          {tour.cardHighlights.slice(0, 4).map((item, index) => (
+                        <ul className="grid grid-cols-2 gap-2 text-xs leading-5 text-ink-soft md:text-sm md:leading-6">
+                          {tour.cardHighlights.slice(0, 3).map((item, index) => (
                             <li key={item} className="flex gap-2">
                               <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
                               <span>
@@ -353,7 +415,7 @@ export default function HomePage() {
                             </li>
                           ))}
                         </ul>
-                        <div className="mt-auto grid gap-2 sm:grid-cols-2">
+                        <div className="mt-auto grid grid-cols-2 gap-2">
                           <a className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-pearl px-4 text-sm font-semibold text-ink transition hover:bg-white" data-analytics-event="tour_card_click" data-tour-id={tour.id} href={tour.href}>
                             <LocalizedText id="minimal.tours.detail">{enText("minimal.tours.detail")}</LocalizedText>
                           </a>
