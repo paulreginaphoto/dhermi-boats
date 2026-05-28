@@ -25,6 +25,7 @@ for (const fragment of [
   "data-tour-track",
   "data-tour-progress",
   "tourRailScrollScript",
+  "Math.round((visibleWidth + gap) / (cardWidth + gap))",
   "minimal.tours.kicker",
   "minimal.tours.hint"
 ]) {

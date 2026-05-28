@@ -181,7 +181,7 @@ const tourRailScrollScript = String.raw`
     var padding = (parseFloat(windowStyle.paddingLeft || "0") || 0) + (parseFloat(windowStyle.paddingRight || "0") || 0);
     var visibleWidth = Math.max(1, windowEl.clientWidth - padding);
     var cardWidth = cards[0].getBoundingClientRect().width || cards[0].offsetWidth || visibleWidth;
-    var visibleCount = Math.max(1, Math.min(cards.length, Math.floor((visibleWidth + gap) / (cardWidth + gap))));
+    var visibleCount = Math.max(1, Math.min(cards.length, Math.round((visibleWidth + gap) / (cardWidth + gap))));
     var steps = Math.max(0, cards.length - visibleCount);
     var stepSize = cardWidth + gap;
     return {
