@@ -3,13 +3,13 @@
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
-import { tours } from "@/data/content";
+import { orderedTours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
 import { translations } from "@/lib/i18n";
 import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
 import { emailAddress, phoneDisplay, whatsappNumber, whatsappUrl } from "@/lib/site";
 
-const selectableTours = tours.slice(0, 5);
+const selectableTours = orderedTours;
 const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;

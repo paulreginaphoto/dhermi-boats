@@ -1,5 +1,5 @@
 import type { Tour } from "@/data/content";
-import { tours } from "@/data/content";
+import { orderedTours } from "@/data/content";
 import { brandName, canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramUrl, phoneDisplay, tiktokUrl } from "@/lib/site";
 
 const businessId = `${canonical("/")}#business`;
@@ -69,7 +69,7 @@ export function localBusinessSchema() {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Dhermi boat tours",
-      itemListElement: tours.map((tour) => tourOffer(tour))
+      itemListElement: orderedTours.map((tour) => tourOffer(tour))
     },
     contactPoint: {
       "@type": "ContactPoint",
@@ -144,7 +144,7 @@ export function tourCollectionSchema() {
     about: { "@id": businessId },
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: tours.map((tour, index) => ({
+      itemListElement: orderedTours.map((tour, index) => ({
         "@type": "ListItem",
         position: index + 1,
         name: tour.title,

@@ -8,7 +8,7 @@ import { CompareToursText, BookingTitleText } from "@/components/MicroCopy";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { TourComparison } from "@/components/TourComparison";
-import { tours } from "@/data/content";
+import { orderedTours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { canonical, languageAlternates } from "@/lib/site";
 import { breadcrumbSchema, tourCollectionSchema, touristTripSchema } from "@/lib/seo";
@@ -25,13 +25,14 @@ export const metadata: Metadata = {
 
 export default function ToursPage() {
   const enText = (key: string) => translations.en[key] ?? "";
+  const heroTour = orderedTours.find((tour) => tour.id === "grama") ?? orderedTours[0]!;
 
   return (
     <>
       <SEOJsonLd
         data={[
           tourCollectionSchema(),
-          ...tours.map((tour) => touristTripSchema(tour)),
+          ...orderedTours.map((tour) => touristTripSchema(tour)),
           breadcrumbSchema([
             { name: enText("page.tours.label"), url: "/" },
             { name: enText("comparison.title"), url: "/tours/" }
@@ -40,8 +41,8 @@ export default function ToursPage() {
       />
       <PageHero
         title={<LocalizedText id="comparison.title">{enText("comparison.title")}</LocalizedText>}
-        image={tours[1].image}
-        imageAlt={tours[1].imageAlt}
+        image={heroTour.image}
+        imageAlt={heroTour.imageAlt}
         label={<LocalizedText id="page.tours.label">{enText("page.tours.label")}</LocalizedText>}
       >
         <p>
@@ -99,7 +100,7 @@ export default function ToursPage() {
               </tr>
             </thead>
             <tbody className="divide-y divide-ink/10">
-              {tours.map((tour) => (
+              {orderedTours.map((tour) => (
                 <tr key={tour.id}>
                   <td className="px-5 py-4 font-semibold text-ink">
                     <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>

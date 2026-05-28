@@ -285,10 +285,13 @@ section {
 
 .tour-rail-window {
   overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 [data-tour-rail-enhanced] .tour-rail-window {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .tour-rail-track {
@@ -440,6 +443,7 @@ body[data-sticky-booking-relief="true"] [data-sticky-booking-bar] {
     padding-inline: 0;
     padding-bottom: 1rem;
     scroll-snap-type: x mandatory;
+    touch-action: pan-x pan-y;
     scrollbar-width: none;
   }
 
@@ -459,6 +463,10 @@ body[data-sticky-booking-relief="true"] [data-sticky-booking-bar] {
   }
 
   .tour-rail-window {
+    overflow: hidden;
+  }
+
+  [data-tour-rail-enhanced] .tour-rail-window {
     overflow: hidden;
   }
 

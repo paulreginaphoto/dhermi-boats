@@ -5,19 +5,19 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LocalizedText } from "@/components/LocalizedText";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
-import { faqs, gallery, reviews, tourComparison, tours } from "@/data/content";
+import { faqs, gallery, orderedTours, reviews, tourComparison } from "@/data/content";
 import { canonical, emailAddress, googleMapsUrl, languageAlternates, phoneDisplay, whatsappNumber } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { translations } from "@/lib/i18n";
 import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 const enText = (key: string) => translations.en[key] ?? "";
-const featuredTours = tours.filter((tour) => ["gjipe", "grama", "private", "sunset", "fishing"].includes(tour.id));
+const featuredTours = orderedTours;
 const featuredTourLabelIndexes = new Map([
-  ["gjipe", 0],
-  ["grama", 1],
-  ["private", 2],
-  ["sunset", 3],
+  ["sunset", 0],
+  ["gjipe", 1],
+  ["grama", 2],
+  ["private", 3],
   ["fishing", 4]
 ]);
 const featuredGallery = gallery.slice(0, 8);
@@ -192,6 +192,11 @@ const tourRailScrollScript = String.raw`
     };
   }
 
+  function setNativeRailOffset(windowEl, value) {
+    if (typeof windowEl.scrollTo === "function") windowEl.scrollTo(value, 0);
+    else windowEl.scrollLeft = value;
+  }
+
   function measureRail(rail) {
     var geometry = railGeometry(rail);
     if (!geometry) return;
@@ -229,7 +234,13 @@ const tourRailScrollScript = String.raw`
     var amount = clamp((stickyTop - rect.top) / scrollRange);
     var snappedStep = geometry.steps ? Math.round(amount * geometry.steps) : 0;
     var translate = Math.min(geometry.maxTranslate, snappedStep * geometry.stepSize);
-    geometry.track.style.transform = "translate3d(" + Math.round(translate * -1) + "px,0,0)";
+    if (window.innerWidth < 768) {
+      geometry.track.style.transform = "";
+      setNativeRailOffset(geometry.windowEl, Math.round(translate));
+    } else {
+      setNativeRailOffset(geometry.windowEl, 0);
+      geometry.track.style.transform = "translate3d(" + Math.round(translate * -1) + "px,0,0)";
+    }
     if (progress) progress.style.transform = "scaleX(" + amount.toFixed(3) + ")";
   }
 
