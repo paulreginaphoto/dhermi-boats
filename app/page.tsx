@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { CalendarDays, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -214,10 +214,10 @@ const tourRailScrollScript = String.raw`
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhërmi Boat Tours | Minimal Boat Trips from Dhërmi"
+    absolute: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave"
   },
   description:
-    "Minimal Dhërmi boat tour booking page for Gjipe, Grama Bay and private trips with a local skipper, max 15 guests and WhatsApp confirmation.",
+    "Book small-group and private boat tours from Dhërmi. Gjipe from 35 €, Grama Bay from 75 €, sunset and private trips confirmed on WhatsApp.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 
@@ -226,7 +226,7 @@ export default function HomePage() {
     <>
       <SEOJsonLd data={[homePageSchema(), ...featuredTours.map((tour) => touristTripSchema(tour)), faqSchema(homepageFaqs)]} />
 
-      <section data-home-section="hero" className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-pearl">
+      <section data-home-section="hero" data-sticky-relief-target className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-pearl">
         <Image
           src="/images/hero-riviera-tablet.webp"
           alt="Dhermi Boat on turquoise water below cliffs near Dhërmi"
@@ -238,11 +238,11 @@ export default function HomePage() {
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-navy/38 to-navy/88" />
         <div className="relative mx-auto flex min-h-[calc(100svh-5rem)] max-w-site flex-col justify-end px-5 pb-28 pt-24 md:px-8 md:pb-20">
-          <div className="max-w-3xl">
+          <div className="max-w-5xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
               <LocalizedText id="minimal.hero.label">{enText("minimal.hero.label")}</LocalizedText>
             </p>
-            <h1 className="mt-4 max-w-4xl font-serif text-5xl font-medium leading-[0.98] text-pearl md:text-7xl">
+            <h1 className="mt-4 max-w-5xl font-serif text-4xl font-medium leading-[0.98] text-pearl sm:text-5xl md:text-7xl">
               <LocalizedText id="minimal.hero.title">{enText("minimal.hero.title")}</LocalizedText>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/92 md:text-xl">
@@ -259,11 +259,14 @@ export default function HomePage() {
               <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="minimal_hero">
                 <LocalizedText id="minimal.cta.whatsapp">{enText("minimal.cta.whatsapp")}</LocalizedText>
               </ButtonLink>
-              <p className="flex items-center gap-2 text-sm font-semibold text-pearl/90">
-                <ShieldCheck className="h-4 w-4 text-sand" aria-hidden />
-                <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
-              </p>
+              <ButtonLink href="#tours" icon={ArrowRight} variant="secondary" className="border-white/25 bg-white/10 text-pearl hover:bg-white/18 focus-visible:ring-pearl">
+                <LocalizedText id="cta.compareTours">{enText("cta.compareTours")}</LocalizedText>
+              </ButtonLink>
             </div>
+            <p className="mt-4 flex max-w-xl items-start gap-2 text-sm font-semibold leading-6 text-pearl/92">
+              <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sand" aria-hidden />
+              <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
+            </p>
           </div>
         </div>
       </section>
