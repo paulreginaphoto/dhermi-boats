@@ -5,7 +5,7 @@ Scope: rebuild the homepage as a minimalist, visual, WhatsApp-first conversion p
 
 ## Summary
 
-The homepage is now a five-section landing page: full-screen visual hero, three tour cards, lazy gallery, compact real reviews and practical contact/form. Copy is shorter, WhatsApp is the primary action, and the reassurance "no payment before availability / departure confirmed on WhatsApp" is kept near conversion points.
+The homepage is now a five-section landing page: full-screen visual hero, a five-tour horizontal rail, lazy gallery, compact real reviews and practical contact/form. Copy is shorter, WhatsApp is the primary action, and the reassurance "no payment before availability / departure confirmed on WhatsApp" is kept near conversion points.
 
 No prices, routes, locations or review claims were invented. Existing real prices, routes, contact details and review excerpts were reused.
 
@@ -14,7 +14,7 @@ No prices, routes, locations or review claims were invented. Existing real price
 - Replaced the dense homepage composition with five clear sections marked by `data-home-section`: hero, tours, gallery, reviews and contact.
 - Added a minimal availability form that prepares a WhatsApp message with name, date and number of people in EN/FR/AL.
 - Kept gallery images as optimized WebP/Next images with lazy loading and zoom links.
-- Reduced the mobile sticky booking bar to one compact WhatsApp CTA so it does not cover the booking form.
+- Reduced the mobile sticky booking bar to one compact WhatsApp CTA and hide it on dense homepage booking/tour sections so it does not cover content.
 - Added mobile scroll padding/margins so section anchors and sticky CTA behave better on small screens.
 - Added a dedicated `qa:minimal-homepage` guard for the new structure and the dynamic form WhatsApp link behavior.
 - Updated EN, FR and SQ/AL translations for all new visible homepage strings.

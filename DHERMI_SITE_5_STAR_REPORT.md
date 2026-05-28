@@ -12,7 +12,11 @@ No prices, phone number, real routes or real review claims were invented. Sea/we
 ## Main Changes
 
 - Hero copy, badges, CTAs and desktop trust card were redesigned for quick clarity.
-- Mobile sticky bar keeps WhatsApp, Tours, Prices and Call visible with cleaner spacing.
+- Homepage tours were upgraded from a static card grid to a five-tour horizontal rail driven by vertical scroll on desktop and swipe on mobile.
+- Sunset is now positioned as the "Sunset Lovers Tour" / "tour des amoureux" with matching EN, FR and SQ/AL copy.
+- Repeated landing-page blocks were removed from hot-intent pages, and the reusable trust block is now a compact proof strip instead of a heavy card.
+- The mobile booking bar now hides on dense homepage tour/form sections so it does not cover tour cards or booking content.
+- Mobile booking/navigation keeps WhatsApp easy to reach with cleaner spacing and no content coverage in dense homepage sections.
 - Tour cards now show duration, price, capacity, best fit, main stops and tour-specific WhatsApp CTAs.
 - Booking reassurance copy now focuses on WhatsApp first, meeting point, sea conditions and no payment before availability.
 - EN, FR and AL/SQ translation keys were expanded and regenerated.
@@ -25,10 +29,10 @@ No prices, phone number, real routes or real review claims were invented. Sea/we
 ## Files Touched
 
 - Core pages: `app/page.tsx`, `app/layout.tsx`, `app/tours/page.tsx`, `app/destinations/page.tsx`, hot-intent pages.
-- Components: `HeroCinematic`, `TourCard`, `TourComparison`, `HighSeasonOfferLadder`, `OneMinuteBooking`, `StickyBookingBar`, `LanguageSwitcher`, trust/reassurance/local skipper blocks.
+- Components: `HeroCinematic`, `TourCard`, `TourComparison`, `HighSeasonOfferLadder`, `OneMinuteBooking`, `StickyBookingBar`, `LanguageSwitcher`, trust/reassurance/local skipper blocks, hot-intent landing pages.
 - Content/i18n/SEO: `data/content.ts`, `lib/i18n.ts`, `lib/seo.ts`, `lib/site.ts`, `lib/whatsappMessages.ts`, `public/locales/translations.json`.
-- QA/guards: `scripts/content-guard.mjs`.
-- New docs/assets: `DHERMI_SITE_5_STAR_PLAN.md`, `DHERMI_SITE_5_STAR_REPORT.md`, `docs/screenshots/dhermi-5-star/`.
+- QA/guards: `scripts/content-guard.mjs`, `scripts/qa-five-tour-rail.mjs`.
+- New docs/assets: `DHERMI_SITE_5_STAR_PLAN.md`, `DHERMI_SITE_5_STAR_REPORT.md`, `docs/screenshots/dhermi-5-star/`, `docs/screenshots/dhermi-five-tour-rail/`.
 - New legacy pages: `/tours/private/`, `/tours/group/`, `/20250721_103929/`, `/2026/02/28/hello-world/`, `/sample-page/`, `/boutique/`, `/panier/`, `/mon-compte/`, `/commander/`.
 
 ## Checks Run
@@ -42,11 +46,13 @@ All passed unless noted:
 | `npm run content:guard` | PASS |
 | `npm run test:date-format` | PASS |
 | `npm run build` | PASS, 33 static pages, Google Ads injected |
+| `npm run qa:five-tour-rail` | PASS |
 | `npm run qa:conversion-ux` | PASS |
-| `npm run qa:i18n-links` | PASS, 31 HTML files, 519 used i18n keys, 604 translation keys |
+| `npm run qa:minimal-homepage` | PASS |
+| `npm run qa:i18n-links` | PASS, 31 HTML files, 469 used i18n keys, 636 translation keys |
 | `npm run qa:url-canonicals` | PASS, 5 canonical tours, 8 legacy redirects, 1 legacy media file |
 | `npm run qa:final-release` | PASS, 12 public URLs checked |
-| Playwright visual/flow QA | PASS, no console errors, no horizontal overflow, layout shift 0 |
+| Playwright visual/flow QA | PASS, no console errors, no horizontal overflow, rail sticky/translation verified |
 | Lighthouse local homepage | Performance 93, Accessibility 100, Best Practices 77, SEO 100 |
 
 Lighthouse still reports Best Practices issues caused by Google Ads/DoubleClick third-party cookie and DevTools issues on localhost. The report JSON was written to `.tmp-dhermi-qa/lighthouse-home.json`; Lighthouse also hit a Windows temp cleanup `EPERM` after writing the report.
@@ -58,6 +64,12 @@ Lighthouse still reports Best Practices issues caused by Google Ads/DoubleClick 
 - Mobile booking flow: `docs/screenshots/dhermi-5-star/mobile-booking-flow.png`
 - Desktop hero: `docs/screenshots/dhermi-5-star/desktop-hero.png`
 - Desktop tour comparison: `docs/screenshots/dhermi-5-star/desktop-tour-comparison.png`
+- Five-tour rail desktop start: `docs/screenshots/dhermi-five-tour-rail/desktop-rail-start.png`
+- Five-tour rail desktop mid: `docs/screenshots/dhermi-five-tour-rail/desktop-rail-mid.png`
+- Five-tour rail desktop end: `docs/screenshots/dhermi-five-tour-rail/desktop-rail-end.png`
+- Five-tour rail mobile start: `docs/screenshots/dhermi-five-tour-rail/mobile-rail-start.png`
+- Sunset lovers mobile card: `docs/screenshots/dhermi-five-tour-rail/mobile-sunset-card.png`
+- Mobile booking flow after relief check: `docs/screenshots/dhermi-five-tour-rail/mobile-booking-flow.png`
 
 ## Remaining TODOs
 

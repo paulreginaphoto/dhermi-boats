@@ -14,7 +14,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -24,7 +24,7 @@ body {
   font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 a,
@@ -268,6 +268,31 @@ section {
   contain-intrinsic-size: 1000px 900px;
 }
 
+.tour-rail-section {
+  min-height: auto;
+}
+
+.tour-rail-sticky {
+  position: relative;
+  overflow: hidden;
+}
+
+.tour-rail-window {
+  overflow-x: auto;
+}
+
+.tour-rail-track {
+  display: flex;
+  gap: 1rem;
+  will-change: transform;
+}
+
+.tour-rail-card {
+  grid-template-rows: auto 1fr;
+  min-width: min(82vw, 25rem);
+  scroll-snap-align: start;
+}
+
 .destination-section {
   margin-top: -1px;
   background:
@@ -316,6 +341,18 @@ section {
   background: #fff !important;
 }
 
+[data-sticky-booking-bar] {
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+body[data-sticky-booking-relief="true"] [data-sticky-booking-bar] {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(calc(100% + 1rem));
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -324,6 +361,10 @@ section {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+
+  .tour-rail-track {
+    transform: none !important;
   }
 }
 
@@ -370,6 +411,61 @@ section {
   .photo-overlay-dark-strong {
     background:
       linear-gradient(180deg, transparent 20%, rgb(7 27 38 / 0.66) 100%);
+  }
+
+  .tour-rail-window {
+    margin-inline: -1.25rem;
+    padding-inline: 1.25rem;
+    padding-bottom: 1rem;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .tour-rail-window::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tour-rail-track {
+    transform: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .tour-rail-section {
+    height: 320svh;
+  }
+
+  .tour-rail-sticky {
+    position: sticky;
+    top: 0;
+    display: flex;
+    min-height: 100svh;
+    align-items: center;
+    overflow: hidden;
+    padding-block: clamp(4.75rem, 7vh, 6rem) 2rem;
+  }
+
+  .tour-rail-window {
+    overflow: hidden;
+  }
+
+  .tour-rail-track {
+    gap: 1.25rem;
+    transition: transform 0.08s linear;
+  }
+
+  .tour-rail-card {
+    min-width: min(42vw, 32rem);
+  }
+
+  .tour-rail-image {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (min-width: 1280px) {
+  .tour-rail-card {
+    min-width: 31rem;
   }
 }
 

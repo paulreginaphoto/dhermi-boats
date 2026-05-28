@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import { ArrowRight, CalendarDays, MessageCircle, ShieldCheck, Star } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
-import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
-import { HighSeasonOfferLadder } from "@/components/HighSeasonOfferLadder";
 import { LocalizedText } from "@/components/LocalizedText";
 import { TourDetailsText } from "@/components/MicroCopy";
 import { PageHero } from "@/components/PageHero";
-import { SeasonAvailabilityStrip } from "@/components/SeasonAvailabilityStrip";
 import { WhyBookLocal } from "@/components/WhyBookLocal";
 import { primaryWhatsappHref, tours } from "@/data/content";
 import { canonical, languageAlternates } from "@/lib/site";
@@ -66,9 +63,6 @@ export function HotIntentLandingPage({
         </div>
       </PageHero>
 
-      <SeasonAvailabilityStrip />
-      <ConversionTrustBlock />
-
       <section className="bg-pearl py-14 md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
           <div>
@@ -81,9 +75,9 @@ export function HotIntentLandingPage({
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             {bullets.map((bullet, index) => (
-              <article key={bullet} className="rounded-2xl border border-ink/8 bg-limestone/70 p-5 shadow-sm">
+              <article key={bullet} className="rounded-lg border border-ink/8 bg-limestone/70 p-5">
                 <div className="flex items-start gap-4">
-                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-ink text-pearl">
+                  <span className="grid h-10 w-10 shrink-0 place-items-center rounded-md bg-ink text-pearl">
                     {index === 0 ? <CalendarDays className="h-5 w-5" aria-hidden strokeWidth={1.75} /> : null}
                     {index === 1 ? <ShieldCheck className="h-5 w-5" aria-hidden strokeWidth={1.75} /> : null}
                     {index > 1 ? <Star className="h-5 w-5" aria-hidden strokeWidth={1.75} /> : null}
@@ -96,7 +90,6 @@ export function HotIntentLandingPage({
         </div>
       </section>
 
-      <HighSeasonOfferLadder />
       <WhyBookLocal />
       <BookingCTA whatsappKey={primaryTour.id as "gjipe" | "grama" | "private" | "sunset" | "fishing"} analyticsPlacement="hot_intent_final" />
     </>

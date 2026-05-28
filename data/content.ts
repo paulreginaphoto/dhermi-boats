@@ -181,9 +181,9 @@ export const tours: Tour[] = [
   },
   {
     id: "sunset",
-    title: "Sunset Private Tour from Dhërmi",
-    shortTitle: "Sunset Private Tour",
-    subtitle: "A private sunset boat tour around the Dhërmi coast.",
+    title: "Sunset Lovers Tour from Dhërmi",
+    shortTitle: "Sunset Lovers Tour",
+    subtitle: "A private sunset boat tour for couples, proposals and quiet evenings on the Dhërmi coast.",
     type: "experience",
     offerTier: "experience",
     duration: "Sunset timing",
@@ -194,18 +194,18 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-sunset-card.avif"),
     imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset tour. Tour: Sunset Private Tour / Date: __ / Adults: __ / Children: __ / Preferred time: sunset / Language: __ / Questions: __",
-    bestFor: "Couples and quiet evenings",
-    highlights: ["Around Dhërmi"],
-    cardHighlights: ["Romantic sunset cruise", "Around Dhërmi", "Private cruise"],
-    included: ["Around Dhërmi", "Romantic sunset cruise around Dhërmi", "Private timing confirmed on WhatsApp"],
+    whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset lovers tour. Tour: Sunset Lovers Tour / Date: __ / Adults: __ / Children: __ / Preferred time: sunset / Language: __ / Questions: __",
+    bestFor: "Couples, proposals and quiet evenings",
+    highlights: ["Golden-hour cruise", "Around Dhërmi", "Private for your group"],
+    cardHighlights: ["Golden-hour cruise", "Private for your group", "Around Dhërmi", "Soft evening route"],
+    included: ["Around Dhërmi", "Golden-hour cruise on the Dhërmi coast", "Private timing confirmed on WhatsApp"],
     itinerary: ["Confirm sunset availability on WhatsApp", "Meet in the Dhërmi area before sunset", "Cruise around the coast near Dhërmi", "Enjoy the sunset from the sea", "Return after the sunset cruise"],
     bring: ["Light jacket for the evening", "Phone or camera", "Water", "Comfortable beach shoes"],
     safetyNote: "Sunset timing and route are confirmed on WhatsApp and may change depending on sea conditions.",
     detailFaqs: [
       {
-        question: "Is the Sunset Private Tour for couples?",
-        answer: "Yes. It is designed as a romantic private sunset cruise around Dhërmi."
+        question: "Is the Sunset Lovers Tour for couples?",
+        answer: "Yes. It is a private sunset cruise for couples, proposals and quiet evenings around Dhërmi."
       },
       {
         question: "What time does it start?",
@@ -297,7 +297,7 @@ export const tourComparison: TourComparisonItem[] = [
   { angle: "Best value", tourId: "gjipe", duration: "1h30", price: "from €35" },
   { angle: "Most complete route", tourId: "grama", duration: "3h30", price: "from €75" },
   { angle: "Private option", tourId: "private", duration: "custom", price: "€200/hour" },
-  { angle: "Sunset private", tourId: "sunset", duration: "sunset", price: "from €120" },
+  { angle: "Lovers sunset", tourId: "sunset", duration: "sunset", price: "from €120" },
   { angle: "Morning fishing", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
 ];
 

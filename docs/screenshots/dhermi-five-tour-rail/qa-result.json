@@ -1,0 +1,157 @@
+{
+  "outDir": "C:\\Users\\paulr\\Documents\\Dhermi Boats\\docs\\screenshots\\dhermi-five-tour-rail",
+  "errors": [],
+  "railMetrics": [
+    {
+      "label": "desktop-rail-start",
+      "scrollY": 950,
+      "railTop": 51,
+      "stickyTop": 51,
+      "transform": "matrix(1, 0, 0, 1, 0, 0)",
+      "progress": "matrix(0, 0, 0, 1, 0, 0)",
+      "overflow": 0,
+      "cards": [
+        {
+          "id": "gjipe",
+          "left": 162,
+          "right": 658,
+          "top": 388,
+          "bottom": 1007
+        },
+        {
+          "id": "grama",
+          "left": 678,
+          "right": 1174,
+          "top": 388,
+          "bottom": 1007
+        },
+        {
+          "id": "private",
+          "left": 1194,
+          "right": 1690,
+          "top": 388,
+          "bottom": 1007
+        },
+        {
+          "id": "sunset",
+          "left": 1710,
+          "right": 2206,
+          "top": 388,
+          "bottom": 1007
+        },
+        {
+          "id": "fishing",
+          "left": 2226,
+          "right": 2722,
+          "top": 388,
+          "bottom": 1007
+        }
+      ]
+    },
+    {
+      "label": "desktop-rail-mid",
+      "scrollY": 2095,
+      "railTop": -1094,
+      "stickyTop": 0,
+      "transform": "matrix(1, 0, 0, 1, -614.179, 0)",
+      "progress": "matrix(0.497, 0, 0, 1, 0, 0)",
+      "overflow": 0,
+      "cards": [
+        {
+          "id": "gjipe",
+          "left": -452,
+          "right": 44,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "grama",
+          "left": 64,
+          "right": 560,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "private",
+          "left": 580,
+          "right": 1076,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "sunset",
+          "left": 1096,
+          "right": 1592,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "fishing",
+          "left": 1612,
+          "right": 2108,
+          "top": 337,
+          "bottom": 956
+        }
+      ]
+    },
+    {
+      "label": "desktop-rail-end",
+      "scrollY": 3169,
+      "railTop": -2168,
+      "stickyTop": 0,
+      "transform": "matrix(1, 0, 0, 1, -1319.79, 0)",
+      "progress": "matrix(0.985, 0, 0, 1, 0, 0)",
+      "overflow": 0,
+      "cards": [
+        {
+          "id": "gjipe",
+          "left": -1158,
+          "right": -662,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "grama",
+          "left": -642,
+          "right": -146,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "private",
+          "left": -126,
+          "right": 370,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "sunset",
+          "left": 390,
+          "right": 886,
+          "top": 337,
+          "bottom": 956
+        },
+        {
+          "id": "fishing",
+          "left": 906,
+          "right": 1402,
+          "top": 337,
+          "bottom": 956
+        }
+      ]
+    }
+  ],
+  "mobileMetrics": {
+    "overflow": 0,
+    "visibleTourIds": [
+      "gjipe",
+      "grama",
+      "private",
+      "sunset",
+      "fishing"
+    ],
+    "stickyRelief": "true",
+    "stickyOpacity": "0",
+    "formHref": "https://wa.me/355693921356?text=Hello%20Dhermi%20Boat%2C%20I%20would%20like%20to%20check%20availability.%0AName%3A%20QA%20Guest%0ADate%3A%202026-07-15%0APeople%3A%202%0ASource%3A%20Minimal%20homepage%20form"
+  }
+}

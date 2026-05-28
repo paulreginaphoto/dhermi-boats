@@ -9,9 +9,7 @@ const reasons = [
   "why.reason.0",
   "why.reason.1",
   "why.reason.2",
-  "why.reason.3",
-  "why.reason.4",
-  "why.reason.5"
+  "why.reason.3"
 ];
 
 const proofCards = [
