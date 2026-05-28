@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
+import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
@@ -1119,7 +1120,7 @@ export function OneMinuteBooking() {
             </a>
           </div>
         </form>
-        <script dangerouslySetInnerHTML={{ __html: staticBookingEnhancerScript }} />
+        <InlineRuntimeScript id="static-booking-enhancer" code={staticBookingEnhancerScript} />
       </div>
     </section>
   );

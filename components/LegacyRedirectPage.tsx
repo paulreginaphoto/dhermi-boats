@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
+import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { sitePath } from "@/lib/site";
 import { translations } from "@/lib/i18n";
@@ -17,11 +18,7 @@ export function LegacyRedirectPage({ destination = "/" }: { destination?: string
 
   return (
     <section className="bg-limestone py-16 md:py-24">
-      <script
-        dangerouslySetInnerHTML={{
-          __html: redirectScript
-        }}
-      />
+      <InlineRuntimeScript id="legacy-redirect" code={redirectScript} />
       <meta content={`0;url=${targetPath}`} httpEquiv="refresh" />
       <div className="site-band">
         <div className="max-w-2xl rounded-lg border border-ink/10 bg-pearl p-6 shadow-sm md:p-8">

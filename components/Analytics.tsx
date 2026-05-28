@@ -1,4 +1,4 @@
-/* eslint-disable @next/next/next-script-for-ga */
+import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 
 const gtmId = process.env.NEXT_PUBLIC_GTM_ID?.trim();
 
@@ -41,11 +41,9 @@ export function Analytics() {
     <>
       {gtmId ? (
         <>
-          <script
+          <InlineRuntimeScript
             id="gtm-loader"
-            dangerouslySetInnerHTML={{
-              __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer",${scriptValue(gtmId)});`
-            }}
+            code={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({"gtm.start":new Date().getTime(),event:"gtm.js"});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src="https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);})(window,document,"script","dataLayer",${scriptValue(gtmId)});`}
           />
           <noscript>
             <iframe
@@ -58,12 +56,7 @@ export function Analytics() {
           </noscript>
         </>
       ) : null}
-      <script
-        id="analytics-click-tracking"
-        dangerouslySetInnerHTML={{
-          __html: clickTrackingScript
-        }}
-      />
+      <InlineRuntimeScript id="analytics-click-tracking" code={clickTrackingScript} />
     </>
   );
 }

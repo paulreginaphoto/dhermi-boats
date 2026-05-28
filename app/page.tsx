@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight, CalendarDays, Clock3, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
+import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, gallery, orderedTours, reviews, tourComparison } from "@/data/content";
@@ -605,8 +606,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      <script dangerouslySetInnerHTML={{ __html: minimalAvailabilityFormScript }} />
-      <script dangerouslySetInnerHTML={{ __html: tourRailScrollScript }} />
+      <InlineRuntimeScript id="minimal-availability-form" code={minimalAvailabilityFormScript} />
+      <InlineRuntimeScript id="tour-rail-scroll" code={tourRailScrollScript} />
     </>
   );
 }

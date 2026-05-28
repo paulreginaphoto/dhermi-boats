@@ -1,3 +1,4 @@
+import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { basePath } from "@/lib/site";
 import { whatsappNumber } from "@/lib/site";
 import { defaultLocale, locales } from "@/lib/i18n";
@@ -212,19 +213,33 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       .catch(function () {});
   }
 
-  updateTranslations();
-  applyWhatsappLinks();
-  applyAnalyticsEvents();
+  function start() {
+    updateTranslations();
+    applyWhatsappLinks();
+    applyAnalyticsEvents();
+  }
+
+  function hasNextRuntime() {
+    try {
+      return Boolean(window.__next_f || window.document.querySelector('script[src*="/_next/static/chunks"]'));
+    } catch (_e) {
+      return false;
+    }
+  }
+
+  if (hasNextRuntime()) {
+    window.setTimeout(start, 800);
+  } else {
+    start();
+  }
 })();`;
 }
 
 export function LocaleBootstrap() {
   return (
-    <script
+    <InlineRuntimeScript
       id="dhermi-locale-bootstrap"
-      dangerouslySetInnerHTML={{
-        __html: toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages)
-      }}
+      code={toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages)}
     />
   );
 }
