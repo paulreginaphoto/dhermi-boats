@@ -67,7 +67,7 @@ export const tours: Tour[] = [
     id: "gjipe",
     title: "Gjipe Boat Tour from Dhërmi",
     shortTitle: "Gjipe Tour",
-    subtitle: "1h30 to Pirates Cave, Gjipe Beach, Pigeon Cave and a swim stop.",
+    subtitle: "1h30: Pirates Cave, Gjipe Beach, Pigeon Cave, swim stop.",
     type: "shared",
     offerTier: "bestSeller",
     duration: "1h30",
@@ -79,7 +79,7 @@ export const tours: Tour[] = [
     imageAlt: "Boat approaching a clear beach cove with turquoise water near Dhërmi",
     href: sitePath("/gjipe-boat-tour/"),
     whatsappText: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Tour: Gjipe Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
-    bestFor: "Short trip, caves and swim stop",
+    bestFor: "Short caves + swim",
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
     cardHighlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "30-minute swim stop"],
     included: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
@@ -105,7 +105,7 @@ export const tours: Tour[] = [
     id: "grama",
     title: "Grama Bay Boat Tour from Dhërmi",
     shortTitle: "Grama Tour",
-    subtitle: "3h30 along Karaburun to Blue Cave, San Andrea and Grama Bay.",
+    subtitle: "3h30 Karaburun route with Blue Cave, San Andrea and Grama Bay.",
     type: "shared",
     offerTier: "premiumRoute",
     duration: "3h30",
@@ -117,13 +117,13 @@ export const tours: Tour[] = [
     imageAlt: "Wide blue bay and rocky Karaburun coastline on a Dhermi boat tour",
     href: sitePath("/grama-bay-boat-tour/"),
     whatsappText: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Tour: Grama Bay Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
-    bestFor: "Longest shared route and Blue Cave",
+    bestFor: "Full Karaburun route",
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
     cardHighlights: ["Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach"],
     included: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
     itinerary: ["Depart from the Dhërmi area", "Sail along Karaburun Natural Park", "Stop near San Andrea Beach and Blue Cave", "Spend time at Grama Beach", "Return to Dhërmi with route adjusted to sea conditions"],
     bring: ["Swimwear and towel", "Sun protection", "Water", "Light snacks if you want extra comfort"],
-    safetyNote: "The skipper adapts cave access, stops and timing to the sea and weather on the day.",
+    safetyNote: "Cave access, stops and timing depend on sea and weather.",
     detailFaqs: [
       {
         question: "Is Grama Tour the longest shared route?",
@@ -142,8 +142,8 @@ export const tours: Tour[] = [
   {
     id: "private",
     title: "Private Boat Tour from Dhërmi, Albania",
-    shortTitle: "Tailor-made private tour",
-    subtitle: "Private route with your timing, coves and swim stops.",
+    shortTitle: "Private tour",
+    subtitle: "Custom timing, coves and swim stops.",
     type: "private",
     offerTier: "private",
     duration: "Custom, minimum 2 hours",
@@ -155,11 +155,11 @@ export const tours: Tour[] = [
     imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
     href: sitePath("/private-boat-tour-albania/"),
     whatsappText: "Hello Dhermi Boat, I'd like to plan a private boat tour. Tour: Private Boat Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
-    bestFor: "Families, friends and custom stops",
+    bestFor: "Families, friends, custom stops",
     highlights: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
     cardHighlights: ["Custom duration", "Custom itinerary", "Swimming stops", "1 drink included / person"],
     included: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
-    itinerary: ["Share your preferred date, group size and ideas on WhatsApp", "Choose a duration of at least 2 hours", "Agree the route, coves and swimming stops with the skipper", "Enjoy the private tour from Dhërmi", "Adjust the plan if sea conditions require it"],
+    itinerary: ["Share date, group size and route ideas on WhatsApp", "Choose at least 2 hours", "Agree the route, coves and swimming stops", "Enjoy the private tour from Dhërmi", "Adjust the plan if sea conditions require it"],
     bring: ["Swimwear and towel", "Sun protection", "Water or personal snacks", "Your preferred route ideas"],
     safetyNote: "Private routes stay flexible when wind or waves change.",
     detailFaqs: [
@@ -181,7 +181,7 @@ export const tours: Tour[] = [
     id: "sunset",
     title: "Sunset Lovers Tour from Dhërmi",
     shortTitle: "Sunset Lovers Tour",
-    subtitle: "Private sunset cruise for couples and quiet evenings.",
+    subtitle: "Private sunset cruise for couples.",
     type: "experience",
     offerTier: "experience",
     duration: "Sunset timing",
@@ -354,33 +354,33 @@ export const reviews = [
 ] satisfies Review[];
 
 export const whyChooseUs = [
-  "Local skipper from the Dhërmi area",
-  "Albanian and French, with good English for guest communication",
-  "Routes adjusted with the skipper for sea conditions",
-  "Meeting point and timing confirmed on WhatsApp"
+  "Local route advice",
+  "EN / FR / AL",
+  "Routes follow sea conditions",
+  "Meeting point on WhatsApp"
 ];
 
 export const skipper = {
-  name: "Local skipper",
+  name: "Local route",
   image: assetPath("/images/gallery-blue-cove-boat.webp"),
   imageAlt: "Dhermi Boat in a turquoise cove near Dhërmi",
-  text: "Direct local booking, clear meeting point and routes adjusted to the sea."
+  text: "Direct booking, clear meeting point and routes adjusted to the sea."
 };
 
 export const usefulInformation = [
   "Departure from the Dhërmi area",
   "Small groups, up to 15 guests depending on the tour",
-  "Routes confirmed by the skipper after checking sea conditions"
+  "Routes confirmed after checking sea conditions"
 ];
 
 export const faqs = [
   {
     question: "How do I book a tour?",
-    answer: "Send the date, group size and tour on WhatsApp. We reply with availability."
+    answer: "Send date, guests and tour on WhatsApp. We reply with availability."
   },
   {
     question: "Where is the departure point?",
-    answer: "Departure is from the Dhërmi area. The exact point is sent on WhatsApp."
+    answer: "Departure is around Dhërmi. Exact point comes on WhatsApp."
   },
   {
     question: "Is parking possible near departure?",
@@ -388,7 +388,7 @@ export const faqs = [
   },
   {
     question: "Can I pay cash or card?",
-    answer: "Payment details are confirmed on WhatsApp when availability is checked, so you know what to prepare before you arrive."
+    answer: "Payment details come after availability is checked."
   },
   {
     question: "Do tours depend on the weather?",
@@ -396,7 +396,7 @@ export const faqs = [
   },
   {
     question: "What happens if the sea is not safe?",
-    answer: "The skipper confirms safety-first routes depending on sea conditions. If the route is not safe, we adapt the route, timing or booking plan."
+    answer: "If the route is not safe, timing or route changes."
   },
   {
     question: "Can I choose a private tour?",
@@ -408,7 +408,7 @@ export const faqs = [
   },
   {
     question: "Are life jackets included?",
-    answer: "Yes. Safety equipment is part of the boat setup, and the skipper confirms what is needed before departure."
+    answer: "Yes. Safety equipment is part of the boat setup."
   },
   {
     question: "Can I bring bags and towels?",
@@ -416,11 +416,11 @@ export const faqs = [
   },
   {
     question: "How many people can join?",
-    answer: "Tours are made for small groups, up to 15 people depending on the tour. For special requests, contact us on WhatsApp."
+    answer: "Most tours are up to 15 guests. Fishing is up to 5."
   },
   {
     question: "How long is the swim stop?",
-    answer: "The Gjipe shared tour includes around 30 minutes of swimming. Longer and private routes confirm swim timing with the skipper."
+    answer: "Gjipe includes about 30 minutes. Private routes are flexible."
   },
   {
     question: "Is the tour private or shared?",
@@ -432,11 +432,11 @@ export const faqs = [
   },
   {
     question: "Can we choose swimming stops?",
-    answer: "On private tours, you can request swimming stops and destinations. Routes and timing may change depending on sea conditions."
+    answer: "Yes on private tours. Sea conditions still decide the final route."
   },
   {
     question: "Is the meeting point confirmed by WhatsApp?",
-    answer: "Yes. The exact meeting point in the Dhërmi area is confirmed by WhatsApp after availability is checked."
+    answer: "Yes. Exact point is sent on WhatsApp after availability."
   },
   {
     question: "Can I be dropped off at Gjipe?",
@@ -444,14 +444,14 @@ export const faqs = [
   },
   {
     question: "Which languages does the skipper speak?",
-    answer: "Albanian, French and English communication."
+    answer: "Albanian, French and English."
   }
 ];
 
 export const trustBadges = [
   "5-star guest reviews",
   "Small groups, max 15 guests",
-  "Local skipper",
+  "Local route",
   "Daily departures",
   "Sea-condition routes"
 ];

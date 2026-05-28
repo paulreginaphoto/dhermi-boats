@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, Clock3, Euro, ListChecks, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock3, Euro, ListChecks, MessageCircle, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
@@ -52,7 +52,7 @@ export function TourComparison() {
                     className="object-cover transition duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/62 via-transparent to-transparent" />
-                  <p className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
+                  <p className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-md bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
                     <LocalizedText id={`comparison.${index}.angle`}>{item.angle}</LocalizedText>
                   </p>
                 </div>
@@ -62,39 +62,39 @@ export function TourComparison() {
                     <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
                   </h3>
                   <dl className="mt-5 grid gap-2 text-sm font-semibold text-ink-soft">
-                    <div className="flex items-center gap-2">
-                      <Clock3 className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                    <div className="flex items-center gap-2 rounded-md bg-pearl/70 p-2.5">
+                      <Clock3 className="h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
                         <LocalizedText id="tour.durationLabel">{translations.en["tour.durationLabel"] ?? ""}</LocalizedText>
                       </dt>
-                      <dd>
+                      <dd className="leading-5">
                         <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
                       </dd>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Euro className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                    <div className="flex items-center gap-2 rounded-md bg-pearl/70 p-2.5">
+                      <Euro className="h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
                         <LocalizedText id="tour.priceLabel">{translations.en["tour.priceLabel"] ?? ""}</LocalizedText>
                       </dt>
-                      <dd>
+                      <dd className="leading-5">
                         <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
                       </dd>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Users className="h-4 w-4 text-turquoise" aria-hidden strokeWidth={1.75} />
+                    <div className="flex items-center gap-2 rounded-md bg-pearl/70 p-2.5">
+                      <Users className="h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                       <dt className="sr-only">
                         <LocalizedText id="tour.capacityLabel">{translations.en["tour.capacityLabel"] ?? ""}</LocalizedText>
                       </dt>
-                      <dd>
+                      <dd className="leading-5">
                         <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
                       </dd>
                     </div>
                   </dl>
                   <div className="mt-4 rounded-md bg-pearl/70 p-3">
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                    <p className="sr-only">
                       <LocalizedText id="comparison.audience">{translations.en["comparison.audience"] ?? ""}</LocalizedText>
                     </p>
-                    <p className="mt-1 text-sm font-semibold leading-6 text-ink">
+                    <p className="text-sm font-semibold leading-6 text-ink">
                       <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
                     </p>
                   </div>
@@ -106,7 +106,7 @@ export function TourComparison() {
                     <ul className="mt-2 grid gap-1.5 text-sm leading-6 text-ink-soft">
                       {tour.cardHighlights.slice(0, 3).map((stop, stopIndex) => (
                         <li key={stop} className="flex gap-2">
-                          <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                          <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={1.75} />
                           <span>
                             <LocalizedText id={`tour.${tour.id}.cardHighlight.${stopIndex}`}>{stop}</LocalizedText>
                           </span>
@@ -115,7 +115,7 @@ export function TourComparison() {
                     </ul>
                   </div>
                   <div className="mt-auto grid gap-2 pt-5">
-                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                    <p className="sr-only">
                       <LocalizedText id="comparison.ctaLabel">{translations.en["comparison.ctaLabel"] ?? ""}</LocalizedText>
                     </p>
                     <a

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ArrowRight, Clock3, Euro, ListChecks, MessageCircle, Users } from "lucide-react";
+import { ArrowRight, CheckCircle2, Clock3, Euro, ListChecks, MessageCircle, Users } from "lucide-react";
 import type { Tour } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
 import { translations } from "@/lib/i18n";
@@ -56,7 +56,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
               <LocalizedText id={`${translationBase}.bestFor`}>{tour.bestFor}</LocalizedText>
             </p>
           </div>
-            <a
+          <a
             className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-ink/10 text-ink transition group-hover:border-turquoise group-hover:text-turquoise"
             data-analytics-event="tour_card_click"
             data-tour-id={tour.id}
@@ -66,12 +66,6 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             <ArrowRight className="h-4 w-4" strokeWidth={iconStrokeWidth} />
           </a>
         </div>
-
-        {tour.subtitle ? (
-          <p className="mt-4 text-sm leading-7 text-ink-soft">
-            <LocalizedText id={`${translationBase}.subtitle`}>{tour.subtitle}</LocalizedText>
-          </p>
-        ) : null}
 
         <div className="mt-5 grid gap-2 text-sm font-semibold text-ink sm:grid-cols-2">
           {tour.duration ? (
@@ -120,7 +114,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
         <ul className="mt-3 grid flex-1 gap-2 text-sm leading-6 text-ink-soft">
           {tour.cardHighlights.slice(0, 5).map((item, index) => (
             <li key={item} className="flex gap-2">
-              <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden strokeWidth={iconStrokeWidth} />
               <span>
                 <LocalizedText id={`${translationBase}.cardHighlight.${index}`}>{item}</LocalizedText>
               </span>
@@ -148,6 +142,7 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             href={tour.href}
           >
             <TourDetailsText />
+            <ArrowRight className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />
           </a>
         </div>
       </div>

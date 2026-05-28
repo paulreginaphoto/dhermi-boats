@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, CalendarDays, ChevronLeft, ChevronRight, Clock3, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users, X } from "lucide-react";
+import { ArrowRight, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users, Waves, X } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryViewerRuntime } from "@/components/GalleryViewerRuntime";
@@ -25,6 +25,18 @@ const featuredTourLabelIndexes = new Map([
 const featuredGallery = gallery.slice(0, 8);
 const featuredReviews = reviews.slice(0, 4);
 const homepageFaqs = [0, 1, 4, 6, 13, 17].map((index) => ({ ...faqs[index], translationIndex: index }));
+const heroBadges = [
+  { key: "minimal.hero.badge.local", icon: Euro },
+  { key: "minimal.hero.badge.capacity", icon: Users },
+  { key: "minimal.hero.badge.daily", icon: Waves }
+];
+const railIconByTourId = {
+  sunset: Star,
+  gjipe: MapPin,
+  grama: Waves,
+  private: Users,
+  fishing: Clock3
+};
 
 function scriptJson(value: unknown) {
   return JSON.stringify(value).replace(/</g, "\\u003c");
@@ -40,8 +52,6 @@ const minimalAvailabilityFormScript = String.raw`
         name: "Name",
         date: "Date",
         people: "People",
-        source: "Source",
-        sourceValue: "Minimal homepage form",
         missingName: "Add your name",
         missingDate: "Choose a date",
         missingPeople: "Add people"
@@ -51,8 +61,6 @@ const minimalAvailabilityFormScript = String.raw`
         name: "Nom",
         date: "Date",
         people: "Personnes",
-        source: "Source",
-        sourceValue: "Formulaire homepage minimaliste",
         missingName: "Ajoutez votre nom",
         missingDate: "Choisissez une date",
         missingPeople: "Ajoutez le nombre de personnes"
@@ -62,8 +70,6 @@ const minimalAvailabilityFormScript = String.raw`
         name: "Emri",
         date: "Data",
         people: "Persona",
-        source: "Burimi",
-        sourceValue: "Formulari i faqes kryesore",
         missingName: "Shtoni emrin",
         missingDate: "Zgjidhni daten",
         missingPeople: "Shtoni numrin e personave"
@@ -107,8 +113,7 @@ const minimalAvailabilityFormScript = String.raw`
         labels.intro,
         labels.name + ": " + (nameInput.value.trim() || labels.missingName),
         labels.date + ": " + (dateInput.value || labels.missingDate),
-        labels.people + ": " + (peopleInput.value || labels.missingPeople),
-        labels.source + ": " + labels.sourceValue
+        labels.people + ": " + (peopleInput.value || labels.missingPeople)
       ].join("\n");
     }
 
@@ -432,11 +437,16 @@ export default function HomePage() {
               <LocalizedText id="minimal.hero.text">{enText("minimal.hero.text")}</LocalizedText>
             </p>
             <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-pearl">
-              {["minimal.hero.badge.local", "minimal.hero.badge.capacity", "minimal.hero.badge.daily"].map((key) => (
-                <span key={key} className="rounded-md border border-white/15 bg-ink/80 px-3 py-2 text-pearl shadow-sm backdrop-blur">
-                  <LocalizedText id={key}>{enText(key)}</LocalizedText>
-                </span>
-              ))}
+              {heroBadges.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <span key={item.key} className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-ink/80 px-3 py-2 text-pearl shadow-sm backdrop-blur">
+                    <Icon className="h-3.5 w-3.5 text-sand" aria-hidden />
+                    <LocalizedText id={item.key}>{enText(item.key)}</LocalizedText>
+                  </span>
+                );
+              })}
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="minimal_hero">
@@ -484,6 +494,7 @@ export default function HomePage() {
                 {featuredTours.map((tour) => {
                   const labelIndex = featuredTourLabelIndexes.get(tour.id);
                   const comparisonLabel = labelIndex === undefined ? null : tourComparison[labelIndex];
+                  const RailIcon = railIconByTourId[tour.id as keyof typeof railIconByTourId] ?? CheckCircle2;
 
                   return (
                     <article key={tour.id} data-tour-id={tour.id} className="tour-rail-card grid overflow-hidden rounded-lg bg-limestone shadow-sm">
@@ -498,7 +509,8 @@ export default function HomePage() {
                           className="object-cover"
                         />
                         {comparisonLabel ? (
-                          <span className="absolute left-4 top-4 rounded-md bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
+                          <span className="absolute left-4 top-4 inline-flex items-center gap-2 rounded-md bg-pearl px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-ink shadow-sm">
+                            <RailIcon className="h-3.5 w-3.5 text-turquoise" aria-hidden />
                             <LocalizedText id={`comparison.${labelIndex}.angle`}>{comparisonLabel.angle}</LocalizedText>
                           </span>
                         ) : null}
@@ -531,7 +543,7 @@ export default function HomePage() {
                         <ul className="grid grid-cols-2 gap-2 text-xs leading-5 text-ink-soft md:text-sm md:leading-6">
                           {tour.cardHighlights.slice(0, 3).map((item, index) => (
                             <li key={item} className="flex gap-2">
-                              <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
                               <span>
                                 <LocalizedText id={`tour.${tour.id}.cardHighlight.${index}`}>{item}</LocalizedText>
                               </span>

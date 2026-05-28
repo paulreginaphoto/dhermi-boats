@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Camera, Mail, MapPin, MessageCircle, Phone, Ticket, Video } from "lucide-react";
+import { CalendarDays, Camera, Compass, Mail, MapPin, MessageCircle, MessageSquareText, Phone, Ticket, UserRound, Users, Video } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
@@ -41,6 +41,14 @@ const contacts = [
   analyticsEvent?: string;
 }>;
 
+const bookingDetailItems = [
+  { id: "contact.message.date", icon: CalendarDays },
+  { id: "contact.message.group", icon: Users },
+  { id: "contact.message.tour", icon: Compass },
+  { id: "contact.message.name", icon: UserRound },
+  { id: "contact.message.question", icon: MessageSquareText }
+];
+
 export default function ContactPage() {
   return (
     <>
@@ -73,12 +81,17 @@ export default function ContactPage() {
             <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
               <LocalizedText id="contact.message.title">{enText("contact.message.title")}</LocalizedText>
             </h2>
-            <div className="mt-8 grid gap-4 md:grid-cols-5">
-              {["contact.message.date", "contact.message.group", "contact.message.tour", "contact.message.name", "contact.message.question"].map((id) => (
-                <div key={id} className="rounded-md border border-ink/8 bg-limestone/70 p-4 text-sm font-semibold text-ink">
-                  <LocalizedText id={id}>{translations.en[id] ?? ""}</LocalizedText>
-                </div>
-              ))}
+            <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {bookingDetailItems.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div key={item.id} className="flex items-center gap-3 rounded-md border border-ink/8 bg-limestone/70 p-4 text-sm font-semibold text-ink">
+                    <Icon className="h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                    <LocalizedText id={item.id}>{translations.en[item.id] ?? ""}</LocalizedText>
+                  </div>
+                );
+              })}
             </div>
             <div className="mt-8">
               <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="contact_panel">
