@@ -4,10 +4,9 @@ import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
 import { LocalizedText } from "@/components/LocalizedText";
-import { CompareToursText, BookingTitleText, TourDetailsText } from "@/components/MicroCopy";
+import { CompareToursText, BookingTitleText } from "@/components/MicroCopy";
 import { PageHero } from "@/components/PageHero";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
-import { TourCard } from "@/components/TourCard";
 import { TourComparison } from "@/components/TourComparison";
 import { tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
@@ -25,12 +24,6 @@ export const metadata: Metadata = {
 };
 
 export default function ToursPage() {
-  const tiers = ["bestSeller", "premiumRoute", "private", "experience"] as const;
-  const toursByTier = tiers.map((tier) => ({
-    tier,
-    label: `tour.tier.${tier}`,
-    tours: tours.filter((tour) => tour.offerTier === tier)
-  }));
   const enText = (key: string) => translations.en[key] ?? "";
 
   return (
@@ -70,84 +63,14 @@ export default function ToursPage() {
 
       <TourComparison />
 
-      <span id="tours-section-label" className="sr-only">
-        <LocalizedText id="a11y.toursSection">{enText("a11y.toursSection")}</LocalizedText>
-      </span>
-      <section aria-labelledby="tours-section-label" className="bg-pearl py-10 md:py-16">
+      <section id="prices" className="scroll-mt-24 bg-limestone py-12 md:py-20">
         <div className="site-band">
-            <div className="mb-8 max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="page.tours.cardsLabel">{enText("page.tours.cardsLabel")}</LocalizedText>
-            </p>
-            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="page.tours.cardsTitle">{enText("page.tours.cardsTitle")}</LocalizedText>
-            </h2>
-          </div>
-          <div className="space-y-12">
-            {toursByTier.map((group) => (
-              <div key={group.tier}>
-                <div className="mb-4 flex items-center justify-between gap-4 border-b border-ink/10 pb-3">
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-                      <LocalizedText id="tour.tier.label">{enText("tour.tier.label")}</LocalizedText>
-                    </p>
-                    <h3 className="mt-2 font-serif text-2xl font-medium leading-tight text-ink md:text-3xl">
-                      <LocalizedText id={group.label}>{enText(group.label)}</LocalizedText>
-                    </h3>
-                  </div>
-                </div>
-                <div className="grid gap-6 lg:grid-cols-3">
-                  {group.tours.map((tour) => (
-                    <TourCard key={tour.id} tour={tour} imagePriority />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-navy py-16 text-pearl md:py-24">
-        <div className="site-band">
-            <div className="max-w-3xl">
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="decision.label">{enText("decision.label")}</LocalizedText>
-            </p>
-            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-5xl">
-              <LocalizedText id="decision.title">{enText("decision.title")}</LocalizedText>
-            </h2>
-          </div>
-            <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-            {[
-              ["decision.gjipe.title", "decision.gjipe.text", "gjipe"],
-              ["decision.grama.title", "decision.grama.text", "grama"],
-              ["decision.private.title", "decision.private.text", "private"],
-              ["decision.sunset.title", "decision.sunset.text", "sunset"],
-              ["decision.fishing.title", "decision.fishing.text", "fishing"]
-            ].map(([titleKey, textKey, tourId]) => {
-              const tour = tours.find((item) => item.id === tourId) ?? tours[0];
-              return (
-                <article key={String(titleKey)} className="rounded-lg border border-white/12 bg-white/8 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
-                  <h3 className="font-serif text-2xl font-medium">
-                    <LocalizedText id={String(titleKey)}>{enText(String(titleKey))}</LocalizedText>
-                  </h3>
-                    <p className="mt-3 text-sm leading-7 text-pearl/86">
-                    <LocalizedText id={String(textKey)}>{enText(String(textKey))}</LocalizedText>
-                  </p>
-                  <ButtonLink href={tour.href} variant="ghost" className="mt-5 border border-white/15 text-pearl hover:bg-white/10">
-                    <TourDetailsText />
-                  </ButtonLink>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-limestone py-16 md:py-24">
-        <div className="site-band overflow-x-auto">
+          <h2 className="mb-6 max-w-2xl font-serif text-3xl font-medium leading-tight text-ink md:text-4xl">
+            <LocalizedText id="page.tours.matrixTitle">{enText("page.tours.matrixTitle")}</LocalizedText>
+          </h2>
+          <div className="overflow-x-auto">
           <table className="w-full min-w-[760px] border-collapse overflow-hidden rounded-lg bg-pearl text-left text-sm shadow-sm">
-          <caption className="mb-6 text-left font-serif text-4xl font-medium text-ink">
+            <caption className="sr-only">
               <LocalizedText id="page.tours.matrixTitle">{enText("page.tours.matrixTitle")}</LocalizedText>
             </caption>
             <thead className="bg-ink text-pearl">
@@ -218,6 +141,7 @@ export default function ToursPage() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </section>
 

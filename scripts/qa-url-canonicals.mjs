@@ -17,6 +17,13 @@ const canonicalTourPaths = [
 
 const legacyRedirects = new Map([
   ["/tours/private/", "/private-boat-tour-albania/"],
+  ["/boat-tour-dhermi-today/", "/tours/"],
+  ["/blue-cave-boat-tour-dhermi/", "/grama-bay-boat-tour/"],
+  ["/dhermi-to-grama-bay-boat/", "/grama-bay-boat-tour/"],
+  ["/family-boat-tour-dhermi/", "/private-boat-tour-albania/"],
+  ["/french-speaking-boat-tour-dhermi/", "/contact/"],
+  ["/destinations/gjipe/", "/gjipe-boat-tour/"],
+  ["/destinations/grama-bay/", "/grama-bay-boat-tour/"],
   ["/2026/02/28/hello-world/", "/"],
   ["/sample-page/", "/"],
   ["/boutique/", "/"],

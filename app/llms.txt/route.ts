@@ -21,7 +21,7 @@ Main pages:
 - ${canonical("/private-boat-tour-albania/")}
 - ${canonical("/sunset-boat-tour/")}
 - ${canonical("/morning-fishing-tour/")}
-- ${canonical("/destinations/")}
+- ${canonical("/destinations/blue-cave/")}
 - ${canonical("/faq/")}
 - ${canonical("/contact/")}
 `;

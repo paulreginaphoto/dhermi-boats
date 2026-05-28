@@ -4,7 +4,6 @@ import { ArrowRight, MessageCircle } from "lucide-react";
 import { BookingCTA } from "@/components/BookingCTA";
 import { ButtonLink } from "@/components/ButtonLink";
 import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
-import { GalleryGrid } from "@/components/GalleryGrid";
 import { CompareToursText, TourDetailsText, BookingTitleText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { PageHero } from "@/components/PageHero";
@@ -48,12 +47,6 @@ const destinationInsights = [
     ctaKey: "tour.grama.book",
   }
 ];
-const chooseDestinationCards = [
-  { eyebrowKey: "destination.gjipe.title", titleKey: "destination.gjipe.title", textKey: "destinations.choose.gjipe", href: tours[0].href },
-  { eyebrowKey: "destination.grama.title", titleKey: "destination.grama.title", textKey: "destinations.choose.grama", href: tours[1].href },
-  { eyebrowKey: "destination.blue-cave.title", titleKey: "destination.blue-cave.title", textKey: "destinations.choose.blue", href: tours[1].href }
-];
-
 const enText = (key: string) => translations.en[key] ?? "";
 
 export default function DestinationsPage() {
@@ -142,36 +135,6 @@ export default function DestinationsPage() {
           })}
         </div>
       </section>
-      <section className="bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-10 lg:grid-cols-[0.76fr_1.24fr] lg:items-start">
-          <SectionHeading
-            label={<LocalizedText id="destinations.choose.label">{enText("destinations.choose.label")}</LocalizedText>}
-            title={<LocalizedText id="destinations.choose.title">{enText("destinations.choose.title")}</LocalizedText>}
-          >
-            <p>
-              <LocalizedText id="destinations.choose.text">{enText("destinations.choose.text")}</LocalizedText>
-            </p>
-          </SectionHeading>
-          <div className="grid gap-4 md:grid-cols-3">
-            {chooseDestinationCards.map(({ eyebrowKey, titleKey, textKey, href }) => (
-              <article key={titleKey} className="rounded-lg border border-ink/8 bg-limestone/70 p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-bronze">
-                  <LocalizedText id={eyebrowKey}>{enText(eyebrowKey)}</LocalizedText>
-                </p>
-                <h3 className="font-serif text-3xl font-medium text-ink">
-                  <LocalizedText id={titleKey}>{enText(titleKey)}</LocalizedText>
-                </h3>
-                <p className="mt-3 text-sm leading-7 text-ink-soft">
-                  <LocalizedText id={textKey}>{enText(textKey)}</LocalizedText>
-                </p>
-                <ButtonLink href={href} variant="secondary" className="mt-5">
-                  <TourDetailsText />
-                </ButtonLink>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
       <section id="routes" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
         <div className="site-band">
                 <SectionHeading
@@ -186,17 +149,6 @@ export default function DestinationsPage() {
             {destinations.map((destination) => (
               <SeaRouteMap key={destination.id} destination={destination} compact />
             ))}
-          </div>
-        </div>
-      </section>
-      <section className="bg-pearl py-16 md:py-24">
-        <div className="site-band">
-          <SectionHeading
-            label={<LocalizedText id="section.social.label">{enText("section.social.label")}</LocalizedText>}
-            title={<LocalizedText id="section.social.title">{enText("section.social.title")}</LocalizedText>}
-          />
-          <div className="mt-10">
-            <GalleryGrid />
           </div>
         </div>
       </section>
