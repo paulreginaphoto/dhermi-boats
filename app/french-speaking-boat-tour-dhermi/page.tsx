@@ -4,7 +4,7 @@ import { heroImage } from "@/data/content";
 export const metadata = hotIntentMetadata({
   slug: "french-speaking-boat-tour-dhermi",
   title: "French-Speaking Boat Tour Dhërmi | Local Skipper in Albania",
-  description: "Book a French-friendly boat tour from Dhërmi with local skipper Isuf. Gjipe, Grama Bay, Blue Cave and private trips by WhatsApp."
+  description: "Book a French-friendly boat tour from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave and private trips by WhatsApp."
 });
 
 export default function FrenchSpeakingBoatTourDhermiPage() {
@@ -14,7 +14,7 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
       title="French-Speaking Boat Tour Dhërmi"
       label="French-friendly skipper"
       heroTitle="A Dhërmi boat tour that feels easy for French-speaking guests."
-      heroText="Isuf speaks Albanian and French, with good English for international guests. Ask questions, confirm the meeting point and book by WhatsApp."
+      heroText="The local skipper speaks Albanian and French, with good English for international guests. Ask questions, confirm the meeting point and book by WhatsApp."
       image={heroImage}
       primaryTourId="private"
       bullets={[

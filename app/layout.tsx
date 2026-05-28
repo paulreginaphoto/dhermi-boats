@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | Dhermi Boat"
   },
   description:
-    "Book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Small groups, clear prices and WhatsApp booking with local skipper Isuf.",
+    "Book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Small groups, clear prices and WhatsApp booking with a local skipper.",
   keywords: [
     "Dhermi boat tour",
     "Dhermi boat tours",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: brandName,
     title: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     description:
-      "Small-group and private boat tours from Dhërmi with local skipper Isuf. Gjipe, Grama Bay, Blue Cave and sea-condition routes.",
+      "Small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave and sea-condition routes.",
     images: [
       {
         url: socialImageUrl,
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Dhërmi Boat Tours",
-    description: "Boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave with local skipper Isuf.",
+    description: "Boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave with a local skipper.",
     images: [socialImageUrl]
   },
   icons: {

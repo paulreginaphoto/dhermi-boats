@@ -6,7 +6,7 @@ const privateTour = tours.find((tour) => tour.id === "private") ?? tours[2];
 export const metadata = hotIntentMetadata({
   slug: "family-boat-tour-dhermi",
   title: "Family Boat Tour Dhërmi | Private & Small-Group Trips",
-  description: "Book a family-friendly boat tour from Dhërmi to Gjipe, Grama Bay or a private custom route. WhatsApp booking with local skipper Isuf."
+  description: "Book a family-friendly boat tour from Dhërmi to Gjipe, Grama Bay or a private custom route. WhatsApp booking with a local skipper."
 });
 
 export default function FamilyBoatTourDhermiPage() {

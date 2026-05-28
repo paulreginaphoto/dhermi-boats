@@ -62,7 +62,7 @@ Lighthouse still reports Best Practices issues caused by Google Ads/DoubleClick 
 ## Remaining TODOs
 
 - Verify live production after push/deploy: Google Ads Tag Assistant, Search Console sitemap, Rich Results Test.
-- Add richer real review embeds or updated review excerpts only if Isuf provides verified sources.
+- Add richer real review embeds or updated review excerpts only if the business owner provides verified sources.
 - Best Practices score can improve only by revisiting third-party Google Ads behavior or consent/loading strategy.
 
 ## Ship Decision

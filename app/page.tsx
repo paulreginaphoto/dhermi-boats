@@ -145,10 +145,10 @@ const minimalAvailabilityFormScript = String.raw`
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhërmi Boat Tours | Minimal Boat Trips with Isuf"
+    absolute: "Dhërmi Boat Tours | Minimal Boat Trips from Dhërmi"
   },
   description:
-    "Minimal Dhërmi boat tour booking page for Gjipe, Grama Bay and private trips with local skipper Isuf, max 15 guests and WhatsApp confirmation.",
+    "Minimal Dhërmi boat tour booking page for Gjipe, Grama Bay and private trips with a local skipper, max 15 guests and WhatsApp confirmation.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 

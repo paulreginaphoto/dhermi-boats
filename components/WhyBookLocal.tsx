@@ -58,7 +58,7 @@ export function WhyBookLocal() {
               whatsappKey="default"
               analyticsPlacement="why_book_local"
             >
-              <LocalizedText id="cta.askIsuf">{enText("cta.askIsuf")}</LocalizedText>
+              <LocalizedText id="cta.askWhatsapp">{enText("cta.askWhatsapp")}</LocalizedText>
             </ButtonLink>
             <ButtonLink href={googleMapsUrl} icon={Star} variant="ghost" className="border border-white/15 text-pearl hover:bg-white/10" analyticsEvent="maps_click">
               <LocalizedText id="section.reviews.cta">{enText("section.reviews.cta")}</LocalizedText>

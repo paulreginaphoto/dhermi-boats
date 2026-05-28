@@ -71,7 +71,7 @@ All passed:
 ## Remaining TODOs
 
 - Verify the live production deployment after push.
-- Replace or expand review excerpts only with verified new Google reviews from Isuf.
+- Replace or expand review excerpts only with verified new Google reviews from the business owner.
 - Consider a later media pass if more strong boat/cave photos become available.
 
 ## Ship Decision

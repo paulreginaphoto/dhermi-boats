@@ -321,7 +321,7 @@ export const reviews = [
     name: "Julie Dw",
     detail: "Local Guide • 21 avis • 4 photos · Il y a 11 semaines",
     rating: 5,
-    text: "Super expérience en bateau en Albanie ! Isuf est une personne passionnée, très sympa et bienveillante, il met tout de suite en confiance et l'ambiance à bord est juste top."
+    text: "Super expérience en bateau en Albanie ! Le capitaine est une personne passionnée, très sympa et bienveillante, il met tout de suite en confiance et l'ambiance à bord est juste top."
   },
   {
     name: "Marianne Vayson",
@@ -357,10 +357,10 @@ export const whyChooseUs = [
 ];
 
 export const skipper = {
-  name: "Isuf",
+  name: "Local skipper",
   image: assetPath("/images/gallery-blue-cove-boat.webp"),
   imageAlt: "Dhermi Boat in a turquoise cove near Dhërmi",
-  text: "Isuf is a local skipper from the Dhërmi area. He keeps the booking simple, confirms the meeting point on WhatsApp and adapts the route to the sea."
+  text: "A local skipper from the Dhërmi area keeps the booking simple, confirms the meeting point on WhatsApp and adapts the route to the sea."
 };
 
 export const usefulInformation = [

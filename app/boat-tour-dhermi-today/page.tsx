@@ -14,7 +14,7 @@ export default function BoatTourDhermiTodayPage() {
       title="Boat Tour Dhërmi Today"
       label="Last-minute Dhërmi boat tour"
       heroTitle="Looking for a boat tour from Dhërmi today?"
-      heroText="Send your date, group size and preferred route on WhatsApp. Isuf confirms what is available and safe according to the sea."
+      heroText="Send your date, group size and preferred route on WhatsApp. The local skipper confirms what is available and safe according to the sea."
       image={heroImage}
       primaryTourId="gjipe"
       bullets={[
