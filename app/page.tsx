@@ -1,264 +1,438 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { MapPin, MessageCircle } from "lucide-react";
-import { BookingCTA } from "@/components/BookingCTA";
+import { CalendarDays, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
-import { ArrivalComfortBar } from "@/components/ArrivalComfortBar";
-import { ConversionTrustBlock } from "@/components/ConversionTrustBlock";
-import { DestinationCard } from "@/components/DestinationCard";
 import { FAQAccordion } from "@/components/FAQAccordion";
-import { GalleryGrid } from "@/components/GalleryGrid";
-import { HighSeasonOfferLadder } from "@/components/HighSeasonOfferLadder";
-import { HeroCinematic } from "@/components/HeroCinematic";
-import { MotionReveal } from "@/components/MotionReveal";
-import { LazyOneMinuteBooking } from "@/components/LazyOneMinuteBooking";
-import { ReviewCard } from "@/components/ReviewCard";
-import { SectionHeading } from "@/components/SectionHeading";
-import { SeasonAvailabilityStrip } from "@/components/SeasonAvailabilityStrip";
-import { SEOJsonLd } from "@/components/SEOJsonLd";
-import { SocialFeed } from "@/components/SocialFeed";
-import { TourCard } from "@/components/TourCard";
-import { TourComparison } from "@/components/TourComparison";
-import { VideoFeature } from "@/components/VideoFeature";
-import { WhyBookLocal } from "@/components/WhyBookLocal";
-import { TourDetailsText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
-import { destinations, faqs, reviews, skipper, tours, usefulInformation, whyChooseUs } from "@/data/content";
-import { canonical, googleMapsUrl, languageAlternates } from "@/lib/site";
+import { SEOJsonLd } from "@/components/SEOJsonLd";
+import { faqs, gallery, reviews, tours } from "@/data/content";
+import { canonical, emailAddress, googleMapsUrl, languageAlternates, phoneDisplay, whatsappNumber } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
-import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 import { translations } from "@/lib/i18n";
+import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 const enText = (key: string) => translations.en[key] ?? "";
+const featuredTours = tours.filter((tour) => ["gjipe", "grama", "private"].includes(tour.id));
+const featuredGallery = gallery.slice(0, 8);
+const featuredReviews = reviews.slice(0, 4);
+const homepageFaqs = [0, 1, 4, 6, 13, 17].map((index) => ({ ...faqs[index], translationIndex: index }));
+
+function scriptJson(value: unknown) {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
+const minimalAvailabilityFormScript = String.raw`
+(function () {
+  var config = ${scriptJson({
+    whatsappNumber,
+    labels: {
+      en: {
+        intro: "Hello Dhermi Boat, I would like to check availability.",
+        name: "Name",
+        date: "Date",
+        people: "People",
+        source: "Source",
+        sourceValue: "Minimal homepage form",
+        missingName: "Add your name",
+        missingDate: "Choose a date",
+        missingPeople: "Add people"
+      },
+      fr: {
+        intro: "Bonjour Dhermi Boat, je voudrais vérifier la disponibilité.",
+        name: "Nom",
+        date: "Date",
+        people: "Personnes",
+        source: "Source",
+        sourceValue: "Formulaire homepage minimaliste",
+        missingName: "Ajoutez votre nom",
+        missingDate: "Choisissez une date",
+        missingPeople: "Ajoutez le nombre de personnes"
+      },
+      sq: {
+        intro: "Pershendetje Dhermi Boat, dua te kontrolloj disponueshmerine.",
+        name: "Emri",
+        date: "Data",
+        people: "Persona",
+        source: "Burimi",
+        sourceValue: "Formulari i faqes kryesore",
+        missingName: "Shtoni emrin",
+        missingDate: "Zgjidhni daten",
+        missingPeople: "Shtoni numrin e personave"
+      }
+    }
+  })};
+
+  function normalizeLocale(value) {
+    if (!value) return "en";
+    var normalized = String(value).toLowerCase().replace("_", "-");
+    if (normalized === "al" || normalized === "sq-al") return "sq";
+    var primary = normalized.split("-")[0];
+    return primary === "fr" || primary === "sq" || primary === "en" ? primary : "en";
+  }
+
+  function readLocale() {
+    try {
+      var params = new URL(window.location.href).searchParams;
+      return normalizeLocale(params.get("dlang") || params.get("lang") || window.localStorage.getItem("dhermi-language") || document.documentElement.lang);
+    } catch (error) {
+      return "en";
+    }
+  }
+
+  function encodeMessage(message) {
+    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(message);
+  }
+
+  function initForm(form) {
+    var locale = readLocale();
+    var labels = config.labels[locale] || config.labels.en;
+    var nameInput = form.querySelector("[name='name']");
+    var dateInput = form.querySelector("[name='date']");
+    var peopleInput = form.querySelector("[name='people']");
+    var action = form.querySelector("[data-minimal-booking-action]");
+    var summary = form.querySelector("[data-minimal-booking-summary]");
+    if (!nameInput || !dateInput || !peopleInput || !action || !summary) return;
+
+    function buildMessage() {
+      return [
+        labels.intro,
+        labels.name + ": " + (nameInput.value.trim() || labels.missingName),
+        labels.date + ": " + (dateInput.value || labels.missingDate),
+        labels.people + ": " + (peopleInput.value || labels.missingPeople),
+        labels.source + ": " + labels.sourceValue
+      ].join("\n");
+    }
+
+    function update() {
+      var ready = Boolean(nameInput.value.trim() && dateInput.value && peopleInput.value);
+      var message = buildMessage();
+      summary.textContent = message;
+      action.href = ready ? encodeMessage(message) : "#minimal-booking-form";
+      action.setAttribute("aria-disabled", ready ? "false" : "true");
+      if (ready) {
+        action.setAttribute("target", "_blank");
+        action.setAttribute("rel", "noreferrer");
+      } else {
+        action.removeAttribute("target");
+        action.removeAttribute("rel");
+      }
+    }
+
+    action.addEventListener("click", function (event) {
+      if (nameInput.value.trim() && dateInput.value && peopleInput.value) return;
+      event.preventDefault();
+      var target = !nameInput.value.trim() ? nameInput : !dateInput.value ? dateInput : peopleInput;
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: "center", behavior: "smooth" });
+    });
+
+    [nameInput, dateInput, peopleInput].forEach(function (input) {
+      input.addEventListener("input", update);
+      input.addEventListener("change", update);
+    });
+
+    update();
+  }
+
+  function init() {
+    document.querySelectorAll("[data-minimal-booking-form]").forEach(initForm);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
+  else init();
+})();
+`;
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave | Dhermi Boat"
+    absolute: "Dhërmi Boat Tours | Minimal Boat Trips with Isuf"
   },
   description:
-    "Compare Dhërmi boat tours to Gjipe, Grama Bay and the Blue Cave route. Small groups, clear prices, local skipper Isuf and WhatsApp booking.",
+    "Minimal Dhërmi boat tour booking page for Gjipe, Grama Bay and private trips with local skipper Isuf, max 15 guests and WhatsApp confirmation.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 
 export default function HomePage() {
   return (
     <>
-      <SEOJsonLd data={[homePageSchema(), ...tours.map((tour) => touristTripSchema(tour)), faqSchema(faqs)]} />
-      <HeroCinematic />
+      <SEOJsonLd data={[homePageSchema(), ...featuredTours.map((tour) => touristTripSchema(tour)), faqSchema(homepageFaqs)]} />
 
-      <SeasonAvailabilityStrip />
-
-      <ArrivalComfortBar />
-
-      <ConversionTrustBlock />
-
-      <TourComparison />
-
-      <LazyOneMinuteBooking />
-
-      <HighSeasonOfferLadder />
-
-      <section className="bg-pearl py-16 md:py-24" id="tours">
-        <div className="site-band">
-          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-            <SectionHeading
-              label={<LocalizedText id="section.tours.label">{enText("section.tours.label")}</LocalizedText>}
-              title={<LocalizedText id="section.tours.title">{enText("section.tours.title")}</LocalizedText>}
-            >
-              <p>
-                <LocalizedText id="section.tours.text">{enText("section.tours.text")}</LocalizedText>
+      <section data-home-section="hero" className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-pearl">
+        <Image
+          src="/images/hero-riviera-tablet.webp"
+          alt="Dhermi Boat on turquoise water below cliffs near Dhërmi"
+          fill
+          priority
+          quality={72}
+          sizes="100vw"
+          className="object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-navy/38 to-navy/88" />
+        <div className="relative mx-auto flex min-h-[calc(100svh-5rem)] max-w-site flex-col justify-end px-5 pb-28 pt-24 md:px-8 md:pb-20">
+          <div className="max-w-3xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="minimal.hero.label">{enText("minimal.hero.label")}</LocalizedText>
+            </p>
+            <h1 className="mt-4 max-w-4xl font-serif text-5xl font-medium leading-[0.98] text-pearl md:text-7xl">
+              <LocalizedText id="minimal.hero.title">{enText("minimal.hero.title")}</LocalizedText>
+            </h1>
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/92 md:text-xl">
+              <LocalizedText id="minimal.hero.text">{enText("minimal.hero.text")}</LocalizedText>
+            </p>
+            <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-pearl">
+              {["minimal.hero.badge.local", "minimal.hero.badge.capacity", "minimal.hero.badge.daily"].map((key) => (
+                <span key={key} className="rounded-md border border-white/20 bg-white/12 px-3 py-2 backdrop-blur">
+                  <LocalizedText id={key}>{enText(key)}</LocalizedText>
+                </span>
+              ))}
+            </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <ButtonLink href={whatsappHrefForKey("default")} icon={MessageCircle} variant="dark" whatsappKey="default" analyticsPlacement="minimal_hero">
+                <LocalizedText id="minimal.cta.whatsapp">{enText("minimal.cta.whatsapp")}</LocalizedText>
+              </ButtonLink>
+              <p className="flex items-center gap-2 text-sm font-semibold text-pearl/90">
+                <ShieldCheck className="h-4 w-4 text-sand" aria-hidden />
+                <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
               </p>
-            </SectionHeading>
-            <ButtonLink href="/tours/" variant="secondary">
-              <LocalizedText id="cta.viewTours">{enText("cta.viewTours")}</LocalizedText>
-            </ButtonLink>
-          </div>
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-            {tours.map((tour, index) => (
-              <MotionReveal key={tour.id} delay={index * 80}>
-                <TourCard tour={tour} />
-              </MotionReveal>
-            ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="below-fold bg-limestone py-16 md:py-24">
-        <div className="site-band grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-          <div>
-            <SectionHeading
-              label={<LocalizedText id="section.experiences.label">{enText("section.experiences.label")}</LocalizedText>}
-              title={<LocalizedText id="section.experiences.title">{enText("section.experiences.title")}</LocalizedText>}
-            />
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/private-boat-tour-albania/" variant="primary">
-                <TourDetailsText />
-              </ButtonLink>
-              <ButtonLink href={whatsappHrefForKey("private")} icon={MessageCircle} variant="secondary" whatsappKey="private" analyticsTour="private" analyticsPlacement="home_private">
-                <LocalizedText id="tour.private.book">{enText("tour.private.book")}</LocalizedText>
-              </ButtonLink>
-            </div>
+      <section data-home-section="tours" id="tours" className="bg-pearl py-16 md:py-24">
+        <div className="site-band">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="minimal.tours.label">{enText("minimal.tours.label")}</LocalizedText>
+            </p>
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+              <LocalizedText id="minimal.tours.title">{enText("minimal.tours.title")}</LocalizedText>
+            </h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {tours.slice(3).map((tour) => (
-              <article key={tour.id} className="rounded-md border border-ink/10 bg-pearl p-6 shadow-sm">
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
-                  <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
-                </p>
-                <h3 className="mt-3 font-serif text-3xl font-medium text-ink">
-                  <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
-                </h3>
-                {tour.subtitle ? (
-                  <p className="mt-3 text-sm leading-7 text-ink-soft">
-                    <LocalizedText id={`tour.${tour.id}.subtitle`}>{tour.subtitle}</LocalizedText>
-                  </p>
-                ) : null}
-                <ul className="mt-5 grid gap-2 text-sm leading-6 text-ink-soft">
-                  {tour.included.map((item, index) => (
-                    <li key={item} className="flex gap-2">
-                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
-                      <span>
-                        <LocalizedText id={`tour.${tour.id}.included.${index}`}>{item}</LocalizedText>
-                      </span>
-                    </li>
-                  ))}
-                </ul>
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            {featuredTours.map((tour) => (
+              <article key={tour.id} className="grid overflow-hidden rounded-lg bg-limestone shadow-sm">
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={tour.cardImage ?? tour.image}
+                    alt={tour.imageAlt ?? tour.title}
+                    fill
+                    loading="lazy"
+                    quality={58}
+                    sizes="(min-width: 1024px) 31vw, 92vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div className="grid gap-5 p-5">
+                  <div>
+                    <h3 className="font-serif text-3xl font-medium leading-tight text-ink">
+                      <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                    </h3>
+                    <p className="mt-2 text-sm font-semibold leading-6 text-ink-soft">
+                      <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                    </p>
+                  </div>
+                  <div className="grid gap-3 text-sm font-semibold text-ink">
+                    <p className="flex gap-2">
+                      <Clock3 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                      <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
+                    </p>
+                    <p className="flex gap-2">
+                      <Euro className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                      <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                    </p>
+                    <p className="flex gap-2">
+                      <Users className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                      <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
+                    </p>
+                  </div>
+                  <ul className="grid gap-2 text-sm leading-6 text-ink-soft">
+                    {tour.cardHighlights.slice(0, 3).map((item, index) => (
+                      <li key={item} className="flex gap-2">
+                        <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
+                        <span>
+                          <LocalizedText id={`tour.${tour.id}.cardHighlight.${index}`}>{item}</LocalizedText>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="mt-auto grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+                    <a className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-pearl px-4 text-sm font-semibold text-ink transition hover:bg-white" data-analytics-event="tour_card_click" data-tour-id={tour.id} href={tour.href}>
+                      <LocalizedText id="minimal.tours.detail">{enText("minimal.tours.detail")}</LocalizedText>
+                    </a>
+                    <a
+                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-4 text-sm font-semibold text-pearl transition hover:bg-navy"
+                      data-tour-id={tour.id}
+                      data-whatsapp-key={tour.id}
+                      href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
+                      rel="noreferrer"
+                      target="_blank"
+                      data-analytics-event={`whatsapp_click_${tour.id}_en_minimal_tour_card`}
+                      data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}"
+                      data-analytics-tour={tour.id}
+                      data-analytics-placement="minimal_tour_card"
+                    >
+                      <MessageCircle className="h-4 w-4" aria-hidden />
+                      <LocalizedText id="minimal.tours.book">{enText("minimal.tours.book")}</LocalizedText>
+                    </a>
+                  </div>
+                </div>
               </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-navy py-16 text-pearl md:py-24">
+      <section data-home-section="gallery" id="gallery" className="bg-limestone py-16 md:py-24">
         <div className="site-band">
-        <div className="max-w-3xl">
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-sand">
-              <LocalizedText id="section.destinations.label">{enText("section.destinations.label")}</LocalizedText>
+          <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+                <LocalizedText id="minimal.gallery.label">{enText("minimal.gallery.label")}</LocalizedText>
+              </p>
+              <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+                <LocalizedText id="minimal.gallery.title">{enText("minimal.gallery.title")}</LocalizedText>
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm leading-7 text-ink-soft">
+              <LocalizedText id="minimal.gallery.text">{enText("minimal.gallery.text")}</LocalizedText>
             </p>
-            <h2 className="font-serif text-4xl font-medium leading-[1.04] md:text-5xl">
-              <LocalizedText id="section.destinations.title">{enText("section.destinations.title")}</LocalizedText>
-            </h2>
           </div>
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {destinations.map((destination) => (
-              <DestinationCard key={destination.id} destination={destination} />
+          <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {featuredGallery.map((item, index) => (
+              <a key={item.src} href={item.src} target="_blank" rel="noreferrer" data-gallery-zoom="true" className={index === 0 ? "group relative aspect-[4/5] overflow-hidden rounded-lg bg-sand sm:col-span-2 lg:row-span-2" : "group relative aspect-[4/5] overflow-hidden rounded-lg bg-sand"}>
+                <Image src={item.src} alt={item.alt} fill loading="lazy" quality={52} sizes="(min-width: 1024px) 25vw, 50vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                <span className="absolute right-3 top-3 grid h-10 w-10 place-items-center rounded-md bg-pearl/90 text-ink shadow-sm">
+                  <Maximize2 className="h-4 w-4" aria-hidden />
+                </span>
+              </a>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="below-fold bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-12 lg:grid-cols-[1fr_0.82fr] lg:items-center">
-          <div>
-            <SectionHeading
-              label={<LocalizedText id="section.social.label">{enText("section.social.label")}</LocalizedText>}
-              title={<LocalizedText id="section.social.title">{enText("section.social.title")}</LocalizedText>}
-            />
-          </div>
-          <VideoFeature />
-        </div>
-        <div className="site-band mt-10">
-          <GalleryGrid />
-        </div>
-      </section>
-
-      <SocialFeed />
-
-      <WhyBookLocal />
-
-      <section className="below-fold bg-pearl py-16 md:py-24">
-        <div className="site-band grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-sand shadow-image">
-            <Image
-              src={skipper.image}
-              alt={skipper.imageAlt}
-              fill
-              loading="lazy"
-              quality={58}
-              sizes="(min-width: 1024px) 45vw, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="section.skipper.label">{enText("section.skipper.label")}</LocalizedText>
-            </p>
-            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-              <LocalizedText id="section.skipper.title">{enText("section.skipper.title")}</LocalizedText>
-            </h2>
-            <p className="mt-5 text-base leading-8 text-ink-soft">
-              <LocalizedText id="section.skipper.text">{skipper.text}</LocalizedText>
-            </p>
-            <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft">
-              {whyChooseUs.map((item, index) => (
-                <li key={item} className="flex gap-3">
-                  <span aria-hidden className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-bronze" />
-                  <span>
-                    <LocalizedText id={`why.${index}`}>{item}</LocalizedText>
-                  </span>
-                </li>
+      <section data-home-section="reviews" id="reviews" className="bg-pearl py-16 md:py-24">
+        <div className="site-band">
+          <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr] lg:items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+                <LocalizedText id="minimal.reviews.label">{enText("minimal.reviews.label")}</LocalizedText>
+              </p>
+              <h2 className="mt-3 font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+                <LocalizedText id="minimal.reviews.title">{enText("minimal.reviews.title")}</LocalizedText>
+              </h2>
+              <a className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-ink/12 px-4 text-sm font-semibold text-ink transition hover:bg-limestone" href={googleMapsUrl} rel="noreferrer" target="_blank" data-analytics-event="maps_click">
+                <MapPin className="h-4 w-4" aria-hidden />
+                <LocalizedText id="minimal.reviews.more">{enText("minimal.reviews.more")}</LocalizedText>
+              </a>
+            </div>
+            <div className="grid gap-4 md:grid-cols-2">
+              {featuredReviews.map((review) => (
+                <article key={review.name} className="rounded-lg bg-limestone p-5">
+                  <div className="flex gap-1 text-bronze">
+                    {Array.from({ length: review.rating }).map((_, index) => (
+                      <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
+                    ))}
+                  </div>
+                  <blockquote className="mt-4 text-sm leading-7 text-ink">&quot;{review.text}&quot;</blockquote>
+                  <p className="mt-4 text-sm font-semibold text-ink">{review.name}</p>
+                </article>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="reviews" className="below-fold scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">
-        <div className="site-band">
-          <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <SectionHeading
-              label={<LocalizedText id="section.reviews.label">{enText("section.reviews.label")}</LocalizedText>}
-              title={<LocalizedText id="section.reviews.title">{enText("section.reviews.title")}</LocalizedText>}
-            />
-            <a
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md border border-ink/15 bg-pearl px-5 text-sm font-semibold text-ink transition hover:border-ink/35 hover:bg-white"
-              data-analytics-event="maps_click"
-              href={googleMapsUrl}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <MapPin className="h-4 w-4" aria-hidden />
-              <LocalizedText id="section.reviews.cta">{enText("section.reviews.cta")}</LocalizedText>
-            </a>
-          </div>
-          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((review) => (
-              <ReviewCard key={review.name} review={review} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="below-fold bg-pearl py-16 md:py-20">
-        <div className="site-band">
-          <h2 className="font-serif text-4xl font-medium text-ink">
-            <LocalizedText id="section.info.title">{enText("section.info.title")}</LocalizedText>
-          </h2>
-          <ul className="mt-6 grid gap-3 text-base leading-7 text-ink-soft md:grid-cols-3">
-            {usefulInformation.map((item, index) => (
-              <li key={item} className="rounded-lg border border-ink/8 bg-limestone/70 p-5">
-                <LocalizedText id={`useful.${index}`}>{item}</LocalizedText>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <section className="below-fold bg-pearl py-16 md:py-24">
+      <section data-home-section="contact" id="contact" className="bg-navy py-16 text-pearl md:py-24">
         <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <SectionHeading
-            label={<LocalizedText id="section.faq.label">{enText("section.faq.label")}</LocalizedText>}
-            title={<LocalizedText id="section.faq.title">{enText("section.faq.title")}</LocalizedText>}
-          >
-            <p>
-              <LocalizedText id="section.faq.text">{enText("section.faq.text")}</LocalizedText>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+              <LocalizedText id="minimal.contact.label">{enText("minimal.contact.label")}</LocalizedText>
             </p>
-          </SectionHeading>
-          <FAQAccordion items={faqs} />
+            <h2 className="mt-3 font-serif text-4xl font-medium leading-tight md:text-6xl">
+              <LocalizedText id="minimal.contact.title">{enText("minimal.contact.title")}</LocalizedText>
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-8 text-pearl/86">
+              <LocalizedText id="minimal.contact.text">{enText("minimal.contact.text")}</LocalizedText>
+            </p>
+            <div className="mt-7 grid gap-3 text-sm text-pearl/90">
+              <a className="flex items-center gap-3 rounded-md border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={whatsappHrefForKey("default")} target="_blank" rel="noreferrer" data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_minimal_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="minimal_contact_info">
+                <MessageCircle className="h-4 w-4 text-sand" aria-hidden />
+                <LocalizedText id="minimal.contact.whatsapp">{enText("minimal.contact.whatsapp")}</LocalizedText>
+              </a>
+              <a className="flex items-center gap-3 rounded-md border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={`tel:${phoneDisplay.replace(/\s/g, "")}`} data-analytics-event="call_click">
+                <Phone className="h-4 w-4 text-sand" aria-hidden />
+                {phoneDisplay}
+              </a>
+              <a className="flex items-center gap-3 rounded-md border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={`mailto:${emailAddress}`} data-analytics-event="email_click">
+                <Mail className="h-4 w-4 text-sand" aria-hidden />
+                {emailAddress}
+              </a>
+              <a className="flex items-center gap-3 rounded-md border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={googleMapsUrl} target="_blank" rel="noreferrer" data-analytics-event="maps_click">
+                <MapPin className="h-4 w-4 text-sand" aria-hidden />
+                <LocalizedText id="minimal.contact.location">{enText("minimal.contact.location")}</LocalizedText>
+              </a>
+            </div>
+          </div>
+          <div className="grid gap-5">
+            <form id="minimal-booking-form" data-minimal-booking-form="true" className="rounded-lg bg-pearl p-5 text-ink shadow-image md:p-6">
+              <div className="grid gap-4">
+                <label className="grid gap-2 text-sm font-semibold">
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+                    <LocalizedText id="minimal.contact.form.name">{enText("minimal.contact.form.name")}</LocalizedText>
+                  </span>
+                  <input className="h-12 rounded-md border border-ink/12 bg-white px-4 outline-none focus:border-turquoise" name="name" autoComplete="name" required />
+                </label>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <label className="grid gap-2 text-sm font-semibold">
+                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+                      <LocalizedText id="minimal.contact.form.date">{enText("minimal.contact.form.date")}</LocalizedText>
+                    </span>
+                    <span className="relative">
+                      <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden />
+                      <input className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise" name="date" type="date" required />
+                    </span>
+                  </label>
+                  <label className="grid gap-2 text-sm font-semibold">
+                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+                      <LocalizedText id="minimal.contact.form.people">{enText("minimal.contact.form.people")}</LocalizedText>
+                    </span>
+                    <input className="h-12 rounded-md border border-ink/12 bg-white px-4 outline-none focus:border-turquoise" name="people" type="number" min="1" max="15" defaultValue="2" required />
+                  </label>
+                </div>
+              </div>
+              <div className="mt-5 rounded-md bg-limestone p-4">
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+                  <LocalizedText id="minimal.contact.form.preview">{enText("minimal.contact.form.preview")}</LocalizedText>
+                </p>
+                <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft" data-minimal-booking-summary />
+              </div>
+              <a className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-md bg-ink px-5 text-sm font-semibold text-pearl transition hover:bg-navy" href="#minimal-booking-form" data-minimal-booking-action data-analytics-event="whatsapp_click_default_en_minimal_form" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="minimal_form">
+                <MessageCircle className="h-4 w-4" aria-hidden />
+                <LocalizedText id="minimal.contact.form.send">{enText("minimal.contact.form.send")}</LocalizedText>
+              </a>
+              <p className="mt-3 flex items-start gap-2 text-xs font-semibold leading-5 text-ink-soft">
+                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
+              </p>
+            </form>
+            <details className="rounded-lg border border-white/12 bg-white/8 p-4">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold [&::-webkit-details-marker]:hidden">
+                <span className="flex items-center gap-2">
+                  <HelpCircle className="h-4 w-4 text-sand" aria-hidden />
+                  <LocalizedText id="minimal.faq.trigger">{enText("minimal.faq.trigger")}</LocalizedText>
+                </span>
+                <span aria-hidden>+</span>
+              </summary>
+              <div className="mt-4 text-ink">
+                <FAQAccordion items={homepageFaqs} />
+              </div>
+            </details>
+          </div>
         </div>
       </section>
 
-      <BookingCTA />
+      <script dangerouslySetInnerHTML={{ __html: minimalAvailabilityFormScript }} />
     </>
   );
 }

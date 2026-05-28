@@ -328,6 +328,16 @@ section {
 }
 
 @media (max-width: 767px) {
+  html {
+    scroll-padding-top: 5rem;
+    scroll-padding-bottom: 6rem;
+  }
+
+  [data-home-section] {
+    scroll-margin-top: 5rem;
+    scroll-margin-bottom: 6rem;
+  }
+
   header > div {
     width: 100%;
     max-width: 100vw;

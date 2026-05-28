@@ -623,13 +623,23 @@ function checkLocaleSwitcherHydration(filePath, content) {
 function checkArrivalComfortSection(filePath, content) {
   if (!filePath.endsWith(path.join("app", "page.tsx"))) return;
 
-  if (!content.includes("ArrivalComfortBar")) {
-    addIssue(
-      filePath,
-      1,
-      "La home doit rassurer les visiteurs dès l’arrivée avec une section courte avant le formulaire.",
-      "ArrivalComfortBar"
-    );
+  for (const snippet of [
+    'data-home-section="hero"',
+    'data-home-section="tours"',
+    'data-home-section="gallery"',
+    'data-home-section="reviews"',
+    'data-home-section="contact"',
+    "minimal.reassurance",
+    "minimalAvailabilityFormScript"
+  ]) {
+    if (!content.includes(snippet)) {
+      addIssue(
+        filePath,
+        1,
+        "La home doit suivre la structure minimaliste en cinq sections avec réassurance et formulaire WhatsApp.",
+        snippet
+      );
+    }
   }
 }
 
@@ -734,20 +744,17 @@ function checkStickyMobileConversionBar(filePath, content) {
   if (!filePath.endsWith(path.join("components", "StickyBookingBar.tsx"))) return;
 
   for (const snippet of [
-    "grid-cols-4",
-    "sticky.whatsapp",
-    "sticky.tours",
-    "sticky.prices",
-    "sticky.call",
-    "sitePath(\"/tours/\")",
-    "sitePath(\"/tours/#compare-tours\")",
-    "href={`tel:${phoneDisplay.replace(/\\s/g, \"\")}`}"
+    "data-sticky-booking-bar",
+    "minimal.cta.whatsapp",
+    "minimal.reassurance",
+    "whatsappHrefForKey(\"default\")",
+    "placement: \"sticky_mobile\""
   ]) {
     if (!content.includes(snippet)) {
       addIssue(
         filePath,
         1,
-        "La barre mobile doit proposer les quatre actions de conversion: WhatsApp, Tours, Prices, Call.",
+        "La barre mobile minimaliste doit garder un CTA WhatsApp permanent avec réassurance.",
         snippet
       );
     }
