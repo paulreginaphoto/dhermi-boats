@@ -128,6 +128,11 @@ const minimalAvailabilityFormScript = String.raw`
     return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message));
   }
 
+  function formatBookingDate(value) {
+    var parts = String(value || "").split("-");
+    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : value || "";
+  }
+
   function initForm(form) {
     var locale = readLocale();
     var labels = config.labels[locale] || config.labels.en;
@@ -154,7 +159,7 @@ const minimalAvailabilityFormScript = String.raw`
         "",
         labels.tour + ": " + (selectedTourText() || labels.missingTour),
         labels.name + ": " + (nameInput.value.trim() || labels.missingName),
-        labels.date + ": " + (dateInput.value || labels.missingDate),
+        labels.date + ": " + (formatBookingDate(dateInput.value) || labels.missingDate),
         labels.people + ": " + (peopleInput.value || labels.missingPeople)
       ].join("\n");
     }
@@ -798,7 +803,7 @@ export default function HomePage() {
                     </span>
                     <span className="relative">
                       <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden />
-                      <input className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise" name="date" type="date" required />
+                      <input className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise" lang="en-GB" name="date" type="date" required />
                     </span>
                   </label>
                   <label className="grid gap-2 text-sm font-semibold">

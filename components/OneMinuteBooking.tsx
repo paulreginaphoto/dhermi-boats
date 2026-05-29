@@ -15,7 +15,7 @@ const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as co
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
-const dateDisplayFormat = "DD MM YYYY";
+const dateDisplayFormat = "DD/MM/YYYY";
 
 const capacityByTourId = {
   gjipe: 15,
@@ -171,6 +171,27 @@ const validationMessages: Record<FormLocale, { date: string; name: string; phone
   }
 };
 
+const dateFieldCopy: Record<FormLocale, { empty: string; selected: string; format: string; calendar: string }> = {
+  en: {
+    empty: "Choose a date",
+    selected: "Selected date",
+    format: "Format DD/MM/YYYY",
+    calendar: "Calendar"
+  },
+  fr: {
+    empty: "Choisir une date",
+    selected: "Date sélectionnée",
+    format: "Format JJ/MM/AAAA",
+    calendar: "Calendrier"
+  },
+  sq: {
+    empty: "Zgjidhni daten",
+    selected: "Data e zgjedhur",
+    format: "Formati DD/MM/YYYY",
+    calendar: "Kalendari"
+  }
+};
+
 const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> = {
   en: {
     date: "choose date",
@@ -194,8 +215,10 @@ const staticBookingEnhancerConfig = {
   whatsappNumber,
   emailAddress,
   storageKey: bookingDraftStorageKey,
+  dateDisplayFormat,
   messageIntro,
   fieldLabels,
+  dateFieldCopy,
   requiredFieldPrompts,
   tourOptionLabels,
   timeOptionLabels,
@@ -258,12 +281,6 @@ const staticBookingEnhancerScript = String.raw`
     return "en";
   }
 
-  function localeCode(locale) {
-    if (locale === "fr") return "fr-FR";
-    if (locale === "sq") return "sq-AL";
-    return "en-GB";
-  }
-
   function todayInputValue() {
     var today = new Date();
     var year = today.getFullYear();
@@ -273,20 +290,14 @@ const staticBookingEnhancerScript = String.raw`
   }
 
   function formatBookingDate(value, locale) {
+    void locale;
     var parts = String(value || "").split("-");
-    if (parts.length !== 3) return value || "";
-    var date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-    if (Number.isNaN(date.getTime())) return value || "";
-    try {
-      return new Intl.DateTimeFormat(localeCode(locale), { day: "numeric", month: "long", year: "numeric" }).format(date);
-    } catch (error) {
-      return parts[2] + " " + parts[1] + " " + parts[0];
-    }
+    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : value || "";
   }
 
   function formatDateShort(value) {
     var parts = String(value || "").split("-");
-    return parts.length === 3 ? parts[2] + " " + parts[1] + " " + parts[0] : "DD MM YYYY";
+    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : "DD/MM/YYYY";
   }
 
   function cleanValue(value) {
@@ -324,6 +335,7 @@ const staticBookingEnhancerScript = String.raw`
   function initBookingForm(root) {
     var locale = readLocale();
     var labels = config.fieldLabels[locale] || config.fieldLabels.en;
+    var dateCopy = config.dateFieldCopy[locale] || config.dateFieldCopy.en;
     var prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
     var summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
     var selectedTourId = config.defaultTourId;
@@ -342,6 +354,8 @@ const staticBookingEnhancerScript = String.raw`
     var capacityText = root.querySelector("[data-booking-capacity]");
     var summaryTitle = root.querySelector("[data-booking-summary-title]");
     var summaryMessage = root.querySelector("[data-booking-summary-message]");
+    var dateStatus = root.querySelector("[data-booking-date-status]");
+    var dateDisplay = root.querySelector("[data-booking-date-display]");
     var dateHint = root.querySelector("[data-booking-date-short]");
     var whatsappAction = root.querySelector("[data-booking-action='whatsapp']");
     var emailAction = root.querySelector("[data-booking-action='email']");
@@ -451,7 +465,14 @@ const staticBookingEnhancerScript = String.raw`
       if (ready) nextSummaryLabel = summaryLabels.ready;
       if (summaryTitle) summaryTitle.textContent = nextSummaryLabel;
       if (summaryMessage) summaryMessage.textContent = message;
-      if (dateHint) dateHint.textContent = dateInput.value ? formatDateShort(dateInput.value) : "DD MM YYYY";
+      var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value) : config.dateDisplayFormat;
+      if (dateStatus) dateStatus.textContent = dateInput.value ? dateCopy.selected : dateCopy.empty;
+      if (dateDisplay) {
+        dateDisplay.textContent = dateDisplayText;
+        dateDisplay.classList.toggle("text-ink", Boolean(dateInput.value));
+        dateDisplay.classList.toggle("text-ink-soft", !dateInput.value);
+      }
+      if (dateHint) dateHint.textContent = (dateCopy.format || "Format DD/MM/YYYY") + ": " + dateDisplayText;
 
       whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
       whatsappAction.setAttribute("aria-disabled", ready ? "false" : "true");
@@ -658,10 +679,11 @@ export function OneMinuteBooking() {
   const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
   const [bookingDraftReady, setBookingDraftReady] = useState(false);
-  const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(false);
+  const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(true);
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
+  const dateCopy = dateFieldCopy[locale];
   const activeTourTitle = tourOptionLabels[locale][activeTour.id] ?? activeTour.shortTitle;
   const activeTourCapacity = capacityForTour(activeTour.id);
   const availableTimeOptions = useMemo(() => timeOptionsForTour(tourId), [tourId]);
@@ -888,23 +910,32 @@ export function OneMinuteBooking() {
                   className={
                     dateDisplayEnhanced
                       ? [
-                          "relative h-12 rounded-md border bg-white transition focus-within:border-ink",
+                          "relative min-h-[4.75rem] overflow-hidden rounded-md border bg-white transition focus-within:border-ink focus-within:ring-2 focus-within:ring-turquoise/25",
                           errors.date ? "border-bronze" : "border-ink/12"
                         ].join(" ")
                       : "relative"
                   }
                 >
-                  <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden strokeWidth={1.75} />
+                  <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-turquoise" aria-hidden strokeWidth={1.75} />
                   {dateDisplayEnhanced ? (
-                    <span
-                      aria-hidden
-                      className={[
-                        "pointer-events-none absolute left-11 top-1/2 -translate-y-1/2 text-base font-semibold",
-                        shortBookingDate ? "text-ink" : "text-ink-soft"
-                      ].join(" ")}
-                    >
-                      {shortBookingDate || dateDisplayFormat}
-                    </span>
+                    <>
+                      <span className="pointer-events-none absolute left-12 top-3 text-[0.68rem] font-bold uppercase tracking-[0.16em] text-bronze" data-booking-date-status="true">
+                        {shortBookingDate ? dateCopy.selected : dateCopy.empty}
+                      </span>
+                      <span
+                        aria-hidden
+                        data-booking-date-display="true"
+                        className={[
+                          "pointer-events-none absolute left-12 top-8 font-serif text-[1.35rem] font-medium leading-none",
+                          shortBookingDate ? "text-ink" : "text-ink-soft"
+                        ].join(" ")}
+                      >
+                        {shortBookingDate || dateDisplayFormat}
+                      </span>
+                      <span className="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full border border-ink/10 bg-limestone px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-ink-soft sm:inline-flex">
+                        {dateCopy.calendar}
+                      </span>
+                    </>
                   ) : null}
                   <input
                     id="quick-date"
@@ -936,7 +967,7 @@ export function OneMinuteBooking() {
                   </p>
                 ) : null}
                 <p className="text-xs font-semibold text-ink-soft" aria-live="polite" data-booking-date-short="true">
-                  {shortBookingDate || dateDisplayFormat}
+                  {dateCopy.format}: {shortBookingDate || dateDisplayFormat}
                 </p>
               </div>
 

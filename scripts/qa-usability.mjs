@@ -260,8 +260,8 @@ async function verifyHomeInteractions(baseUrl, browser) {
     ? new URL(href).searchParams.get("text") || ""
     : "";
 
-  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("People: 4")) {
-    fail("home minimal booking message is missing tour, name or people");
+  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21/06/2026") || !body.includes("People: 4")) {
+    fail("home minimal booking message is missing tour, name, DD/MM/YYYY date or people");
   }
 
   await context.close();
@@ -290,10 +290,10 @@ async function verifyContactForms(baseUrl, browser) {
       : "";
     const summary = await page.locator("[data-booking-summary-message]").innerText();
 
-    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes("+33600000000")) {
+    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes("21/06/2026") || !body.includes("+33600000000")) {
       fail(`contact ${locale} WhatsApp action is incomplete`);
     }
-    if (!summary.includes(name) || !summary.includes("Audit availability check")) {
+    if (!summary.includes(name) || !summary.includes("21/06/2026") || !summary.includes("Audit availability check")) {
       fail(`contact ${locale} summary is incomplete`);
     }
 

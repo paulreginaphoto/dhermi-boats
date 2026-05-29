@@ -33,7 +33,7 @@ export function formatDateShort(value: string) {
   const day = String(parsed.day).padStart(2, "0");
   const month = String(parsed.month).padStart(2, "0");
 
-  return `${day} ${month} ${parsed.year}`;
+  return `${day}/${month}/${parsed.year}`;
 }
 
 export function formatDateLong(value: string, locale: BookingDateLocale = "fr") {
