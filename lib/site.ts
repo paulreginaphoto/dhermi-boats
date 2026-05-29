@@ -50,13 +50,13 @@ export function whatsappUrl(message: string) {
 }
 
 export const defaultBookingMessage = [
-  "👋 Hello Dhermi Boat, I'd like to book a boat tour.",
+  "Hello Dhermi Boat :) I'd like to book a boat tour.",
   "",
-  "🚤 Tour: __",
-  "📅 Date: __",
-  "👥 Adults: __",
-  "🧒 Children: __",
-  "🕒 Preferred time: __",
-  "🌍 Language: __",
-  "💬 Questions: __"
+  "*Tour:* __",
+  "*Date:* __",
+  "*Adults:* __",
+  "*Children:* __",
+  "*Preferred time:* __",
+  "*Language:* __",
+  "*Questions:* __"
 ].join("\n");

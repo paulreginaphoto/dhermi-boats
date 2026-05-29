@@ -43,9 +43,9 @@ type BookingDraft = {
 };
 
 const messageIntro: Record<FormLocale, string> = {
-  en: "👋 Hello Dhermi Boat, I would like to book a boat tour.",
-  fr: "👋 Bonjour Dhermi Boat, je voudrais réserver un tour en bateau.",
-  sq: "👋 Pershendetje Dhermi Boat, dua te rezervoj nje tur me varke."
+  en: "Hello Dhermi Boat :) I would like to book a boat tour.",
+  fr: "Bonjour Dhermi Boat :) je voudrais réserver un tour en bateau.",
+  sq: "Pershendetje Dhermi Boat :) dua te rezervoj nje tur me varke."
 };
 
 const fieldLabels: Record<FormLocale, Record<string, string>> = {
@@ -411,15 +411,15 @@ const staticBookingEnhancerScript = String.raw`
       return [
         (config.messageIntro[locale] || config.messageIntro.en),
         "",
-        "🚤 " + labels.tour + ": " + (tourLabels[selectedTourId] || selectedTourId),
-        "📅 " + labels.date + ": " + requiredValue(formatBookingDate(dateInput.value, locale), prompts.date),
-        "🕒 " + labels.time + ": " + cleanValue(timeLabels[selectedTime] || selectedTime),
-        "🌍 " + labels.language + ": " + (languageLabels[locale] || locale),
-        "👥 " + labels.adults + ": " + adults,
-        "🧒 " + labels.children + ": " + children,
-        "🙋 " + labels.name + ": " + requiredValue(nameInput.value, prompts.name),
-        "📞 " + labels.phone + ": " + cleanValue(phoneInput ? phoneInput.value : ""),
-        "💬 " + labels.notes + ": " + cleanValue(notesInput ? notesInput.value : "")
+        "*" + labels.tour + ":* " + (tourLabels[selectedTourId] || selectedTourId),
+        "*" + labels.date + ":* " + requiredValue(formatBookingDate(dateInput.value, locale), prompts.date),
+        "*" + labels.time + ":* " + cleanValue(timeLabels[selectedTime] || selectedTime),
+        "*" + labels.language + ":* " + (languageLabels[locale] || locale),
+        "*" + labels.adults + ":* " + adults,
+        "*" + labels.children + ":* " + children,
+        "*" + labels.name + ":* " + requiredValue(nameInput.value, prompts.name),
+        "*" + labels.phone + ":* " + cleanValue(phoneInput ? phoneInput.value : ""),
+        "*" + labels.notes + ":* " + cleanValue(notesInput ? notesInput.value : "")
       ].join("\n");
     }
 
@@ -703,15 +703,15 @@ export function OneMinuteBooking() {
   const bookingMessage = [
     messageIntro[locale],
     "",
-    `🚤 ${labels.tour}: ${activeTourTitle}`,
-    `📅 ${labels.date}: ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
-    `🕒 ${labels.time}: ${cleanValue(activeTimeLabel)}`,
-    `🌍 ${labels.language}: ${localeMessageLabels[locale]}`,
-    `👥 ${labels.adults}: ${safeAdults}`,
-    `🧒 ${labels.children}: ${safeChildren}`,
-    `🙋 ${labels.name}: ${requiredValue(name, requiredPrompts.name)}`,
-    `📞 ${labels.phone}: ${cleanValue(phone)}`,
-    `💬 ${labels.notes}: ${cleanValue(notes)}`
+    `*${labels.tour}:* ${activeTourTitle}`,
+    `*${labels.date}:* ${requiredValue(formattedBookingDate, requiredPrompts.date)}`,
+    `*${labels.time}:* ${cleanValue(activeTimeLabel)}`,
+    `*${labels.language}:* ${localeMessageLabels[locale]}`,
+    `*${labels.adults}:* ${safeAdults}`,
+    `*${labels.children}:* ${safeChildren}`,
+    `*${labels.name}:* ${requiredValue(name, requiredPrompts.name)}`,
+    `*${labels.phone}:* ${cleanValue(phone)}`,
+    `*${labels.notes}:* ${cleanValue(notes)}`
   ].join("\n");
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;

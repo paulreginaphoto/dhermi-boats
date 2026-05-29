@@ -122,63 +122,14 @@ function isVisibleContentFile(filePath) {
   return /^(app|components|data|lib|public\/locales)\//.test(relative) || relative === "public/llms.txt";
 }
 
-function lineIsInsideBlock(lines, lineNumber, startPattern, endPattern, maxDistance = 40) {
-  const index = lineNumber - 1;
-  let hasStart = false;
-  for (let i = index; i >= 0 && index - i <= maxDistance; i -= 1) {
-    if (startPattern.test(lines[i] ?? "")) {
-      hasStart = true;
-      break;
-    }
-  }
-  if (!hasStart) return false;
-
-  for (let i = index; i < lines.length && i - index <= maxDistance; i += 1) {
-    if (endPattern.test(lines[i] ?? "")) return true;
-  }
-
-  return false;
-}
-
-function isWhatsappEmojiLine(filePath, text, lineNumber, lines) {
-  const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
-  if (relative === "lib/whatsappMessages.ts") return true;
-
-  if (relative === "lib/site.ts") {
-    return lineIsInsideBlock(lines, lineNumber, /defaultBookingMessage\s*=/, /\]\.join\("\\n"\);/);
-  }
-
-  if (relative === "data/content.ts") {
-    return lineIsInsideBlock(lines, lineNumber, /whatsappText:\s*whatsappMessage\(\[/, /\]\),/, 16);
-  }
-
-  if (relative === "app/page.tsx") {
-    return (
-      /^\s*(intro|tour|name|date|people):/.test(text) &&
-      lineIsInsideBlock(lines, lineNumber, /minimalAvailabilityFormScript\s*=\s*String\.raw`/, /^`;/, 280)
-    );
-  }
-
-  if (relative === "components/OneMinuteBooking.tsx") {
-    if (lineIsInsideBlock(lines, lineNumber, /messageIntro:\s*Record<FormLocale,\s*string>\s*=/, /^};/, 10)) {
-      return true;
-    }
-
-    const nearbyMessageBlock = lines.slice(Math.max(0, lineNumber - 24), lineNumber + 20).join("\n");
-    return /\blabels\./.test(text) && /\.join\("\\n"\)/.test(nearbyMessageBlock);
-  }
-
-  return false;
-}
-
 function checkLineForForbiddenDash(file, text, lineNumber) {
   if (text.includes(FORBIDDEN_DASH)) {
     addIssue(file, lineNumber, "Le caractère interdit U+2014 est présent.", text);
   }
 }
 
-function checkLineForEmoji(file, text, lineNumber, lines) {
-  if (isVisibleContentFile(file) && EMOJI_CHARACTER.test(text) && !isWhatsappEmojiLine(file, text, lineNumber, lines)) {
+function checkLineForEmoji(file, text, lineNumber) {
+  if (isVisibleContentFile(file) && EMOJI_CHARACTER.test(text)) {
     addIssue(file, lineNumber, "Emoji détecté dans du contenu visible; utiliser du texte ou des icônes Lucide.", text);
   }
 }
@@ -255,9 +206,9 @@ function checkWordPressResidue(file, text, lineNumber) {
   }
 }
 
-function scanLine(filePath, text, lineNumber, lines) {
+function scanLine(filePath, text, lineNumber) {
   checkLineForForbiddenDash(filePath, text, lineNumber);
-  checkLineForEmoji(filePath, text, lineNumber, lines);
+  checkLineForEmoji(filePath, text, lineNumber);
   checkRepeatedWords(filePath, text, lineNumber);
   checkRepeatedPhrase(filePath, text, lineNumber);
   checkGenericVisiblePhrase(filePath, text, lineNumber);
@@ -1139,7 +1090,7 @@ function walkDir(dir) {
       const content = fs.readFileSync(full, "utf8");
       scanFileContent(full, content);
       const lines = content.split(/\r?\n/);
-      lines.forEach((line, index) => scanLine(full, line, index + 1, lines));
+      lines.forEach((line, index) => scanLine(full, line, index + 1));
     }
   }
 }
