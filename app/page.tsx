@@ -461,7 +461,7 @@ export default function HomePage() {
     <>
       <SEOJsonLd data={[homePageSchema(), ...featuredTours.map((tour) => touristTripSchema(tour)), faqSchema(homepageFaqs)]} />
 
-      <section data-home-section="hero" data-sticky-relief-target className="relative min-h-[calc(100svh-5rem)] overflow-hidden bg-navy text-pearl">
+      <section data-home-section="hero" data-sticky-relief-target className="relative min-h-[calc(84svh-5rem)] overflow-hidden bg-navy text-pearl md:min-h-[calc(80svh-5rem)]">
         <Image
           src="/images/hero-riviera-tablet-lcp.avif"
           alt="Dhermi Boat on turquoise water below cliffs near Dhërmi"
@@ -472,23 +472,23 @@ export default function HomePage() {
           className="object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-navy/20 via-navy/38 to-navy/88" />
-        <div className="relative mx-auto flex min-h-[calc(100svh-5rem)] max-w-site flex-col justify-end px-5 pb-28 pt-24 md:px-8 md:pb-20">
+        <div className="relative mx-auto flex min-h-[calc(84svh-5rem)] max-w-site flex-col justify-end px-5 pb-8 pt-12 md:min-h-[calc(80svh-5rem)] md:px-8 md:pb-12 md:pt-24">
           <div className="max-w-5xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
               <LocalizedText id="minimal.hero.label">{enText("minimal.hero.label")}</LocalizedText>
             </p>
-            <h1 className="mt-4 max-w-5xl font-serif text-4xl font-medium leading-[0.98] text-pearl sm:text-5xl md:text-7xl">
+            <h1 className="mt-4 max-w-5xl font-serif text-4xl font-medium leading-[0.98] text-pearl max-[360px]:text-[2rem] sm:text-5xl md:text-7xl">
               <LocalizedText id="minimal.hero.title">{enText("minimal.hero.title")}</LocalizedText>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-8 text-pearl/92 md:text-xl">
               <LocalizedText id="minimal.hero.text">{enText("minimal.hero.text")}</LocalizedText>
             </p>
-            <div className="mt-7 flex flex-wrap gap-2 text-xs font-bold text-pearl">
+            <div className="mt-7 grid grid-cols-3 gap-1.5 text-[0.68rem] font-bold text-pearl sm:flex sm:flex-wrap sm:gap-2 sm:text-xs">
               {heroBadges.map((item) => {
                 const Icon = item.icon;
 
                 return (
-                  <span key={item.key} className="inline-flex items-center gap-2 rounded-md border border-white/15 bg-ink/80 px-3 py-2 text-pearl shadow-sm backdrop-blur">
+                  <span key={item.key} className="inline-flex min-w-0 items-center justify-center gap-1.5 rounded-md border border-white/15 bg-ink/80 px-2 py-2 text-pearl shadow-sm backdrop-blur sm:gap-2 sm:px-3">
                     <Icon className="h-3.5 w-3.5 text-sand" aria-hidden />
                     <LocalizedText id={item.key}>{enText(item.key)}</LocalizedText>
                   </span>
@@ -503,7 +503,7 @@ export default function HomePage() {
                 <LocalizedText id="cta.compareTours">{enText("cta.compareTours")}</LocalizedText>
               </ButtonLink>
             </div>
-            <p className="mt-4 inline-flex max-w-xl items-start gap-2 rounded-md border border-white/15 bg-ink/90 px-3.5 py-2.5 text-sm font-semibold leading-6 text-pearl shadow-sm backdrop-blur-md">
+            <p className="mt-4 inline-flex max-w-xl items-start gap-2 rounded-md border border-white/15 bg-ink/90 px-3.5 py-2.5 text-sm font-semibold leading-6 text-pearl shadow-sm backdrop-blur-md max-[360px]:hidden">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-sand" aria-hidden />
               <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
             </p>
@@ -511,7 +511,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section data-home-section="tours" id="tours" data-tour-rail data-sticky-relief-target className="tour-rail-section bg-pearl py-16 md:py-0">
+      <section data-home-section="tours" id="tours" data-tour-rail data-sticky-relief-target className="tour-rail-section bg-pearl pb-16 pt-8 md:py-0">
         <div className="tour-rail-sticky">
           <div className="site-band w-full">
             <div className="grid gap-6 md:grid-cols-[0.95fr_1.05fr] md:items-end">

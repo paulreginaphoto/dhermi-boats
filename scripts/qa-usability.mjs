@@ -154,6 +154,16 @@ async function collectPageMetrics(page) {
           reliefActive: document.body.hasAttribute("data-sticky-booking-relief"),
           viewportHeight: window.innerHeight
         };
+      })(),
+      homeNextSectionHint: (() => {
+        const nextLabel = document.querySelector('#tours [data-i18n="minimal.tours.label"]');
+        if (!nextLabel || !visible(nextLabel)) return null;
+        const rect = nextLabel.getBoundingClientRect();
+        return {
+          top: Math.round(rect.top),
+          bottom: Math.round(rect.bottom),
+          viewportHeight: window.innerHeight
+        };
       })()
     };
   });
@@ -194,6 +204,9 @@ async function verifyRoute(baseUrl, browser, route, viewport) {
   if (!metrics.h1Count) fail(`${viewport.name} ${route} missing h1`);
   if (metrics.horizontalOverflow) {
     fail(`${viewport.name} ${route} horizontal overflow ${metrics.scrollWidth}/${metrics.clientWidth}`);
+  }
+  if (route === "/" && (!metrics.homeNextSectionHint || metrics.homeNextSectionHint.top >= metrics.homeNextSectionHint.viewportHeight)) {
+    fail(`${viewport.name} ${route} hero does not reveal the next section content`);
   }
   for (const src of metrics.brokenImages) fail(`${viewport.name} ${route} broken image ${src}`);
   for (const src of metrics.imagesWithoutAlt) fail(`${viewport.name} ${route} image missing alt ${src}`);
@@ -289,12 +302,16 @@ async function verifyContactForms(baseUrl, browser) {
       ? new URL(href).searchParams.get("text") || ""
       : "";
     const summary = await page.locator("[data-booking-summary-message]").innerText();
+    const bodyText = await page.locator("body").innerText();
 
     if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes("21/06/2026") || !body.includes("+33600000000")) {
       fail(`contact ${locale} WhatsApp action is incomplete`);
     }
     if (!summary.includes(name) || !summary.includes("21/06/2026") || !summary.includes("Audit availability check")) {
       fail(`contact ${locale} summary is incomplete`);
+    }
+    if (locale === "fr" && (bodyText.includes("Phone is helpful") || bodyText.includes("Format JJ/MM/AAAA: DD/MM/YYYY"))) {
+      fail("contact fr booking form leaks English helper copy");
     }
 
     await context.close();

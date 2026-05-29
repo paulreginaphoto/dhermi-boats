@@ -31,6 +31,11 @@ const fixedTimeByTourId = {
 } as const satisfies Record<string, TimeOption>;
 
 type FormLocale = "en" | "fr" | "sq";
+const dateDisplayFormats: Record<FormLocale, string> = {
+  en: "DD/MM/YYYY",
+  fr: "JJ/MM/AAAA",
+  sq: "DD/MM/YYYY"
+};
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
 const enText = (key: string) => translations.en[key] ?? "";
 
@@ -216,9 +221,11 @@ const staticBookingEnhancerConfig = {
   emailAddress,
   storageKey: bookingDraftStorageKey,
   dateDisplayFormat,
+  dateDisplayFormats,
   messageIntro,
   fieldLabels,
   dateFieldCopy,
+  validationMessages,
   requiredFieldPrompts,
   tourOptionLabels,
   timeOptionLabels,
@@ -336,6 +343,10 @@ const staticBookingEnhancerScript = String.raw`
     var locale = readLocale();
     var labels = config.fieldLabels[locale] || config.fieldLabels.en;
     var dateCopy = config.dateFieldCopy[locale] || config.dateFieldCopy.en;
+    var displayFormats = config.dateDisplayFormats || {};
+    var datePlaceholder = displayFormats[locale] || config.dateDisplayFormat;
+    var validationCopy = config.validationMessages || {};
+    var messages = validationCopy[locale] || validationCopy.en;
     var prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
     var summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
     var selectedTourId = config.defaultTourId;
@@ -357,6 +368,7 @@ const staticBookingEnhancerScript = String.raw`
     var dateStatus = root.querySelector("[data-booking-date-status]");
     var dateDisplay = root.querySelector("[data-booking-date-display]");
     var dateHint = root.querySelector("[data-booking-date-short]");
+    var phoneHint = root.querySelector("[data-booking-phone-hint]");
     var whatsappAction = root.querySelector("[data-booking-action='whatsapp']");
     var emailAction = root.querySelector("[data-booking-action='email']");
 
@@ -465,14 +477,15 @@ const staticBookingEnhancerScript = String.raw`
       if (ready) nextSummaryLabel = summaryLabels.ready;
       if (summaryTitle) summaryTitle.textContent = nextSummaryLabel;
       if (summaryMessage) summaryMessage.textContent = message;
-      var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value) : config.dateDisplayFormat;
+      var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value) : datePlaceholder;
       if (dateStatus) dateStatus.textContent = dateInput.value ? dateCopy.selected : dateCopy.empty;
       if (dateDisplay) {
         dateDisplay.textContent = dateDisplayText;
         dateDisplay.classList.toggle("text-ink", Boolean(dateInput.value));
         dateDisplay.classList.toggle("text-ink-soft", !dateInput.value);
       }
-      if (dateHint) dateHint.textContent = (dateCopy.format || "Format DD/MM/YYYY") + ": " + dateDisplayText;
+      if (dateHint) dateHint.textContent = dateInput.value ? (dateCopy.selected + ": " + dateDisplayText) : (dateCopy.format || "Format DD/MM/YYYY");
+      if (phoneHint) phoneHint.textContent = messages.phoneHint;
 
       whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
       whatsappAction.setAttribute("aria-disabled", ready ? "false" : "true");
@@ -696,6 +709,7 @@ export function OneMinuteBooking() {
   const requiredPrompts = requiredFieldPrompts[locale];
   const formattedBookingDate = date ? formatBookingDate(date, locale) : "";
   const shortBookingDate = date ? formatDateShort(date) : "";
+  const dateDisplayPlaceholder = dateDisplayFormats[locale] ?? dateDisplayFormat;
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -930,7 +944,7 @@ export function OneMinuteBooking() {
                           shortBookingDate ? "text-ink" : "text-ink-soft"
                         ].join(" ")}
                       >
-                        {shortBookingDate || dateDisplayFormat}
+                        {shortBookingDate || dateDisplayPlaceholder}
                       </span>
                       <span className="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-full border border-ink/10 bg-limestone px-3 py-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-ink-soft sm:inline-flex">
                         {dateCopy.calendar}
@@ -939,7 +953,7 @@ export function OneMinuteBooking() {
                   ) : null}
                   <input
                     id="quick-date"
-                    aria-label={`${labels.date} ${dateDisplayFormat}`}
+                    aria-label={`${labels.date} ${dateDisplayPlaceholder}`}
                     aria-describedby={errors.date ? "quick-date-error" : undefined}
                     aria-invalid={errors.date || undefined}
                     className={
@@ -967,7 +981,7 @@ export function OneMinuteBooking() {
                   </p>
                 ) : null}
                 <p className="text-xs font-semibold text-ink-soft" aria-live="polite" data-booking-date-short="true">
-                  {dateCopy.format}: {shortBookingDate || dateDisplayFormat}
+                  {shortBookingDate ? `${dateCopy.selected}: ${shortBookingDate}` : dateCopy.format}
                 </p>
               </div>
 
@@ -1099,7 +1113,7 @@ export function OneMinuteBooking() {
                   value={phone}
                   onChange={(event) => setPhone(event.target.value)}
                 />
-                <p className="text-xs font-semibold text-ink-soft">{messages.phoneHint}</p>
+                <p className="text-xs font-semibold text-ink-soft" data-booking-phone-hint="true">{messages.phoneHint}</p>
               </div>
             </div>
           </div>
