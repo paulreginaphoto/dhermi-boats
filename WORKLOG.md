@@ -159,3 +159,11 @@ The site is a static, image-led booking website with clear prices, a one-minute 
 - Added a static noindex fallback for `/20250721_103929/` that canonicalizes and redirects visitors to `/boat-photos/`.
 - Restored the old MP4 upload path as a static file so crawlers and users no longer hit a missing resource while the old WordPress result drops out of search.
 - Extended URL canonical QA to check legacy media attachment routes and restored media files after every export.
+
+## 2026-05-29 Search Console Indexing Cleanup
+
+- Reproduced the live Search Console patterns: canonical public pages returned 200/indexable, legacy pages returned 200 with `noindex`, language URLs exposed crawlable `?dlang` alternates, and robots blocked old WordPress query patterns.
+- Changed production robots to allow crawling so Google can read canonicals instead of reporting `Blocked by robots.txt`.
+- Converted legacy WordPress/WooCommerce URLs to canonical transition pages with instant meta-refresh and no `noindex`; added `/tours/group/` to the legacy redirect map.
+- Removed query-based hreflang and crawlable language switcher links while keeping runtime language selection and legacy `?dlang` input support.
+- Added QA coverage for clean robots, no crawlable language query links, no legacy noindex exclusions and 16 legacy canonical transitions.

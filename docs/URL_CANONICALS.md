@@ -1,6 +1,6 @@
 # Dhermi Boat URL Canonicals
 
-Last updated: 2026-05-25
+Last updated: 2026-05-29
 
 ## Canonical Tour Pages
 
@@ -24,10 +24,7 @@ These pages stay public because they are collection or destination-navigation pa
 | --- | --- |
 | `/` | Home and booking entry |
 | `/tours/` | Tour comparison and tour list |
-| `/tours/group/` | Shared-tour collection |
 | `/destinations/` | Destination overview |
-| `/destinations/gjipe/` | Gjipe destination context |
-| `/destinations/grama-bay/` | Grama Bay destination context |
 | `/destinations/blue-cave/` | Blue Cave destination context |
 | `/boat-photos/` | Photo gallery |
 | `/faq/` | FAQ |
@@ -37,11 +34,19 @@ Destination pages link users back to the canonical tour detail pages for route a
 
 ## Legacy Redirects
 
-Legacy or non-booking URLs should not be indexed and should point users to the closest real page.
+Legacy or non-booking URLs should point users and crawlers to the closest real page.
 
 | Legacy URL | Destination | Notes |
 | --- | --- | --- |
 | `/tours/private/` | `/private-boat-tour-albania/` | Removed duplicate private-tour template |
+| `/tours/group/` | `/tours/` | Shared-tour helper duplicate |
+| `/boat-tour-dhermi-today/` | `/tours/` | Old availability landing page |
+| `/blue-cave-boat-tour-dhermi/` | `/grama-bay-boat-tour/` | Old Blue Cave landing page |
+| `/dhermi-to-grama-bay-boat/` | `/grama-bay-boat-tour/` | Old Grama landing page |
+| `/family-boat-tour-dhermi/` | `/private-boat-tour-albania/` | Old family/private landing page |
+| `/french-speaking-boat-tour-dhermi/` | `/contact/` | Old language/contact landing page |
+| `/destinations/gjipe/` | `/gjipe-boat-tour/` | Destination helper duplicate |
+| `/destinations/grama-bay/` | `/grama-bay-boat-tour/` | Destination helper duplicate |
 | `/20250721_103929/` | `/boat-photos/` | WordPress media attachment artifact |
 | `/2026/02/28/hello-world/` | `/` | WordPress blog artifact |
 | `/sample-page/` | `/` | WordPress sample artifact |
@@ -50,25 +55,25 @@ Legacy or non-booking URLs should not be indexed and should point users to the c
 | `/mon-compte/` | `/` | WooCommerce artifact |
 | `/commander/` | `/contact/` | WooCommerce checkout artifact |
 
-The static app renders noindex redirect pages for legacy routes. `public/_redirects` also includes 301 rules for hosts that support Netlify or Cloudflare Pages-style redirects.
+The static app renders canonical transition pages for legacy routes. They use canonical tags plus instant meta-refresh, without `noindex`, so Search Console does not classify them as noindex exclusions. `public/_redirects` also includes 301 rules for hosts that support Netlify or Cloudflare Pages-style redirects.
 
 The old WordPress video URL `/wp-content/uploads/2026/02/20250721_103929.mp4` is also kept as a static media file so Google and users do not hit a 404 while the old attachment result drops out of search.
 
 ## Language Routing
 
-The site uses one URL path per page and a language query:
+The site uses one canonical URL path per page. The language switcher updates the document language in JavaScript and stores the choice locally; it does not publish crawlable language-query links.
 
-| Language | Query |
+| Language | Runtime code |
 | --- | --- |
-| English | `?dlang=en` |
-| French | `?dlang=fr` |
-| Albanian | `?dlang=sq` |
+| English | `en` |
+| French | `fr` |
+| Albanian | `sq` |
 
 Rules:
 
-- `?dlang` changes language only. It must not change the page template.
+- `?dlang` and `lang` are accepted only as legacy inputs and removed from the visible URL client-side.
 - `sq` is the normalized Albanian code.
-- `al`, `sq-AL`, and `lang=...` are accepted as legacy inputs and normalized client-side to `dlang=sq`, `dlang=fr`, or `dlang=en`.
+- `al`, `sq-AL`, and `lang=...` are accepted as legacy inputs and normalized client-side to `sq`, `fr`, or `en`.
 - No `/al/` or `/sq/` path routing is used.
 
 ## Canonical And Hreflang
@@ -76,12 +81,9 @@ Rules:
 Indexable pages expose:
 
 - a canonical tag without `dlang`
-- `hreflang="en"` with `?dlang=en`
-- `hreflang="fr"` with `?dlang=fr`
-- `hreflang="sq"` with `?dlang=sq`
 - `hreflang="x-default"` without `dlang`
 
-Noindex legacy redirect pages do not advertise hreflang alternates.
+Legacy transition pages do not advertise hreflang alternates.
 
 ## Sitemap And Navigation
 
@@ -91,12 +93,4 @@ Header, mobile menu, footer, home CTAs, `llms.txt`, and schema-driven public lin
 
 ## Garbage URL Policy
 
-Robots disallows old WordPress or parameter garbage such as:
-
-- `?add-to-cart=`
-- `?section=`
-- `?elementor...`
-- `?p=`
-- `?page_id=`
-
-These parameter URLs should not be promoted, linked, or indexed.
+Production robots allows crawling so Google can see canonicals and transition pages instead of reporting `Blocked by robots.txt`. Old WordPress parameters such as `?add-to-cart=`, `?section=`, `?elementor`, `?p=`, and `?page_id=` must not be promoted or linked.

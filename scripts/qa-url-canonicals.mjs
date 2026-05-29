@@ -22,6 +22,7 @@ const legacyRedirects = new Map([
   ["/dhermi-to-grama-bay-boat/", "/grama-bay-boat-tour/"],
   ["/family-boat-tour-dhermi/", "/private-boat-tour-albania/"],
   ["/french-speaking-boat-tour-dhermi/", "/contact/"],
+  ["/tours/group/", "/tours/"],
   ["/destinations/gjipe/", "/gjipe-boat-tour/"],
   ["/destinations/grama-bay/", "/grama-bay-boat-tour/"],
   ["/2026/02/28/hello-world/", "/"],
@@ -186,25 +187,20 @@ function checkLegacyRedirectSources() {
     }
   }
 
-  const privateLegacy = exists("app/tours/private/page.tsx") ? read("app/tours/private/page.tsx") : "";
-  assertIncludes("app/tours/private/page.tsx", privateLegacy, "LegacyRedirectPage", "legacy private URL must render a redirect page");
-  assertIncludes("app/tours/private/page.tsx", privateLegacy, "robots: { index: false, follow: true }", "legacy private URL must be noindex");
-  assertIncludes("app/tours/private/page.tsx", privateLegacy, 'destination="/private-boat-tour-albania/"', "legacy private URL must redirect to the canonical private tour");
-  assertNotIncludes("app/tours/private/page.tsx", privateLegacy, "TourDetailPage", "legacy private URL must not render the tour template");
-  assertNotIncludes("app/tours/private/page.tsx", privateLegacy, "languageAlternates(", "legacy private URL must not advertise hreflang alternates");
-
-  for (const [from, to] of legacyAttachmentRedirects) {
+  for (const [from, to] of allLegacyRedirects) {
     const file = `app${from}page.tsx`;
     if (!exists(file)) {
-      fail(`${file}: legacy media attachment URL must render a static noindex fallback`);
+      fail(`${file}: legacy URL must render a static canonical transition page`);
       continue;
     }
 
     const content = read(file);
-    assertIncludes(file, content, "LegacyRedirectPage", "legacy media attachment URL must render a redirect page");
-    assertIncludes(file, content, "robots: { index: false, follow: true }", "legacy media attachment URL must be noindex");
-    assertIncludes(file, content, `canonical("${to}")`, `legacy media attachment URL must canonicalize to ${to}`);
-    assertIncludes(file, content, `destination="${to}"`, `legacy media attachment URL must redirect to ${to}`);
+    assertIncludes(file, content, "LegacyRedirectPage", "legacy URL must render a redirect page");
+    assertIncludes(file, content, `canonical("${to}")`, `legacy URL must canonicalize to ${to}`);
+    assertIncludes(file, content, `destination="${to}"`, `legacy URL must redirect to ${to}`);
+    assertNotIncludes(file, content, "robots: { index: false", "legacy transition URL must not trigger Search Console noindex exclusions");
+    assertNotIncludes(file, content, "TourDetailPage", "legacy URL must not render the canonical page template");
+    assertNotIncludes(file, content, "languageAlternates(", "legacy URL must not advertise hreflang alternates");
   }
 }
 
@@ -233,7 +229,8 @@ function checkPublicLinks() {
 
 function checkLanguageRouting() {
   const site = read("lib/site.ts");
-  assertIncludes("lib/site.ts", site, "sq: canonical(`${path}?dlang=sq`)", "hreflang must use sq for Albanian");
+  assertIncludes("lib/site.ts", site, '"x-default": canonical(path)', "language alternates must keep only the canonical x-default URL");
+  assertNotIncludes("lib/site.ts", site, "?dlang=", "metadata hreflang must not expose client-side language query duplicates");
   assertNotIncludes("lib/site.ts", site, "al: canonical", "hreflang must not expose mixed al/sq Albanian URLs");
 
   for (const file of ["components/LocaleBootstrap.tsx", "components/LanguageProvider.tsx", "components/OneMinuteBooking.tsx"]) {
@@ -244,10 +241,12 @@ function checkLanguageRouting() {
 
   const bootstrap = read("components/LocaleBootstrap.tsx");
   assertIncludes("components/LocaleBootstrap.tsx", bootstrap, "normalizeUrlLocale()", "bootstrap must canonicalize legacy language query params");
-  assertIncludes("components/LocaleBootstrap.tsx", bootstrap, 'searchParams.set("dlang", locale)', "bootstrap must write the normalized dlang query");
+  assertIncludes("components/LocaleBootstrap.tsx", bootstrap, 'searchParams.delete("dlang")', "bootstrap must remove client-side language query params from canonical URLs");
   assertIncludes("components/LocaleBootstrap.tsx", bootstrap, 'searchParams.delete("lang")', "bootstrap must remove mixed lang query behavior");
 
   const switcher = read("components/LanguageSwitcher.tsx");
+  assertIncludes("components/LanguageSwitcher.tsx", switcher, "type=\"button\"", "language switcher must use buttons instead of crawlable query links");
+  assertNotIncludes("components/LanguageSwitcher.tsx", switcher, "href={`?dlang=${item}`}", "language switcher must not expose crawlable dlang links");
   assertNotIncludes("components/LanguageSwitcher.tsx", switcher, "dlang=al", "language switcher must not link to al");
 }
 
@@ -278,8 +277,9 @@ function checkFrenchTranslations() {
 function checkRobotsAndGarbagePolicy() {
   const robots = read("app/robots.ts");
   for (const snippet of ["/*?section=", "/*?elementor", "/*?p=", "/*?page_id="]) {
-    assertIncludes("app/robots.ts", robots, snippet, "robots must disallow public garbage query URLs");
+    assertNotIncludes("app/robots.ts", robots, snippet, "production robots must not block old WordPress query URLs before Google can see the canonical page");
   }
+  assertNotIncludes("app/robots.ts", robots, "legacyWordPressDisallow", "production robots must not carry a legacy WordPress disallow list");
 }
 
 function checkExportedHtml() {
@@ -300,13 +300,16 @@ function checkExportedHtml() {
 
     const html = fs.readFileSync(file, "utf8");
     assertIncludes(routeLabel, html, `rel="canonical" href="${canonicalUrl(routePath)}"`, "exported page must have canonical tag");
-    for (const locale of locales) {
-      if (!hasHreflang(html, locale, canonicalUrl(`${routePath}?dlang=${locale}`))) {
-        fail(`${routeLabel}: exported page must have ${locale} hreflang`);
-      }
-    }
     if (!hasHreflang(html, "x-default", canonicalUrl(routePath))) {
       fail(`${routeLabel}: exported page must have x-default hreflang`);
+    }
+    for (const locale of locales) {
+      if (hasHreflang(html, locale, canonicalUrl(`${routePath}?dlang=${locale}`))) {
+        fail(`${routeLabel}: exported page must not expose query-based ${locale} hreflang`);
+      }
+    }
+    if (/href="[^"]*\?dlang=/.test(html)) {
+      fail(`${routeLabel}: exported page must not expose crawlable language query links`);
     }
     assertNotIncludes(routeLabel, html, "NEXT_REDIRECT", "canonical route must not be a Next redirect shell");
   }
@@ -321,7 +324,7 @@ function checkExportedHtml() {
     }
     const html = fs.readFileSync(file, "utf8");
     const routeLabel = relative(file);
-    assertIncludes(routeLabel, html, `noindex`, "legacy redirect page must be noindex");
+    assertNotIncludes(routeLabel, html, `noindex`, "legacy redirect page must not trigger Search Console noindex exclusions");
     assertIncludes(routeLabel, html, `rel="canonical" href="${canonicalUrl(to)}"`, `legacy redirect page must canonicalize to ${to}`);
     assertIncludes(routeLabel, html, `content="0;url=${to}"`, `legacy redirect page must meta-refresh to ${to}`);
   }
@@ -353,6 +356,10 @@ function checkExportedHtml() {
 
     if (html.includes("?dlang=al") || html.includes("hreflang=\"al\"") || html.includes("hrefLang=\"al\"")) {
       fail(`${relative(file)}: exported HTML exposes mixed al/sq language URL`);
+    }
+
+    if (/href="[^"]*\?dlang=/.test(html)) {
+      fail(`${relative(file)}: exported HTML exposes crawlable language query links`);
     }
   }
 }

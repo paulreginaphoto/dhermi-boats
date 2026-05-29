@@ -5,8 +5,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Grama Bay Boat Tour",
   description: "This old destination URL now points to the Grama Bay boat tour.",
-  alternates: { canonical: canonical("/grama-bay-boat-tour/") },
-  robots: { index: false, follow: true }
+  alternates: { canonical: canonical("/grama-bay-boat-tour/") }
 };
 
 export default function GramaDestinationPage() {

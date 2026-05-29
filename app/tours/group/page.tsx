@@ -5,8 +5,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Dhermi Boat Tours",
   description: "This legacy group tours URL now points to the canonical tours comparison page.",
-  alternates: { canonical: canonical("/tours/") },
-  robots: { index: false, follow: true }
+  alternates: { canonical: canonical("/tours/") }
 };
 
 export default function LegacyGroupToursPage() {

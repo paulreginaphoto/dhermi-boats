@@ -151,7 +151,10 @@ if (fs.existsSync(outDir)) {
     const title = html.match(/<title>([^<]+)<\/title>/i)?.[1]?.trim();
     const description = html.match(/<meta name="description" content="([^"]+)"/i)?.[1]?.trim();
     const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
-    const hreflangs = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/gi)].map((match) => match[1]);
+    const hreflangs = [...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/gi)].map((match) => ({
+      lang: match[1],
+      href: match[2]
+    }));
 
     if (!title) fail(`${routePath} missing title`);
     if (!description) fail(`${routePath} missing meta description`);
@@ -173,11 +176,16 @@ if (fs.existsSync(outDir)) {
     } else if (head.includes(googleAdsContactSendTo)) {
       fail(`${routePath} should not include the Contact conversion event snippet`);
     }
-    for (const lang of hreflangs) {
+    for (const { lang, href } of hreflangs) {
       if (!["en", "fr", "sq", "x-default"].includes(lang)) fail(`${routePath} exposes unsupported hreflang ${lang}`);
+      if (href.includes("?dlang=")) fail(`${routePath} exposes query-based hreflang ${href}`);
     }
-    for (const lang of ["en", "fr", "sq", "x-default"]) {
-      if (!hreflangs.includes(lang)) fail(`${routePath} missing hreflang ${lang}`);
+    if (!hreflangs.some((item) => item.lang === "x-default")) fail(`${routePath} missing hreflang x-default`);
+    for (const lang of ["en", "fr", "sq"]) {
+      if (hreflangs.some((item) => item.lang === lang)) fail(`${routePath} should not expose client-side ${lang} hreflang`);
+    }
+    if (/href="[^"]*\?dlang=/.test(html)) {
+      fail(`${routePath} exposes crawlable language query links`);
     }
 
     const schemas = flattenSchemas(extractJsonLd(html));
@@ -217,7 +225,7 @@ for (const routePath of excludedSitemapUrls.slice(0, 4)) {
 
 const robotsSource = read("app/robots.ts");
 for (const snippet of ["/*?section=", "/*?*section=", "/*?elementor", "/*?page_id=", "/*?p="]) {
-  if (!robotsSource.includes(snippet)) fail(`app/robots.ts missing disallow ${snippet}`);
+  if (robotsSource.includes(snippet)) fail(`app/robots.ts must not block legacy query URLs in production: ${snippet}`);
 }
 
 for (const relativePath of [
@@ -226,8 +234,9 @@ for (const relativePath of [
   "app/destinations/grama-bay/page.tsx"
 ]) {
   const source = read(relativePath);
-  if (!source.includes("robots: { index: false, follow: true }")) fail(`${relativePath} must be noindex`);
-  if (source.includes("languageAlternates(")) fail(`${relativePath} noindex duplicate should not emit hreflang alternates`);
+  if (!source.includes("LegacyRedirectPage")) fail(`${relativePath} must remain a canonical legacy transition page`);
+  if (source.includes("robots: { index: false")) fail(`${relativePath} must not trigger Search Console noindex exclusions`);
+  if (source.includes("languageAlternates(")) fail(`${relativePath} legacy duplicate should not emit hreflang alternates`);
 }
 
 for (const [relativePath, snippets] of Object.entries({

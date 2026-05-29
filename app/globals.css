@@ -79,7 +79,11 @@ summary:focus-visible {
   align-items: center;
   justify-content: center;
   border-radius: 0.8rem;
+  border: 0;
+  background: transparent;
   color: #405766;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 0.75rem;
   font-weight: 800;
   line-height: 1;

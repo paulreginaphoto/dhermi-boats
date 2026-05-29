@@ -66,17 +66,18 @@ For each canonical tour page:
 
 ## Legacy Checks
 
-Legacy routes must not be indexable tour pages:
+Legacy routes must stay canonical transition pages:
 
 | URL | Expected behavior |
 | --- | --- |
-| `/tours/private/` | noindex redirect to `/private-boat-tour-albania/` |
-| `/2026/02/28/hello-world/` | noindex redirect to `/` |
-| `/sample-page/` | noindex redirect to `/` |
-| `/boutique/` | noindex redirect to `/` |
-| `/panier/` | noindex redirect to `/` |
-| `/mon-compte/` | noindex redirect to `/` |
-| `/commander/` | noindex redirect to `/contact/` |
+| `/tours/private/` | canonical + instant meta-refresh to `/private-boat-tour-albania/` |
+| `/tours/group/` | canonical + instant meta-refresh to `/tours/` |
+| `/2026/02/28/hello-world/` | canonical + instant meta-refresh to `/` |
+| `/sample-page/` | canonical + instant meta-refresh to `/` |
+| `/boutique/` | canonical + instant meta-refresh to `/` |
+| `/panier/` | canonical + instant meta-refresh to `/` |
+| `/mon-compte/` | canonical + instant meta-refresh to `/` |
+| `/commander/` | canonical + instant meta-refresh to `/contact/` |
 
 ## Garbage Text Checks
 

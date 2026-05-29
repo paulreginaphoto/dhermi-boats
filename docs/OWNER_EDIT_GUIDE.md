@@ -33,7 +33,7 @@ Ce guide sert à modifier le site sans chercher dans tout le code.
 - Pages principales : `app/*/page.tsx`.
 - Canonicals et domaine public : `lib/site.ts`.
 - Sitemap : `app/sitemap.ts`.
-- Anciennes URLs WordPress/WooCommerce : garder les pages noindex avec `LegacyRedirectPage` et les règles dans `public/_redirects`.
+- Anciennes URLs WordPress/WooCommerce : garder les pages `LegacyRedirectPage` avec canonique + meta-refresh, sans `noindex`, et les règles dans `public/_redirects`.
 
 ## Checklist avant publication
 

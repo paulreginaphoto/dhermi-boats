@@ -38,9 +38,6 @@ export function canonical(path = "/") {
 
 export function languageAlternates(path = "/") {
   return {
-    en: canonical(`${path}?dlang=en`),
-    fr: canonical(`${path}?dlang=fr`),
-    sq: canonical(`${path}?dlang=sq`),
     "x-default": canonical(path)
   };
 }

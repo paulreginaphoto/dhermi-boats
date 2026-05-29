@@ -543,6 +543,7 @@ function checkImportantPageHreflang(filePath, content) {
   if (!filePath.endsWith(path.join("page.tsx"))) return;
   if (!content.includes("export const metadata")) return;
   if (!content.includes("alternates:")) return;
+  if (content.includes("LegacyRedirectPage")) return;
   if (content.includes("robots: { index: false")) return;
   if (content.includes("languageAlternates(")) return;
 

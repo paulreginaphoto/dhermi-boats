@@ -73,7 +73,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   function normalizeUrlLocale() {
     if (!searchParams.has("dlang") && !searchParams.has("lang")) return;
     var previous = currentUrl.search;
-    searchParams.set("dlang", locale);
+    searchParams.delete("dlang");
     searchParams.delete("lang");
     if (currentUrl.search !== previous) {
       window.history.replaceState(null, "", currentUrl.pathname + currentUrl.search + currentUrl.hash);
@@ -94,16 +94,31 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       var nextLocale = button.getAttribute("data-locale");
       var isActive = button.getAttribute("data-locale") === locale;
       button.toggleAttribute("data-active", isActive);
-      if (isLocale(nextLocale)) {
-        var target = new URL(window.location.href);
-        target.searchParams.set("dlang", nextLocale);
-        target.searchParams.delete("lang");
-        button.setAttribute("href", target.pathname + target.search + target.hash);
-      }
       if (isActive) {
         button.setAttribute("aria-current", "true");
+        button.setAttribute("aria-pressed", "true");
       } else {
         button.removeAttribute("aria-current");
+        button.setAttribute("aria-pressed", "false");
+      }
+      if (button.getAttribute("data-locale-listener-bound") !== "true") {
+        button.setAttribute("data-locale-listener-bound", "true");
+        button.addEventListener("click", function (event) {
+          event?.preventDefault?.();
+          var selectedLocale = button.getAttribute("data-locale");
+          if (!isLocale(selectedLocale)) return;
+          locale = selectedLocale;
+          try {
+            currentUrl = new URL(window.location.href);
+            searchParams = currentUrl.searchParams;
+            searchParams.delete("dlang");
+            searchParams.delete("lang");
+            window.history.replaceState(null, "", currentUrl.pathname + currentUrl.search + currentUrl.hash);
+            window.localStorage.setItem("dhermi-language", locale);
+          } catch (_e) {}
+          document.documentElement.lang = locale;
+          applyLocaleText();
+        });
       }
     });
     } catch (_e) {}

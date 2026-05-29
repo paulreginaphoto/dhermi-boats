@@ -20,9 +20,9 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
       ) : null}
       <div className={compact ? "language-switcher-shell language-switcher-shell-compact" : "language-switcher-shell"}>
         {locales.map((item: Locale) => (
-          <a
+          <button
             key={item}
-            href={`?dlang=${item}`}
+            type="button"
             aria-label={`${localeLabels[item]} - ${localeAriaNames[item]}`}
             data-analytics-event="language_switch_click"
             data-locale={item}
@@ -30,7 +30,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
             className="language-option"
           >
             <span>{localeLabels[item]}</span>
-          </a>
+          </button>
         ))}
       </div>
     </div>

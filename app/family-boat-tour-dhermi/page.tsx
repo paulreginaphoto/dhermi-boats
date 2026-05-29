@@ -5,8 +5,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Private Boat Tour",
   description: "This old family landing page now points to the private boat tour.",
-  alternates: { canonical: canonical("/private-boat-tour-albania/") },
-  robots: { index: false, follow: true }
+  alternates: { canonical: canonical("/private-boat-tour-albania/") }
 };
 
 export default function FamilyBoatTourDhermiPage() {

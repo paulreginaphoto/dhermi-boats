@@ -13,29 +13,11 @@ export default function robots(): MetadataRoute.Robots {
     };
   }
 
-  const legacyWordPressDisallow = [
-    "/wp-content/uploads/wc-logs/",
-    "/wp-content/uploads/woocommerce_transient_files/",
-    "/wp-content/uploads/woocommerce_uploads/",
-    "/*?add-to-cart=",
-    "/*?*add-to-cart=",
-    "/*?section=",
-    "/*?*section=",
-    "/*?elementor",
-    "/*?*elementor",
-    "/*?p=",
-    "/*?*p=",
-    "/*?page_id=",
-    "/*?*page_id=",
-    "/wp-admin/"
-  ];
-
   return {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/wp-admin/admin-ajax.php"],
-        disallow: legacyWordPressDisallow
+        allow: "/"
       },
       { userAgent: "GPTBot", allow: "/" },
       { userAgent: "ChatGPT-User", allow: "/" },

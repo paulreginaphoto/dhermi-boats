@@ -5,8 +5,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Dhermi Boat Photos",
   description: "This legacy media attachment URL now points to the boat photos page.",
-  alternates: { canonical: canonical("/boat-photos/") },
-  robots: { index: false, follow: true }
+  alternates: { canonical: canonical("/boat-photos/") }
 };
 
 export default function LegacyMediaAttachmentPage() {

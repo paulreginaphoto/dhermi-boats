@@ -18,7 +18,7 @@ Commercial facts were not changed: prices, tour durations, routes, phone, WhatsA
 - JSON-LD FAQPage: PASS only where the FAQ questions are visible on the page.
 - JSON-LD TouristTrip/Offer: PASS on canonical tour pages with factual tour names, prices, itinerary text, provider, and URL. No availability/scarcity claims are emitted.
 - Sitemap: PASS canonical public URLs only.
-- Robots: PASS parameter garbage and legacy WordPress-style URLs excluded or blocked from indexing.
+- Robots: PASS production crawl is open so Google can read canonicals and transition pages.
 
 ## Public URL Matrix
 
@@ -41,12 +41,12 @@ Commercial facts were not changed: prices, tour durations, routes, phone, WhatsA
 
 | URL | Status | Notes |
 | --- | --- | --- |
-| `/tours/private/` | REDIRECT / NOINDEX | Redirect helper for the canonical private tour page. |
-| `/tours/group/` | NOINDEX | Helper choice page canonicalizes to `/tours/`; removed from sitemap. |
-| `/destinations/gjipe/` | NOINDEX | Helper destination page canonicalizes to `/gjipe-boat-tour/`; removed from sitemap. |
-| `/destinations/grama-bay/` | NOINDEX | Helper destination page canonicalizes to `/grama-bay-boat-tour/`; removed from sitemap. |
-| WordPress/blog artifact URLs | REDIRECT / NOINDEX | Legacy routes are excluded from public sitemap and blocked by robots/redirect handling. |
-| Section/parameter garbage URLs | BLOCKED | `robots.ts` disallows WordPress, Elementor, paging, and section-style parameters. |
+| `/tours/private/` | CANONICAL TRANSITION | Redirect helper for the canonical private tour page. |
+| `/tours/group/` | CANONICAL TRANSITION | Helper choice page canonicalizes to `/tours/`; removed from sitemap. |
+| `/destinations/gjipe/` | CANONICAL TRANSITION | Helper destination page canonicalizes to `/gjipe-boat-tour/`; removed from sitemap. |
+| `/destinations/grama-bay/` | CANONICAL TRANSITION | Helper destination page canonicalizes to `/grama-bay-boat-tour/`; removed from sitemap. |
+| WordPress/blog artifact URLs | CANONICAL TRANSITION | Legacy routes are excluded from public sitemap and readable by Google. |
+| Section/parameter garbage URLs | CANONICALIZED | `robots.ts` does not block production crawl, so Google can see the canonical page. |
 
 ## Performance Hygiene
 

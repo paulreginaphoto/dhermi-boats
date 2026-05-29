@@ -41,7 +41,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const setLocale = useCallback((nextLocale: Locale) => {
     setLocaleState(nextLocale);
     const url = new URL(window.location.href);
-    url.searchParams.set("dlang", nextLocale);
+    url.searchParams.delete("dlang");
     url.searchParams.delete("lang");
     window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
   }, []);
@@ -59,7 +59,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         ? normalizedStored
         : browserLocale();
     if (params.has("dlang") || params.has("lang")) {
-      params.set("dlang", nextLocale);
+      params.delete("dlang");
       params.delete("lang");
       window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
     }
