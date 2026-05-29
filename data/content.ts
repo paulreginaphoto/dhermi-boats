@@ -62,6 +62,10 @@ export const navItems = [
 
 export const heroImage = assetPath("/images/hero-riviera.webp");
 
+function whatsappMessage(lines: string[]) {
+  return lines.join("\n");
+}
+
 export const tours: Tour[] = [
   {
     id: "gjipe",
@@ -78,7 +82,17 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-gjipe-card.avif"),
     imageAlt: "Boat approaching a clear beach cove with turquoise water near Dhërmi",
     href: sitePath("/gjipe-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to book the Gjipe Tour. Tour: Gjipe Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    whatsappText: whatsappMessage([
+      "👋 Hello Dhermi Boat, I'd like to book the Gjipe Tour.",
+      "",
+      "🚤 Tour: Gjipe Tour",
+      "📅 Date: __",
+      "👥 Adults: __",
+      "🧒 Children: __",
+      "🕒 Preferred time: __",
+      "🌍 Language: __",
+      "💬 Questions: __"
+    ]),
     bestFor: "Short caves + swim",
     highlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "2 coves", "30-minute swimming stop on a beach", "Beach drop-off option: +15 € / person (drop-off for the day or a few hours, depending on what you want)"],
     cardHighlights: ["Pirates Cave", "Gjipe Beach", "Pigeon Cave", "30-minute swim stop"],
@@ -116,7 +130,17 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-grama-card.avif"),
     imageAlt: "Wide blue bay and rocky Karaburun coastline on a Dhermi boat tour",
     href: sitePath("/grama-bay-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about Grama Bay availability. Tour: Grama Bay Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    whatsappText: whatsappMessage([
+      "👋 Hello Dhermi Boat, I'd like to ask about Grama Bay availability.",
+      "",
+      "🚤 Tour: Grama Bay Tour",
+      "📅 Date: __",
+      "👥 Adults: __",
+      "🧒 Children: __",
+      "🕒 Preferred time: __",
+      "🌍 Language: __",
+      "💬 Questions: __"
+    ]),
     bestFor: "Full Karaburun route",
     highlights: ["Sailing along Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach", "Secret Cave Karaburun option: +20 € / person (from 3 people)"],
     cardHighlights: ["Karaburun Natural Park", "San Andrea Beach", "Blue Cave", "Grama Beach"],
@@ -154,7 +178,17 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-private-card.avif"),
     imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
     href: sitePath("/private-boat-tour-albania/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to plan a private boat tour. Tour: Private Boat Tour / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __",
+    whatsappText: whatsappMessage([
+      "👋 Hello Dhermi Boat, I'd like to plan a private boat tour.",
+      "",
+      "🚤 Tour: Private Boat Tour",
+      "📅 Date: __",
+      "👥 Adults: __",
+      "🧒 Children: __",
+      "🕒 Preferred time: __",
+      "🌍 Language: __",
+      "💬 Questions: __"
+    ]),
     bestFor: "Families, friends, custom stops",
     highlights: ["You choose everything: duration - itinerary - swimming stops - destinations", "1 drink included / person", "Ideal for families, groups of friends or special occasions"],
     cardHighlights: ["Custom duration", "Custom itinerary", "Swimming stops", "1 drink included / person"],
@@ -192,7 +226,17 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-sunset-card.avif"),
     imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about the sunset lovers tour. Tour: Sunset Lovers Tour / Date: __ / Adults: __ / Children: __ / Preferred time: sunset / Language: __ / Questions: __",
+    whatsappText: whatsappMessage([
+      "👋 Hello Dhermi Boat, I'd like to ask about the sunset lovers tour.",
+      "",
+      "🚤 Tour: Sunset Lovers Tour",
+      "📅 Date: __",
+      "👥 Adults: __",
+      "🧒 Children: __",
+      "🕒 Preferred time: sunset",
+      "🌍 Language: __",
+      "💬 Questions: __"
+    ]),
     bestFor: "Couples, proposals and quiet evenings",
     highlights: ["Golden-hour cruise", "Around Dhërmi", "Private for your group"],
     cardHighlights: ["Golden-hour cruise", "Private for your group", "Around Dhërmi", "Soft evening route"],
@@ -230,7 +274,17 @@ export const tours: Tour[] = [
     cardImage: assetPath("/images/tour-fishing-card.avif"),
     imageAlt: "Boat helm facing the Dhërmi coastline on calm water",
     href: sitePath("/morning-fishing-tour/"),
-    whatsappText: "Hello Dhermi Boat, I'd like to ask about the morning fishing tour. Tour: Morning Fishing Tour / Date: __ / Adults: __ / Children: __ / Preferred time: 5 AM to 8 AM / Language: __ / Questions: __",
+    whatsappText: whatsappMessage([
+      "👋 Hello Dhermi Boat, I'd like to ask about the morning fishing tour.",
+      "",
+      "🚤 Tour: Morning Fishing Tour",
+      "📅 Date: __",
+      "👥 Adults: __",
+      "🧒 Children: __",
+      "🕒 Preferred time: 5 AM to 8 AM",
+      "🌍 Language: __",
+      "💬 Questions: __"
+    ]),
     bestFor: "Quiet sunrise fishing",
     highlights: ["Around Dhërmi", "2 fishing rods included", "5 AM to 8 AM"],
     cardHighlights: ["5 AM to 8 AM", "2 fishing rods included", "Around Dhërmi", "Max 5 people"],

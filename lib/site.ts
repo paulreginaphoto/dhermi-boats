@@ -49,5 +49,14 @@ export function whatsappUrl(message: string) {
   return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
 
-export const defaultBookingMessage =
-  "Hello Dhermi Boat, I'd like to book a boat tour. Tour: __ / Date: __ / Adults: __ / Children: __ / Preferred time: __ / Language: __ / Questions: __";
+export const defaultBookingMessage = [
+  "👋 Hello Dhermi Boat, I'd like to book a boat tour.",
+  "",
+  "🚤 Tour: __",
+  "📅 Date: __",
+  "👥 Adults: __",
+  "🧒 Children: __",
+  "🕒 Preferred time: __",
+  "🌍 Language: __",
+  "💬 Questions: __"
+].join("\n");
