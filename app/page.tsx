@@ -15,6 +15,19 @@ import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessa
 
 const enText = (key: string) => translations.en[key] ?? "";
 const featuredTours = orderedTours;
+const minimalBookingLocales = ["en", "fr", "sq"] as const;
+const minimalTourLabels = Object.fromEntries(
+  minimalBookingLocales.map((locale) => [
+    locale,
+    Object.fromEntries([
+      ["not-sure", translations[locale]["minimal.contact.form.tourUnsure"] ?? translations.en["minimal.contact.form.tourUnsure"] ?? "Not sure yet"],
+      ...featuredTours.map((tour) => [
+        tour.id,
+        translations[locale][`tour.${tour.id}.shortTitle`] ?? tour.shortTitle
+      ])
+    ])
+  ])
+);
 const featuredTourLabelIndexes = new Map([
   ["sunset", 0],
   ["gjipe", 1],
@@ -49,32 +62,39 @@ const minimalAvailabilityFormScript = String.raw`
     labels: {
       en: {
         intro: "Hello Dhermi Boat, I would like to check availability.",
+        tour: "Preferred tour",
         name: "Name",
         date: "Date",
         people: "People",
+        missingTour: "Not sure yet",
         missingName: "Add your name",
         missingDate: "Choose a date",
         missingPeople: "Add people"
       },
       fr: {
         intro: "Bonjour Dhermi Boat, je voudrais vérifier la disponibilité.",
+        tour: "Tour souhaité",
         name: "Nom",
         date: "Date",
         people: "Personnes",
+        missingTour: "Pas encore sûr",
         missingName: "Ajoutez votre nom",
         missingDate: "Choisissez une date",
         missingPeople: "Ajoutez le nombre de personnes"
       },
       sq: {
         intro: "Pershendetje Dhermi Boat, dua te kontrolloj disponueshmerine.",
+        tour: "Turi i preferuar",
         name: "Emri",
         date: "Data",
         people: "Persona",
+        missingTour: "Ende nuk jam i sigurt",
         missingName: "Shtoni emrin",
         missingDate: "Zgjidhni daten",
         missingPeople: "Shtoni numrin e personave"
       }
-    }
+    },
+    tourLabels: minimalTourLabels
   })};
 
   function normalizeLocale(value) {
@@ -101,16 +121,27 @@ const minimalAvailabilityFormScript = String.raw`
   function initForm(form) {
     var locale = readLocale();
     var labels = config.labels[locale] || config.labels.en;
+    var tourLabels = config.tourLabels[locale] || config.tourLabels.en;
+    var tourInput = form.querySelector("[name='tour']");
     var nameInput = form.querySelector("[name='name']");
     var dateInput = form.querySelector("[name='date']");
     var peopleInput = form.querySelector("[name='people']");
     var action = form.querySelector("[data-minimal-booking-action]");
     var summary = form.querySelector("[data-minimal-booking-summary]");
-    if (!nameInput || !dateInput || !peopleInput || !action || !summary) return;
+    if (!tourInput || !nameInput || !dateInput || !peopleInput || !action || !summary) return;
+
+    function selectedTourText() {
+      var label = tourLabels[tourInput.value];
+      var selected = typeof tourInput.item === "function" ? tourInput.item(tourInput.selectedIndex) : null;
+      if (label) return label;
+      if (!selected || !selected.textContent) return "";
+      return selected.textContent.trim();
+    }
 
     function buildMessage() {
       return [
         labels.intro,
+        labels.tour + ": " + (selectedTourText() || labels.missingTour),
         labels.name + ": " + (nameInput.value.trim() || labels.missingName),
         labels.date + ": " + (dateInput.value || labels.missingDate),
         labels.people + ": " + (peopleInput.value || labels.missingPeople)
@@ -140,7 +171,7 @@ const minimalAvailabilityFormScript = String.raw`
       target.scrollIntoView({ block: "center", behavior: "smooth" });
     });
 
-    [nameInput, dateInput, peopleInput].forEach(function (input) {
+    [tourInput, nameInput, dateInput, peopleInput].forEach(function (input) {
       input.addEventListener("input", update);
       input.addEventListener("change", update);
     });
@@ -728,6 +759,21 @@ export default function HomePage() {
           <div className="grid gap-5">
             <form id="minimal-booking-form" data-minimal-booking-form="true" className="rounded-lg bg-pearl p-5 text-ink shadow-image md:p-6">
               <div className="grid gap-4">
+                <label className="grid gap-2 text-sm font-semibold">
+                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
+                    <LocalizedText id="minimal.contact.form.tour">{enText("minimal.contact.form.tour")}</LocalizedText>
+                  </span>
+                  <select className="h-12 rounded-md border border-ink/12 bg-white px-4 text-ink outline-none focus:border-turquoise" name="tour" autoComplete="off" defaultValue="not-sure">
+                    <option value="not-sure" data-i18n="minimal.contact.form.tourUnsure">
+                      {enText("minimal.contact.form.tourUnsure")}
+                    </option>
+                    {featuredTours.map((tour) => (
+                      <option key={`minimal-tour-${tour.id}`} value={tour.id} data-i18n={`tour.${tour.id}.shortTitle`}>
+                        {tour.shortTitle}
+                      </option>
+                    ))}
+                  </select>
+                </label>
                 <label className="grid gap-2 text-sm font-semibold">
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                     <LocalizedText id="minimal.contact.form.name">{enText("minimal.contact.form.name")}</LocalizedText>

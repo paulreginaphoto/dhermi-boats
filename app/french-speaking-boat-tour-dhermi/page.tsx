@@ -3,7 +3,7 @@ import { LegacyRedirectPage } from "@/components/LegacyRedirectPage";
 import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Dhermi Boat",
+  title: "Redirecting to Contact Dhermi Boat",
   description: "This old language landing page now points to the contact page.",
   alternates: { canonical: canonical("/contact/") },
   robots: { index: false, follow: true }

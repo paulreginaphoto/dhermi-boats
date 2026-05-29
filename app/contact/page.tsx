@@ -68,9 +68,9 @@ export default function ContactPage() {
         </div>
       </PageHero>
 
-      <ConversionTrustBlock />
-
       <OneMinuteBooking />
+
+      <ConversionTrustBlock />
 
       <section className="bg-limestone py-12 md:py-16">
         <div className="site-band">

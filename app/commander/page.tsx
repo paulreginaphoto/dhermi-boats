@@ -3,7 +3,7 @@ import { LegacyRedirectPage } from "@/components/LegacyRedirectPage";
 import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Contact Dhermi Boat",
+  title: "Redirecting to Contact Dhermi Boat",
   description: "This legacy checkout URL now points to the Dhermi Boat contact page.",
   alternates: { canonical: canonical("/contact/") },
   robots: { index: false, follow: true }
@@ -12,4 +12,3 @@ export const metadata: Metadata = {
 export default function LegacyCommanderPage() {
   return <LegacyRedirectPage destination="/contact/" />;
 }
-

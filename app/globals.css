@@ -612,8 +612,8 @@ body[data-sticky-booking-relief="true"] [data-sticky-booking-bar] {
 
   .language-option,
   .language-switcher-compact .language-option {
-    min-width: 1.95rem;
-    height: 2.375rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
     border-radius: 0.65rem;
     font-size: 0.625rem;
   }
@@ -780,8 +780,8 @@ body[data-sticky-booking-relief="true"] [data-sticky-booking-bar] {
 @media (max-width: 359px) {
   .language-option,
   .language-switcher-compact .language-option {
-    min-width: 1.75rem;
-    height: 2.25rem;
+    min-width: 2.75rem;
+    height: 2.75rem;
     font-size: 0.58rem;
   }
 }

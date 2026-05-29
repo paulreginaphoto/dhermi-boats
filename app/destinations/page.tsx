@@ -72,7 +72,28 @@ export default function DestinationsPage() {
       </PageHero>
       <ConversionTrustBlock />
       <section className="destination-section py-8 text-pearl md:py-16" id="choose-destination">
-        <div className="site-band grid gap-5 lg:grid-cols-3">
+        <div className="site-band">
+          <div className="mb-8 grid gap-5 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
+                <LocalizedText id="destinations.choose.label">{enText("destinations.choose.label")}</LocalizedText>
+              </p>
+              <h2 className="mt-3 max-w-xl font-serif text-3xl font-medium leading-tight md:text-5xl">
+                <LocalizedText id="destinations.choose.title">{enText("destinations.choose.title")}</LocalizedText>
+              </h2>
+            </div>
+            <p className="max-w-2xl text-base font-semibold leading-8 text-pearl/88 lg:justify-self-end">
+              <LocalizedText id="destinations.choose.text">{enText("destinations.choose.text")}</LocalizedText>
+            </p>
+          </div>
+          <div className="mb-8 grid gap-3 text-sm font-semibold text-ink md:grid-cols-3">
+            {["gjipe", "grama", "blue"].map((item) => (
+              <p key={item} className="rounded-md bg-pearl/95 p-4 shadow-sm">
+                <LocalizedText id={`destinations.choose.${item}`}>{enText(`destinations.choose.${item}`)}</LocalizedText>
+              </p>
+            ))}
+          </div>
+          <div className="grid gap-5 lg:grid-cols-3">
           {destinationInsights.map((insight, index) => {
             const destination = destinations.find((item) => item.id === insight.destinationId);
             const tour = tours.find((item) => item.id === insight.tourId);
@@ -133,6 +154,7 @@ export default function DestinationsPage() {
               </article>
             );
           })}
+          </div>
         </div>
       </section>
       <section id="routes" className="scroll-mt-24 bg-limestone py-16 md:scroll-mt-28 md:py-24">

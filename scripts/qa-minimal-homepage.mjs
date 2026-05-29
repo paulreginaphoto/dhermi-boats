@@ -43,6 +43,8 @@ for (const fragment of [
   "minimal.gallery.title",
   "minimal.reviews.title",
   "minimal.contact.title",
+  "minimal.contact.form.tour",
+  "minimal.contact.form.tourUnsure",
   "minimal.contact.form.name",
   "minimal.contact.form.date",
   "minimal.contact.form.people",

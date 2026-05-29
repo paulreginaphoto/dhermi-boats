@@ -3,7 +3,7 @@ import { LegacyRedirectPage } from "@/components/LegacyRedirectPage";
 import { canonical } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Grama Bay Boat Tour from Dhermi",
+  title: "Redirecting to Grama Bay Boat Tour",
   description: "This old Grama Bay landing page now points to the canonical Grama tour.",
   alternates: { canonical: canonical("/grama-bay-boat-tour/") },
   robots: { index: false, follow: true }

@@ -84,6 +84,22 @@ export default function BoatPhotosLegacyPage() {
                 <LocalizedText id="section.reviews.cta">{enText("section.reviews.cta")}</LocalizedText>
               </ButtonLink>
             </div>
+            <div className="mt-6 grid gap-2 text-sm font-semibold leading-6 text-ink md:grid-cols-3">
+              {photoConversionGroups.slice(0, 3).map((group) => (
+                <a
+                  key={`photos-guide-${group.tourId}`}
+                  className="rounded-md border border-ink/8 bg-pearl p-4 transition hover:-translate-y-0.5 hover:bg-white hover:shadow-sm"
+                  href={`#photos-${group.tourId}`}
+                >
+                  <span className="block text-xs font-bold uppercase tracking-[0.16em] text-bronze">
+                    <LocalizedText id={group.titleKey}>{enText(group.titleKey)}</LocalizedText>
+                  </span>
+                  <span className="mt-2 block text-ink-soft">
+                    <LocalizedText id={group.textKey}>{enText(group.textKey)}</LocalizedText>
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-[minmax(260px,390px)_1fr] md:items-stretch">
             <VideoFeature />
@@ -129,7 +145,7 @@ export default function BoatPhotosLegacyPage() {
               if (!tour) return null;
 
               return (
-              <article key={group.titleKey} className="overflow-hidden rounded-lg border border-ink/8 bg-limestone shadow-sm">
+              <article id={`photos-${group.tourId}`} key={group.titleKey} className="scroll-mt-24 overflow-hidden rounded-lg border border-ink/8 bg-limestone shadow-sm">
                 <div className="grid grid-cols-2 gap-1 p-1">
                   {group.indexes.slice(0, 4).map((itemIndex) => {
                     const item = gallery[itemIndex];
