@@ -15,6 +15,7 @@
     "qa:minimal-homepage": "node ./scripts/qa-minimal-homepage.mjs",
     "qa:usability": "node ./scripts/qa-usability.mjs",
     "qa:url-canonicals": "node ./scripts/qa-url-canonicals.mjs",
+    "qa:whatsapp-messages": "node ./scripts/qa-whatsapp-messages.mjs",
     "content:guard": "node ./scripts/content-guard.mjs",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit"

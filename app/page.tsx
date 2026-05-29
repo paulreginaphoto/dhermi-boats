@@ -114,8 +114,18 @@ const minimalAvailabilityFormScript = String.raw`
     }
   }
 
+  var unsafeWhatsappSymbols = /[\uD83C-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uFFFD/g;
+
+  function cleanWhatsappMessage(message) {
+    return String(message || "")
+      .replace(unsafeWhatsappSymbols, "")
+      .replace(/[ \t]+\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
   function encodeMessage(message) {
-    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(message);
+    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message));
   }
 
   function initForm(form) {

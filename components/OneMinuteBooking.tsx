@@ -303,12 +303,22 @@ const staticBookingEnhancerScript = String.raw`
     return String(value || "default").toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_+|_+$/g, "") || "default";
   }
 
+  var unsafeWhatsappSymbols = /[\uD83C-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uFFFD/g;
+
+  function cleanWhatsappMessage(message) {
+    return String(message || "")
+      .replace(unsafeWhatsappSymbols, "")
+      .replace(/[ \t]+\n/g, "\n")
+      .replace(/\n{3,}/g, "\n\n")
+      .trim();
+  }
+
   function whatsappUrl(message) {
-    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(message);
+    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message));
   }
 
   function mailtoUrl(title, message) {
-    return "mailto:" + config.emailAddress + "?subject=" + encodeURIComponent("Dhermi Boat booking: " + title) + "&body=" + encodeURIComponent(message);
+    return "mailto:" + config.emailAddress + "?subject=" + encodeURIComponent("Dhermi Boat booking: " + title) + "&body=" + encodeURIComponent(cleanWhatsappMessage(message));
   }
 
   function initBookingForm(root) {

@@ -45,8 +45,18 @@ export function languageAlternates(path = "/") {
   };
 }
 
+const unsafeWhatsappSymbols = /[\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFFFD]/gu;
+
+export function cleanWhatsappMessage(message: string) {
+  return message
+    .replace(unsafeWhatsappSymbols, "")
+    .replace(/[ \t]+\n/g, "\n")
+    .replace(/\n{3,}/g, "\n\n")
+    .trim();
+}
+
 export function whatsappUrl(message: string) {
-  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+  return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(cleanWhatsappMessage(message))}`;
 }
 
 export const defaultBookingMessage = [

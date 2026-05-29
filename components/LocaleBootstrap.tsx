@@ -111,6 +111,16 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   applyLocaleSwitchers();
 
+  var unsafeWhatsappSymbols = /[\\uD83C-\\uDBFF][\\uDC00-\\uDFFF]|[\\u2600-\\u27BF]|\\uFFFD/g;
+
+  function cleanWhatsappMessage(message) {
+    return String(message || "")
+      .replace(unsafeWhatsappSymbols, "")
+      .replace(/[ \\t]+\\n/g, "\\n")
+      .replace(/\\n{3,}/g, "\\n\\n")
+      .trim();
+  }
+
   function setContent(node) {
     var key = node.getAttribute("data-i18n");
     if (!key) return;
@@ -130,7 +140,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
         var messageMap = key && whatsappMessages[key];
         var message = messageMap && (messageMap[locale] || messageMap[defaultLocale]);
         if (message && link.setAttribute) {
-          link.setAttribute("href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message));
+          link.setAttribute("href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message)));
         }
       });
     } catch (_e) {}
