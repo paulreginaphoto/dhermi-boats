@@ -164,6 +164,14 @@ async function collectPageMetrics(page) {
           bottom: Math.round(rect.bottom),
           viewportHeight: window.innerHeight
         };
+      })(),
+      mobileToursPresentation: (() => {
+        const mobileList = document.querySelector("[data-mobile-tour-list]");
+        const railWindow = document.querySelector("[data-tour-window]");
+        return {
+          listVisible: Boolean(mobileList && visible(mobileList)),
+          railVisible: Boolean(railWindow && visible(railWindow))
+        };
       })()
     };
   });
@@ -207,6 +215,9 @@ async function verifyRoute(baseUrl, browser, route, viewport) {
   }
   if (route === "/" && (!metrics.homeNextSectionHint || metrics.homeNextSectionHint.top >= metrics.homeNextSectionHint.viewportHeight)) {
     fail(`${viewport.name} ${route} hero does not reveal the next section content`);
+  }
+  if (route === "/" && viewport.isMobile && (!metrics.mobileToursPresentation.listVisible || metrics.mobileToursPresentation.railVisible)) {
+    fail(`${viewport.name} ${route} mobile tours should use the vertical list instead of the horizontal rail`);
   }
   for (const src of metrics.brokenImages) fail(`${viewport.name} ${route} broken image ${src}`);
   for (const src of metrics.imagesWithoutAlt) fail(`${viewport.name} ${route} image missing alt ${src}`);

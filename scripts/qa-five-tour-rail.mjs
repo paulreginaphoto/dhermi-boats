@@ -21,10 +21,14 @@ for (const id of ["gjipe", "grama", "private", "sunset", "fishing"]) {
 }
 
 for (const fragment of [
+  "data-mobile-tour-list",
+  "data-mobile-tour-card",
+  "mobile-tour-card",
   "data-tour-rail",
   "data-tour-track",
   "data-tour-progress",
   "tourRailScrollScript",
+  "shouldEnhanceRail",
   "Math.round((visibleWidth + gap) / (cardWidth + gap))",
   "minimal.tours.kicker",
   "minimal.tours.hint"
@@ -56,7 +60,7 @@ if (!fs.existsSync(htmlPath)) {
   fail("out/index.html missing; run npm run build first");
 } else {
   const html = fs.readFileSync(htmlPath, "utf8");
-  for (const fragment of ["data-tour-rail", "data-tour-track", "data-tour-progress"]) {
+  for (const fragment of ["data-mobile-tour-list", "data-mobile-tour-card", "data-tour-rail", "data-tour-track", "data-tour-progress"]) {
     if (!html.includes(fragment)) {
       fail(`out/index.html missing built rail fragment: ${fragment}`);
     }

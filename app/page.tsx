@@ -251,36 +251,49 @@ const tourRailScrollScript = String.raw`
     else windowEl.scrollLeft = value;
   }
 
-  function measureRail(rail) {
-    var geometry = railGeometry(rail);
-    if (!geometry) return;
+  function shouldEnhanceRail() {
+    return window.innerWidth >= 768;
+  }
 
-    if (reduceMotion) {
-      rail.style.height = "";
-      rail.removeAttribute("data-tour-rail-enhanced");
-      rail.style.removeProperty("--tour-rail-shift");
+  function resetRail(rail) {
+    var track = rail.querySelector("[data-tour-track]");
+    var windowEl = rail.querySelector("[data-tour-window]");
+    var progress = rail.querySelector("[data-tour-progress]");
+    rail.style.height = "";
+    rail.removeAttribute("data-tour-rail-enhanced");
+    rail.style.removeProperty("--tour-rail-shift");
+    if (track) track.style.transform = "";
+    if (windowEl) setNativeRailOffset(windowEl, 0);
+    if (progress) progress.style.transform = "scaleX(0)";
+  }
+
+  function measureRail(rail) {
+    if (!shouldEnhanceRail() || reduceMotion) {
+      resetRail(rail);
       return;
     }
 
+    var geometry = railGeometry(rail);
+    if (!geometry) return;
+
     rail.setAttribute("data-tour-rail-enhanced", "true");
     var viewport = Math.max(1, window.innerHeight - headerOffset());
-    var breathingRoom = window.innerWidth < 768 ? 220 : 300;
-    var minScreens = window.innerWidth < 768 ? 3.8 : 2.7;
+    var breathingRoom = 300;
+    var minScreens = 2.7;
     var sectionHeight = Math.max(viewport * minScreens, viewport + geometry.maxTranslate + breathingRoom);
     rail.style.height = Math.ceil(sectionHeight) + "px";
     rail.style.setProperty("--tour-rail-shift", geometry.maxTranslate.toFixed(2) + "px");
   }
 
   function updateRail(rail) {
+    if (!shouldEnhanceRail() || reduceMotion) {
+      resetRail(rail);
+      return;
+    }
+
     var geometry = railGeometry(rail);
     var progress = rail.querySelector("[data-tour-progress]");
     if (!geometry) return;
-
-    if (reduceMotion) {
-      geometry.track.style.transform = "";
-      if (progress) progress.style.transform = "scaleX(0)";
-      return;
-    }
 
     var stickyTop = headerOffset();
     var scrollRange = Math.max(1, rail.offsetHeight - window.innerHeight + stickyTop);
@@ -288,13 +301,8 @@ const tourRailScrollScript = String.raw`
     var amount = clamp((stickyTop - rect.top) / scrollRange);
     var snappedStep = geometry.steps ? Math.round(amount * geometry.steps) : 0;
     var translate = Math.min(geometry.maxTranslate, snappedStep * geometry.stepSize);
-    if (window.innerWidth < 768) {
-      geometry.track.style.transform = "";
-      setNativeRailOffset(geometry.windowEl, Math.round(translate));
-    } else {
-      setNativeRailOffset(geometry.windowEl, 0);
-      geometry.track.style.transform = "translate3d(" + Math.round(translate * -1) + "px,0,0)";
-    }
+    setNativeRailOffset(geometry.windowEl, 0);
+    geometry.track.style.transform = "translate3d(" + Math.round(translate * -1) + "px,0,0)";
     if (progress) progress.style.transform = "scaleX(" + amount.toFixed(3) + ")";
   }
 
@@ -530,13 +538,103 @@ export default function HomePage() {
                 <p className="mt-2 hidden max-w-sm text-sm leading-6 text-ink-soft md:ml-auto md:block md:leading-7">
                   <LocalizedText id="minimal.tours.hint">{enText("minimal.tours.hint")}</LocalizedText>
                 </p>
-                <div className="mt-4 h-1 overflow-hidden rounded-full bg-ink/10 md:mt-5" aria-hidden>
+                <div className="mt-4 hidden h-1 overflow-hidden rounded-full bg-ink/10 md:mt-5 md:block" aria-hidden>
                   <span data-tour-progress className="block h-full origin-left scale-x-0 rounded-full bg-turquoise" />
                 </div>
               </div>
             </div>
 
-            <div data-tour-window className="tour-rail-window mt-6 md:mt-10">
+            <div data-mobile-tour-list className="mobile-tour-list mt-6 md:hidden">
+              {featuredTours.map((tour) => {
+                const labelIndex = featuredTourLabelIndexes.get(tour.id);
+                const comparisonLabel = labelIndex === undefined ? null : tourComparison[labelIndex];
+                const RailIcon = railIconByTourId[tour.id as keyof typeof railIconByTourId] ?? CheckCircle2;
+
+                return (
+                  <article key={tour.id} data-mobile-tour-card data-tour-id={tour.id} className="mobile-tour-card bg-limestone shadow-sm">
+                    <a className="mobile-tour-image relative block overflow-hidden" data-analytics-event="tour_card_click" data-tour-id={tour.id} href={tour.href}>
+                      <Image
+                        src={tour.cardImage ?? tour.image}
+                        alt={tour.imageAlt ?? tour.title}
+                        fill
+                        loading="lazy"
+                        quality={58}
+                        sizes="(max-width: 767px) calc(100vw - 2.5rem), 1px"
+                        className="object-cover"
+                      />
+                      {comparisonLabel ? (
+                        <span className="absolute left-3 top-3 inline-flex max-w-[calc(100%-1.5rem)] items-center gap-1.5 rounded-md bg-pearl px-2.5 py-1.5 text-[0.68rem] font-bold uppercase leading-none tracking-[0.12em] text-ink shadow-sm">
+                          <RailIcon className="h-3.5 w-3.5 shrink-0 text-turquoise" aria-hidden />
+                          <span className="truncate">
+                            <LocalizedText id={`comparison.${labelIndex}.angle`}>{comparisonLabel.angle}</LocalizedText>
+                          </span>
+                        </span>
+                      ) : null}
+                    </a>
+                    <div className="grid gap-3 p-3.5">
+                      <div>
+                        <h3 className="font-serif text-[1.45rem] font-medium leading-[1.06] text-ink max-[360px]:text-[1.32rem]">
+                          <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                        </h3>
+                        <p className="mt-1.5 text-sm font-semibold leading-5 text-ink-soft">
+                          <LocalizedText id={`tour.${tour.id}.bestFor`}>{tour.bestFor}</LocalizedText>
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-[0.76rem] font-semibold leading-4 text-ink max-[359px]:grid-cols-1">
+                        <p className="flex min-w-0 items-start gap-1.5 rounded-md bg-pearl/75 px-2.5 py-2">
+                          <Clock3 className="mt-0.5 h-3.5 w-3.5 shrink-0 text-turquoise" aria-hidden />
+                          <span className="min-w-0">
+                            {comparisonLabel && labelIndex !== undefined ? (
+                              <LocalizedText id={`comparison.${labelIndex}.meta`}>{`${comparisonLabel.duration} • ${comparisonLabel.price}`}</LocalizedText>
+                            ) : (
+                              <LocalizedText id={`tour.${tour.id}.duration`}>{tour.duration}</LocalizedText>
+                            )}
+                          </span>
+                        </p>
+                        <p className="flex min-w-0 items-start gap-1.5 rounded-md bg-pearl/75 px-2.5 py-2">
+                          <Users className="mt-0.5 h-3.5 w-3.5 shrink-0 text-turquoise" aria-hidden />
+                          <span className="min-w-0">
+                            <LocalizedText id={`tour.${tour.id}.capacity`}>{tour.capacity}</LocalizedText>
+                          </span>
+                        </p>
+                      </div>
+                      <ul className="grid gap-1.5 text-sm leading-5 text-ink-soft">
+                        {tour.cardHighlights.slice(0, 2).map((item, index) => (
+                          <li key={item} className="flex gap-2">
+                            <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
+                            <span>
+                              <LocalizedText id={`tour.${tour.id}.cardHighlight.${index}`}>{item}</LocalizedText>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="grid grid-cols-2 gap-2">
+                        <a className="inline-flex min-h-11 items-center justify-center rounded-md border border-ink/12 bg-pearl px-3 text-sm font-semibold text-ink transition hover:bg-white" data-analytics-event="tour_card_click" data-tour-id={tour.id} href={tour.href}>
+                          <LocalizedText id="minimal.tours.detail">{enText("minimal.tours.detail")}</LocalizedText>
+                        </a>
+                        <a
+                          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
+                          data-tour-id={tour.id}
+                          data-whatsapp-key={tour.id}
+                          href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
+                          rel="noreferrer"
+                          target="_blank"
+                          data-analytics-event={`whatsapp_click_${tour.id}_en_minimal_tour_card_mobile`}
+                          data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}"
+                          data-analytics-tour={tour.id}
+                          data-analytics-placement="minimal_tour_card_mobile"
+                        >
+                          <MessageCircle className="h-4 w-4" aria-hidden />
+                          <LocalizedText id="minimal.tours.book">{enText("minimal.tours.book")}</LocalizedText>
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <div data-tour-window className="tour-rail-window mt-6 hidden md:mt-10 md:block">
               <div data-tour-track className="tour-rail-track">
                 {featuredTours.map((tour) => {
                   const labelIndex = featuredTourLabelIndexes.get(tour.id);
