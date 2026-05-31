@@ -3,7 +3,6 @@ import { MessageCircle } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
 import { ButtonLink } from "@/components/ButtonLink";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
-import { HeroWhatsappText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
 import { MobileNav } from "@/components/MobileNav";
 import { navKeyByLabel } from "@/components/navigationConfig";
@@ -18,7 +17,7 @@ export function Header() {
         <Link className="flex min-h-11 min-w-0 flex-1 items-center leading-none lg:flex-none" href="/" prefetch={false}>
           <span className="flex min-w-0 flex-col leading-none">
             <span className="truncate whitespace-nowrap font-serif text-[0.95rem] font-semibold tracking-wide text-ink min-[360px]:text-base sm:text-2xl">
-              Dhermi Boat
+              Dhermi Boat by Isuf
             </span>
             <span className="mt-1 hidden text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft sm:block">
               <LocalizedText id="brand.region">{enText("brand.region")}</LocalizedText>
@@ -44,7 +43,7 @@ export function Header() {
         <div className="hidden items-center gap-3 lg:flex">
           <LanguageSwitcher />
           <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="header">
-            <HeroWhatsappText />
+            <LocalizedText id="cta.askAvailability">{enText("cta.askAvailability")}</LocalizedText>
           </ButtonLink>
         </div>
 

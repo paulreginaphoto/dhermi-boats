@@ -626,9 +626,10 @@ function checkArrivalComfortSection(filePath, content) {
 
   for (const snippet of [
     'data-home-section="hero"',
+    'data-home-section="social-proof"',
+    'data-home-section="skipper"',
     'data-home-section="tours"',
     'data-home-section="gallery"',
-    'data-home-section="reviews"',
     'data-home-section="contact"',
     "minimal.reassurance",
     "minimalAvailabilityFormScript"
@@ -637,7 +638,7 @@ function checkArrivalComfortSection(filePath, content) {
       addIssue(
         filePath,
         1,
-        "La home doit suivre la structure minimaliste en cinq sections avec réassurance et formulaire WhatsApp.",
+        "La home V2 doit garder hero, avis, skipper, tours, galerie, réassurance et formulaire WhatsApp.",
         snippet
       );
     }

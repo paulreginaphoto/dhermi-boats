@@ -156,7 +156,7 @@ async function collectPageMetrics(page) {
         };
       })(),
       homeNextSectionHint: (() => {
-        const nextLabel = document.querySelector('#tours [data-i18n="minimal.tours.label"]');
+        const nextLabel = document.querySelector('#reviews [data-i18n="v2.social.label"]');
         if (!nextLabel || !visible(nextLabel)) return null;
         const rect = nextLabel.getBoundingClientRect();
         return {
@@ -166,10 +166,10 @@ async function collectPageMetrics(page) {
         };
       })(),
       mobileToursPresentation: (() => {
-        const mobileList = document.querySelector("[data-mobile-tour-list]");
+        const comparison = document.querySelector("[data-tour-comparison]");
         const railWindow = document.querySelector("[data-tour-window]");
         return {
-          listVisible: Boolean(mobileList && visible(mobileList)),
+          listVisible: Boolean(comparison && visible(comparison)),
           railVisible: Boolean(railWindow && visible(railWindow))
         };
       })()
@@ -279,13 +279,14 @@ async function verifyHomeInteractions(baseUrl, browser) {
   await page.locator('[data-minimal-booking-form] input[name="name"]').fill("Audit Home");
   await page.locator('[data-minimal-booking-form] input[name="date"]').fill("2026-06-21");
   await page.locator('[data-minimal-booking-form] input[name="people"]').fill("4");
+  await page.locator('[data-minimal-booking-form] textarea[name="message"]').fill("Prefer a calm swim stop");
   const href = await page.locator("[data-minimal-booking-action]").getAttribute("href");
   const body = href?.startsWith("https://wa.me/")
     ? new URL(href).searchParams.get("text") || ""
     : "";
 
-  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21/06/2026") || !body.includes("People: 4")) {
-    fail("home minimal booking message is missing tour, name, DD/MM/YYYY date or people");
+  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21/06/2026") || !body.includes("People: 4") || !body.includes("Prefer a calm swim stop")) {
+    fail("home minimal booking message is missing tour, name, DD/MM/YYYY date, people or message");
   }
 
   await context.close();

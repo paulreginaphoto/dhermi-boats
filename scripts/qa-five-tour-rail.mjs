@@ -21,25 +21,24 @@ for (const id of ["gjipe", "grama", "private", "sunset", "fishing"]) {
 }
 
 for (const fragment of [
-  "data-mobile-tour-list",
-  "data-mobile-tour-card",
-  "mobile-tour-card",
-  "data-tour-rail",
-  "data-tour-track",
-  "data-tour-progress",
-  "tourRailScrollScript",
-  "shouldEnhanceRail",
-  "Math.round((visibleWidth + gap) / (cardWidth + gap))",
-  "minimal.tours.kicker",
-  "minimal.tours.hint"
+  "data-tour-comparison",
+  "data-tour-card",
+  "v2.tours.badge",
+  "v2.tours.price",
+  "v2.tours.duration",
+  "v2.tours.bestFor",
+  "v2.tours.viewRoute",
+  "v2.tours.book"
 ]) {
   if (!appSource.includes(fragment)) {
-    fail(`app/page.tsx missing five-tour rail fragment: ${fragment}`);
+    fail(`app/page.tsx missing V2 five-tour comparison fragment: ${fragment}`);
   }
 }
 
-if (appSource.includes("lg:grid-cols-3") && appSource.includes("featuredTours.map")) {
-  fail("homepage tours should no longer render as the old static 3-column grid");
+for (const obsoleteRailFragment of ["data-tour-rail", "data-tour-track", "data-tour-progress", "tourRailScrollScript"]) {
+  if (appSource.includes(obsoleteRailFragment)) {
+    fail(`homepage tours should no longer render the old scroll rail: ${obsoleteRailFragment}`);
+  }
 }
 
 for (const fragment of [
@@ -60,9 +59,9 @@ if (!fs.existsSync(htmlPath)) {
   fail("out/index.html missing; run npm run build first");
 } else {
   const html = fs.readFileSync(htmlPath, "utf8");
-  for (const fragment of ["data-mobile-tour-list", "data-mobile-tour-card", "data-tour-rail", "data-tour-track", "data-tour-progress"]) {
+  for (const fragment of ["data-tour-comparison", "data-tour-card"]) {
     if (!html.includes(fragment)) {
-      fail(`out/index.html missing built rail fragment: ${fragment}`);
+      fail(`out/index.html missing built comparison fragment: ${fragment}`);
     }
   }
   for (const id of ["gjipe", "grama", "private", "sunset", "fishing"]) {

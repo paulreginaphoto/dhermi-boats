@@ -12,7 +12,7 @@ function fail(message) {
   failures.push(message);
 }
 
-const expectedSections = ["hero", "tours", "gallery", "reviews", "contact"];
+const expectedSections = ["hero", "social-proof", "skipper", "tours", "gallery", "contact"];
 
 for (const section of expectedSections) {
   if (!appSource.includes(`data-home-section="${section}"`)) {
@@ -37,23 +37,43 @@ for (const block of obsoleteHomepageBlocks) {
 }
 
 for (const fragment of [
-  "minimal.hero.title",
-  "minimal.hero.text",
-  "minimal.tours.title",
-  "minimal.gallery.title",
-  "minimal.reviews.title",
-  "minimal.contact.title",
+  "v2.hero.title",
+  "v2.hero.text",
+  "v2.social.title",
+  "v2.skipper.title",
+  "v2.tours.title",
+  "v2.gallery.title",
+  "v2.contact.title",
   "minimal.contact.form.tour",
   "minimal.contact.form.tourUnsure",
   "minimal.contact.form.name",
   "minimal.contact.form.date",
   "minimal.contact.form.people",
-  "minimal.faq.trigger",
+  "v2.contact.form.message",
   "minimalAvailabilityFormScript"
 ]) {
-  if (!appSource.includes(fragment)) {
-    fail(`app/page.tsx missing minimal homepage fragment: ${fragment}`);
-  }
+  if (!appSource.includes(fragment)) fail(`app/page.tsx missing V2 homepage fragment: ${fragment}`);
+}
+
+const heroIndex = appSource.indexOf('data-home-section="hero"');
+const socialIndex = appSource.indexOf('data-home-section="social-proof"');
+const skipperIndex = appSource.indexOf('data-home-section="skipper"');
+const toursIndex = appSource.indexOf('data-home-section="tours"');
+if (!(heroIndex >= 0 && socialIndex > heroIndex && skipperIndex > socialIndex && toursIndex > skipperIndex)) {
+  fail("homepage sections must be ordered hero, social-proof, skipper, tours");
+}
+
+for (const obsoleteRailFragment of [
+  "data-tour-rail",
+  "data-tour-track",
+  "data-tour-progress",
+  "tourRailScrollScript"
+]) {
+  if (appSource.includes(obsoleteRailFragment)) fail(`V2 homepage should not keep old horizontal tour rail fragment: ${obsoleteRailFragment}`);
+}
+
+if (!appSource.includes('name="message"')) {
+  fail("V2 booking form must include a name=\"message\" textarea/input");
 }
 
 const formActionSourceLine = appSource
@@ -82,6 +102,16 @@ if (!fs.existsSync(htmlPath)) {
 
   if (!html.includes("data-minimal-booking-form")) {
     fail("out/index.html missing static minimal booking form");
+  }
+
+  for (const fragment of [
+    "Boat tours from Dh",
+    "Meet Isuf",
+    "French-speaking skipper",
+    "Send booking request on WhatsApp",
+    "name=\"message\""
+  ]) {
+    if (!html.includes(fragment)) fail(`out/index.html missing V2 rendered fragment: ${fragment}`);
   }
 
   const formActionHtml = html.match(/<a[^>]*data-minimal-booking-action[^>]*>/);
