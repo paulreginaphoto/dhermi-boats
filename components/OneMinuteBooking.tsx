@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, type MouseEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -693,6 +693,7 @@ export function OneMinuteBooking() {
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
   const [bookingDraftReady, setBookingDraftReady] = useState(false);
   const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(true);
+  const dateInputRef = useRef<HTMLInputElement>(null);
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
   const labels = fieldLabels[locale];
@@ -821,6 +822,19 @@ export function OneMinuteBooking() {
   function selectDate(nextDate: string) {
     setDate(minimumDate && nextDate && nextDate < minimumDate ? minimumDate : nextDate);
     setErrors((currentErrors) => ({ ...currentErrors, date: false }));
+  }
+
+  function openDatePicker() {
+    const dateInput = dateInputRef.current;
+    if (!dateInput) return;
+
+    const withPicker = dateInput as HTMLInputElement & { showPicker?: () => void };
+    if (typeof withPicker.showPicker === "function") {
+      withPicker.showPicker();
+      return;
+    }
+
+    dateInput.focus({ preventScroll: true });
   }
 
   return (
@@ -953,6 +967,7 @@ export function OneMinuteBooking() {
                   ) : null}
                   <input
                     id="quick-date"
+                    ref={dateInputRef}
                     aria-label={`${labels.date} ${dateDisplayPlaceholder}`}
                     aria-describedby={errors.date ? "quick-date-error" : undefined}
                     aria-invalid={errors.date || undefined}
@@ -970,6 +985,22 @@ export function OneMinuteBooking() {
                     min={minimumDate || undefined}
                     required
                     value={date}
+                    onPointerDown={() => {
+                      if (dateDisplayEnhanced) {
+                        openDatePicker();
+                      }
+                    }}
+                    onTouchStart={() => {
+                      if (dateDisplayEnhanced) {
+                        openDatePicker();
+                      }
+                    }}
+                    onKeyDown={(event) => {
+                      if (!dateDisplayEnhanced) return;
+                      if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
+                        openDatePicker();
+                      }
+                    }}
                     onInput={(event) => selectDate(event.currentTarget.value)}
                     onChange={(event) => selectDate(event.target.value)}
                     onBlur={(event) => selectDate(event.currentTarget.value)}
