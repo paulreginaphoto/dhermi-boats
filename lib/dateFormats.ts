@@ -6,50 +6,20 @@ type ParsedInputDate = {
   year: number;
 };
 
-const monthNames: Record<BookingDateLocale, string[]> = {
-  en: [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December"
-  ],
-  fr: [
-    "Janvier",
-    "Février",
-    "Mars",
-    "Avril",
-    "Mai",
-    "Juin",
-    "Juillet",
-    "Août",
-    "Septembre",
-    "Octobre",
-    "Novembre",
-    "Décembre"
-  ],
-  sq: [
-    "Janar",
-    "Shkurt",
-    "Mars",
-    "Prill",
-    "Maj",
-    "Qershor",
-    "Korrik",
-    "Gusht",
-    "Shtator",
-    "Tetor",
-    "Nëntor",
-    "Dhjetor"
-  ]
-};
+export const frenchBookingMonthNames = [
+  "Janvier",
+  "Février",
+  "Mars",
+  "Avril",
+  "Mai",
+  "Juin",
+  "Juillet",
+  "Août",
+  "Septembre",
+  "Octobre",
+  "Novembre",
+  "Décembre"
+];
 
 function parseInputDate(value: string): ParsedInputDate | null {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
@@ -72,11 +42,11 @@ function parseInputDate(value: string): ParsedInputDate | null {
 }
 
 export function formatDateShort(value: string, locale: BookingDateLocale = "fr") {
+  void locale;
   const parsed = parseInputDate(value);
   if (!parsed) return value;
 
-  const localeMonths = monthNames[locale] ?? monthNames.fr;
-  const monthName = localeMonths[parsed.month - 1];
+  const monthName = frenchBookingMonthNames[parsed.month - 1];
 
   return `${parsed.day} ${monthName} ${parsed.year}`;
 }

@@ -237,8 +237,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   function bookingFormHref(key) {
     var contactPath = (basePath ? basePath : "") + "/contact/";
-    var tourKey = key && key !== "default" ? "?tour=" + encodeURIComponent(key) : "";
-    return contactPath + tourKey + "#book";
+    return contactPath + "#book";
   }
 
   function setContent(node) {

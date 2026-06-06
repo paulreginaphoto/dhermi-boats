@@ -83,6 +83,10 @@ const WORDPRESS_RESIDUE_FRAGMENTS = [
   "Like this:",
   "%d"
 ];
+const REMOVED_MEDIA_FRAGMENTS = [
+  "gallery-boat-beach.webp",
+  "gallery-cave-entrance.webp"
+];
 const FRENCH_TONE_AND_ROUTE_RESIDUE = [
   "Choisis ton",
   "choisis ton",
@@ -206,6 +210,20 @@ function checkWordPressResidue(file, text, lineNumber) {
   }
 }
 
+function checkRemovedMediaResidue(file, text, lineNumber) {
+  if (file.endsWith(path.join("scripts", "content-guard.mjs"))) return;
+
+  const residue = REMOVED_MEDIA_FRAGMENTS.find((item) => text.includes(item));
+  if (residue) {
+    addIssue(
+      file,
+      lineNumber,
+      "Média supprimé détecté; ces photos ne doivent pas revenir sur le site.",
+      residue
+    );
+  }
+}
+
 function scanLine(filePath, text, lineNumber) {
   checkLineForForbiddenDash(filePath, text, lineNumber);
   checkLineForEmoji(filePath, text, lineNumber);
@@ -213,6 +231,7 @@ function scanLine(filePath, text, lineNumber) {
   checkRepeatedPhrase(filePath, text, lineNumber);
   checkGenericVisiblePhrase(filePath, text, lineNumber);
   checkWordPressResidue(filePath, text, lineNumber);
+  checkRemovedMediaResidue(filePath, text, lineNumber);
 }
 
 function lineNumberForIndex(content, index) {
@@ -1013,6 +1032,20 @@ function checkRoundFaviconAssets() {
   }
 }
 
+function checkRemovedMediaAssets() {
+  for (const file of REMOVED_MEDIA_FRAGMENTS) {
+    const imagePath = path.join(ROOT_DIR, "public", "images", file);
+    if (fs.existsSync(imagePath)) {
+      addIssue(
+        imagePath,
+        1,
+        "Média supprimé encore présent dans public/images.",
+        file
+      );
+    }
+  }
+}
+
 function checkSEOFocus(filePath, content) {
   const relative = path.relative(ROOT_DIR, filePath).replace(/\\/g, "/");
   const requirements = [
@@ -1105,6 +1138,7 @@ for (const target of TARGET_DIRS) {
 }
 
 checkRoundFaviconAssets();
+checkRemovedMediaAssets();
 checkFrenchToneAndRouteResidue();
 
 if (issues.length > 0) {

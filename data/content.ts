@@ -498,7 +498,7 @@ export const faqs = [
   },
   {
     question: "Which languages does the skipper speak?",
-    answer: "Albanian, French and English."
+    answer: "French, English and Albanian."
   }
 ];
 

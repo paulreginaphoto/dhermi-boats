@@ -1,6 +1,6 @@
-import { AtSign, Mail, MapPin, MessageCircle, Music2, Phone, Ticket } from "lucide-react";
+import { AtSign, MapPin, MessageCircle, Music2, Ticket } from "lucide-react";
 import { navItems, primaryWhatsappHref } from "@/data/content";
-import { emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, phoneDisplay, tiktokHandle, tiktokUrl } from "@/lib/site";
+import { getYourGuideUrl, googleMapsUrl, instagramHandle, instagramUrl, tiktokHandle, tiktokUrl } from "@/lib/site";
 import { ActiveNavLink } from "@/components/ActiveNavLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { navActivePathsByLabel, navKeyByLabel } from "@/components/navigationConfig";
@@ -51,14 +51,6 @@ export function Footer() {
             <a className="flex items-center gap-3 transition hover:text-white" data-whatsapp-key="default" href={primaryWhatsappHref} {...conversionAttrs({ tourId: "default", placement: "footer" })}>
               <MessageCircle className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.whatsapp">{translations.en["footer.whatsapp"] ?? ""}</LocalizedText>
-            </a>
-            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="call_click" href={`tel:${phoneDisplay.replace(/\s/g, "")}`}>
-              <Phone className="h-4 w-4 text-turquoise" />
-              {phoneDisplay}
-            </a>
-            <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="email_click" href={`mailto:${emailAddress}`}>
-              <Mail className="h-4 w-4 text-turquoise" />
-              {emailAddress}
             </a>
             <a className="flex items-center gap-3 transition hover:text-white" data-analytics-event="maps_click" href={googleMapsUrl} rel="noreferrer" target="_blank">
               <MapPin className="h-4 w-4 text-turquoise" />

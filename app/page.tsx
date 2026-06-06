@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { ArrowRight, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Clock3, Euro, HelpCircle, Mail, MapPin, Maximize2, MessageCircle, Phone, ShieldCheck, Star, Users, Waves, X } from "lucide-react";
+import { ArrowRight, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Clock3, Euro, HelpCircle, MapPin, Maximize2, MessageCircle, ShieldCheck, Star, Users, Waves, X } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryViewerRuntime } from "@/components/GalleryViewerRuntime";
@@ -9,7 +9,7 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, gallery, orderedTours, reviews, tourComparison, type Tour } from "@/data/content";
 import { bookingFormHrefForKey } from "@/lib/bookingLinks";
-import { canonical, emailAddress, googleMapsUrl, languageAlternates, phoneDisplay, whatsappNumber } from "@/lib/site";
+import { canonical, googleMapsUrl, languageAlternates, sitePath, whatsappNumber } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { translations } from "@/lib/i18n";
 import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
@@ -144,11 +144,11 @@ const minimalAvailabilityFormScript = String.raw`
     },
     tourLabels: minimalTourLabels,
     bookingDraftStorageKey: "dhermi-booking-draft-v1",
-    bookingFormBase: bookingFormHrefForKey("default").replace("#book", ""),
+    bookingFormHref: bookingFormHrefForKey("default"),
     monthNames: {
-      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      en: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
       fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-      sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
+      sq: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
     }
   })};
 
@@ -179,9 +179,8 @@ const minimalAvailabilityFormScript = String.raw`
       .trim();
   }
 
-  function bookingFormHref(tourId) {
-    var tourKey = tourId && tourId !== "not-sure" ? "?tour=" + encodeURIComponent(tourId) : "";
-    return config.bookingFormBase + tourKey + "#book";
+  function bookingFormHref() {
+    return config.bookingFormHref || "/contact/#book";
   }
 
   function saveBookingDraft(tourInput, dateInput, peopleInput) {
@@ -206,7 +205,7 @@ const minimalAvailabilityFormScript = String.raw`
     var month = Number(parts[1]);
     var year = parts[0];
     var configuredMonths = config.monthNames || {};
-    var monthNames = configuredMonths[locale] || configuredMonths.fr || [];
+    var monthNames = configuredMonths.fr || configuredMonths[locale] || [];
     var monthName = monthNames[month - 1];
     var readableDate = day + " " + monthName + " " + year;
     return day && monthName ? readableDate : value || "";
@@ -249,7 +248,7 @@ const minimalAvailabilityFormScript = String.raw`
       var ready = Boolean(nameInput.value.trim() && dateInput.value && peopleInput.value);
       var message = buildMessage();
       summary.textContent = message;
-      action.href = ready ? bookingFormHref(tourInput.value) : "#minimal-booking-form";
+      action.href = ready ? bookingFormHref() : "#minimal-booking-form";
       action.setAttribute("aria-disabled", ready ? "false" : "true");
       action.removeAttribute("target");
       action.removeAttribute("rel");
@@ -777,19 +776,19 @@ export default function HomePage() {
               <LocalizedText id="v2.contact.text">{enText("v2.contact.text")}</LocalizedText>
             </p>
             <div className="mt-7 grid gap-3 text-sm text-pearl/90">
-              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={whatsappHrefForKey("default")} data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_v2_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_contact_info">
+              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12 hover:text-white" href={whatsappHrefForKey("default")} data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_v2_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_contact_info">
                 <MessageCircle className="h-4 w-4 text-sand" aria-hidden />
                 <LocalizedText id="minimal.contact.whatsapp">{enText("minimal.contact.whatsapp")}</LocalizedText>
               </a>
-              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={`tel:${phoneDisplay.replace(/\s/g, "")}`} data-analytics-event="call_click">
-                <Phone className="h-4 w-4 text-sand" aria-hidden />
-                {phoneDisplay}
+              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12 hover:text-white" href={bookingFormHrefForKey("default")} data-analytics-event="contact_form_click" data-analytics-placement="v2_contact_info">
+                <CalendarDays className="h-4 w-4 text-sand" aria-hidden />
+                <LocalizedText id="minimal.contact.form.send">{enText("minimal.contact.form.send")}</LocalizedText>
               </a>
-              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={`mailto:${emailAddress}`} data-analytics-event="email_click">
-                <Mail className="h-4 w-4 text-sand" aria-hidden />
-                {emailAddress}
+              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12 hover:text-white" href={sitePath("/#tours")} data-analytics-event="contact_tours_click">
+                <Waves className="h-4 w-4 text-sand" aria-hidden />
+                <LocalizedText id="cta.compareTours">{enText("cta.compareTours")}</LocalizedText>
               </a>
-              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={googleMapsUrl} target="_blank" rel="noreferrer" data-analytics-event="maps_click">
+              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12 hover:text-white" href={googleMapsUrl} target="_blank" rel="noreferrer" data-analytics-event="maps_click">
                 <MapPin className="h-4 w-4 text-sand" aria-hidden />
                 <LocalizedText id="minimal.contact.location">{enText("minimal.contact.location")}</LocalizedText>
               </a>

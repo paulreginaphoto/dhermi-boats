@@ -67,7 +67,7 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
         steps={[
           { title: "Compare the routes", text: "Gjipe is shorter, Grama is the complete route, and private gives your group custom timing." },
           { title: "Send the form", text: "Choose the tour, date and group size. The message is prepared automatically." },
-          { title: "Get a clear answer", text: "We answer with availability and practical details in simple French or English." }
+          { title: "Get a clear answer", text: "We answer with availability and practical details in French, English or Albanian." }
         ]}
         tours={selectedTours}
         faqs={faqs}

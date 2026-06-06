@@ -292,7 +292,7 @@ async function verifyHomeInteractions(baseUrl, browser) {
   await page.locator('[data-minimal-booking-form] textarea[name="message"]').fill("Prefer a calm swim stop");
   const href = await page.locator("[data-minimal-booking-action]").getAttribute("href");
 
-  if (!href || !href.includes("/contact/?tour=private#book")) {
+  if (!href || !href.includes("/contact/#book")) {
     fail(`home minimal booking should continue to contact form, got ${href}`);
   }
 
@@ -302,7 +302,7 @@ async function verifyHomeInteractions(baseUrl, browser) {
   }
 
   await page.locator("[data-minimal-booking-action]").click();
-  await page.waitForURL(/\/contact\/\?tour=private#book$/, { timeout: 15000 });
+  await page.waitForURL(/\/contact\/#book$/, { timeout: 15000 });
   await page.waitForFunction(() => document.querySelector('[data-booking-form="true"]'));
   const selectedTour = await page.locator('button[data-booking-tour-option][aria-pressed="true"]').getAttribute("data-tour-id");
   const restoredDate = await page.locator("#quick-date").inputValue();
@@ -375,7 +375,7 @@ async function verifyContactForms(baseUrl, browser) {
     const summary = await page.locator("[data-booking-summary-message]").textContent();
     const bodyText = await page.locator("body").innerText();
 
-    const expectedDate = locale === "fr" ? "21 Juin 2026" : locale === "sq" ? "21 Qershor 2026" : "21 June 2026";
+    const expectedDate = "21 Juin 2026";
 
     if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes(expectedDate) || !body.includes("+33600000000")) {
       fail(`contact ${locale} WhatsApp action is incomplete`);

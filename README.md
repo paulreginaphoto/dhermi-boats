@@ -2,6 +2,12 @@
 
 Static website for Dhermi Boat, built with Next.js, TypeScript and Tailwind, exported as static files for GitHub Pages.
 
+## Site Rules
+
+- Customer-facing booking dates must always use French month names in `D MMMM YYYY`, for example `15 Janvier 2026`, in every interface language.
+- Contact and booking requests start at `/contact/#book`. Direct WhatsApp or email links should only open from the validated booking form after useful details are collected.
+- The skipper language order is French, English and Albanian.
+
 ## Local Development
 
 ```bash

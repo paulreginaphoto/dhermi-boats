@@ -77,6 +77,31 @@ expectFileContains("components/ButtonLink.tsx", [
   "conversionAttrs"
 ]);
 
+expectFileContains("lib/bookingLinks.ts", [
+  "centralizedBookingHref",
+  'sitePath("/contact/#book")'
+]);
+
+expectFileDoesNotContain("lib/bookingLinks.ts", [
+  "?tour=",
+  "encodeURIComponent(key)"
+]);
+
+expectFileDoesNotContain("app/page.tsx", [
+  'bookingFormBase',
+  '?tour=" + encodeURIComponent'
+]);
+
+expectFileDoesNotContain("components/StickyBookingBar.tsx", [
+  "tel:",
+  "call_click_mobile_sticky"
+]);
+
+expectFileDoesNotContain("components/BookingCTA.tsx", [
+  "tel:",
+  "call_click"
+]);
+
 expectFileContains("components/LocaleBootstrap.tsx", [
   "applyAnalyticsEvents",
   "data-analytics-event-template",

@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
-import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
+import Image from "next/image";
+import { CalendarDays, Mail, MessageCircle, Minus, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { BrandProofStrip } from "@/components/BrandProofStrip";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
 import { translations } from "@/lib/i18n";
-import { formatBookingDate, formatDateShort } from "@/lib/dateFormats";
-import { emailAddress, phoneDisplay, whatsappNumber, whatsappUrl } from "@/lib/site";
+import { formatBookingDate, formatDateShort, frenchBookingMonthNames } from "@/lib/dateFormats";
+import { assetPath, emailAddress, whatsappNumber, whatsappUrl } from "@/lib/site";
 
 const selectableTours = orderedTours;
 const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as const;
@@ -200,9 +201,9 @@ const dateFieldCopy: Record<FormLocale, { empty: string; selected: string; forma
 };
 
 const dateMonthNames: Record<FormLocale, string[]> = {
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-  sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
+  en: frenchBookingMonthNames,
+  fr: frenchBookingMonthNames,
+  sq: frenchBookingMonthNames
 };
 
 const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> = {
@@ -321,7 +322,7 @@ const staticBookingEnhancerScript = String.raw`
     var month = Number(parts[1]);
     var year = parts[0];
     var configuredMonths = config.dateMonthNames || {};
-    var monthNames = configuredMonths[locale] || configuredMonths.fr || [];
+    var monthNames = configuredMonths.fr || configuredMonths[locale] || [];
     var monthName = monthNames[month - 1];
     var readableDate = day + " " + monthName + " " + year;
     return day && monthName ? readableDate : value || "";
@@ -804,7 +805,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
   const whatsappHref = whatsappUrl(bookingMessage);
-  const phoneHref = `tel:${phoneDisplay.replace(/\s/g, "")}`;
   const whatsappAnalyticsPlacement = "quick_form";
   const whatsappAnalyticsTour = analyticsSegment(activeTour.id);
   const firstMissingRequiredFieldId = !date ? "quick-date" : !name.trim() ? "quick-name" : null;
@@ -878,18 +878,32 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
     dateInput.focus({ preventScroll: true });
   }
 
-  const sectionClass = isContactMode ? "overflow-hidden bg-limestone text-ink" : "overflow-hidden bg-ink text-pearl";
+  const sectionClass = isContactMode ? "relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink text-ink" : "overflow-hidden bg-ink text-pearl";
   const bandClass = isContactMode
-    ? "site-band flex justify-center py-6 md:py-10"
+    ? "site-band relative z-[1] flex justify-center py-8 md:py-12"
     : "site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center";
   const formClass = isContactMode
-    ? "w-full max-w-5xl rounded-xl border border-ink/10 bg-pearl p-4 text-ink shadow-[0_28px_70px_rgba(7,27,38,0.12)] md:p-6"
+    ? "w-full max-w-5xl rounded-xl border border-white/45 bg-pearl p-4 text-ink shadow-[0_32px_90px_rgba(3,16,24,0.28)] md:p-6"
     : "rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6";
   const actionGridBaseClass = "mt-5 grid gap-3 sm:grid-cols-2";
-  const actionGridClass = isContactMode ? actionGridBaseClass : `${actionGridBaseClass} lg:grid-cols-[1.2fr_0.9fr_0.7fr]`;
+  const actionGridClass = actionGridBaseClass;
 
   return (
     <section id="book" className={sectionClass} data-contact-form-page={isContactMode ? "true" : undefined}>
+      {isContactMode ? (
+        <div className="absolute inset-0 -z-10" aria-hidden>
+          <Image
+            src={assetPath("/images/gallery-blue-cove-boat.webp")}
+            alt=""
+            fill
+            priority
+            quality={72}
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(7,27,38,0.88)_0%,rgba(7,27,38,0.58)_46%,rgba(7,27,38,0.22)_100%)]" />
+        </div>
+      ) : null}
       <div className={bandClass}>
         {!isContactMode ? (
         <div className="max-w-xl">
@@ -1269,16 +1283,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="quick.email">{enText("quick.email")}</LocalizedText>
             </a>
-            {!isContactMode ? (
-            <a
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
-              data-analytics-event="call_click"
-              href={phoneHref}
-            >
-              <Phone className="h-4 w-4" aria-hidden strokeWidth={1.75} />
-              <LocalizedText id="cta.call">{enText("cta.call")}</LocalizedText>
-            </a>
-            ) : null}
           </div>
         </form>
         <InlineRuntimeScript id="static-booking-enhancer" code={staticBookingEnhancerScript} />

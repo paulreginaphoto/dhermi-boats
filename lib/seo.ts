@@ -75,7 +75,7 @@ export function localBusinessSchema() {
       "@type": "ContactPoint",
       telephone: phoneDisplay,
       contactType: "reservations",
-      availableLanguage: ["English", "French", "Albanian"]
+      availableLanguage: ["French", "English", "Albanian"]
     }
   };
 }
@@ -196,7 +196,7 @@ export function serviceLandingPageSchema({
       availableChannel: {
         "@type": "ServiceChannel",
         serviceUrl: canonical("/contact/"),
-        availableLanguage: ["English", "French", "Albanian"]
+        availableLanguage: ["French", "English", "Albanian"]
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",

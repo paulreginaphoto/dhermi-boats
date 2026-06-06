@@ -254,6 +254,7 @@ for (const [relativePath, snippets] of Object.entries({
 const trackingSource = [
   read("lib/conversion.ts"),
   read("components/Footer.tsx"),
+  read("components/OneMinuteBooking.tsx"),
   read("components/ConversionTrustBlock.tsx"),
   read("components/SocialFeed.tsx"),
   read("app/contact/page.tsx"),
@@ -262,7 +263,7 @@ const trackingSource = [
 ].join("\n");
 for (const eventName of [
   "whatsapp_click_",
-  "call_click",
+  "contact_form_click",
   "email_click",
   "maps_click",
   "instagram_click",
