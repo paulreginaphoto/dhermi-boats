@@ -353,7 +353,7 @@ export const destinations: Destination[] = [
 ];
 
 export const tourComparison: TourComparisonItem[] = [
-  { angle: "Lovers sunset", tourId: "sunset", duration: "sunset", price: "from €120" },
+  { angle: "Sunset tour", tourId: "sunset", duration: "sunset", price: "from €120" },
   { angle: "Private option", tourId: "private", duration: "custom", price: "€200/hour" },
   { angle: "Best value", tourId: "gjipe", duration: "1h30", price: "from €35" },
   { angle: "Most complete route", tourId: "grama", duration: "3h30", price: "from €75" },

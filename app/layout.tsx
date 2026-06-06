@@ -18,11 +18,11 @@ const socialImageUrl = canonical("/images/hero-riviera.webp");
 export const metadata: Metadata = {
   metadataBase: new URL(canonicalOrigin),
   title: {
-    default: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
+    default: "Dhermi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     template: "%s | Dhermi Boat"
   },
   description:
-    "Book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and the Albanian Riviera. Small groups, clear prices and WhatsApp booking with a local skipper.",
+    "Book Dhermi boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave routes. Compare Gjipe from 35 €, Grama from 75 €, private boat tours and Sunset tour.",
   keywords: [
     "Dhermi boat tour",
     "Dhermi boat tours",
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     type: "website",
     url: canonical("/"),
     siteName: brandName,
-    title: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
+    title: "Dhermi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     description:
-      "Small-group and private boat tours from Dhërmi with a local skipper. Compare Gjipe, Grama Bay, Blue Cave, sunset and fishing.",
+      "Dhermi boat tours from Dhërmi to Gjipe, Grama Bay, Blue Cave, private routes, Sunset tour and fishing.",
     images: [
       {
         url: socialImageUrl,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dhërmi Boat Tours",
+    title: "Dhermi Boat Tours",
     description: "Boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave with a local skipper.",
     images: [socialImageUrl]
   },

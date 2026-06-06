@@ -88,7 +88,7 @@ export function websiteSchema() {
     name: "Dhermi Boat Tours",
     alternateName: brandName,
     url: canonical("/"),
-    description: "Dhërmi boat tour booking site for Gjipe, Grama Bay, Blue Cave and private boat trips.",
+    description: "Dhermi boat tour booking site for Gjipe, Grama Bay, Blue Cave, private boat trips, Sunset tour and morning fishing.",
     publisher: { "@id": businessId },
     inLanguage: ["en", "fr", "sq"]
   };
@@ -100,8 +100,8 @@ export function homePageSchema() {
     "@type": "WebPage",
     "@id": `${canonical("/")}#webpage`,
     url: canonical("/"),
-    name: "Dhërmi Boat Tours to Gjipe, Grama Bay and Blue Cave",
-    description: "Compare and book Dhërmi boat tours to Gjipe, Grama Bay, Blue Cave and private routes.",
+    name: "Dhermi Boat Tours to Gjipe, Grama Bay and Blue Cave",
+    description: "Compare Dhermi boat tours from Dhërmi: Gjipe from 35 €, Grama Bay from 75 €, Blue Cave routes, private boat tours and Sunset tour.",
     isPartOf: { "@id": websiteId },
     about: { "@id": businessId },
     mainEntity: { "@id": businessId }

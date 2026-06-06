@@ -12,19 +12,19 @@ const bootstrapDefaultTranslations = JSON.stringify(translations.en);
 const localizedPageMetadata = JSON.stringify({
   "/": {
     en: {
-      title: "Dhërmi Boat Tours with Local Skipper | Dhermi Boat",
+      title: "Dhermi Boat Tours to Gjipe, Grama Bay & Blue Cave",
       description:
-        "Book premium small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave, sunset tours and WhatsApp availability."
+        "Book Dhermi boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave routes. Gjipe from 35 €, Grama from 75 €, private boat tours and Sunset tour."
     },
     fr: {
-      title: "Tours en bateau à Dhërmi avec skipper local | Dhermi Boat",
+      title: "Tours bateau à Dhermi vers Gjipe, Grama Bay et Grotte Bleue",
       description:
-        "Réservez des tours en bateau en petit groupe ou privés depuis Dhërmi avec un skipper local. Gjipe, Grama Bay, Grotte Bleue, coucher de soleil et disponibilité WhatsApp."
+        "Réservez un tour bateau à Dhermi depuis Dhërmi vers Gjipe, Grama Bay et Grotte Bleue : Gjipe dès 35 €, Grama dès 75 €, privé et Sunset tour."
     },
     sq: {
-      title: "Ture me varkë në Dhërmi me skipper lokal | Dhermi Boat",
+      title: "Ture me varkë në Dhermi drejt Gjipe, Grama Bay dhe Shpellës Blu",
       description:
-        "Rezervoni ture me varkë në grupe të vogla ose private nga Dhërmiu me skipper lokal. Gjipe, Grama Bay, Shpella Blu, perëndim dhe disponueshmëri në WhatsApp."
+        "Rezervoni ture me varkë në Dhermi nga Dhërmiu drejt Gjipe, Grama Bay dhe Shpellës Blu. Gjipe nga 35 €, Grama nga 75 €, privat dhe Sunset tour."
     }
   },
   "/tours/": {

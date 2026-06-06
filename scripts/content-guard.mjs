@@ -1065,7 +1065,7 @@ function checkSEOFocus(filePath, content) {
     },
     {
       file: "app/page.tsx",
-      snippets: ["absolute: \"Dhërmi Boat Tours", "homePageSchema()"]
+      snippets: ["absolute: \"Dhermi Boat Tours", "homePageSchema()"]
     },
     {
       file: "app/tours/page.tsx",

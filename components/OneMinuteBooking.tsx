@@ -90,9 +90,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     adults: "Adults",
     children: "Children",
     language: "Language",
-    name: "Name",
-    phone: "Phone",
-    notes: "Questions"
+    name: "Name"
   },
   fr: {
     tour: "Tour",
@@ -101,9 +99,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     adults: "Adultes",
     children: "Enfants",
     language: "Langue",
-    name: "Nom",
-    phone: "Téléphone",
-    notes: "Questions"
+    name: "Nom"
   },
   sq: {
     tour: "Turi",
@@ -112,9 +108,7 @@ const fieldLabels: Record<FormLocale, Record<string, string>> = {
     adults: "Të rritur",
     children: "Fëmijë",
     language: "Gjuha",
-    name: "Emri",
-    phone: "Telefoni",
-    notes: "Pyetje"
+    name: "Emri"
   }
 };
 
@@ -187,21 +181,18 @@ const counterActionLabels: Record<FormLocale, { decrease: string; increase: stri
   }
 };
 
-const validationMessages: Record<FormLocale, { date: string; name: string; phoneHint: string }> = {
+const validationMessages: Record<FormLocale, { date: string; name: string }> = {
   en: {
     date: "Choose a date before sending WhatsApp.",
-    name: "Add your name before sending WhatsApp.",
-    phoneHint: "Phone is helpful, but WhatsApp can be used without it."
+    name: "Add your name before sending WhatsApp."
   },
   fr: {
     date: "Choisissez une date avant d’envoyer WhatsApp.",
-    name: "Ajoutez votre nom avant d’envoyer WhatsApp.",
-    phoneHint: "Le téléphone aide, mais WhatsApp peut suffire."
+    name: "Ajoutez votre nom avant d’envoyer WhatsApp."
   },
   sq: {
     date: "Zgjidhni daten para se te dergoni WhatsApp.",
-    name: "Shtoni emrin para se te dergoni WhatsApp.",
-    phoneHint: "Telefoni ndihmon, por WhatsApp mund te mjaftoje."
+    name: "Shtoni emrin para se te dergoni WhatsApp."
   }
 };
 
@@ -433,8 +424,6 @@ const staticBookingEnhancerScript = String.raw`
     var dateInput = root.querySelector("#quick-date");
     var timeSelect = root.querySelector("#quick-time");
     var nameInput = root.querySelector("#quick-name");
-    var phoneInput = root.querySelector("#quick-phone");
-    var notesInput = root.querySelector("#quick-notes");
     var adultInput = root.querySelector("[data-booking-counter-value='adults']");
     var childInput = root.querySelector("[data-booking-counter-value='children']");
     var capacityText = root.querySelector("[data-booking-capacity]");
@@ -447,7 +436,6 @@ const staticBookingEnhancerScript = String.raw`
     var calendarGrid = root.querySelector("[data-booking-calendar-grid]");
     var calendarPrev = root.querySelector("[data-booking-calendar-prev]");
     var calendarNext = root.querySelector("[data-booking-calendar-next]");
-    var phoneHint = root.querySelector("[data-booking-phone-hint]");
     var whatsappAction = root.querySelector("[data-booking-action='whatsapp']");
     var emailAction = root.querySelector("[data-booking-action='email']");
 
@@ -642,7 +630,6 @@ const staticBookingEnhancerScript = String.raw`
         dateDisplay.classList.toggle("text-ink-soft", !dateInput.value);
       }
       if (dateHint) dateHint.textContent = dateInput.value ? (dateCopy.selected + ": " + dateDisplayText) : (dateCopy.format || config.dateDisplayFormat);
-      if (phoneHint) phoneHint.textContent = messages.phoneHint;
       renderCalendar();
 
       whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
@@ -743,7 +730,7 @@ const staticBookingEnhancerScript = String.raw`
       updateLinks();
     });
 
-    [dateInput, nameInput, phoneInput, notesInput].forEach(function (input) {
+    [dateInput, nameInput].forEach(function (input) {
       if (!input) return;
       input.addEventListener("input", updateLinks);
       input.addEventListener("change", updateLinks);

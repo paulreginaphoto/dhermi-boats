@@ -323,10 +323,10 @@ async function verifyLanguageSwitcher(baseUrl, browser) {
   await page.waitForFunction(() => document.documentElement.lang === "sq");
   await page.locator('[data-locale-switcher][data-locale="en"]:visible').first().click();
   await page.waitForFunction(() => document.documentElement.lang === "en");
-  await page.waitForFunction(() => document.body.innerText.includes("Boat tours from Dhërmi"));
+  await page.waitForFunction(() => document.body.innerText.includes("Dhermi boat tours"));
 
   const bodyText = await page.locator("body").innerText();
-  if (!bodyText.includes("Boat tours from Dhërmi") || bodyText.includes("Tours en bateau") || bodyText.includes("Ture me varkë")) {
+  if (!bodyText.includes("Dhermi boat tours") || bodyText.includes("Tours bateau") || bodyText.includes("Ture me varkë")) {
     fail("language switcher does not return to English after repeated switches");
   }
 
@@ -343,7 +343,9 @@ async function verifyPhotoAlbum(baseUrl, browser) {
   const bodyText = await page.locator("body").innerText();
   if (groupedCards !== 0) fail(`boat photos should be one album, found ${groupedCards} category cards`);
   if (albumImages < 10) fail(`boat photos album should show the full album, found ${albumImages} images`);
-  if (!bodyText.includes("One simple album")) fail("boat photos copy should present one simple album");
+  if (!bodyText.includes("Gjipe") || !bodyText.includes("Grama Bay") || !bodyText.includes("Blue Cave")) {
+    fail("boat photos copy should name the main tour photo subjects");
+  }
 
   await context.close();
 }

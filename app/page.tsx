@@ -193,10 +193,10 @@ const galleryViewerScript = String.raw`
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhërmi Boat Tours with Local Skipper | Dhermi Boat"
+    absolute: "Dhermi Boat Tours to Gjipe, Grama Bay & Blue Cave"
   },
   description:
-    "Book premium small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave, sunset tours and WhatsApp availability.",
+    "Book Dhermi boat tours from Dhërmi to Gjipe, Grama Bay and Blue Cave routes. Gjipe from 35 €, Grama from 75 €, private boat tours and Sunset tour by WhatsApp.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 
