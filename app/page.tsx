@@ -146,9 +146,9 @@ const minimalAvailabilityFormScript = String.raw`
     bookingDraftStorageKey: "dhermi-booking-draft-v1",
     bookingFormHref: bookingFormHrefForKey("default"),
     monthNames: {
-      en: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-      sq: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+      sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
     }
   })};
 
@@ -205,7 +205,7 @@ const minimalAvailabilityFormScript = String.raw`
     var month = Number(parts[1]);
     var year = parts[0];
     var configuredMonths = config.monthNames || {};
-    var monthNames = configuredMonths.fr || configuredMonths[locale] || [];
+    var monthNames = configuredMonths[locale] || configuredMonths.fr || configuredMonths.en || [];
     var monthName = monthNames[month - 1];
     var readableDate = day + " " + monthName + " " + year;
     return day && monthName ? readableDate : value || "";

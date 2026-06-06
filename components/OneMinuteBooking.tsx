@@ -8,7 +8,7 @@ import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
 import { analyticsSegment, conversionEvent, whatsappEventTemplate } from "@/lib/conversion";
 import { translations } from "@/lib/i18n";
-import { formatBookingDate, formatDateShort, frenchBookingMonthNames } from "@/lib/dateFormats";
+import { bookingMonthNamesByLocale, formatBookingDate, formatDateShort } from "@/lib/dateFormats";
 import { assetPath, emailAddress, whatsappNumber, whatsappUrl } from "@/lib/site";
 
 const selectableTours = orderedTours;
@@ -37,6 +37,11 @@ const dateDisplayFormats: Record<FormLocale, string> = {
   en: "Select date",
   fr: "Choisir la date",
   sq: "Zgjidhni daten"
+};
+const dateInputLang: Record<FormLocale, string> = {
+  en: "en-GB",
+  fr: "fr-FR",
+  sq: "sq-AL"
 };
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
 const enText = (key: string) => translations.en[key] ?? "";
@@ -200,9 +205,9 @@ const dateFieldCopy: Record<FormLocale, { empty: string; selected: string; forma
 };
 
 const dateMonthNames: Record<FormLocale, string[]> = {
-  en: frenchBookingMonthNames,
-  fr: frenchBookingMonthNames,
-  sq: frenchBookingMonthNames
+  en: bookingMonthNamesByLocale.en,
+  fr: bookingMonthNamesByLocale.fr,
+  sq: bookingMonthNamesByLocale.sq
 };
 
 const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> = {
@@ -230,6 +235,7 @@ const staticBookingEnhancerConfig = {
   storageKey: bookingDraftStorageKey,
   dateDisplayFormat,
   dateDisplayFormats,
+  dateInputLang,
   dateMonthNames,
   messageIntro,
   fieldLabels,
@@ -321,7 +327,7 @@ const staticBookingEnhancerScript = String.raw`
     var month = Number(parts[1]);
     var year = parts[0];
     var configuredMonths = config.dateMonthNames || {};
-    var monthNames = configuredMonths.fr || configuredMonths[locale] || [];
+    var monthNames = configuredMonths[locale] || configuredMonths.fr || configuredMonths.en || [];
     var monthName = monthNames[month - 1];
     var readableDate = day + " " + monthName + " " + year;
     return day && monthName ? readableDate : value || "";
@@ -399,6 +405,8 @@ const staticBookingEnhancerScript = String.raw`
     var emailAction = root.querySelector("[data-booking-action='email']");
 
     if (!dateInput || !nameInput || !timeSelect || !whatsappAction || !emailAction) return;
+    var inputLanguages = config.dateInputLang || {};
+    dateInput.setAttribute("lang", inputLanguages[locale] || inputLanguages.en || "en-GB");
 
     function applyLocale(nextLocale) {
       var normalizedLocale = normalizeLocale(nextLocale);
@@ -410,6 +418,7 @@ const staticBookingEnhancerScript = String.raw`
       messages = validationCopy[locale] || validationCopy.en;
       prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
       summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
+      dateInput.setAttribute("lang", inputLanguages[locale] || inputLanguages.en || "en-GB");
     }
 
     var minimumDate = todayInputValue();
@@ -1116,7 +1125,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                             errors.date ? "border-bronze" : "border-ink/12"
                           ].join(" ")
                     }
-                    lang="en-GB"
+                    lang={dateInputLang[locale]}
                     name="Date"
                     type="date"
                     min={minimumDate || undefined}
