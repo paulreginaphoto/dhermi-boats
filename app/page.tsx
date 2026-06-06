@@ -563,8 +563,8 @@ export default function HomePage() {
       </section>
 
       <section data-home-section="contact" id="contact" data-sticky-relief-target className="bg-navy py-16 text-pearl md:py-24">
-        <div className="site-band grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
-          <div>
+        <div className="site-band grid gap-10">
+          <div className="max-w-3xl">
             <p className="text-xs font-bold uppercase tracking-[0.22em] text-sand">
               <LocalizedText id="v2.contact.label">{enText("v2.contact.label")}</LocalizedText>
             </p>
@@ -574,7 +574,7 @@ export default function HomePage() {
             <p className="mt-5 max-w-xl text-base leading-8 text-pearl/86">
               <LocalizedText id="v2.contact.text">{enText("v2.contact.text")}</LocalizedText>
             </p>
-            <div className="mt-7 grid gap-3 text-sm text-pearl/90">
+            <div className="mt-7 grid gap-3 text-sm text-pearl/90 sm:grid-cols-2 lg:grid-cols-4">
               <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12 hover:text-white" href={whatsappHrefForKey("default")} data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_v2_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_contact_info">
                 <MessageCircle className="h-4 w-4 text-sand" aria-hidden />
                 <LocalizedText id="minimal.contact.whatsapp">{enText("minimal.contact.whatsapp")}</LocalizedText>
@@ -593,8 +593,8 @@ export default function HomePage() {
               </a>
             </div>
           </div>
-          <div className="grid gap-5">
-            <OneMinuteBooking />
+          <div className="mx-auto grid w-full max-w-5xl gap-5">
+            <OneMinuteBooking mode="embedded" />
             <details className="rounded-xl border border-white/12 bg-white/8 p-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center gap-2">

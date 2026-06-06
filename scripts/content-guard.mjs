@@ -661,7 +661,7 @@ function checkArrivalComfortSection(filePath, content) {
     'data-home-section="gallery"',
     'data-home-section="contact"',
     'import { OneMinuteBooking }',
-    "<OneMinuteBooking />"
+    "<OneMinuteBooking"
   ]) {
     if (!content.includes(snippet)) {
       addIssue(

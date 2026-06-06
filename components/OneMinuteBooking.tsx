@@ -16,7 +16,7 @@ const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as co
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
-type BookingFormMode = "default" | "contact";
+type BookingFormMode = "default" | "contact" | "embedded";
 const dateDisplayFormat = "Select date";
 
 const capacityByTourId = {
@@ -942,6 +942,8 @@ function calendarDaysForMonth(monthDate: Date) {
 
 export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode } = {}) {
   const isContactMode = mode === "contact";
+  const isEmbeddedMode = mode === "embedded";
+  const isFormFocusedMode = isContactMode || isEmbeddedMode;
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
   const [date, setDate] = useState("");
@@ -1111,11 +1113,17 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
     setCalendarOpen(true);
   }
 
-  const sectionClass = isContactMode ? "relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink text-ink" : "overflow-hidden bg-ink text-pearl";
+  const sectionClass = isContactMode
+    ? "relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink text-ink"
+    : isEmbeddedMode
+      ? "overflow-visible text-ink"
+      : "overflow-hidden bg-ink text-pearl";
   const bandClass = isContactMode
     ? "site-band relative z-[1] flex justify-center py-8 md:py-12"
-    : "site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center";
-  const formClass = isContactMode
+    : isEmbeddedMode
+      ? "relative z-[1] flex w-full justify-center"
+      : "site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center";
+  const formClass = isFormFocusedMode
     ? "w-full max-w-5xl rounded-xl border border-white/45 bg-pearl p-4 text-ink shadow-[0_32px_90px_rgba(3,16,24,0.28)] md:p-6"
     : "rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6";
   const actionGridBaseClass = "mt-5 grid gap-3 sm:grid-cols-2";
@@ -1138,7 +1146,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
         </div>
       ) : null}
       <div className={bandClass}>
-        {!isContactMode ? (
+        {!isFormFocusedMode ? (
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-sand">
             <LocalizedText id="quick.label">{enText("quick.label")}</LocalizedText>
@@ -1171,7 +1179,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
           data-booking-form="true"
           onSubmit={(event) => event.preventDefault()}
         >
-          {isContactMode ? (
+          {isFormFocusedMode ? (
             <div className="mb-5 border-b border-ink/10 pb-5">
               <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
                 <LocalizedText id="quick.label">{enText("quick.label")}</LocalizedText>
