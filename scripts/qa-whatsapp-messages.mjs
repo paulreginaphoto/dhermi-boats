@@ -7,7 +7,7 @@ const ROOT_DIR = process.cwd();
 const OUT_DIR = path.join(ROOT_DIR, "out");
 const WHATSAPP_NUMBER = "355693921356";
 const BAD_WHATSAPP_SYMBOLS = /[\uFFFD\u{1F1E6}-\u{1F1FF}\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/u;
-const REQUIRED_MARKERS = ["Tour", "Date", "Language", "Questions"];
+const REQUIRED_MARKERS = ["Tour", "Date", "Language", "Name"];
 const TEXT_EXTENSIONS = new Set([".html", ".txt"]);
 
 /** @type {Array<string>} */

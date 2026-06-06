@@ -285,30 +285,28 @@ async function verifyHomeInteractions(baseUrl, browser) {
   if (!galleryOpen) fail("home gallery modal did not open");
   await page.keyboard.press("Escape");
 
-  await page.locator('[data-minimal-booking-form] select[name="tour"]').selectOption("private");
-  await page.locator('[data-minimal-booking-form] input[name="name"]').fill("Audit Home");
-  await page.locator('[data-minimal-booking-form] input[name="date"]').fill("2026-06-21");
-  await page.locator('[data-minimal-booking-form] input[name="people"]').fill("4");
-  await page.locator('[data-minimal-booking-form] textarea[name="message"]').fill("Prefer a calm swim stop");
-  const href = await page.locator("[data-minimal-booking-action]").getAttribute("href");
+  await page.locator("[data-booking-form]").scrollIntoViewIfNeeded();
+  await page.locator('button[data-booking-tour-option][data-tour-id="private"]').click();
+  await page.locator("#quick-date").evaluate((input) => {
+    input.value = "2026-06-21";
+    input.dispatchEvent(new Event("input", { bubbles: true }));
+    input.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+  await page.locator("#quick-name").fill("Audit Home");
+  await page.locator('[data-booking-counter="adults"][data-booking-counter-delta="1"]').click();
+  await page.locator('[data-booking-counter="adults"][data-booking-counter-delta="1"]').click();
+  const href = await page.locator('[data-booking-action="whatsapp"]').getAttribute("href");
+  const message = href?.startsWith("https://wa.me/")
+    ? new URL(href).searchParams.get("text") || ""
+    : "";
 
-  if (!href || !href.includes("/contact/#book")) {
-    fail(`home minimal booking should continue to contact form, got ${href}`);
+  if (!href?.startsWith("https://wa.me/") || !message.includes("Audit Home") || !message.includes("21 June 2026") || message.includes("Questions")) {
+    fail(`home booking form should generate a complete WhatsApp request, got ${href}`);
   }
 
   const homeTours = await page.locator("[data-tour-card]").evaluateAll((cards) => cards.map((card) => card.getAttribute("data-tour-id")));
   if (homeTours.join(",") !== "sunset,private,gjipe,grama,fishing") {
     fail(`home tour order should highlight sunset and private first, got ${homeTours.join(",")}`);
-  }
-
-  await page.locator("[data-minimal-booking-action]").click();
-  await page.waitForURL(/\/contact\/#book$/, { timeout: 15000 });
-  await page.waitForFunction(() => document.querySelector('[data-booking-form="true"]'));
-  const selectedTour = await page.locator('button[data-booking-tour-option][aria-pressed="true"]').getAttribute("data-tour-id");
-  const restoredDate = await page.locator("#quick-date").inputValue();
-  const restoredAdults = await page.locator("#quick-adults").inputValue();
-  if (selectedTour !== "private" || restoredDate !== "2026-06-21" || restoredAdults !== "4") {
-    fail(`contact form should restore home booking draft, got tour=${selectedTour}, date=${restoredDate}, adults=${restoredAdults}`);
   }
 
   await context.close();
@@ -359,11 +357,12 @@ async function verifyContactForms(baseUrl, browser) {
     await page.goto(`${baseUrl}/contact/?dlang=${locale}`, { waitUntil: "networkidle", timeout: 15000 });
     await page.locator("[data-booking-form]").scrollIntoViewIfNeeded();
     await page.locator('button[data-booking-tour-option][data-tour-id="private"]').click();
-    await page.locator("#quick-date").fill("2026-06-21");
+    await page.locator("#quick-date").evaluate((input) => {
+      input.value = "2026-06-21";
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
     await page.locator("#quick-name").fill(name);
-    await page.locator("#quick-phone").evaluate((element) => element.closest("details")?.setAttribute("open", ""));
-    await page.locator("#quick-phone").fill("+33600000000");
-    await page.locator("#quick-notes").fill("Audit availability check");
 
     const action = page.locator('[data-booking-action="whatsapp"]');
     const href = await action.getAttribute("href");
@@ -372,16 +371,22 @@ async function verifyContactForms(baseUrl, browser) {
     const body = href?.startsWith("https://wa.me/")
       ? new URL(href).searchParams.get("text") || ""
       : "";
-    const summary = await page.locator("[data-booking-summary-message]").textContent();
     const bodyText = await page.locator("body").innerText();
 
-    const expectedDate = "21 Juin 2026";
+    const expectedDate = {
+      en: "21 June 2026",
+      fr: "21 Juin 2026",
+      sq: "21 Qershor 2026"
+    }[locale];
 
-    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes(expectedDate) || !body.includes("+33600000000")) {
+    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes(expectedDate)) {
       fail(`contact ${locale} WhatsApp action is incomplete`);
     }
-    if (!summary?.includes(name) || !summary.includes(expectedDate) || !summary.includes("Audit availability check")) {
-      fail(`contact ${locale} summary is incomplete`);
+    if (body.includes("Questions") || body.includes("Téléphone") || body.includes("Phone")) {
+      fail(`contact ${locale} WhatsApp action should not include removed optional fields`);
+    }
+    if (bodyText.includes("Détails optionnels") || bodyText.includes("Date et nom à ajouter")) {
+      fail(`contact ${locale} should not show removed low-value helper text`);
     }
     if (locale === "fr" && (bodyText.includes("Phone is helpful") || bodyText.includes("Format JJ/MM/AAAA: DD/MM/YYYY") || bodyText.includes("5 h à 8 h"))) {
       fail("contact fr booking form leaks English helper copy");
@@ -396,37 +401,27 @@ async function verifyContactForms(baseUrl, browser) {
   await switchPage.locator("[data-booking-form]").scrollIntoViewIfNeeded();
   await switchPage.locator('[data-locale-switcher][data-locale="sq"]').first().click();
   await switchPage.waitForFunction(() => document.documentElement.lang === "sq");
-  await switchPage.waitForFunction(() => (document.querySelector("[data-booking-summary-message]")?.textContent || "").includes("Pershendetje"));
+  await switchPage.waitForFunction(() => (document.querySelector('label[for="quick-date"]')?.textContent || "").trim() === "Data");
 
   const switchedState = await switchPage.evaluate(() => ({
     htmlLang: document.documentElement.lang,
     title: document.querySelector('[data-i18n="quick.title"]')?.textContent || "",
     dateLabel: document.querySelector('label[for="quick-date"]')?.textContent || "",
-    datePlaceholder: document.querySelector("[data-booking-date-display]")?.textContent || "",
-    summary: document.querySelector("[data-booking-summary-message]")?.textContent || ""
+    datePlaceholder: document.querySelector("[data-booking-date-display]")?.textContent || ""
   }));
 
   if (
     switchedState.htmlLang !== "sq" ||
     !switchedState.title.includes("Rezervo") ||
     switchedState.dateLabel.trim() !== "Data" ||
-    !switchedState.datePlaceholder.includes("Zgjidhni") ||
-    !switchedState.summary.includes("Pershendetje") ||
-    switchedState.summary.includes("Bonjour") ||
-    switchedState.summary.includes("*Langue:* French")
+    !switchedState.datePlaceholder.includes("Zgjidhni")
   ) {
     fail(`contact language switch should update booking form state, got ${JSON.stringify(switchedState)}`);
   }
 
-  await switchPage.locator("#quick-date").evaluate((input) => {
-    window.__bookingDatePickerCalls = 0;
-    input.showPicker = () => {
-      window.__bookingDatePickerCalls += 1;
-    };
-  });
   await switchPage.locator("#quick-date").click();
-  await switchPage.waitForFunction(() => window.__bookingDatePickerCalls > 0, null, { timeout: 3000 }).catch(() => {
-    fail("contact date field should request the native date picker on click");
+  await switchPage.waitForFunction(() => document.querySelector("[data-booking-calendar-panel]")?.classList.contains("block"), null, { timeout: 3000 }).catch(() => {
+    fail("contact date field should open the booking calendar on click");
   });
 
   await switchContext.close();

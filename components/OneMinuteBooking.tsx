@@ -269,20 +269,6 @@ const staticBookingEnhancerConfig = {
   tourOptionLabels,
   timeOptionLabels,
   localeMessageLabels,
-  summaryLabels: {
-    en: {
-      pending: translations.en["quick.summary.pending"] ?? "Ready after date and name",
-      ready: translations.en["quick.summary.ready"] ?? "Ready to send"
-    },
-    fr: {
-      pending: translations.fr["quick.summary.pending"] ?? "Prêt après la date et le nom",
-      ready: translations.fr["quick.summary.ready"] ?? "Prêt à envoyer"
-    },
-    sq: {
-      pending: translations.sq["quick.summary.pending"] ?? "Gati pas dates dhe emrit",
-      ready: translations.sq["quick.summary.ready"] ?? "Gati per dergim"
-    }
-  },
   counterLabels: counterActionLabels,
   flexibleTimeOptions,
   fixedTimeByTourId,
@@ -438,7 +424,6 @@ const staticBookingEnhancerScript = String.raw`
     var validationCopy = config.validationMessages || {};
     var messages = validationCopy[locale] || validationCopy.en;
     var prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
-    var summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
     var selectedTourId = config.defaultTourId;
     var selectedTime = "Flexible";
     var adults = 2;
@@ -453,8 +438,6 @@ const staticBookingEnhancerScript = String.raw`
     var adultInput = root.querySelector("[data-booking-counter-value='adults']");
     var childInput = root.querySelector("[data-booking-counter-value='children']");
     var capacityText = root.querySelector("[data-booking-capacity]");
-    var summaryTitle = root.querySelector("[data-booking-summary-title]");
-    var summaryMessage = root.querySelector("[data-booking-summary-message]");
     var dateStatus = root.querySelector("[data-booking-date-status]");
     var dateDisplay = root.querySelector("[data-booking-date-display]");
     var dateHint = root.querySelector("[data-booking-date-short]");
@@ -483,7 +466,6 @@ const staticBookingEnhancerScript = String.raw`
       datePlaceholder = displayFormats[locale] || config.dateDisplayFormat;
       messages = validationCopy[locale] || validationCopy.en;
       prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
-      summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
       dateInput.setAttribute("lang", inputLanguages[locale] || inputLanguages.en || "en-GB");
       renderCalendar();
     }
@@ -634,9 +616,7 @@ const staticBookingEnhancerScript = String.raw`
         "*" + labels.language + ":* " + (languageLabels[locale] || locale),
         "*" + labels.adults + ":* " + adults,
         "*" + labels.children + ":* " + children,
-        "*" + labels.name + ":* " + requiredValue(nameInput.value, prompts.name),
-        "*" + labels.phone + ":* " + cleanValue(phoneInput ? phoneInput.value : ""),
-        "*" + labels.notes + ":* " + cleanValue(notesInput ? notesInput.value : "")
+        "*" + labels.name + ":* " + requiredValue(nameInput.value, prompts.name)
       ].join("\n");
     }
 
@@ -654,10 +634,6 @@ const staticBookingEnhancerScript = String.raw`
       var analyticsLocale = analyticsSegment(locale);
       var whatsappPlacement = analyticsSegment(whatsappAction.getAttribute("data-analytics-placement") || "quick_form");
 
-      var nextSummaryLabel = summaryLabels.pending;
-      if (ready) nextSummaryLabel = summaryLabels.ready;
-      if (summaryTitle) summaryTitle.textContent = nextSummaryLabel;
-      if (summaryMessage) summaryMessage.textContent = message;
       var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value, locale) : datePlaceholder;
       if (dateStatus) dateStatus.textContent = dateInput.value ? dateCopy.selected : dateCopy.empty;
       if (dateDisplay) {
@@ -974,8 +950,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [notes, setNotes] = useState("");
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
   const [bookingDraftReady, setBookingDraftReady] = useState(false);
   const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(true);
@@ -1067,9 +1041,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
     `*${labels.language}:* ${localeMessageLabels[locale]}`,
     `*${labels.adults}:* ${safeAdults}`,
     `*${labels.children}:* ${safeChildren}`,
-    `*${labels.name}:* ${requiredValue(name, requiredPrompts.name)}`,
-    `*${labels.phone}:* ${cleanValue(phone)}`,
-    `*${labels.notes}:* ${cleanValue(notes)}`
+    `*${labels.name}:* ${requiredValue(name, requiredPrompts.name)}`
   ].join("\n");
 
   const emailHref = `mailto:${emailAddress}?subject=${encodeURIComponent(`Dhermi Boat booking: ${activeTourTitle}`)}&body=${encodeURIComponent(bookingMessage)}`;
@@ -1081,8 +1053,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
   const bookingFallbackHref = firstMissingRequiredFieldId ? `#${firstMissingRequiredFieldId}` : "#book";
   const whatsappActionHref = bookingLinksReady ? whatsappHref : bookingFallbackHref;
   const emailActionHref = bookingLinksReady ? emailHref : bookingFallbackHref;
-  const bookingSummaryKey = bookingLinksReady ? "quick.summary.ready" : "quick.summary.pending";
-
   function validateRequiredFields() {
     const nextErrors = {
       date: !date,
@@ -1225,22 +1195,36 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                       aria-pressed={selected}
                       className={[
                         "group flex w-full items-center justify-between gap-4 rounded-md border px-4 py-3 text-left transition duration-300 active:translate-y-px",
-                        selected ? "border-ink bg-ink text-pearl" : "border-ink/10 bg-limestone/70 text-ink hover:border-ink/25 hover:bg-white"
+                        selected ? "border-ink bg-ink text-pearl" : "border-ink/10 bg-white text-ink hover:border-ink/25"
                       ].join(" ")}
                       data-booking-tour-option="true"
                       data-tour-id={tour.id}
                       type="button"
                       onClick={() => selectTour(tour.id)}
                     >
-                      <span>
-                        <span className="block font-serif text-xl font-medium">
-                          <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
-                        </span>
+                      <span className="flex min-w-0 items-center gap-3">
                         <span
-                          className={selected ? "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-sand" : "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-bronze"}
-                          data-booking-tour-price="true"
+                          className={selected ? "relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-white/18 bg-white/10" : "relative h-12 w-12 shrink-0 overflow-hidden rounded-full border border-ink/10 bg-limestone"}
+                          aria-hidden
                         >
-                          <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                          <Image
+                            src={tour.cardImage ?? tour.image}
+                            alt=""
+                            fill
+                            className="object-cover"
+                            sizes="48px"
+                          />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block font-serif text-xl font-medium leading-tight">
+                            <LocalizedText id={`tour.${tour.id}.shortTitle`}>{tour.shortTitle}</LocalizedText>
+                          </span>
+                          <span
+                            className={selected ? "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-sand" : "mt-1 block text-xs font-semibold uppercase tracking-[0.14em] text-bronze"}
+                            data-booking-tour-price="true"
+                          >
+                            <LocalizedText id={`tour.${tour.id}.price`}>{tour.price}</LocalizedText>
+                          </span>
                         </span>
                       </span>
                       <span
@@ -1539,48 +1523,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
 
             </div>
           </div>
-
-          <details className="mt-5 rounded-md border border-ink/10 bg-limestone/60 p-4">
-            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-[0.18em] text-bronze [&::-webkit-details-marker]:hidden">
-              <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
-            </summary>
-            <div className="mt-4 grid gap-4 md:grid-cols-2">
-              <div className="grid gap-2">
-                <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-phone">
-                  <LocalizedText id="quick.phone">{enText("quick.phone")}</LocalizedText>
-                </label>
-                <input
-                  id="quick-phone"
-                  autoComplete="tel"
-                  className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
-                  name="Phone"
-                  inputMode="tel"
-                  value={phone}
-                  onChange={(event) => setPhone(event.target.value)}
-                />
-                <p className="text-xs font-semibold text-ink-soft" data-booking-phone-hint="true">{messages.phoneHint}</p>
-              </div>
-              <div className="grid gap-2">
-                <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-notes">
-                  <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
-                </label>
-                <textarea
-                  id="quick-notes"
-                  className="min-h-24 w-full resize-y rounded-md border border-ink/12 bg-white px-4 py-3 text-base leading-7 text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
-                  name="Notes"
-                  value={notes}
-                  onChange={(event) => setNotes(event.target.value)}
-                />
-              </div>
-            </div>
-          </details>
-
-          <details className="mt-4 rounded-md border border-ink/10 bg-limestone/55 p-4">
-            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-[0.18em] text-bronze [&::-webkit-details-marker]:hidden" data-booking-summary-title="true">
-              <LocalizedText id={bookingSummaryKey}>{translations.en[bookingSummaryKey] ?? ""}</LocalizedText>
-            </summary>
-            <p className="mt-3 whitespace-pre-line text-sm leading-6 text-ink-soft" data-booking-summary-message="true">{bookingMessage}</p>
-          </details>
 
           <div className={actionGridClass}>
             <a

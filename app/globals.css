@@ -567,8 +567,8 @@ body[data-gallery-open] {
 }
 
 [data-booking-tour-option][aria-pressed="false"] {
-  border-color: rgb(16 34 45 / 0.1) !important;
-  background: rgb(247 244 235 / 0.7) !important;
+  border-color: rgb(16 34 45 / 0.12) !important;
+  background: #fff !important;
   color: #10222d !important;
 }
 
