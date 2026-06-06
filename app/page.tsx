@@ -812,10 +812,10 @@ export default function HomePage() {
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                     <LocalizedText id="v2.contact.form.message">{enText("v2.contact.form.message")}</LocalizedText>
                   </span>
-                  <textarea className="min-h-28 rounded-lg border border-ink/12 bg-white px-4 py-3 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="message" rows={4} placeholder={enText("v2.contact.form.messagePlaceholder")} />
+                  <textarea className="min-h-20 rounded-lg border border-ink/12 bg-white px-4 py-3 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="message" rows={3} placeholder={enText("v2.contact.form.messagePlaceholder")} />
                 </label>
               </div>
-              <div className="mt-5 rounded-lg bg-limestone p-4">
+              <div className="sr-only">
                 <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                   <LocalizedText id="minimal.contact.form.preview">{enText("minimal.contact.form.preview")}</LocalizedText>
                 </p>

@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     siteName: brandName,
     title: "Dhërmi Boat Tours to Gjipe, Grama Bay & Blue Cave",
     description:
-      "Small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave and sea-condition routes.",
+      "Small-group and private boat tours from Dhërmi with a local skipper. Compare Gjipe, Grama Bay, Blue Cave, sunset and fishing.",
     images: [
       {
         url: socialImageUrl,

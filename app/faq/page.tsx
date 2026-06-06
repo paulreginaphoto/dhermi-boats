@@ -16,7 +16,7 @@ import { translations } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour FAQ",
   description:
-    "Practical answers for booking a Dhermi boat tour: departure point, weather, private tours, what to bring, children, payment and group size.",
+    "Practical answers for booking a Dhermi boat tour: prices, five tour choices, private tours, what to bring, children, payment and group size.",
   alternates: { canonical: canonical("/faq/"), languages: languageAlternates("/faq/") }
 };
 

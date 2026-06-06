@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { Metadata } from "next";
-import { Anchor, Camera, CheckCircle2, Clock, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Ticket, Video, Waves } from "lucide-react";
+import { Anchor, Camera, CheckCircle2, Clock, Euro, Mail, MapPin, MessageCircle, Phone, ShieldCheck, Ticket, Video } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { HeroWhatsappText } from "@/components/MicroCopy";
 import { LocalizedText } from "@/components/LocalizedText";
@@ -14,7 +14,7 @@ import { canonical, emailAddress, getYourGuideUrl, googleMapsUrl, instagramHandl
 export const metadata: Metadata = {
   title: "Contact Dhermi Boat | WhatsApp Booking",
   description:
-    "Contact Dhermi Boat on WhatsApp with date, group size and preferred route. Fast availability check, exact meeting point and sea-condition confirmation.",
+    "Contact Dhermi Boat on WhatsApp with date, group size and preferred tour. Compare five tours: Gjipe, Grama, private, sunset and fishing.",
   alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
@@ -24,7 +24,7 @@ const heroTour = tours.find((tour) => tour.id === "private") ?? tours[0];
 
 const heroBadges = [
   { id: "contact.badge.reply", icon: Clock },
-  { id: "contact.badge.route", icon: Waves },
+  { id: "contact.badge.route", icon: Euro },
   { id: "contact.badge.price", icon: CheckCircle2 }
 ] satisfies Array<{ id: string; icon: OutlineIconComponent }>;
 

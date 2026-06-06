@@ -1,4 +1,4 @@
-import { CalendarDays, Clock3, MessageCircle, ShieldCheck } from "lucide-react";
+import { CalendarDays, Clock3, Euro, MessageCircle } from "lucide-react";
 import { ButtonLink } from "@/components/ButtonLink";
 import { primaryWhatsappHref } from "@/data/content";
 
@@ -6,12 +6,12 @@ const checks = [
   {
     icon: CalendarDays,
     title: "Today or tomorrow in Dhërmi?",
-    text: "Send your date and group size. We answer with the safest available route."
+    text: "Send your date and group size. We reply with the available tours."
   },
   {
-    icon: ShieldCheck,
-    title: "Sea conditions checked first",
-    text: "Caves, beaches and timing are confirmed by the skipper before departure."
+    icon: Euro,
+    title: "Clear prices before you choose",
+    text: "Gjipe from 35 €, Grama from 75 €, private from 200 € / hour."
   },
   {
     icon: Clock3,
@@ -46,7 +46,7 @@ export function SeasonAvailabilityStrip() {
             whatsappKey="default"
             analyticsPlacement="season_availability"
           >
-            Check today&apos;s availability
+            Check availability
           </ButtonLink>
         </div>
       </div>

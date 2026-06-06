@@ -723,7 +723,7 @@ function checkFaqHighSeasonObjections(filePath, content) {
   for (const snippet of [
     "Is parking possible",
     "Can I pay cash or card",
-    "What happens if the sea is not safe",
+    "Which tour is best value",
     "Are life jackets included",
     "Can I bring bags and towels",
     "How long is the swim stop",

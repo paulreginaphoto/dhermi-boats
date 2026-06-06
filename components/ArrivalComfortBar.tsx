@@ -1,4 +1,4 @@
-import { CreditCard, MapPinned, MessageCircle, Waves } from "lucide-react";
+import { CreditCard, Euro, MapPinned, MessageCircle } from "lucide-react";
 import { LocalizedText } from "@/components/LocalizedText";
 import { translations } from "@/lib/i18n";
 
@@ -16,7 +16,7 @@ const comfortItems = [
     textKey: "arrival.meeting.text"
   },
   {
-    icon: Waves,
+    icon: Euro,
     titleKey: "arrival.sea.title",
     textKey: "arrival.sea.text"
   },

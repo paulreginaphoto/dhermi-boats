@@ -18,7 +18,7 @@ const heroFacts: Array<[HeroFactIcon, string, string, string, string]> = [
   [Users, "hero.fact.groupSize", "Group size", "hero.fact.capacity", "Max 15 guests"],
   [Anchor, "hero.fact.skipperLabel", "Skipper", "hero.fact.skipper", "Local skipper"],
   [CalendarDays, "hero.fact.departuresLabel", "Departures", "hero.fact.departures", "Daily departures"],
-  [ShieldCheck, "hero.fact.weatherLabel", "Sea planning", "hero.fact.weather", "Sea-condition routes"]
+  [ShieldCheck, "hero.fact.weatherLabel", "Tour choice", "hero.fact.weather", "5 tours, clear prices"]
 ];
 
 const featuredReviews = reviews.slice(0, 1);

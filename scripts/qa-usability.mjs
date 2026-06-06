@@ -303,6 +303,7 @@ async function verifyContactForms(baseUrl, browser) {
     await page.locator('button[data-booking-tour-option][data-tour-id="private"]').click();
     await page.locator("#quick-date").fill("2026-06-21");
     await page.locator("#quick-name").fill(name);
+    await page.locator("#quick-phone").evaluate((element) => element.closest("details")?.setAttribute("open", ""));
     await page.locator("#quick-phone").fill("+33600000000");
     await page.locator("#quick-notes").fill("Audit availability check");
 
@@ -313,13 +314,13 @@ async function verifyContactForms(baseUrl, browser) {
     const body = href?.startsWith("https://wa.me/")
       ? new URL(href).searchParams.get("text") || ""
       : "";
-    const summary = await page.locator("[data-booking-summary-message]").innerText();
+    const summary = await page.locator("[data-booking-summary-message]").textContent();
     const bodyText = await page.locator("body").innerText();
 
     if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes("21/06/2026") || !body.includes("+33600000000")) {
       fail(`contact ${locale} WhatsApp action is incomplete`);
     }
-    if (!summary.includes(name) || !summary.includes("21/06/2026") || !summary.includes("Audit availability check")) {
+    if (!summary?.includes(name) || !summary.includes("21/06/2026") || !summary.includes("Audit availability check")) {
       fail(`contact ${locale} summary is incomplete`);
     }
     if (locale === "fr" && (bodyText.includes("Phone is helpful") || bodyText.includes("Format JJ/MM/AAAA: DD/MM/YYYY"))) {

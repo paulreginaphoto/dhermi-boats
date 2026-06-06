@@ -1131,6 +1131,14 @@ export function OneMinuteBooking() {
                 ) : null}
               </div>
 
+            </div>
+          </div>
+
+          <details className="mt-5 rounded-md border border-ink/10 bg-limestone/60 p-4">
+            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-[0.18em] text-bronze [&::-webkit-details-marker]:hidden">
+              <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
+            </summary>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
               <div className="grid gap-2">
                 <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-phone">
                   <LocalizedText id="quick.phone">{enText("quick.phone")}</LocalizedText>
@@ -1146,28 +1154,27 @@ export function OneMinuteBooking() {
                 />
                 <p className="text-xs font-semibold text-ink-soft" data-booking-phone-hint="true">{messages.phoneHint}</p>
               </div>
+              <div className="grid gap-2">
+                <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-notes">
+                  <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
+                </label>
+                <textarea
+                  id="quick-notes"
+                  className="min-h-24 w-full resize-y rounded-md border border-ink/12 bg-white px-4 py-3 text-base leading-7 text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
+                  name="Notes"
+                  value={notes}
+                  onChange={(event) => setNotes(event.target.value)}
+                />
+              </div>
             </div>
-          </div>
+          </details>
 
-          <div className="mt-5 grid gap-2">
-            <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-notes">
-              <LocalizedText id="quick.notes">{enText("quick.notes")}</LocalizedText>
-            </label>
-            <textarea
-              id="quick-notes"
-              className="min-h-24 w-full resize-y rounded-md border border-ink/12 bg-white px-4 py-3 text-base leading-7 text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
-              name="Notes"
-              value={notes}
-              onChange={(event) => setNotes(event.target.value)}
-            />
-          </div>
-
-          <div className="mt-5 rounded-md border border-ink/10 bg-limestone/75 p-4">
-            <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" data-booking-summary-title="true">
+          <details className="mt-4 rounded-md border border-ink/10 bg-limestone/55 p-4">
+            <summary className="cursor-pointer list-none text-xs font-bold uppercase tracking-[0.18em] text-bronze [&::-webkit-details-marker]:hidden" data-booking-summary-title="true">
               <LocalizedText id={bookingSummaryKey}>{translations.en[bookingSummaryKey] ?? ""}</LocalizedText>
-            </p>
-            <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft" data-booking-summary-message="true">{bookingMessage}</p>
-          </div>
+            </summary>
+            <p className="mt-3 whitespace-pre-line text-sm leading-6 text-ink-soft" data-booking-summary-message="true">{bookingMessage}</p>
+          </details>
 
           <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.7fr]">
             <a
