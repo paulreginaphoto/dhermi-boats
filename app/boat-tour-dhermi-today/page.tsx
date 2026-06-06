@@ -63,7 +63,7 @@ export default function BoatTourDhermiTodayPage() {
           { label: "Custom timing", value: "Private boat from 200 € / hour" }
         ]}
         introTitle="Same-day booking works best when the message is complete."
-        intro="The form asks for the exact details that matter: tour, date, time, adults, children and name. That keeps WhatsApp clean and helps us answer with real availability instead of asking five questions."
+        intro="The form asks for tour, date, time, adults, children and name. WhatsApp opens with those details so we can reply with the routes and times available for that date."
         steps={[
           { title: "Pick the closest match", text: "Choose Gjipe for a shorter trip, Grama for the longer Karaburun route, or private if your group needs a custom time." },
           { title: "Send one complete request", text: "The booking form builds the WhatsApp message for you. No empty template, no manual editing inside WhatsApp." },

@@ -63,7 +63,7 @@ export default function FamilyBoatTourDhermiPage() {
           { label: "Children", value: "Child prices on Gjipe and Grama, ages 5-10" }
         ]}
         introTitle="The right family tour depends on rhythm, not hype."
-        intro="Families usually need clear timing, easy stops and enough space for bags, towels and children. The booking form sends those details first, so the answer you get is useful."
+        intro="Families usually need timing, swim stops and enough space for bags, towels and children. The booking form sends those details first."
         steps={[
           { title: "Tell us the group", text: "Adults, children and preferred date are the details that change the recommendation." },
           { title: "Choose shared or private", text: "Shared tours are clear and affordable. Private tours are better when you want calmer timing and custom stops." },

@@ -60,14 +60,14 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
         facts={[
           { label: "Languages", value: "French, English and Albanian" },
           { label: "Routes", value: "Gjipe, Grama Bay, Blue Cave, private tours" },
-          { label: "Booking", value: "One simple form before WhatsApp opens" }
+          { label: "Booking", value: "Tour, date and group sent to WhatsApp" }
         ]}
         introTitle="Clear explanations matter when you book from abroad."
         intro="The site keeps prices, duration and route choices visible. The form sends the useful booking details first, so French-speaking guests do not need to rewrite the message in WhatsApp."
         steps={[
           { title: "Compare the routes", text: "Gjipe is shorter, Grama is the complete route, and private gives your group custom timing." },
           { title: "Send the form", text: "Choose the tour, date and group size. The message is prepared automatically." },
-          { title: "Get a clear answer", text: "We answer with availability and practical details in French, English or Albanian." }
+          { title: "Receive the options", text: "We reply with available routes and practical details in French, English or Albanian." }
         ]}
         tours={selectedTours}
         faqs={faqs}

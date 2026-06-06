@@ -16,7 +16,7 @@ import { translations } from "@/lib/i18n";
 export const metadata: Metadata = {
   title: "Dhermi Boat Tour Photos",
   description:
-    "See one simple Dhermi Boat photo album with real boat, cave, beach, sunset and onboard photos before booking by WhatsApp.",
+    "See Dhermi Boat photos from Gjipe, Grama Bay, Blue Cave routes, sunset trips and Dhërmi swim stops before booking by WhatsApp.",
   alternates: { canonical: canonical("/boat-photos/"), languages: languageAlternates("/boat-photos/") }
 };
 

@@ -5,7 +5,7 @@ import { canonical, languageAlternates } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact Dhermi Boat | Booking form",
   description:
-    "Fill one simple Dhermi Boat booking form, then send the completed request by WhatsApp or email.",
+    "Send tour, date, group size and name to Dhermi Boat by WhatsApp or email from the booking form.",
   alternates: { canonical: canonical("/contact/"), languages: languageAlternates("/contact/") }
 };
 
