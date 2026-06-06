@@ -54,7 +54,7 @@ for (const fragment of [
   'bestFor: "Couples, proposals and quiet evenings"',
   '"tour.sunset.shortTitle": "Sunset Lovers Tour"',
   '"tour.sunset.bestFor": "Couples, proposals and quiet evenings"',
-  '"tour.sunset.shortTitle": "Tour des amoureux au coucher de soleil"',
+  '"tour.sunset.shortTitle": "Sunset tour"',
   '"tour.sunset.bestFor": "Couples, demandes et soirées calmes"'
 ]) {
   const source = fragment.startsWith("shortTitle") || fragment.startsWith("bestFor") ? contentSource : i18nSource;
