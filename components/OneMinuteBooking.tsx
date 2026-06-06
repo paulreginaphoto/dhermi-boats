@@ -975,7 +975,7 @@ export function OneMinuteBooking() {
                       dateDisplayEnhanced
                         ? "absolute inset-0 h-full w-full cursor-pointer opacity-0"
                         : [
-                            "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
+                            "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2",
                             errors.date ? "border-bronze" : "border-ink/12"
                           ].join(" ")
                     }
@@ -1022,7 +1022,7 @@ export function OneMinuteBooking() {
                 </label>
                 <select
                   id="quick-time"
-                  className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
+                  className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
                   name="Preferred time"
                   value={selectedTime}
                   onChange={(event) => {
@@ -1072,7 +1072,7 @@ export function OneMinuteBooking() {
                         <input
                           id={`quick-${field}`}
                           aria-label={labels[field]}
-                          className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none"
+                          className="min-w-0 bg-white text-center text-base font-bold text-ink outline-none focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
                           data-booking-counter-value={field}
                           max={maxValue}
                           min={minValue}
@@ -1112,7 +1112,7 @@ export function OneMinuteBooking() {
                     aria-invalid={errors.name || undefined}
                     autoComplete="name"
                     className={[
-                      "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink",
+                      "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2",
                       errors.name ? "border-bronze" : "border-ink/12"
                     ].join(" ")}
                     name="Name"
@@ -1138,7 +1138,7 @@ export function OneMinuteBooking() {
                 <input
                   id="quick-phone"
                   autoComplete="tel"
-                  className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink"
+                  className="h-12 w-full rounded-md border border-ink/12 bg-white px-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
                   name="Phone"
                   inputMode="tel"
                   value={phone}
@@ -1155,7 +1155,7 @@ export function OneMinuteBooking() {
             </label>
             <textarea
               id="quick-notes"
-              className="min-h-24 w-full resize-y rounded-md border border-ink/12 bg-white px-4 py-3 text-base leading-7 text-ink outline-none transition focus:border-ink"
+              className="min-h-24 w-full resize-y rounded-md border border-ink/12 bg-white px-4 py-3 text-base leading-7 text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2"
               name="Notes"
               value={notes}
               onChange={(event) => setNotes(event.target.value)}

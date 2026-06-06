@@ -1,21 +1,97 @@
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { basePath } from "@/lib/site";
 import { whatsappNumber } from "@/lib/site";
-import { defaultLocale, locales } from "@/lib/i18n";
+import { defaultLocale, locales, translations } from "@/lib/i18n";
 import { whatsappMessages } from "@/lib/whatsappMessages";
 
 const supportedLocaleSet = JSON.stringify(locales);
 const bootstrapBasePath = JSON.stringify(basePath || "");
 const bootstrapWhatsappNumber = JSON.stringify(whatsappNumber);
 const bootstrapWhatsappMessages = JSON.stringify(whatsappMessages);
+const localizedPageMetadata = JSON.stringify({
+  "/": {
+    en: {
+      title: "Dhërmi Boat Tours with Local Skipper | Dhermi Boat",
+      description:
+        "Book premium small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave, sunset tours and WhatsApp availability."
+    },
+    fr: {
+      title: "Tours en bateau à Dhërmi avec skipper local | Dhermi Boat",
+      description:
+        "Réservez des tours en bateau en petit groupe ou privés depuis Dhërmi avec un skipper local. Gjipe, Grama Bay, Grotte Bleue, coucher de soleil et disponibilité WhatsApp."
+    },
+    sq: {
+      title: "Ture me varkë në Dhërmi me skipper lokal | Dhermi Boat",
+      description:
+        "Rezervoni ture me varkë në grupe të vogla ose private nga Dhërmiu me skipper lokal. Gjipe, Grama Bay, Shpella Blu, perëndim dhe disponueshmëri në WhatsApp."
+    }
+  },
+  "/tours/": {
+    en: {
+      title: "Compare Dhermi Boat Tours | Dhermi Boat",
+      description: translations.en["page.tours.heroText"] ?? "Prices, timing and stops in one place."
+    },
+    fr: {
+      title: "Comparer les tours en bateau à Dhërmi | Dhermi Boat",
+      description: translations.fr["page.tours.heroText"] ?? "Prix, horaires et arrêts au même endroit."
+    },
+    sq: {
+      title: "Krahasoni turet me varkë në Dhërmi | Dhermi Boat",
+      description: translations.sq["page.tours.heroText"] ?? "Çmimet, oraret dhe ndalesat në një vend."
+    }
+  },
+  "/boat-photos/": {
+    en: {
+      title: "Dhermi Boat Tour Photos | Dhermi Boat",
+      description: translations.en["page.photos.text"] ?? "Real photos from Gjipe, Grama Bay, Blue Cave and the boat."
+    },
+    fr: {
+      title: "Photos des tours en bateau à Dhërmi | Dhermi Boat",
+      description: translations.fr["page.photos.text"] ?? "Photos réelles de Gjipe, Grama Bay, Grotte Bleue et du bateau."
+    },
+    sq: {
+      title: "Foto të tureve me varkë në Dhërmi | Dhermi Boat",
+      description: translations.sq["page.photos.text"] ?? "Foto reale nga Gjipe, Grama Bay, Shpella Blu dhe varka."
+    }
+  },
+  "/faq/": {
+    en: {
+      title: "Dhermi Boat Tour FAQ | Dhermi Boat",
+      description: translations.en["section.faq.text"] ?? "Short answers before you book."
+    },
+    fr: {
+      title: "FAQ des tours en bateau à Dhërmi | Dhermi Boat",
+      description: translations.fr["section.faq.text"] ?? "Réponses courtes avant de réserver."
+    },
+    sq: {
+      title: "FAQ për turet me varkë në Dhërmi | Dhermi Boat",
+      description: translations.sq["section.faq.text"] ?? "Përgjigje të shkurtra para rezervimit."
+    }
+  },
+  "/contact/": {
+    en: {
+      title: "Contact Dhermi Boat Tours | Dhermi Boat",
+      description: translations.en["contact.hero.text"] ?? "Date, group, tour. WhatsApp is fastest."
+    },
+    fr: {
+      title: "Contact tours en bateau à Dhërmi | Dhermi Boat",
+      description: translations.fr["contact.hero.text"] ?? "Date, groupe, tour. WhatsApp est le plus rapide."
+    },
+    sq: {
+      title: "Kontakt për ture me varkë në Dhërmi | Dhermi Boat",
+      description: translations.sq["contact.hero.text"] ?? "Data, grupi, turi. WhatsApp është më i shpejtë."
+    }
+  }
+});
 
-function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsappNumber: string, bootstrapWhatsappMessages: string) {
+function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsappNumber: string, bootstrapWhatsappMessages: string, bootstrapPageMetadata: string) {
   return `(function(){
   var locales = new Set(${localeList});
   var defaultLocale = ${JSON.stringify(defaultLocale)};
   var basePath = ${bootstrapBasePath};
   var whatsappNumber = ${bootstrapWhatsappNumber};
   var whatsappMessages = ${bootstrapWhatsappMessages};
+  var pageMetadata = ${bootstrapPageMetadata};
   var translationsUrl = (basePath ? basePath : "") + "/locales/translations.json";
   var currentUrl = new URL(window.location.href);
   var searchParams = currentUrl.searchParams;
@@ -117,7 +193,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
             window.localStorage.setItem("dhermi-language", locale);
           } catch (_e) {}
           document.documentElement.lang = locale;
-          applyLocaleText();
+          updateTranslations();
         });
       }
     });
@@ -125,6 +201,12 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   applyLocaleSwitchers();
+
+  function writeAttr(element, name, value) {
+    if (!element) return;
+    var setter = element.setAttribute;
+    if (typeof setter === "function") setter.call(element, name, value);
+  }
 
   var unsafeWhatsappSymbols = /[\\uD83C-\\uDBFF][\\uDC00-\\uDFFF]|[\\u2600-\\u27BF]|\\uFFFD/g;
 
@@ -155,7 +237,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
         var messageMap = key && whatsappMessages[key];
         var message = messageMap && (messageMap[locale] || messageMap[defaultLocale]);
         if (message && link.setAttribute) {
-          link.setAttribute("href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message)));
+          writeAttr(link, "href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message)));
         }
       });
     } catch (_e) {}
@@ -168,7 +250,8 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
         var tour = node.getAttribute("data-analytics-tour");
         var placement = node.getAttribute("data-analytics-placement");
         if (!template || !tour || !placement) return;
-        node.setAttribute(
+        writeAttr(
+          node,
           "data-analytics-event",
           template
             .replace("{tour}", tour)
@@ -180,13 +263,51 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   var translationsStore = null;
+  var translationsRequest = null;
   var observerTimer = null;
+
+  function normalizedPathname() {
+    var pathname = window.location.pathname || "/";
+    if (basePath && pathname.indexOf(basePath + "/") === 0) {
+      pathname = pathname.slice(basePath.length);
+    }
+    if (!pathname) pathname = "/";
+    if (pathname !== "/" && pathname.charAt(pathname.length - 1) !== "/") pathname += "/";
+    return pathname;
+  }
+
+  function setMetaContent(selector, value) {
+    if (!value) return;
+    try {
+      var node = window.document.querySelector(selector);
+      writeAttr(node, "content", value);
+    } catch (_e) {}
+  }
+
+  function applyDocumentMetadata() {
+    try {
+      var pageMap = pageMetadata[normalizedPathname()];
+      var metadata = pageMap && (pageMap[locale] || pageMap[defaultLocale]);
+      if (!metadata) return;
+      if (metadata.title) {
+        window.document.title = metadata.title;
+        setMetaContent('meta[property="og:title"]', metadata.title);
+        setMetaContent('meta[name="twitter:title"]', metadata.title);
+      }
+      if (metadata.description) {
+        setMetaContent('meta[name="description"]', metadata.description);
+        setMetaContent('meta[property="og:description"]', metadata.description);
+        setMetaContent('meta[name="twitter:description"]', metadata.description);
+      }
+    } catch (_e) {}
+  }
 
   function applyLocaleText() {
     applyLocaleSwitchers();
     try {
       window.document.querySelectorAll("[data-i18n]").forEach(setContent);
     } catch (_e) {}
+    applyDocumentMetadata();
     applyWhatsappLinks();
     applyAnalyticsEvents();
   }
@@ -221,21 +342,24 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       return;
     }
 
-    fetch(translationsUrl, { credentials: "same-origin" })
+    if (!translationsRequest) {
+      translationsRequest = fetch(translationsUrl, { credentials: "same-origin" })
       .then(function (response) {
         if (!response.ok) {
           return;
         }
         return response.json();
       })
-      .then(function (data) {
-        if (data && data[locale]) {
-          translationsStore = data;
-          applyLocaleText();
-          observeLocaleNodes();
-        }
-      })
       .catch(function () {});
+    }
+
+    translationsRequest.then(function (data) {
+      if (data && data[locale]) {
+        translationsStore = data;
+      }
+      applyLocaleText();
+      observeLocaleNodes();
+    });
   }
 
   function start() {
@@ -264,7 +388,7 @@ export function LocaleBootstrap() {
   return (
     <InlineRuntimeScript
       id="dhermi-locale-bootstrap"
-      code={toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages)}
+      code={toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages, localizedPageMetadata)}
     />
   );
 }

@@ -365,10 +365,10 @@ const galleryViewerScript = String.raw`
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Dhërmi Boat Tours with Isuf | Dhermi Boat"
+    absolute: "Dhërmi Boat Tours with Local Skipper | Dhermi Boat"
   },
   description:
-    "Book premium small-group and private boat tours from Dhërmi with Isuf, a local skipper. Gjipe, Grama Bay, Blue Cave, sunset tours and WhatsApp availability.",
+    "Book premium small-group and private boat tours from Dhërmi with a local skipper. Gjipe, Grama Bay, Blue Cave, sunset tours and WhatsApp availability.",
   alternates: { canonical: canonical("/"), languages: languageAlternates("/") }
 };
 
@@ -774,7 +774,7 @@ export default function HomePage() {
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                     <LocalizedText id="minimal.contact.form.tour">{enText("minimal.contact.form.tour")}</LocalizedText>
                   </span>
-                  <select className="h-12 rounded-lg border border-ink/12 bg-white px-4 text-ink outline-none focus:border-turquoise" name="tour" autoComplete="off" defaultValue="not-sure">
+                  <select className="h-12 rounded-lg border border-ink/12 bg-white px-4 text-ink outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="tour" autoComplete="off" defaultValue="not-sure">
                     <option value="not-sure" data-i18n="minimal.contact.form.tourUnsure">
                       {enText("minimal.contact.form.tourUnsure")}
                     </option>
@@ -789,7 +789,7 @@ export default function HomePage() {
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                     <LocalizedText id="minimal.contact.form.name">{enText("minimal.contact.form.name")}</LocalizedText>
                   </span>
-                  <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise" name="name" autoComplete="name" required />
+                  <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="name" autoComplete="name" required />
                 </label>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="grid gap-2 text-sm font-semibold">
@@ -798,21 +798,21 @@ export default function HomePage() {
                     </span>
                     <span className="relative">
                       <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden />
-                      <input className="h-12 w-full rounded-lg border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise" lang="en-GB" name="date" type="date" required />
+                      <input className="h-12 w-full rounded-lg border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" lang="en-GB" name="date" type="date" required />
                     </span>
                   </label>
                   <label className="grid gap-2 text-sm font-semibold">
                     <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                       <LocalizedText id="minimal.contact.form.people">{enText("minimal.contact.form.people")}</LocalizedText>
                     </span>
-                    <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise" name="people" type="number" min="1" max="15" defaultValue="2" required />
+                    <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="people" type="number" min="1" max="15" defaultValue="2" required />
                   </label>
                 </div>
                 <label className="grid gap-2 text-sm font-semibold">
                   <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
                     <LocalizedText id="v2.contact.form.message">{enText("v2.contact.form.message")}</LocalizedText>
                   </span>
-                  <textarea className="min-h-28 rounded-lg border border-ink/12 bg-white px-4 py-3 outline-none focus:border-turquoise" name="message" rows={4} placeholder={enText("v2.contact.form.messagePlaceholder")} />
+                  <textarea className="min-h-28 rounded-lg border border-ink/12 bg-white px-4 py-3 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="message" rows={4} placeholder={enText("v2.contact.form.messagePlaceholder")} />
                 </label>
               </div>
               <div className="mt-5 rounded-lg bg-limestone p-4">

@@ -106,7 +106,7 @@ if (!fs.existsSync(htmlPath)) {
 
   for (const fragment of [
     "Boat tours from Dh",
-    "Meet Isuf",
+    "Meet your local skipper",
     "French-speaking skipper",
     "Send booking request on WhatsApp",
     "name=\"message\""

@@ -17,7 +17,7 @@ export function Header() {
         <Link className="flex min-h-11 min-w-0 flex-1 items-center leading-none lg:flex-none" href="/" prefetch={false}>
           <span className="flex min-w-0 flex-col leading-none">
             <span className="truncate whitespace-nowrap font-serif text-[0.95rem] font-semibold tracking-wide text-ink min-[360px]:text-base sm:text-2xl">
-              Dhermi Boat by Isuf
+              Dhermi Boat
             </span>
             <span className="mt-1 hidden text-[10px] font-bold uppercase tracking-[0.24em] text-ink-soft sm:block">
               <LocalizedText id="brand.region">{enText("brand.region")}</LocalizedText>
