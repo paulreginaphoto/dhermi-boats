@@ -1,6 +1,7 @@
-import { CalendarDays, Compass, Euro, MessageCircle } from "lucide-react";
+import { CalendarDays, Compass, MessageCircle, Phone } from "lucide-react";
 import { conversionAttrs } from "@/lib/conversion";
-import { sitePath } from "@/lib/site";
+import { phoneDisplay, sitePath } from "@/lib/site";
+import { bookingFormHrefForKey } from "@/lib/bookingLinks";
 import { whatsappHrefForKey } from "@/lib/whatsappMessages";
 import { LocalizedText } from "@/components/LocalizedText";
 import { translations } from "@/lib/i18n";
@@ -38,21 +39,21 @@ export function StickyBookingBar() {
         </a>
         <a
           className="inline-flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border border-ink/10 bg-white px-2 text-[0.68rem] font-bold leading-none text-ink"
-          data-analytics-event="sticky_nav_prices_click"
-          data-analytics-placement="sticky_mobile_prices"
-          href={sitePath("/tours/#prices")}
+          data-analytics-event="sticky_nav_call_click"
+          data-analytics-placement="sticky_mobile_call"
+          href={`tel:${phoneDisplay.replace(/[^\d+]/g, "")}`}
         >
-          <Euro className="h-4 w-4 text-turquoise" aria-hidden />
-          <LocalizedText id="sticky.prices">{enText("sticky.prices")}</LocalizedText>
+          <Phone className="h-4 w-4 text-turquoise" aria-hidden />
+          <LocalizedText id="sticky.call">{enText("sticky.call")}</LocalizedText>
         </a>
         <a
           className="inline-flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg border border-ink/10 bg-white px-2 text-[0.68rem] font-bold leading-none text-ink"
-          data-analytics-event="sticky_nav_contact_click"
-          data-analytics-placement="sticky_mobile_contact"
-          href={whatsappHrefForKey("default")}
+          data-analytics-event="sticky_nav_book_click"
+          data-analytics-placement="sticky_mobile_book"
+          href={bookingFormHrefForKey("default")}
         >
           <CalendarDays className="h-4 w-4 text-turquoise" aria-hidden />
-          <LocalizedText id="nav.contact">{enText("nav.contact")}</LocalizedText>
+          <LocalizedText id="cta.book">{enText("cta.book")}</LocalizedText>
         </a>
       </nav>
     </div>
