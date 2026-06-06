@@ -401,12 +401,12 @@ function checkBookingDateMinimum(filePath, content) {
       message: "Le formulaire rapide doit stocker la date minimale côté client sans casser l’export statique."
     },
     {
-      snippet: "min={minimumDate || undefined}",
-      message: "Le champ date du formulaire rapide doit refuser les dates passées."
+      snippet: "disabled={isDisabled}",
+      message: "Le calendrier custom du formulaire rapide doit refuser les dates passées."
     },
     {
-      snippet: "onInput={(event) => selectDate(event.currentTarget.value)}",
-      message: "Le champ date du formulaire rapide doit corriger une saisie manuelle passée avant l’envoi WhatsApp."
+      snippet: "minimumDate && dayValue < minimumDate",
+      message: "Le calendrier custom du formulaire rapide doit bloquer une sélection passée avant l’envoi WhatsApp."
     }
   ];
 
@@ -477,7 +477,9 @@ function checkBookingRequiredFields(filePath, content) {
     "quick.summary.pending",
     "quick.summary.ready",
     "aria-disabled={!bookingLinksReady}",
-    "requestNativeDatePicker",
+    "openDatePicker",
+    'type="text"',
+    "data-booking-calendar-panel",
     "window.addEventListener(\"dhermi:locale-change\""
   ]) {
     if (!content.includes(snippet)) {
@@ -661,8 +663,8 @@ function checkArrivalComfortSection(filePath, content) {
     'data-home-section="tours"',
     'data-home-section="gallery"',
     'data-home-section="contact"',
-    "minimal.reassurance",
-    "minimalAvailabilityFormScript"
+    'import { OneMinuteBooking }',
+    "<OneMinuteBooking />"
   ]) {
     if (!content.includes(snippet)) {
       addIssue(
