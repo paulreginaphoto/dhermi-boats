@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
 import { CalendarDays, Mail, MessageCircle, Minus, Plus, ShieldCheck, UserRound } from "lucide-react";
-import { BrandProofStrip } from "@/components/BrandProofStrip";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
@@ -946,7 +945,6 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
               <h1 className="mt-2 font-serif text-3xl font-medium leading-tight text-ink md:text-5xl">
                 <LocalizedText id="quick.title">{enText("quick.title")}</LocalizedText>
               </h1>
-              <BrandProofStrip className="mt-4" />
             </div>
           ) : null}
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
