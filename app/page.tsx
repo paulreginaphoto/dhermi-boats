@@ -4,12 +4,12 @@ import { ArrowRight, CalendarDays, CheckCircle2, ChevronLeft, ChevronRight, Cloc
 import { ButtonLink } from "@/components/ButtonLink";
 import { FAQAccordion } from "@/components/FAQAccordion";
 import { GalleryViewerRuntime } from "@/components/GalleryViewerRuntime";
-import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
+import { OneMinuteBooking } from "@/components/OneMinuteBooking";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, gallery, orderedTours, reviews, tourComparison, type Tour } from "@/data/content";
 import { bookingFormHrefForKey } from "@/lib/bookingLinks";
-import { canonical, googleMapsUrl, languageAlternates, sitePath, whatsappNumber } from "@/lib/site";
+import { canonical, googleMapsUrl, languageAlternates, sitePath } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { translations } from "@/lib/i18n";
 import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
@@ -21,19 +21,6 @@ const featuredTours = homepageTourOrder
   .map((id) => tourById.get(id))
   .filter((tour): tour is Tour => Boolean(tour));
 const comparisonByTourId = new Map(tourComparison.map((item) => [item.tourId, item]));
-const minimalBookingLocales = ["en", "fr", "sq"] as const;
-const minimalTourLabels = Object.fromEntries(
-  minimalBookingLocales.map((locale) => [
-    locale,
-    Object.fromEntries([
-      ["not-sure", translations[locale]["minimal.contact.form.tourUnsure"] ?? translations.en["minimal.contact.form.tourUnsure"] ?? "Not sure yet"],
-      ...featuredTours.map((tour) => [
-        tour.id,
-        translations[locale][`tour.${tour.id}.shortTitle`] ?? tour.shortTitle
-      ])
-    ])
-  ])
-);
 const featuredGallery = gallery.slice(0, 8);
 const featuredReviews = reviews.slice(0, 3);
 const homepageFaqs = [0, 1, 4, 6, 13, 17].map((index) => ({ ...faqs[index], translationIndex: index }));
@@ -92,195 +79,6 @@ const skipperActivityImages = [
     alt: "Morning fishing setup from Dhermi Boat"
   }
 ];
-
-function scriptJson(value: unknown) {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
-}
-
-const minimalAvailabilityFormScript = String.raw`
-(function () {
-  var config = ${scriptJson({
-    whatsappNumber,
-    labels: {
-      en: {
-        intro: "Hello Dhermi Boat :) I would like to check availability.",
-        tour: "Preferred tour",
-        name: "Name",
-        date: "Date",
-        people: "People",
-        message: "Message",
-        missingTour: "Not sure yet",
-        missingName: "Add your name",
-        missingDate: "Choose a date",
-        missingPeople: "Add people",
-        missingMessage: "No extra note"
-      },
-      fr: {
-        intro: "Bonjour Dhermi Boat :) je voudrais verifier la disponibilite.",
-        tour: "Tour souhaite",
-        name: "Nom",
-        date: "Date",
-        people: "Personnes",
-        message: "Message",
-        missingTour: "Pas encore sur",
-        missingName: "Ajoutez votre nom",
-        missingDate: "Choisissez une date",
-        missingPeople: "Ajoutez le nombre de personnes",
-        missingMessage: "Pas de note en plus"
-      },
-      sq: {
-        intro: "Pershendetje Dhermi Boat :) dua te kontrolloj disponueshmerine.",
-        tour: "Turi i preferuar",
-        name: "Emri",
-        date: "Data",
-        people: "Persona",
-        message: "Mesazh",
-        missingTour: "Ende nuk jam i sigurt",
-        missingName: "Shtoni emrin",
-        missingDate: "Zgjidhni daten",
-        missingPeople: "Shtoni numrin e personave",
-        missingMessage: "Pa shenim shtese"
-      }
-    },
-    tourLabels: minimalTourLabels,
-    bookingDraftStorageKey: "dhermi-booking-draft-v1",
-    bookingFormHref: bookingFormHrefForKey("default"),
-    monthNames: {
-      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-      fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-      sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
-    }
-  })};
-
-  function normalizeLocale(value) {
-    if (!value) return "en";
-    var normalized = String(value).toLowerCase().replace("_", "-");
-    if (normalized === "al" || normalized === "sq-al") return "sq";
-    var primary = normalized.split("-")[0];
-    return primary === "fr" || primary === "sq" || primary === "en" ? primary : "en";
-  }
-
-  function readLocale() {
-    try {
-      var params = new URL(window.location.href).searchParams;
-      return normalizeLocale(params.get("dlang") || params.get("lang") || window.localStorage.getItem("dhermi-language") || document.documentElement.lang);
-    } catch (error) {
-      return "en";
-    }
-  }
-
-  var unsafeWhatsappSymbols = /[\uD83C-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF]|\uFFFD/g;
-
-  function cleanWhatsappMessage(message) {
-    return String(message || "")
-      .replace(unsafeWhatsappSymbols, "")
-      .replace(/[ \t]+\n/g, "\n")
-      .replace(/\n{3,}/g, "\n\n")
-      .trim();
-  }
-
-  function bookingFormHref() {
-    return config.bookingFormHref || "/contact/#book";
-  }
-
-  function saveBookingDraft(tourInput, dateInput, peopleInput) {
-    try {
-      var people = Math.max(1, Math.round(Number(peopleInput.value) || 2));
-      var rawTourId = tourInput.value;
-      var selectedTourId = rawTourId && rawTourId !== "not-sure" ? rawTourId : "sunset";
-      window.localStorage.setItem(config.bookingDraftStorageKey, JSON.stringify({
-        tourId: selectedTourId,
-        date: dateInput.value || "",
-        time: "Flexible",
-        adults: people,
-        children: 0
-      }));
-    } catch (error) {}
-  }
-
-  function formatBookingDate(value, locale) {
-    var parts = String(value || "").split("-");
-    if (parts.length !== 3) return value || "";
-    var day = Number(parts[2]);
-    var month = Number(parts[1]);
-    var year = parts[0];
-    var configuredMonths = config.monthNames || {};
-    var monthNames = configuredMonths[locale] || configuredMonths.fr || configuredMonths.en || [];
-    var monthName = monthNames[month - 1];
-    var readableDate = day + " " + monthName + " " + year;
-    return day && monthName ? readableDate : value || "";
-  }
-
-  function initForm(form) {
-    var locale = readLocale();
-    var labels = config.labels[locale] || config.labels.en;
-    var tourLabels = config.tourLabels[locale] || config.tourLabels.en;
-    var tourInput = form.querySelector("[name='tour']");
-    var nameInput = form.querySelector("[name='name']");
-    var dateInput = form.querySelector("[name='date']");
-    var peopleInput = form.querySelector("[name='people']");
-    var messageInput = form.querySelector("[name='message']");
-    var action = form.querySelector("[data-minimal-booking-action]");
-    var summary = form.querySelector("[data-minimal-booking-summary]");
-    if (!tourInput || !nameInput || !dateInput || !peopleInput || !messageInput || !action || !summary) return;
-
-    function selectedTourText() {
-      var label = tourLabels[tourInput.value];
-      var selected = typeof tourInput.item === "function" ? tourInput.item(tourInput.selectedIndex) : null;
-      if (label) return label;
-      if (!selected || !selected.textContent) return "";
-      return selected.textContent.trim();
-    }
-
-    function buildMessage() {
-      return [
-        labels.intro,
-        "",
-        labels.tour + ": " + (selectedTourText() || labels.missingTour),
-        labels.name + ": " + (nameInput.value.trim() || labels.missingName),
-        labels.date + ": " + (formatBookingDate(dateInput.value, locale) || labels.missingDate),
-        labels.people + ": " + (peopleInput.value || labels.missingPeople),
-        labels.message + ": " + (messageInput.value.trim() || labels.missingMessage)
-      ].join("\n");
-    }
-
-    function update() {
-      var ready = Boolean(nameInput.value.trim() && dateInput.value && peopleInput.value);
-      var message = buildMessage();
-      summary.textContent = message;
-      action.href = ready ? bookingFormHref() : "#minimal-booking-form";
-      action.setAttribute("aria-disabled", ready ? "false" : "true");
-      action.removeAttribute("target");
-      action.removeAttribute("rel");
-    }
-
-    action.addEventListener("click", function (event) {
-      if (nameInput.value.trim() && dateInput.value && peopleInput.value) {
-        saveBookingDraft(tourInput, dateInput, peopleInput);
-        return;
-      }
-      event.preventDefault();
-      var target = !nameInput.value.trim() ? nameInput : !dateInput.value ? dateInput : peopleInput;
-      target.focus({ preventScroll: true });
-      target.scrollIntoView({ block: "center", behavior: "smooth" });
-    });
-
-    [tourInput, nameInput, dateInput, peopleInput, messageInput].forEach(function (input) {
-      input.addEventListener("input", update);
-      input.addEventListener("change", update);
-    });
-
-    update();
-  }
-
-  function init() {
-    document.querySelectorAll("[data-minimal-booking-form]").forEach(initForm);
-  }
-
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
-  else init();
-})();
-`;
 
 const galleryViewerScript = String.raw`
 (function () {
@@ -795,68 +593,7 @@ export default function HomePage() {
             </div>
           </div>
           <div className="grid gap-5">
-            <form id="minimal-booking-form" data-minimal-booking-form="true" className="rounded-xl bg-pearl p-5 text-ink shadow-image md:p-6">
-              <div className="grid gap-4">
-                <label className="grid gap-2 text-sm font-semibold">
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                    <LocalizedText id="minimal.contact.form.tour">{enText("minimal.contact.form.tour")}</LocalizedText>
-                  </span>
-                  <select className="h-12 rounded-lg border border-ink/12 bg-white px-4 text-ink outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="tour" autoComplete="off" defaultValue="not-sure">
-                    <option value="not-sure" data-i18n="minimal.contact.form.tourUnsure">
-                      {enText("minimal.contact.form.tourUnsure")}
-                    </option>
-                    {featuredTours.map((tour) => (
-                      <option key={`minimal-tour-${tour.id}`} value={tour.id} data-i18n={`tour.${tour.id}.shortTitle`}>
-                        {tour.shortTitle}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="grid gap-2 text-sm font-semibold">
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                    <LocalizedText id="minimal.contact.form.name">{enText("minimal.contact.form.name")}</LocalizedText>
-                  </span>
-                  <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="name" autoComplete="name" required />
-                </label>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="grid gap-2 text-sm font-semibold">
-                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                      <LocalizedText id="minimal.contact.form.date">{enText("minimal.contact.form.date")}</LocalizedText>
-                    </span>
-                    <span className="relative">
-                      <CalendarDays className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-soft" aria-hidden />
-                      <input className="h-12 w-full rounded-lg border border-ink/12 bg-white px-4 pl-11 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" lang="en-GB" name="date" type="date" required />
-                    </span>
-                  </label>
-                  <label className="grid gap-2 text-sm font-semibold">
-                    <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                      <LocalizedText id="minimal.contact.form.people">{enText("minimal.contact.form.people")}</LocalizedText>
-                    </span>
-                    <input className="h-12 rounded-lg border border-ink/12 bg-white px-4 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="people" type="number" min="1" max="15" defaultValue="2" required />
-                  </label>
-                </div>
-                <label className="grid gap-2 text-sm font-semibold">
-                  <span className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                    <LocalizedText id="v2.contact.form.message">{enText("v2.contact.form.message")}</LocalizedText>
-                  </span>
-                  <textarea className="min-h-20 rounded-lg border border-ink/12 bg-white px-4 py-3 outline-none focus:border-turquoise focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2" name="message" rows={3} placeholder={enText("v2.contact.form.messagePlaceholder")} />
-                </label>
-              </div>
-              <div className="sr-only">
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-bronze">
-                  <LocalizedText id="minimal.contact.form.preview">{enText("minimal.contact.form.preview")}</LocalizedText>
-                </p>
-                <p className="mt-2 whitespace-pre-line text-sm leading-6 text-ink-soft" data-minimal-booking-summary />
-              </div>
-              <a className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl transition hover:bg-navy" href="#minimal-booking-form" data-minimal-booking-action data-analytics-event="whatsapp_click_default_en_v2_form" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_form">
-                <MessageCircle className="h-4 w-4" aria-hidden />
-                <LocalizedText id="v2.contact.form.send">{enText("v2.contact.form.send")}</LocalizedText>
-              </a>
-              <p className="mt-3 flex items-start gap-2 text-xs font-semibold leading-5 text-ink-soft">
-                <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-turquoise" aria-hidden />
-                <LocalizedText id="minimal.reassurance">{enText("minimal.reassurance")}</LocalizedText>
-              </p>
-            </form>
+            <OneMinuteBooking />
             <details className="rounded-xl border border-white/12 bg-white/8 p-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold [&::-webkit-details-marker]:hidden">
                 <span className="flex items-center gap-2">
@@ -873,7 +610,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <InlineRuntimeScript id="minimal-availability-form" code={minimalAvailabilityFormScript} />
       <GalleryViewerRuntime code={galleryViewerScript} />
     </>
   );
