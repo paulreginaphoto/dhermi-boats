@@ -4,9 +4,9 @@ import { ButtonLink } from "@/components/ButtonLink";
 import { LocalizedText } from "@/components/LocalizedText";
 import { primaryWhatsappHref, tourComparison, tours } from "@/data/content";
 import { conversionAttrs } from "@/lib/conversion";
-import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 import { TourDetailsText } from "@/components/MicroCopy";
 import { tourBookFallback, tourBookKey } from "@/lib/tourBookingCopy";
+import { bookingFormHrefForKey } from "@/lib/bookingLinks";
 import { translations } from "@/lib/i18n";
 
 export function TourComparison() {
@@ -122,7 +122,7 @@ export function TourComparison() {
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-ink px-3 text-sm font-semibold text-pearl transition hover:bg-navy"
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
-                      href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
+                      href={bookingFormHrefForKey(tour.id)}
                       {...conversionAttrs({ tourId: tour.id, placement: "comparison_card" })}
                     >
                       <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />

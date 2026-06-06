@@ -5,6 +5,6 @@ export type BookingFormKey = "default" | "gjipe" | "grama" | "private" | "sunset
 export const centralizedBookingHref = sitePath("/contact/#book");
 
 export function bookingFormHrefForKey(key: BookingFormKey | string = "default") {
-  void key;
+  if (key && key !== "default") return sitePath(`/contact/?tour=${encodeURIComponent(key)}#book`);
   return centralizedBookingHref;
 }
