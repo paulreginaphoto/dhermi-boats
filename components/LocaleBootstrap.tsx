@@ -70,15 +70,15 @@ const localizedPageMetadata = JSON.stringify({
   },
   "/contact/": {
     en: {
-      title: "Contact Dhermi Boat Tours | Dhermi Boat",
+      title: "Contact Dhermi Boat | WhatsApp Booking",
       description: translations.en["contact.hero.text"] ?? "Date, group, tour. WhatsApp is fastest."
     },
     fr: {
-      title: "Contact tours en bateau à Dhërmi | Dhermi Boat",
+      title: "Contact Dhermi Boat | Réservation WhatsApp",
       description: translations.fr["contact.hero.text"] ?? "Date, groupe, tour. WhatsApp est le plus rapide."
     },
     sq: {
-      title: "Kontakt për ture me varkë në Dhërmi | Dhermi Boat",
+      title: "Kontakt Dhermi Boat | Rezervim WhatsApp",
       description: translations.sq["contact.hero.text"] ?? "Data, grupi, turi. WhatsApp është më i shpejtë."
     }
   }
@@ -164,6 +164,21 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   document.documentElement.lang = locale;
 
+  function selectLocale(selectedLocale) {
+    if (!isLocale(selectedLocale)) return;
+    locale = selectedLocale;
+    try {
+      currentUrl = new URL(window.location.href);
+      searchParams = currentUrl.searchParams;
+      searchParams.delete("dlang");
+      searchParams.delete("lang");
+      window.history.replaceState(null, "", currentUrl.pathname + currentUrl.search + currentUrl.hash);
+      window.localStorage.setItem("dhermi-language", locale);
+    } catch (_e) {}
+    document.documentElement.lang = locale;
+    updateTranslations();
+  }
+
   function applyLocaleSwitchers() {
     try {
     window.document.querySelectorAll("[data-locale-switcher]").forEach(function (button) {
@@ -180,20 +195,20 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       if (button.getAttribute("data-locale-listener-bound") !== "true") {
         button.setAttribute("data-locale-listener-bound", "true");
         button.addEventListener("click", function (event) {
-          event?.preventDefault?.();
-          var selectedLocale = button.getAttribute("data-locale");
-          if (!isLocale(selectedLocale)) return;
-          locale = selectedLocale;
-          try {
-            currentUrl = new URL(window.location.href);
-            searchParams = currentUrl.searchParams;
-            searchParams.delete("dlang");
-            searchParams.delete("lang");
-            window.history.replaceState(null, "", currentUrl.pathname + currentUrl.search + currentUrl.hash);
-            window.localStorage.setItem("dhermi-language", locale);
-          } catch (_e) {}
-          document.documentElement.lang = locale;
-          updateTranslations();
+          var preventDefault = event && event.preventDefault;
+          if (typeof preventDefault === "function") preventDefault.call(event);
+          selectLocale(button.getAttribute("data-locale"));
+        });
+      }
+    });
+    window.document.querySelectorAll("[data-locale-select]").forEach(function (select) {
+      if (select.value !== locale) {
+        select.value = locale;
+      }
+      if (select.getAttribute("data-locale-listener-bound") !== "true") {
+        select.setAttribute("data-locale-listener-bound", "true");
+        select.addEventListener("change", function () {
+          selectLocale(select.value);
         });
       }
     });

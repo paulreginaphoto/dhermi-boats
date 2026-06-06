@@ -52,7 +52,7 @@ export function ButtonLink({
   const content = (
     <>
       {Icon ? <Icon aria-hidden className="h-4 w-4 shrink-0" strokeWidth={iconStrokeWidth} /> : null}
-      <span>{children}</span>
+      <span className="min-w-0 text-center leading-snug">{children}</span>
     </>
   );
 

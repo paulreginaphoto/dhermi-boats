@@ -8,7 +8,7 @@ export function LanguageSwitcher({ compact = false }: { compact?: boolean }) {
   const baseId = compact ? "language-switcher-mobile" : "language-switcher-desktop";
 
   return (
-    <div className={compact ? "language-switcher language-switcher-compact" : "language-switcher"} role="group" aria-labelledby={`${baseId}-label`}>
+    <div className={compact ? "language-switcher language-switcher-compact" : "language-switcher"}>
       <span id={`${baseId}-label`} className="sr-only">
         <LocalizedText id="a11y.languageSwitcher">{enText("a11y.languageSwitcher")}</LocalizedText>
       </span>

@@ -40,15 +40,11 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden items-center gap-3 lg:flex">
+        <div className="flex shrink-0 items-center gap-1 sm:gap-2 lg:gap-3">
           <LanguageSwitcher />
-          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="header">
+          <ButtonLink href={primaryWhatsappHref} icon={MessageCircle} whatsappKey="default" analyticsPlacement="header" className="hidden lg:inline-flex">
             <LocalizedText id="cta.askAvailability">{enText("cta.askAvailability")}</LocalizedText>
           </ButtonLink>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-1 lg:hidden">
-          <LanguageSwitcher compact />
           <MobileNav />
         </div>
       </div>
