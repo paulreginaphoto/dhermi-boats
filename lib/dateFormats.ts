@@ -6,6 +6,51 @@ type ParsedInputDate = {
   year: number;
 };
 
+const monthNames: Record<BookingDateLocale, string[]> = {
+  en: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ],
+  fr: [
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre"
+  ],
+  sq: [
+    "Janar",
+    "Shkurt",
+    "Mars",
+    "Prill",
+    "Maj",
+    "Qershor",
+    "Korrik",
+    "Gusht",
+    "Shtator",
+    "Tetor",
+    "Nëntor",
+    "Dhjetor"
+  ]
+};
+
 function parseInputDate(value: string): ParsedInputDate | null {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
   if (!match) return null;
@@ -26,22 +71,20 @@ function parseInputDate(value: string): ParsedInputDate | null {
   return { day, month, year };
 }
 
-export function formatDateShort(value: string) {
+export function formatDateShort(value: string, locale: BookingDateLocale = "fr") {
   const parsed = parseInputDate(value);
   if (!parsed) return value;
 
-  const day = String(parsed.day).padStart(2, "0");
-  const month = String(parsed.month).padStart(2, "0");
+  const localeMonths = monthNames[locale] ?? monthNames.fr;
+  const monthName = localeMonths[parsed.month - 1];
 
-  return `${day}/${month}/${parsed.year}`;
+  return `${parsed.day} ${monthName} ${parsed.year}`;
 }
 
 export function formatDateLong(value: string, locale: BookingDateLocale = "fr") {
-  void locale;
-  return formatDateShort(value);
+  return formatDateShort(value, locale);
 }
 
 export function formatBookingDate(value: string, locale: BookingDateLocale = "fr") {
-  void locale;
-  return formatDateShort(value);
+  return formatDateLong(value, locale);
 }

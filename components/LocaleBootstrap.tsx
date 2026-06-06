@@ -8,6 +8,7 @@ const supportedLocaleSet = JSON.stringify(locales);
 const bootstrapBasePath = JSON.stringify(basePath || "");
 const bootstrapWhatsappNumber = JSON.stringify(whatsappNumber);
 const bootstrapWhatsappMessages = JSON.stringify(whatsappMessages);
+const bootstrapDefaultTranslations = JSON.stringify(translations.en);
 const localizedPageMetadata = JSON.stringify({
   "/": {
     en: {
@@ -84,7 +85,7 @@ const localizedPageMetadata = JSON.stringify({
   }
 });
 
-function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsappNumber: string, bootstrapWhatsappMessages: string, bootstrapPageMetadata: string) {
+function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsappNumber: string, bootstrapWhatsappMessages: string, bootstrapPageMetadata: string, bootstrapDefaultTranslations: string) {
   return `(function(){
   var locales = new Set(${localeList});
   var defaultLocale = ${JSON.stringify(defaultLocale)};
@@ -92,6 +93,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   var whatsappNumber = ${bootstrapWhatsappNumber};
   var whatsappMessages = ${bootstrapWhatsappMessages};
   var pageMetadata = ${bootstrapPageMetadata};
+  var defaultTranslations = ${bootstrapDefaultTranslations};
   var translationsUrl = (basePath ? basePath : "") + "/locales/translations.json";
   var currentUrl = new URL(window.location.href);
   var searchParams = currentUrl.searchParams;
@@ -237,7 +239,9 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     var key = node.getAttribute("data-i18n");
     if (!key) return;
     var localeValueMap = translationsStore && translationsStore[locale];
+    if (!localeValueMap && locale === defaultLocale) localeValueMap = defaultTranslations;
     var value = localeValueMap && localeValueMap[key];
+    if (typeof value !== "string") value = defaultTranslations[key];
     if (typeof value === "string") {
       if (node.textContent !== value) {
         node.textContent = value;
@@ -351,7 +355,6 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   function updateTranslations() {
     if (locale === defaultLocale) {
-      translationsStore = null;
       applyLocaleText();
       observeLocaleNodes();
       return;
@@ -403,7 +406,7 @@ export function LocaleBootstrap() {
   return (
     <InlineRuntimeScript
       id="dhermi-locale-bootstrap"
-      code={toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages, localizedPageMetadata)}
+      code={toScript(supportedLocaleSet, bootstrapBasePath, bootstrapWhatsappNumber, bootstrapWhatsappMessages, localizedPageMetadata, bootstrapDefaultTranslations)}
     />
   );
 }

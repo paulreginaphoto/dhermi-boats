@@ -20,6 +20,14 @@ for (const id of ["gjipe", "grama", "private", "sunset", "fishing"]) {
   }
 }
 
+if (!appSource.includes('const homepageTourOrder = ["sunset", "private", "gjipe", "grama", "fishing"] as const;')) {
+  fail("homepage should put sunset and private tours first in the visible tour comparison");
+}
+
+if (!contentSource.includes('export const tourDisplayOrder = ["sunset", "private", "gjipe", "grama", "fishing"] as const;')) {
+  fail("global tour display order should put sunset and private tours first");
+}
+
 for (const fragment of [
   "data-tour-comparison",
   "data-tour-card",

@@ -200,7 +200,7 @@ export const whatsappMessages = {
       "*Date :* __",
       "*Adultes :* __",
       "*Enfants :* __",
-      "*Horaire souhaité :* 5 h à 8 h",
+      "*Horaire souhaité :* entre 5 et 8h du matin",
       "*Langue :* __",
       "*Questions :* __"
     ]),

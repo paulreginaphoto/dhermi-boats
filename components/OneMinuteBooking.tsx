@@ -15,7 +15,7 @@ const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as co
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
-const dateDisplayFormat = "DD/MM/YYYY";
+const dateDisplayFormat = "5 January 2025";
 
 const capacityByTourId = {
   gjipe: 15,
@@ -32,9 +32,9 @@ const fixedTimeByTourId = {
 
 type FormLocale = "en" | "fr" | "sq";
 const dateDisplayFormats: Record<FormLocale, string> = {
-  en: "DD/MM/YYYY",
-  fr: "JJ/MM/AAAA",
-  sq: "DD/MM/YYYY"
+  en: "5 January 2025",
+  fr: "5 Janvier 2025",
+  sq: "5 Janar 2025"
 };
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
 const enText = (key: string) => translations.en[key] ?? "";
@@ -126,7 +126,7 @@ const timeOptionLabels: Record<FormLocale, Record<TimeOption, string>> = {
     Morning: "Matin",
     Afternoon: "Après-midi",
     Sunset: "Coucher du soleil",
-    FishingMorning: "5 H À 8 H"
+    FishingMorning: "Entre 5 et 8h du matin"
   },
   sq: {
     Flexible: "Fleksibel",
@@ -180,21 +180,27 @@ const dateFieldCopy: Record<FormLocale, { empty: string; selected: string; forma
   en: {
     empty: "Choose a date",
     selected: "Selected date",
-    format: "Format DD/MM/YYYY",
+    format: "Example: 5 January 2025",
     calendar: "Calendar"
   },
   fr: {
     empty: "Choisir une date",
     selected: "Date sélectionnée",
-    format: "Format JJ/MM/AAAA",
+    format: "Exemple : 5 Janvier 2025",
     calendar: "Calendrier"
   },
   sq: {
     empty: "Zgjidhni daten",
     selected: "Data e zgjedhur",
-    format: "Formati DD/MM/YYYY",
+    format: "Shembull: 5 Janar 2025",
     calendar: "Kalendari"
   }
+};
+
+const dateMonthNames: Record<FormLocale, string[]> = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+  sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
 };
 
 const requiredFieldPrompts: Record<FormLocale, { date: string; name: string }> = {
@@ -222,6 +228,7 @@ const staticBookingEnhancerConfig = {
   storageKey: bookingDraftStorageKey,
   dateDisplayFormat,
   dateDisplayFormats,
+  dateMonthNames,
   messageIntro,
   fieldLabels,
   dateFieldCopy,
@@ -297,14 +304,22 @@ const staticBookingEnhancerScript = String.raw`
   }
 
   function formatBookingDate(value, locale) {
-    void locale;
     var parts = String(value || "").split("-");
-    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : value || "";
+    if (parts.length !== 3) return value || "";
+    var day = Number(parts[2]);
+    var month = Number(parts[1]);
+    var year = parts[0];
+    var configuredMonths = config.dateMonthNames || {};
+    var monthNames = configuredMonths[locale] || configuredMonths.fr || [];
+    var monthName = monthNames[month - 1];
+    var readableDate = day + " " + monthName + " " + year;
+    return day && monthName ? readableDate : value || "";
   }
 
-  function formatDateShort(value) {
-    var parts = String(value || "").split("-");
-    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : "DD/MM/YYYY";
+  function formatDateShort(value, locale) {
+    var configuredFormats = config.dateDisplayFormats || {};
+    var fallbackFormat = configuredFormats[locale] || config.dateDisplayFormat;
+    return formatBookingDate(value, locale) || fallbackFormat;
   }
 
   function cleanValue(value) {
@@ -477,14 +492,14 @@ const staticBookingEnhancerScript = String.raw`
       if (ready) nextSummaryLabel = summaryLabels.ready;
       if (summaryTitle) summaryTitle.textContent = nextSummaryLabel;
       if (summaryMessage) summaryMessage.textContent = message;
-      var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value) : datePlaceholder;
+      var dateDisplayText = dateInput.value ? formatDateShort(dateInput.value, locale) : datePlaceholder;
       if (dateStatus) dateStatus.textContent = dateInput.value ? dateCopy.selected : dateCopy.empty;
       if (dateDisplay) {
         dateDisplay.textContent = dateDisplayText;
         dateDisplay.classList.toggle("text-ink", Boolean(dateInput.value));
         dateDisplay.classList.toggle("text-ink-soft", !dateInput.value);
       }
-      if (dateHint) dateHint.textContent = dateInput.value ? (dateCopy.selected + ": " + dateDisplayText) : (dateCopy.format || "Format DD/MM/YYYY");
+      if (dateHint) dateHint.textContent = dateInput.value ? (dateCopy.selected + ": " + dateDisplayText) : (dateCopy.format || config.dateDisplayFormat);
       if (phoneHint) phoneHint.textContent = messages.phoneHint;
 
       whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
@@ -709,7 +724,7 @@ export function OneMinuteBooking() {
   const messages = validationMessages[locale];
   const requiredPrompts = requiredFieldPrompts[locale];
   const formattedBookingDate = date ? formatBookingDate(date, locale) : "";
-  const shortBookingDate = date ? formatDateShort(date) : "";
+  const shortBookingDate = date ? formatDateShort(date, locale) : "";
   const dateDisplayPlaceholder = dateDisplayFormats[locale] ?? dateDisplayFormat;
 
   useEffect(() => {

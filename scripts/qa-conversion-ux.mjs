@@ -26,6 +26,16 @@ function expectFileContains(relativePath, fragments) {
   return source;
 }
 
+function expectFileDoesNotContain(relativePath, fragments) {
+  const source = read(relativePath);
+  for (const fragment of fragments) {
+    if (source.includes(fragment)) {
+      fail(`${relativePath} still contains ${fragment}`);
+    }
+  }
+  return source;
+}
+
 const tourIds = ["default", "gjipe", "grama", "private", "sunset", "fishing"];
 const localeMarkers = {
   en: ["Tour:", "Date:", "Adults:", "Children:", "Preferred time:", "Questions:"],
@@ -87,9 +97,20 @@ if (!exists("components/ConversionTrustBlock.tsx")) {
 }
 
 expectFileContains("app/boat-photos/page.tsx", [
+  "GalleryGrid priorityFirst",
+  "VideoFeature",
+  "ConversionTrustBlock",
+  "analyticsPlacement=\"photos_hero"
+]);
+
+expectFileContains("components/GalleryGrid.tsx", [
+  "data-gallery-grid"
+]);
+
+expectFileDoesNotContain("app/boat-photos/page.tsx", [
   "photoConversionGroups",
   "photos.conversion",
-  "analyticsPlacement=\"photos"
+  "photos.group"
 ]);
 
 expectFileContains("app/destinations/page.tsx", [

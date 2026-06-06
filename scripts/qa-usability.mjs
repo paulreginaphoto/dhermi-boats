@@ -285,9 +285,50 @@ async function verifyHomeInteractions(baseUrl, browser) {
     ? new URL(href).searchParams.get("text") || ""
     : "";
 
-  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21/06/2026") || !body.includes("People: 4") || !body.includes("Prefer a calm swim stop")) {
-    fail("home minimal booking message is missing tour, name, DD/MM/YYYY date, people or message");
+  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21 June 2026") || !body.includes("People: 4") || !body.includes("Prefer a calm swim stop")) {
+    fail("home minimal booking message is missing tour, name, long date, people or message");
   }
+
+  const homeTours = await page.locator("[data-tour-card]").evaluateAll((cards) => cards.map((card) => card.getAttribute("data-tour-id")));
+  if (homeTours.join(",") !== "sunset,private,gjipe,grama,fishing") {
+    fail(`home tour order should highlight sunset and private first, got ${homeTours.join(",")}`);
+  }
+
+  await context.close();
+}
+
+async function verifyLanguageSwitcher(baseUrl, browser) {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const page = await context.newPage();
+
+  await page.goto(`${baseUrl}/?dlang=en`, { waitUntil: "networkidle", timeout: 15000 });
+  await page.locator('[data-locale-switcher][data-locale="fr"]:visible').first().click();
+  await page.waitForFunction(() => document.documentElement.lang === "fr");
+  await page.locator('[data-locale-switcher][data-locale="sq"]:visible').first().click();
+  await page.waitForFunction(() => document.documentElement.lang === "sq");
+  await page.locator('[data-locale-switcher][data-locale="en"]:visible').first().click();
+  await page.waitForFunction(() => document.documentElement.lang === "en");
+  await page.waitForFunction(() => document.body.innerText.includes("Boat tours from Dhërmi"));
+
+  const bodyText = await page.locator("body").innerText();
+  if (!bodyText.includes("Boat tours from Dhërmi") || bodyText.includes("Tours en bateau") || bodyText.includes("Ture me varkë")) {
+    fail("language switcher does not return to English after repeated switches");
+  }
+
+  await context.close();
+}
+
+async function verifyPhotoAlbum(baseUrl, browser) {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await context.newPage();
+
+  await page.goto(`${baseUrl}/boat-photos/?dlang=en`, { waitUntil: "networkidle", timeout: 15000 });
+  const groupedCards = await page.locator('article[id^="photos-"]').count();
+  const albumImages = await page.locator("[data-gallery-grid] figure").count();
+  const bodyText = await page.locator("body").innerText();
+  if (groupedCards !== 0) fail(`boat photos should be one album, found ${groupedCards} category cards`);
+  if (albumImages < 10) fail(`boat photos album should show the full album, found ${albumImages} images`);
+  if (!bodyText.includes("One simple album")) fail("boat photos copy should present one simple album");
 
   await context.close();
 }
@@ -317,13 +358,15 @@ async function verifyContactForms(baseUrl, browser) {
     const summary = await page.locator("[data-booking-summary-message]").textContent();
     const bodyText = await page.locator("body").innerText();
 
-    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes("21/06/2026") || !body.includes("+33600000000")) {
+    const expectedDate = locale === "fr" ? "21 Juin 2026" : locale === "sq" ? "21 Qershor 2026" : "21 June 2026";
+
+    if (tourId !== "private" || disabled !== "false" || !body.includes(name) || !body.includes(expectedDate) || !body.includes("+33600000000")) {
       fail(`contact ${locale} WhatsApp action is incomplete`);
     }
-    if (!summary?.includes(name) || !summary.includes("21/06/2026") || !summary.includes("Audit availability check")) {
+    if (!summary?.includes(name) || !summary.includes(expectedDate) || !summary.includes("Audit availability check")) {
       fail(`contact ${locale} summary is incomplete`);
     }
-    if (locale === "fr" && (bodyText.includes("Phone is helpful") || bodyText.includes("Format JJ/MM/AAAA: DD/MM/YYYY"))) {
+    if (locale === "fr" && (bodyText.includes("Phone is helpful") || bodyText.includes("Format JJ/MM/AAAA: DD/MM/YYYY") || bodyText.includes("5 h à 8 h"))) {
       fail("contact fr booking form leaks English helper copy");
     }
 
@@ -347,6 +390,8 @@ try {
       }
     }
     await verifyHomeInteractions(baseUrl, browser);
+    await verifyLanguageSwitcher(baseUrl, browser);
+    await verifyPhotoAlbum(baseUrl, browser);
     await verifyContactForms(baseUrl, browser);
   }
 } finally {

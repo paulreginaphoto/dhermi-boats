@@ -5,7 +5,7 @@ export function GalleryGrid({ limit = gallery.length, priorityFirst = false }: {
   const items = gallery.slice(0, limit);
 
   return (
-    <div className="grid grid-flow-dense gap-3 md:grid-cols-4 md:auto-rows-[220px]">
+    <div className="grid grid-flow-dense gap-3 md:grid-cols-4 md:auto-rows-[220px]" data-gallery-grid>
       {items.map((item, index) => {
         const eagerFirstImage = priorityFirst && index === 0;
 

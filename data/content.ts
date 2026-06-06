@@ -309,7 +309,7 @@ export const tours: Tour[] = [
   }
 ];
 
-export const tourDisplayOrder = ["sunset", "gjipe", "grama", "private", "fishing"] as const;
+export const tourDisplayOrder = ["sunset", "private", "gjipe", "grama", "fishing"] as const;
 
 export const orderedTours = tourDisplayOrder
   .map((id) => tours.find((tour) => tour.id === id))
@@ -353,9 +353,9 @@ export const destinations: Destination[] = [
 
 export const tourComparison: TourComparisonItem[] = [
   { angle: "Lovers sunset", tourId: "sunset", duration: "sunset", price: "from €120" },
+  { angle: "Private option", tourId: "private", duration: "custom", price: "€200/hour" },
   { angle: "Best value", tourId: "gjipe", duration: "1h30", price: "from €35" },
   { angle: "Most complete route", tourId: "grama", duration: "3h30", price: "from €75" },
-  { angle: "Private option", tourId: "private", duration: "custom", price: "€200/hour" },
   { angle: "Morning fishing", tourId: "fishing", duration: "5 AM to 8 AM", price: "€100/hour" }
 ];
 

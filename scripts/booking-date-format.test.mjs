@@ -33,11 +33,12 @@ vm.runInNewContext(
 
 const { formatBookingDate, formatDateLong, formatDateShort } = loadedModule.exports;
 
-assert.equal(formatDateShort("2026-12-31"), "31/12/2026");
-assert.equal(formatDateLong("2026-12-31", "fr"), "31/12/2026");
-assert.equal(formatDateLong("2026-12-31", "en"), "31/12/2026");
-assert.equal(formatDateLong("2026-12-31", "sq"), "31/12/2026");
-assert.equal(formatBookingDate("2026-12-31", "fr"), "31/12/2026");
+assert.equal(formatDateShort("2026-12-31"), "31 Décembre 2026");
+assert.equal(formatDateShort("2026-12-31", "en"), "31 December 2026");
+assert.equal(formatDateLong("2026-12-31", "fr"), "31 Décembre 2026");
+assert.equal(formatDateLong("2026-12-31", "en"), "31 December 2026");
+assert.equal(formatDateLong("2026-12-31", "sq"), "31 Dhjetor 2026");
+assert.equal(formatBookingDate("2026-12-31", "fr"), "31 Décembre 2026");
 assert.equal(formatDateShort("not-a-date"), "not-a-date");
 assert.equal(formatDateLong("", "fr"), "");
 
@@ -45,7 +46,8 @@ const bookingSource = fs.readFileSync(bookingSourcePath, "utf8");
 
 assert.match(bookingSource, /formatBookingDate/);
 assert.match(bookingSource, /formatDateShort/);
-assert.match(bookingSource, /DD\/MM\/YYYY/);
+assert.match(bookingSource, /5 Janvier 2025/);
+assert.doesNotMatch(bookingSource, /DD\/MM\/YYYY|JJ\/MM\/AAAA/);
 assert.doesNotMatch(bookingSource, /\{shortBookingDate\}\s*·\s*\{formattedBookingDate\}/);
 
 console.log("date-format: OK");

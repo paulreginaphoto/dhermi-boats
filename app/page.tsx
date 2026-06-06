@@ -14,7 +14,7 @@ import { translations } from "@/lib/i18n";
 import { whatsappHrefForKey, type WhatsappMessageKey } from "@/lib/whatsappMessages";
 
 const enText = (key: string) => translations.en[key] ?? "";
-const homepageTourOrder = ["gjipe", "grama", "private", "sunset", "fishing"] as const;
+const homepageTourOrder = ["sunset", "private", "gjipe", "grama", "fishing"] as const;
 const tourById = new Map(orderedTours.map((tour) => [tour.id, tour]));
 const featuredTours = homepageTourOrder
   .map((id) => tourById.get(id))
@@ -141,7 +141,12 @@ const minimalAvailabilityFormScript = String.raw`
         missingMessage: "Pa shenim shtese"
       }
     },
-    tourLabels: minimalTourLabels
+    tourLabels: minimalTourLabels,
+    monthNames: {
+      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+      sq: ["Janar", "Shkurt", "Mars", "Prill", "Maj", "Qershor", "Korrik", "Gusht", "Shtator", "Tetor", "Nëntor", "Dhjetor"]
+    }
   })};
 
   function normalizeLocale(value) {
@@ -175,9 +180,17 @@ const minimalAvailabilityFormScript = String.raw`
     return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message));
   }
 
-  function formatBookingDate(value) {
+  function formatBookingDate(value, locale) {
     var parts = String(value || "").split("-");
-    return parts.length === 3 ? parts[2] + "/" + parts[1] + "/" + parts[0] : value || "";
+    if (parts.length !== 3) return value || "";
+    var day = Number(parts[2]);
+    var month = Number(parts[1]);
+    var year = parts[0];
+    var configuredMonths = config.monthNames || {};
+    var monthNames = configuredMonths[locale] || configuredMonths.fr || [];
+    var monthName = monthNames[month - 1];
+    var readableDate = day + " " + monthName + " " + year;
+    return day && monthName ? readableDate : value || "";
   }
 
   function initForm(form) {
@@ -207,7 +220,7 @@ const minimalAvailabilityFormScript = String.raw`
         "",
         labels.tour + ": " + (selectedTourText() || labels.missingTour),
         labels.name + ": " + (nameInput.value.trim() || labels.missingName),
-        labels.date + ": " + (formatBookingDate(dateInput.value) || labels.missingDate),
+        labels.date + ": " + (formatBookingDate(dateInput.value, locale) || labels.missingDate),
         labels.people + ": " + (peopleInput.value || labels.missingPeople),
         labels.message + ": " + (messageInput.value.trim() || labels.missingMessage)
       ].join("\n");
