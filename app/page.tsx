@@ -21,7 +21,7 @@ const featuredTours = homepageTourOrder
   .map((id) => tourById.get(id))
   .filter((tour): tour is Tour => Boolean(tour));
 const comparisonByTourId = new Map(tourComparison.map((item) => [item.tourId, item]));
-const featuredGallery = gallery.slice(0, 8);
+const featuredGallery = gallery.slice(0, 9);
 const featuredReviews = reviews.slice(0, 3);
 const homepageFaqs = [0, 1, 4, 6, 13, 17].map((index) => ({ ...faqs[index], translationIndex: index }));
 
@@ -54,10 +54,16 @@ const galleryCaptions = [
   "v2.gallery.caption.4",
   "v2.gallery.caption.5",
   "v2.gallery.caption.6",
-  "v2.gallery.caption.7"
+  "v2.gallery.caption.7",
+  "v2.gallery.caption.8"
 ];
 
 const skipperActivityImages = [
+  {
+    tourId: "private",
+    src: "/images/tour-private-card.avif",
+    alt: "Private Dhërmi boat tour beside turquoise water and cliffs"
+  },
   {
     tourId: "gjipe",
     src: "/images/tour-gjipe-card.avif",
@@ -72,11 +78,6 @@ const skipperActivityImages = [
     tourId: "sunset",
     src: "/images/tour-sunset-card.avif",
     alt: "Sunset light from a private Dhërmi boat tour"
-  },
-  {
-    tourId: "fishing",
-    src: "/images/tour-fishing-card.avif",
-    alt: "Morning fishing setup from Dhermi Boat"
   }
 ];
 
@@ -310,18 +311,18 @@ export default function HomePage() {
 
       <section data-home-section="skipper" id="skipper" className="bg-limestone py-14 md:py-20">
         <div className="site-band grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <div className="relative min-h-[24rem] overflow-hidden rounded-2xl bg-ink p-3 shadow-image">
-            <div className="grid h-full min-h-[24rem] gap-3 sm:grid-cols-2">
-              {skipperActivityImages.map((item, index) => (
-                <figure key={item.tourId} className={`relative overflow-hidden rounded-xl bg-navy ${index === 0 ? "min-h-[15rem] sm:row-span-2" : "min-h-[10rem]"}`}>
+          <div className="overflow-hidden rounded-2xl bg-ink p-3 shadow-image">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {skipperActivityImages.map((item) => (
+                <figure key={item.tourId} className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-navy">
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     loading="lazy"
                     quality={58}
-                    sizes="(min-width: 1024px) 22vw, (min-width: 640px) 43vw, 86vw"
-                    className="object-cover transition duration-500 hover:scale-[1.035]"
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 42vw, 86vw"
+                    className="object-cover transition duration-500 group-hover:scale-[1.035]"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy/72 via-navy/8 to-transparent" />
                   <figcaption className="absolute left-3 top-3 rounded-lg bg-ink/78 px-3 py-2 text-xs font-bold text-pearl backdrop-blur">
@@ -330,11 +331,11 @@ export default function HomePage() {
                 </figure>
               ))}
             </div>
-            <div className="absolute bottom-0 left-0 right-0 p-5 text-pearl md:p-7">
+            <div className="px-2 pb-2 pt-5 text-pearl md:px-4 md:pb-4">
               <p className="text-sm font-bold uppercase tracking-[0.18em] text-sand">
                 <LocalizedText id="v2.skipper.imageLabel">{enText("v2.skipper.imageLabel")}</LocalizedText>
               </p>
-              <p className="mt-2 max-w-md font-serif text-3xl leading-tight">
+              <p className="mt-2 max-w-xl font-serif text-3xl leading-tight">
                 <LocalizedText id="v2.skipper.imageText">{enText("v2.skipper.imageText")}</LocalizedText>
               </p>
             </div>

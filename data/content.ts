@@ -177,7 +177,7 @@ export const tours: Tour[] = [
     departure: "Dhërmi area",
     image: assetPath("/images/tour-private.webp"),
     cardImage: assetPath("/images/tour-private-card.avif"),
-    imageAlt: "Dhermi Boat entering a sea cave with bright turquoise water",
+    imageAlt: "Private Dhermi boat tour beside a turquoise cave with the boat in the water",
     href: sitePath("/private-boat-tour-albania/"),
     whatsappText: whatsappMessage([
       "Hello Dhermi Boat :) I'd like to plan a private boat tour.",
@@ -369,6 +369,7 @@ export const gallery = [
   { src: assetPath("/images/gallery-canyon-water.webp"), alt: "Limestone cave wall above bright turquoise water" },
   { src: assetPath("/images/gallery-blue-wall.webp"), alt: "Blue water below a rocky cave wall on the coast" },
   { src: assetPath("/images/gallery-coastline.webp"), alt: "Calm sea and rocky coastline near Dhërmi" },
+  { src: assetPath("/images/gallery-private-cove.webp"), alt: "Private boat view of a quiet turquoise cove near Dhërmi" },
   { src: assetPath("/images/gallery-limestone-cliff.webp"), alt: "Karaburun cliffs and blue water seen from the boat" },
   { src: assetPath("/images/gallery-boat-view.webp"), alt: "Onboard view from Dhermi Boat toward the coast" }
 ];

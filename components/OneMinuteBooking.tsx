@@ -1156,7 +1156,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
       {isContactMode ? (
         <div className="absolute inset-0 -z-10" aria-hidden>
           <Image
-            src={assetPath("/images/gallery-blue-cove-boat.webp")}
+            src={assetPath("/images/booking-contact-hero.webp")}
             alt=""
             fill
             priority
