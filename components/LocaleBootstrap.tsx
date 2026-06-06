@@ -178,6 +178,9 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       window.localStorage.setItem("dhermi-language", locale);
     } catch (_e) {}
     document.documentElement.lang = locale;
+    try {
+      window.dispatchEvent(new CustomEvent("dhermi:locale-change", { detail: { locale: locale } }));
+    } catch (_e) {}
     updateTranslations();
   }
 

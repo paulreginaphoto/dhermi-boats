@@ -400,6 +400,18 @@ const staticBookingEnhancerScript = String.raw`
 
     if (!dateInput || !nameInput || !timeSelect || !whatsappAction || !emailAction) return;
 
+    function applyLocale(nextLocale) {
+      var normalizedLocale = normalizeLocale(nextLocale);
+      if (!isSupportedLocale(normalizedLocale)) return;
+      locale = normalizedLocale;
+      labels = config.fieldLabels[locale] || config.fieldLabels.en;
+      dateCopy = config.dateFieldCopy[locale] || config.dateFieldCopy.en;
+      datePlaceholder = displayFormats[locale] || config.dateDisplayFormat;
+      messages = validationCopy[locale] || validationCopy.en;
+      prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
+      summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
+    }
+
     var minimumDate = todayInputValue();
     var requestedTourId = readRequestedTourId();
     if (requestedTourId) selectedTourId = requestedTourId;
@@ -541,6 +553,43 @@ const staticBookingEnhancerScript = String.raw`
         }));
       } catch (error) {}
     }
+
+    function requestNativeDatePicker(event) {
+      if (!dateInput) return;
+
+      if (typeof dateInput.focus === "function") {
+        try {
+          dateInput.focus({ preventScroll: true });
+        } catch (error) {
+          dateInput.focus();
+        }
+      }
+
+      if (typeof dateInput.showPicker === "function") {
+        try {
+          if (event && event.cancelable) event.preventDefault();
+          dateInput.showPicker();
+        } catch (error) {}
+      }
+    }
+
+    var dateShell = dateInput.parentElement;
+    if (dateShell) {
+      dateShell.addEventListener("pointerdown", requestNativeDatePicker);
+      dateShell.addEventListener("touchstart", requestNativeDatePicker);
+      dateShell.addEventListener("keydown", function (event) {
+        if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
+          requestNativeDatePicker(event);
+        }
+      });
+    }
+
+    window.addEventListener("dhermi:locale-change", function (event) {
+      var localeChangeDetail = event ? event.detail : null;
+      var nextLocale = localeChangeDetail ? localeChangeDetail.locale : "";
+      applyLocale(nextLocale);
+      updateLinks();
+    });
 
     root.querySelectorAll("[data-booking-tour-option]").forEach(function (button) {
       button.addEventListener("click", function () {
@@ -754,6 +803,18 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
       setLocale(readLocale());
     }, 0);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    function handleLocaleChange(event: Event) {
+      const nextLocale = normalizeLocale((event as CustomEvent<{ locale?: string }>).detail?.locale);
+      if (nextLocale === "fr" || nextLocale === "sq" || nextLocale === "en") {
+        setLocale(nextLocale);
+      }
+    }
+
+    window.addEventListener("dhermi:locale-change", handleLocaleChange);
+    return () => window.removeEventListener("dhermi:locale-change", handleLocaleChange);
   }, []);
 
   useEffect(() => {
@@ -1049,7 +1110,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                     aria-invalid={errors.date || undefined}
                     className={
                       dateDisplayEnhanced
-                        ? "absolute inset-0 h-full w-full cursor-pointer opacity-0"
+                        ? "absolute inset-0 h-full w-full cursor-pointer opacity-[0.01]"
                         : [
                             "h-12 w-full rounded-md border bg-white pl-11 pr-4 text-base font-semibold text-ink outline-none transition focus:border-ink focus-visible:ring-2 focus-visible:ring-turquoise focus-visible:ring-offset-2",
                             errors.date ? "border-bronze" : "border-ink/12"

@@ -389,6 +389,47 @@ async function verifyContactForms(baseUrl, browser) {
 
     await context.close();
   }
+
+  const switchContext = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
+  const switchPage = await switchContext.newPage();
+  await switchPage.goto(`${baseUrl}/contact/?dlang=fr#book`, { waitUntil: "networkidle", timeout: 15000 });
+  await switchPage.locator("[data-booking-form]").scrollIntoViewIfNeeded();
+  await switchPage.locator('[data-locale-switcher][data-locale="sq"]').first().click();
+  await switchPage.waitForFunction(() => document.documentElement.lang === "sq");
+  await switchPage.waitForFunction(() => (document.querySelector("[data-booking-summary-message]")?.textContent || "").includes("Pershendetje"));
+
+  const switchedState = await switchPage.evaluate(() => ({
+    htmlLang: document.documentElement.lang,
+    title: document.querySelector('[data-i18n="quick.title"]')?.textContent || "",
+    dateLabel: document.querySelector('label[for="quick-date"]')?.textContent || "",
+    datePlaceholder: document.querySelector("[data-booking-date-display]")?.textContent || "",
+    summary: document.querySelector("[data-booking-summary-message]")?.textContent || ""
+  }));
+
+  if (
+    switchedState.htmlLang !== "sq" ||
+    !switchedState.title.includes("Rezervo") ||
+    switchedState.dateLabel.trim() !== "Data" ||
+    !switchedState.datePlaceholder.includes("Zgjidhni") ||
+    !switchedState.summary.includes("Pershendetje") ||
+    switchedState.summary.includes("Bonjour") ||
+    switchedState.summary.includes("*Langue:* French")
+  ) {
+    fail(`contact language switch should update booking form state, got ${JSON.stringify(switchedState)}`);
+  }
+
+  await switchPage.locator("#quick-date").evaluate((input) => {
+    window.__bookingDatePickerCalls = 0;
+    input.showPicker = () => {
+      window.__bookingDatePickerCalls += 1;
+    };
+  });
+  await switchPage.locator("#quick-date").click();
+  await switchPage.waitForFunction(() => window.__bookingDatePickerCalls > 0, null, { timeout: 3000 }).catch(() => {
+    fail("contact date field should request the native date picker on click");
+  });
+
+  await switchContext.close();
 }
 
 if (!fs.existsSync(outDir)) {

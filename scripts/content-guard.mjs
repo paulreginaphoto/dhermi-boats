@@ -476,7 +476,9 @@ function checkBookingRequiredFields(filePath, content) {
     "bookingSummaryKey",
     "quick.summary.pending",
     "quick.summary.ready",
-    "aria-disabled={!bookingLinksReady}"
+    "aria-disabled={!bookingLinksReady}",
+    "requestNativeDatePicker",
+    "window.addEventListener(\"dhermi:locale-change\""
   ]) {
     if (!content.includes(snippet)) {
       addIssue(
@@ -611,6 +613,15 @@ function checkLocaleSwitcherHydration(filePath, content) {
       1,
       "Le bootstrap doit réappliquer l'état actif du sélecteur de langue après l'hydratation React.",
       "function applyLocaleSwitchers()"
+    );
+  }
+
+  if (!content.includes("dhermi:locale-change")) {
+    addIssue(
+      filePath,
+      1,
+      "Le changement de langue doit notifier les scripts statiques qui gardent leur propre état.",
+      "dhermi:locale-change"
     );
   }
 
