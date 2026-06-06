@@ -108,7 +108,7 @@ if (!fs.existsSync(htmlPath)) {
     "Boat tours from Dh",
     "Meet your local skipper",
     "French-speaking skipper",
-    "Send booking request on WhatsApp",
+    "Continue to booking form",
     "name=\"message\""
   ]) {
     if (!html.includes(fragment)) fail(`out/index.html missing V2 rendered fragment: ${fragment}`);

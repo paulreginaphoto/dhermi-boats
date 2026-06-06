@@ -128,8 +128,6 @@ export function TourCard({ tour, imagePriority = false }: { tour: Tour; imagePri
             data-tour-id={tour.id}
             data-whatsapp-key={tour.id}
             href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
-            rel="noreferrer"
-            target="_blank"
             {...conversionAttrs({ tourId: tour.id, placement: "tour_card" })}
           >
             <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={iconStrokeWidth} />

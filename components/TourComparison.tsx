@@ -123,8 +123,6 @@ export function TourComparison() {
                       data-tour-id={tour.id}
                       data-whatsapp-key={tour.id}
                       href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
-                      rel="noreferrer"
-                      target="_blank"
                       {...conversionAttrs({ tourId: tour.id, placement: "comparison_card" })}
                     >
                       <MessageCircle className="h-4 w-4" aria-hidden strokeWidth={1.75} />

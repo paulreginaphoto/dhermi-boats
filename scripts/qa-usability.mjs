@@ -155,6 +155,10 @@ async function collectPageMetrics(page) {
           viewportHeight: window.innerHeight
         };
       })(),
+      contactBookingForm: (() => {
+        const form = document.querySelector('[data-contact-form-page="true"] [data-booking-form="true"]');
+        return Boolean(form && visible(form));
+      })(),
       homeNextSectionHint: (() => {
         const nextLabel = document.querySelector('#reviews [data-i18n="v2.social.label"]');
         if (!nextLabel || !visible(nextLabel)) return null;
@@ -252,7 +256,10 @@ async function verifyRoute(baseUrl, browser, route, viewport) {
       fail(`${viewport.name} ${route} mobile menu panel is outside the viewport`);
     }
 
-    if (!metrics.stickyBar) {
+    if (route === "/contact/") {
+      if (metrics.stickyBar) fail(`${viewport.name} ${route} sticky booking bar should be hidden on the form-only contact page`);
+      if (!metrics.contactBookingForm) fail(`${viewport.name} ${route} contact booking form missing`);
+    } else if (!metrics.stickyBar) {
       fail(`${viewport.name} ${route} sticky booking bar missing`);
     } else if (
       metrics.stickyBar.links !== 4 ||
@@ -281,17 +288,24 @@ async function verifyHomeInteractions(baseUrl, browser) {
   await page.locator('[data-minimal-booking-form] input[name="people"]').fill("4");
   await page.locator('[data-minimal-booking-form] textarea[name="message"]').fill("Prefer a calm swim stop");
   const href = await page.locator("[data-minimal-booking-action]").getAttribute("href");
-  const body = href?.startsWith("https://wa.me/")
-    ? new URL(href).searchParams.get("text") || ""
-    : "";
 
-  if (!body.includes("Preferred tour: Private tour") || !body.includes("Name: Audit Home") || !body.includes("Date: 21 June 2026") || !body.includes("People: 4") || !body.includes("Prefer a calm swim stop")) {
-    fail("home minimal booking message is missing tour, name, long date, people or message");
+  if (!href || !href.includes("/contact/?tour=private#book")) {
+    fail(`home minimal booking should continue to contact form, got ${href}`);
   }
 
   const homeTours = await page.locator("[data-tour-card]").evaluateAll((cards) => cards.map((card) => card.getAttribute("data-tour-id")));
   if (homeTours.join(",") !== "sunset,private,gjipe,grama,fishing") {
     fail(`home tour order should highlight sunset and private first, got ${homeTours.join(",")}`);
+  }
+
+  await page.locator("[data-minimal-booking-action]").click();
+  await page.waitForURL(/\/contact\/\?tour=private#book$/, { timeout: 15000 });
+  await page.waitForFunction(() => document.querySelector('[data-booking-form="true"]'));
+  const selectedTour = await page.locator('button[data-booking-tour-option][aria-pressed="true"]').getAttribute("data-tour-id");
+  const restoredDate = await page.locator("#quick-date").inputValue();
+  const restoredAdults = await page.locator("#quick-adults").inputValue();
+  if (selectedTour !== "private" || restoredDate !== "2026-06-21" || restoredAdults !== "4") {
+    fail(`contact form should restore home booking draft, got tour=${selectedTour}, date=${restoredDate}, adults=${restoredAdults}`);
   }
 
   await context.close();

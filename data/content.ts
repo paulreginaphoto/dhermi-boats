@@ -1,4 +1,5 @@
-import { assetPath, defaultBookingMessage, sitePath, whatsappUrl } from "@/lib/site";
+import { bookingFormHrefForKey } from "@/lib/bookingLinks";
+import { assetPath, sitePath } from "@/lib/site";
 
 export type Tour = {
   id: string;
@@ -213,8 +214,8 @@ export const tours: Tour[] = [
   },
   {
     id: "sunset",
-    title: "Sunset Lovers Tour from Dhërmi",
-    shortTitle: "Sunset Lovers Tour",
+    title: "Sunset tour from Dhërmi",
+    shortTitle: "Sunset tour",
     subtitle: "Private sunset cruise for couples.",
     type: "experience",
     offerTier: "experience",
@@ -227,9 +228,9 @@ export const tours: Tour[] = [
     imageAlt: "Sunset over the Dhërmi coast from the bow of the boat",
     href: sitePath("/sunset-boat-tour/"),
     whatsappText: whatsappMessage([
-      "Hello Dhermi Boat :) I'd like to ask about the sunset lovers tour.",
+      "Hello Dhermi Boat :) I'd like to ask about the Sunset tour.",
       "",
-      "*Tour:* Sunset Lovers Tour",
+      "*Tour:* Sunset tour",
       "*Date:* __",
       "*Adults:* __",
       "*Children:* __",
@@ -246,7 +247,7 @@ export const tours: Tour[] = [
     safetyNote: "Private evening cruise from 120 € for two people. Add your group size on WhatsApp.",
     detailFaqs: [
       {
-        question: "Is the Sunset Lovers Tour for couples?",
+        question: "Is the Sunset tour private?",
         answer: "Yes. It is a private sunset cruise for couples, proposals and quiet evenings around Dhërmi."
       },
       {
@@ -511,4 +512,4 @@ export const trustBadges = [
   "Clear prices"
 ];
 
-export const primaryWhatsappHref = whatsappUrl(defaultBookingMessage);
+export const primaryWhatsappHref = bookingFormHrefForKey("default");

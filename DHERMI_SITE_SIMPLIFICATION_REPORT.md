@@ -5,7 +5,7 @@ Date: 2026-05-28
 ## What changed
 
 - Removed the repeated first-name framing from visible source content. The site now speaks as `Dhermi Boat` / local skipper instead of repeating a person name.
-- Kept the homepage focused on the 5-tour vertical-trigger horizontal rail, including the sunset tour positioned as the romantic/lovers option.
+- Kept the homepage focused on the 5-tour vertical-trigger horizontal rail, including the sunset tour positioned as the evening private option.
 - Simplified the main navigation to `Tours`, `Photos`, `FAQ`, `Contact`.
 - Removed duplicate tour-card and decision sections from `/tours/`. The page now keeps the hero, trust block, comparison cards and one price table.
 - Moved the prices title outside the horizontal table scroll so it reads cleanly on mobile.

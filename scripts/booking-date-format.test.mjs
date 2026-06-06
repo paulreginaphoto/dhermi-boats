@@ -46,7 +46,7 @@ const bookingSource = fs.readFileSync(bookingSourcePath, "utf8");
 
 assert.match(bookingSource, /formatBookingDate/);
 assert.match(bookingSource, /formatDateShort/);
-assert.match(bookingSource, /5 Janvier 2025/);
+assert.match(bookingSource, /Aucune date sélectionnée/);
 assert.doesNotMatch(bookingSource, /DD\/MM\/YYYY|JJ\/MM\/AAAA/);
 assert.doesNotMatch(bookingSource, /\{shortBookingDate\}\s*·\s*\{formattedBookingDate\}/);
 

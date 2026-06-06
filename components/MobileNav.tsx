@@ -8,7 +8,7 @@ import { translations } from "@/lib/i18n";
 
 export function MobileNav() {
   return (
-    <details className="group lg:hidden">
+    <details className="group relative z-[95] lg:hidden">
       <span id="mobile-navigation-label" className="sr-only">
         <LocalizedText id="a11y.mobileNavigation">{translations.en["a11y.mobileNavigation"] ?? ""}</LocalizedText>
       </span>
@@ -22,7 +22,7 @@ export function MobileNav() {
       </summary>
       <div
         id="mobile-navigation-panel"
-        className="fixed left-3 right-3 top-[5.75rem] z-50 overflow-hidden rounded-xl border border-ink/10 bg-pearl p-2 shadow-[0_28px_90px_rgba(7,27,38,0.28)]"
+        className="fixed left-3 right-3 top-[5.75rem] z-[95] overflow-hidden rounded-xl border border-ink/10 bg-pearl p-2 shadow-[0_28px_90px_rgba(7,27,38,0.28)]"
       >
         <nav className="grid gap-1" aria-labelledby="mobile-navigation-label">
           {navItems.map((item) => (
@@ -38,8 +38,6 @@ export function MobileNav() {
             className="mt-2 inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-4 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
             data-whatsapp-key="default"
             href={primaryWhatsappHref}
-            rel="noreferrer"
-            target="_blank"
             {...conversionAttrs({ tourId: "default", placement: "mobile_menu" })}
           >
             <MessageCircle className="h-4 w-4" aria-hidden />

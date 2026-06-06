@@ -48,7 +48,7 @@ export function Footer() {
             <LocalizedText id="footer.contact">{translations.en["footer.contact"] ?? ""}</LocalizedText>
           </p>
           <div className="mt-5 grid gap-3 text-sm text-pearl/88">
-            <a className="flex items-center gap-3 transition hover:text-white" data-whatsapp-key="default" href={primaryWhatsappHref} rel="noreferrer" target="_blank" {...conversionAttrs({ tourId: "default", placement: "footer" })}>
+            <a className="flex items-center gap-3 transition hover:text-white" data-whatsapp-key="default" href={primaryWhatsappHref} {...conversionAttrs({ tourId: "default", placement: "footer" })}>
               <MessageCircle className="h-4 w-4 text-turquoise" />
               <LocalizedText id="footer.whatsapp">{translations.en["footer.whatsapp"] ?? ""}</LocalizedText>
             </a>

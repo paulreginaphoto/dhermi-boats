@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { bookingFormHrefForKey, type BookingFormKey } from "@/lib/bookingLinks";
 import { whatsappUrl } from "@/lib/site";
 
 function message(lines: string[]) {
@@ -150,7 +151,7 @@ export const whatsappMessages = {
     en: message([
       "Hello Dhermi Boat :) I'd like to ask about the sunset tour.",
       "",
-      "*Tour:* Sunset Private Tour",
+      "*Tour:* Sunset tour",
       "*Date:* __",
       "*Adults:* __",
       "*Children:* __",
@@ -220,6 +221,10 @@ export const whatsappMessages = {
 
 export type WhatsappMessageKey = keyof typeof whatsappMessages;
 
-export function whatsappHrefForKey(key: WhatsappMessageKey, locale: Locale = "en") {
+export function directWhatsappHrefForKey(key: WhatsappMessageKey, locale: Locale = "en") {
   return whatsappUrl(whatsappMessages[key][locale]);
+}
+
+export function whatsappHrefForKey(key: WhatsappMessageKey) {
+  return bookingFormHrefForKey(key as BookingFormKey);
 }

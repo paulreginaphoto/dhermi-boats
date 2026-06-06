@@ -1,10 +1,10 @@
 import { LocalizedText } from "@/components/LocalizedText";
 import { HeroWhatsappText } from "@/components/MicroCopy";
 import { conversionAttrs } from "@/lib/conversion";
-import { defaultBookingMessage, whatsappUrl } from "@/lib/site";
+import { bookingFormHrefForKey } from "@/lib/bookingLinks";
 import { translations } from "@/lib/i18n";
 
-const fallbackWhatsappHref = whatsappUrl(defaultBookingMessage);
+const fallbackWhatsappHref = bookingFormHrefForKey("default");
 
 export function LazyOneMinuteBooking() {
   return (
@@ -25,8 +25,6 @@ export function LazyOneMinuteBooking() {
           className="inline-flex min-h-12 w-full items-center justify-center rounded-lg bg-pearl px-5 text-sm font-semibold text-ink shadow-soft transition hover:bg-white lg:w-auto"
           data-whatsapp-key="default"
           href={fallbackWhatsappHref}
-          rel="noreferrer"
-          target="_blank"
           {...conversionAttrs({ tourId: "default", placement: "quick_fallback" })}
         >
           <HeroWhatsappText />

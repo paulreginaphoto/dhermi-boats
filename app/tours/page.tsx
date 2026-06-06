@@ -125,8 +125,6 @@ export default function ToursPage() {
                   data-tour-id={tour.id}
                   data-whatsapp-key={tour.id}
                   href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
-                  rel="noreferrer"
-                  target="_blank"
                   {...conversionAttrs({ tourId: tour.id, placement: "tour_matrix" })}
                 >
                   <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>
@@ -197,8 +195,6 @@ export default function ToursPage() {
                         data-tour-id={tour.id}
                         data-whatsapp-key={tour.id}
                         href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
-                        rel="noreferrer"
-                        target="_blank"
                         {...conversionAttrs({ tourId: tour.id, placement: "tour_matrix" })}
                       >
                         <LocalizedText id={tourBookKey(tour.id)}>{tourBookFallback(tour.id)}</LocalizedText>

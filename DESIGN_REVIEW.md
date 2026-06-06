@@ -82,7 +82,7 @@ Fixes applied:
 - Tightened the home hero to a short, direct booking headline and removed the duplicated visible heading on the tours listing so offers appear sooner on mobile.
 - Rechecked the one-minute booking form in dev browser QA and fixed the invalid translated `option` markup that was causing a React hydration error.
 - Confirmed the French booking summary now uses localized tour and time labels without inserting components into native select options.
-- Rechecked the quick booking logic for fixed-time tours and constrained `Sunset Private Tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
+- Rechecked the quick booking logic for fixed-time tours and constrained `Sunset tour` and `Morning Fishing Tour` so visitors cannot generate mismatched preferred-time messages.
 - Rechecked the live and local quick booking date field and found past dates were still selectable. The form now sets the local date as the minimum and clamps manual past-date entry before WhatsApp/email message generation.
 - Rechecked the live and local quick booking form and found that empty date or name values could still leave through backup email, while WhatsApp and email-app links skipped the inline validation path. The one-minute form now validates date and name before any message or backup-email action opens.
 - Rechecked clickable external trust links and replaced the obsolete GetYourGuide supplier ID with the verified Dhermi Boat Tours supplier profile.

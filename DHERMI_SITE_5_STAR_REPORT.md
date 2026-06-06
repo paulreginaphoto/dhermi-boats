@@ -13,9 +13,9 @@ No prices, phone number, real routes or real review claims were invented. Sea/we
 
 - Hero copy, badges, CTAs and desktop trust card were redesigned for quick clarity.
 - Homepage tours were upgraded from a static card grid to a five-tour horizontal rail driven by vertical scroll on desktop and swipe on mobile.
-- The five-tour order is now: Sunset Lovers / Tour des amoureux, Gjipe, Grama, Private, Fishing.
+- The five-tour order is now: Sunset tour, Gjipe, Grama, Private, Fishing.
 - The mobile rail now supports both flows in the same section: vertical scroll advances the rail, and a lateral touch swipe can move the cards manually.
-- Sunset is now positioned as the "Sunset Lovers Tour" / "tour des amoureux" with matching EN, FR and SQ/AL copy.
+- Sunset is now positioned as "Sunset tour" with matching EN, FR and SQ/AL copy.
 - Repeated landing-page blocks were removed from hot-intent pages, and the reusable trust block is now a compact proof strip instead of a heavy card.
 - The mobile booking bar now hides on dense homepage tour/form sections so it does not cover tour cards or booking content.
 - Mobile booking/navigation keeps WhatsApp easy to reach with cleaner spacing and no content coverage in dense homepage sections.
@@ -70,7 +70,7 @@ Lighthouse still reports Best Practices issues caused by Google Ads/DoubleClick 
 - Five-tour rail desktop mid: `docs/screenshots/dhermi-five-tour-rail/desktop-rail-mid.png`
 - Five-tour rail desktop end: `docs/screenshots/dhermi-five-tour-rail/desktop-rail-end.png`
 - Five-tour rail mobile start: `docs/screenshots/dhermi-five-tour-rail/mobile-rail-start.png`
-- Sunset lovers mobile card: `docs/screenshots/dhermi-five-tour-rail/mobile-sunset-card.png`
+- Sunset tour mobile card: `docs/screenshots/dhermi-five-tour-rail/mobile-sunset-card.png`
 - Mobile booking flow after relief check: `docs/screenshots/dhermi-five-tour-rail/mobile-booking-flow.png`
 - Latest mobile hero: `docs/screenshots/dhermi-tour-order-scroll/mobile-hero.png`
 - Latest mobile rail start: `docs/screenshots/dhermi-tour-order-scroll/mobile-tour-rail-start.png`

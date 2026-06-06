@@ -8,6 +8,7 @@ import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { SEOJsonLd } from "@/components/SEOJsonLd";
 import { faqs, gallery, orderedTours, reviews, tourComparison, type Tour } from "@/data/content";
+import { bookingFormHrefForKey } from "@/lib/bookingLinks";
 import { canonical, emailAddress, googleMapsUrl, languageAlternates, phoneDisplay, whatsappNumber } from "@/lib/site";
 import { faqSchema, homePageSchema, touristTripSchema } from "@/lib/seo";
 import { translations } from "@/lib/i18n";
@@ -142,6 +143,8 @@ const minimalAvailabilityFormScript = String.raw`
       }
     },
     tourLabels: minimalTourLabels,
+    bookingDraftStorageKey: "dhermi-booking-draft-v1",
+    bookingFormBase: bookingFormHrefForKey("default").replace("#book", ""),
     monthNames: {
       en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
       fr: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
@@ -176,8 +179,24 @@ const minimalAvailabilityFormScript = String.raw`
       .trim();
   }
 
-  function encodeMessage(message) {
-    return "https://wa.me/" + config.whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message));
+  function bookingFormHref(tourId) {
+    var tourKey = tourId && tourId !== "not-sure" ? "?tour=" + encodeURIComponent(tourId) : "";
+    return config.bookingFormBase + tourKey + "#book";
+  }
+
+  function saveBookingDraft(tourInput, dateInput, peopleInput) {
+    try {
+      var people = Math.max(1, Math.round(Number(peopleInput.value) || 2));
+      var rawTourId = tourInput.value;
+      var selectedTourId = rawTourId && rawTourId !== "not-sure" ? rawTourId : "sunset";
+      window.localStorage.setItem(config.bookingDraftStorageKey, JSON.stringify({
+        tourId: selectedTourId,
+        date: dateInput.value || "",
+        time: "Flexible",
+        adults: people,
+        children: 0
+      }));
+    } catch (error) {}
   }
 
   function formatBookingDate(value, locale) {
@@ -230,19 +249,17 @@ const minimalAvailabilityFormScript = String.raw`
       var ready = Boolean(nameInput.value.trim() && dateInput.value && peopleInput.value);
       var message = buildMessage();
       summary.textContent = message;
-      action.href = ready ? encodeMessage(message) : "#minimal-booking-form";
+      action.href = ready ? bookingFormHref(tourInput.value) : "#minimal-booking-form";
       action.setAttribute("aria-disabled", ready ? "false" : "true");
-      if (ready) {
-        action.setAttribute("target", "_blank");
-        action.setAttribute("rel", "noreferrer");
-      } else {
-        action.removeAttribute("target");
-        action.removeAttribute("rel");
-      }
+      action.removeAttribute("target");
+      action.removeAttribute("rel");
     }
 
     action.addEventListener("click", function (event) {
-      if (nameInput.value.trim() && dateInput.value && peopleInput.value) return;
+      if (nameInput.value.trim() && dateInput.value && peopleInput.value) {
+        saveBookingDraft(tourInput, dateInput, peopleInput);
+        return;
+      }
       event.preventDefault();
       var target = !nameInput.value.trim() ? nameInput : !dateInput.value ? dateInput : peopleInput;
       target.focus({ preventScroll: true });
@@ -645,8 +662,6 @@ export default function HomePage() {
                         data-tour-id={tour.id}
                         data-whatsapp-key={tour.id}
                         href={whatsappHrefForKey(tour.id as WhatsappMessageKey)}
-                        rel="noreferrer"
-                        target="_blank"
                         data-analytics-event={`whatsapp_click_${tour.id}_en_v2_tour_card`}
                         data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}"
                         data-analytics-tour={tour.id}
@@ -762,7 +777,7 @@ export default function HomePage() {
               <LocalizedText id="v2.contact.text">{enText("v2.contact.text")}</LocalizedText>
             </p>
             <div className="mt-7 grid gap-3 text-sm text-pearl/90">
-              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={whatsappHrefForKey("default")} target="_blank" rel="noreferrer" data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_v2_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_contact_info">
+              <a className="flex items-center gap-3 rounded-lg border border-white/12 bg-white/8 p-3 transition hover:bg-white/12" href={whatsappHrefForKey("default")} data-whatsapp-key="default" data-analytics-event="whatsapp_click_default_en_v2_contact_info" data-analytics-event-template="whatsapp_click_{tour}_{language}_{placement}" data-analytics-tour="default" data-analytics-placement="v2_contact_info">
                 <MessageCircle className="h-4 w-4 text-sand" aria-hidden />
                 <LocalizedText id="minimal.contact.whatsapp">{enText("minimal.contact.whatsapp")}</LocalizedText>
               </a>

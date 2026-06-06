@@ -77,7 +77,7 @@
 - Reworked the booking form options to render plain text, kept FR / AL / EN labels coherent in the generated WhatsApp message and added a content guard so this cannot regress silently.
 - Added the custom Next image quality values to `next.config.mjs` and extended the content guard to catch unconfigured `next/image` quality values before deployment.
 - Found a booking-quality issue in the one-minute form: fixed-time tours could still generate WhatsApp messages with incompatible preferred times.
-- Constrained `Sunset Private Tour` to the sunset option and `Morning Fishing Tour` to the existing 5 AM to 8 AM source time, then added a content guard so those fixed-time mappings cannot disappear silently.
+- Constrained `Sunset tour` to the sunset option and `Morning Fishing Tour` to the existing 5 AM to 8 AM source time, then added a content guard so those fixed-time mappings cannot disappear silently.
 - Audited local and live mobile booking again and found that the one-minute date field accepted past dates.
 - Added a client-side local minimum date and manual-entry clamp so a past date cannot appear in the generated WhatsApp booking message, then guarded the behavior in `content:guard`.
 - Audited local and live mobile booking again and found that the one-minute form could still send without a date or name, and the WhatsApp / email-app links bypassed the inline validation path.

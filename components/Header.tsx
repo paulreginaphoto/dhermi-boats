@@ -12,7 +12,7 @@ const enText = (key: string) => translations.en[key] ?? "";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b border-ink/10 bg-pearl/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-[90] isolate border-b border-ink/10 bg-pearl/90 backdrop-blur-xl">
       <div className="relative mx-auto flex h-20 max-w-site items-center justify-between gap-2 px-2 sm:gap-3 sm:px-4 md:px-8">
         <Link className="flex min-h-11 min-w-0 flex-1 items-center leading-none lg:flex-none" href="/" prefetch={false}>
           <span className="flex min-w-0 flex-col leading-none">

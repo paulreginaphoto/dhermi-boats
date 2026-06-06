@@ -62,6 +62,10 @@ for (const filePath of collectFiles(OUT_DIR)) {
       failures.push(`${relative}: WhatsApp message contains emoji/replacement character -> ${decoded.slice(0, 120)}`);
     }
 
+    if (decoded.includes("__")) {
+      failures.push(`${relative}: WhatsApp message still contains blank placeholders -> ${decoded.slice(0, 120)}`);
+    }
+
     if (!decoded.includes("\n\n")) {
       failures.push(`${relative}: WhatsApp message is missing the blank line after greeting`);
     }
@@ -74,13 +78,9 @@ for (const filePath of collectFiles(OUT_DIR)) {
   }
 }
 
-if (checkedLinks === 0) {
-  failures.push("No WhatsApp links found in exported HTML.");
-}
-
 if (failures.length > 0) {
   console.error(["qa-whatsapp-messages: failed", ...failures.slice(0, 40)].join("\n- "));
   process.exit(1);
 }
 
-console.log(`qa-whatsapp-messages: OK (${checkedLinks} exported WhatsApp links checked).`);
+console.log(`qa-whatsapp-messages: OK (${checkedLinks} exported direct WhatsApp links checked).`);

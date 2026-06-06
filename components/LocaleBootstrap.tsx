@@ -71,16 +71,16 @@ const localizedPageMetadata = JSON.stringify({
   },
   "/contact/": {
     en: {
-      title: "Contact Dhermi Boat | WhatsApp Booking",
-      description: translations.en["contact.hero.text"] ?? "Date, group, tour. WhatsApp is fastest."
+      title: "Contact Dhermi Boat | Booking Form",
+      description: "Fill the booking form, then send the completed request by WhatsApp or email."
     },
     fr: {
-      title: "Contact Dhermi Boat | Réservation WhatsApp",
-      description: translations.fr["contact.hero.text"] ?? "Date, groupe, tour. WhatsApp est le plus rapide."
+      title: "Contact Dhermi Boat | Formulaire de réservation",
+      description: "Remplissez le formulaire, puis envoyez la demande complète par WhatsApp ou email."
     },
     sq: {
-      title: "Kontakt Dhermi Boat | Rezervim WhatsApp",
-      description: translations.sq["contact.hero.text"] ?? "Data, grupi, turi. WhatsApp është më i shpejtë."
+      title: "Kontakt Dhermi Boat | Formular rezervimi",
+      description: "Plotësoni formularin, pastaj dërgoni kërkesën me WhatsApp ose email."
     }
   }
 });
@@ -235,6 +235,12 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       .trim();
   }
 
+  function bookingFormHref(key) {
+    var contactPath = (basePath ? basePath : "") + "/contact/";
+    var tourKey = key && key !== "default" ? "?tour=" + encodeURIComponent(key) : "";
+    return contactPath + tourKey + "#book";
+  }
+
   function setContent(node) {
     var key = node.getAttribute("data-i18n");
     if (!key) return;
@@ -254,9 +260,12 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
       window.document.querySelectorAll("[data-whatsapp-key]").forEach(function (link) {
         var key = link.getAttribute("data-whatsapp-key");
         var messageMap = key && whatsappMessages[key];
-        var message = messageMap && (messageMap[locale] || messageMap[defaultLocale]);
-        if (message && link.setAttribute) {
-          writeAttr(link, "href", "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(cleanWhatsappMessage(message)));
+        if (messageMap && link.setAttribute) {
+          writeAttr(link, "href", bookingFormHref(key));
+          if (link.removeAttribute) {
+            link.removeAttribute("target");
+            link.removeAttribute("rel");
+          }
         }
       });
     } catch (_e) {}

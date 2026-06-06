@@ -50,16 +50,16 @@ for (const obsoleteRailFragment of ["data-tour-rail", "data-tour-track", "data-t
 }
 
 for (const fragment of [
-  'shortTitle: "Sunset Lovers Tour"',
+  'shortTitle: "Sunset tour"',
   'bestFor: "Couples, proposals and quiet evenings"',
-  '"tour.sunset.shortTitle": "Sunset Lovers Tour"',
+  '"tour.sunset.shortTitle": "Sunset tour"',
   '"tour.sunset.bestFor": "Couples, proposals and quiet evenings"',
   '"tour.sunset.shortTitle": "Sunset tour"',
   '"tour.sunset.bestFor": "Couples, demandes et soirées calmes"'
 ]) {
   const source = fragment.startsWith("shortTitle") || fragment.startsWith("bestFor") ? contentSource : i18nSource;
   if (!source.includes(fragment)) {
-    fail(`missing sunset lovers copy: ${fragment}`);
+    fail(`missing sunset copy: ${fragment}`);
   }
 }
 

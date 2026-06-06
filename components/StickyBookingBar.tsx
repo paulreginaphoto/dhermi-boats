@@ -19,8 +19,6 @@ export function StickyBookingBar() {
           className="inline-flex min-h-14 flex-col items-center justify-center gap-1 rounded-lg bg-ink px-2 text-[0.68rem] font-bold leading-none text-pearl shadow-sm"
           data-whatsapp-key="default"
           href={whatsappHrefForKey("default")}
-          rel="noreferrer"
-          target="_blank"
           {...conversionAttrs({ tourId: "default", placement: "sticky_mobile" })}
         >
           <MessageCircle className="h-4 w-4" aria-hidden />

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import { CalendarDays, Mail, MessageCircle, Minus, Phone, Plus, ShieldCheck, UserRound } from "lucide-react";
+import { BrandProofStrip } from "@/components/BrandProofStrip";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
@@ -15,7 +16,8 @@ const flexibleTimeOptions = ["Flexible", "Morning", "Afternoon", "Sunset"] as co
 const fixedOnlyTimeOptions = ["FishingMorning"] as const;
 const timeOptions = [...flexibleTimeOptions, ...fixedOnlyTimeOptions] as const;
 type TimeOption = (typeof timeOptions)[number];
-const dateDisplayFormat = "5 January 2025";
+type BookingFormMode = "default" | "contact";
+const dateDisplayFormat = "Select date";
 
 const capacityByTourId = {
   gjipe: 15,
@@ -32,9 +34,9 @@ const fixedTimeByTourId = {
 
 type FormLocale = "en" | "fr" | "sq";
 const dateDisplayFormats: Record<FormLocale, string> = {
-  en: "5 January 2025",
-  fr: "5 Janvier 2025",
-  sq: "5 Janar 2025"
+  en: "Select date",
+  fr: "Choisir la date",
+  sq: "Zgjidhni daten"
 };
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
 const enText = (key: string) => translations.en[key] ?? "";
@@ -94,21 +96,21 @@ const tourOptionLabels: Record<FormLocale, Record<string, string>> = {
     gjipe: "Gjipe Tour",
     grama: "Grama Tour",
     private: "Tailor-made private tour",
-    sunset: "Sunset Private Tour",
+    sunset: "Sunset tour",
     fishing: "Morning Fishing Tour"
   },
   fr: {
     gjipe: "Tour de Gjipe",
     grama: "Tour de Grama",
     private: "Tour privé sur mesure",
-    sunset: "Tour privé au coucher du soleil",
+    sunset: "Sunset tour",
     fishing: "Tour pêche du matin"
   },
   sq: {
     gjipe: "Turi i Gjipesë",
     grama: "Turi i Gramës",
     private: "Tur privat sipas dëshirës",
-    sunset: "Tur privat në perëndim",
+    sunset: "Sunset tour",
     fishing: "Tur peshkimi në mëngjes"
   }
 };
@@ -180,19 +182,19 @@ const dateFieldCopy: Record<FormLocale, { empty: string; selected: string; forma
   en: {
     empty: "Choose a date",
     selected: "Selected date",
-    format: "Example: 5 January 2025",
+    format: "No date selected yet",
     calendar: "Calendar"
   },
   fr: {
     empty: "Choisir une date",
     selected: "Date sélectionnée",
-    format: "Exemple : 5 Janvier 2025",
+    format: "Aucune date sélectionnée",
     calendar: "Calendrier"
   },
   sq: {
     empty: "Zgjidhni daten",
     selected: "Data e zgjedhur",
-    format: "Shembull: 5 Janar 2025",
+    format: "Ende pa date",
     calendar: "Kalendari"
   }
 };
@@ -295,6 +297,15 @@ const staticBookingEnhancerScript = String.raw`
     return "en";
   }
 
+  function readRequestedTourId() {
+    try {
+      var params = new URL(window.location.href).searchParams;
+      var tourId = params.get("tour") || params.get("tourId") || "";
+      return config.capacityByTourId[tourId] ? tourId : "";
+    } catch (error) {}
+    return "";
+  }
+
   function todayInputValue() {
     var today = new Date();
     var year = today.getFullYear();
@@ -390,12 +401,14 @@ const staticBookingEnhancerScript = String.raw`
     if (!dateInput || !nameInput || !timeSelect || !whatsappAction || !emailAction) return;
 
     var minimumDate = todayInputValue();
+    var requestedTourId = readRequestedTourId();
+    if (requestedTourId) selectedTourId = requestedTourId;
     if (!dateInput.getAttribute("min")) dateInput.setAttribute("min", minimumDate);
 
     try {
       var saved = JSON.parse(window.localStorage.getItem(config.storageKey) || "null");
       if (saved && config.capacityByTourId[saved.tourId]) {
-        selectedTourId = saved.tourId;
+        if (!requestedTourId) selectedTourId = saved.tourId;
         if (typeof saved.date === "string" && saved.date >= minimumDate) dateInput.value = saved.date;
         if (typeof saved.time === "string") selectedTime = saved.time;
         if (typeof saved.adults === "number") adults = saved.adults;
@@ -641,6 +654,13 @@ function readLocale(): FormLocale {
   return browserLocale();
 }
 
+function readRequestedTourId() {
+  if (typeof window === "undefined") return "";
+  const params = new URL(window.location.href).searchParams;
+  const requestedTourId = params.get("tour") || params.get("tourId") || "";
+  return selectableTours.some((tour) => tour.id === requestedTourId) ? requestedTourId : "";
+}
+
 function isTimeOption(value: string): value is TimeOption {
   return timeOptions.includes(value as TimeOption);
 }
@@ -694,7 +714,8 @@ function readStoredBookingDraft(minimumDate: string) {
   }
 }
 
-export function OneMinuteBooking() {
+export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode } = {}) {
+  const isContactMode = mode === "contact";
   const [locale, setLocale] = useState<FormLocale>("en");
   const [tourId, setTourId] = useState(selectableTours[0]?.id ?? "gjipe");
   const [date, setDate] = useState("");
@@ -739,10 +760,15 @@ export function OneMinuteBooking() {
     const timer = window.setTimeout(() => {
       const currentMinimumDate = todayInputValue();
       const bookingDraft = readStoredBookingDraft(currentMinimumDate);
+      const requestedTourId = readRequestedTourId();
+      const nextTourId = requestedTourId || bookingDraft.tourId;
+      const nextTimeOptions = timeOptionsForTour(nextTourId);
+      const draftTime = bookingDraft.time;
+      const restoredTime = nextTimeOptions.includes(draftTime) ? draftTime : nextTimeOptions[0];
 
       setMinimumDate(currentMinimumDate);
-      setTourId(bookingDraft.tourId);
-      setTime(bookingDraft.time);
+      setTourId(nextTourId);
+      setTime(restoredTime);
       setAdults(bookingDraft.adults);
       setChildren(bookingDraft.children);
       setDate(bookingDraft.date);
@@ -852,9 +878,20 @@ export function OneMinuteBooking() {
     dateInput.focus({ preventScroll: true });
   }
 
+  const sectionClass = isContactMode ? "overflow-hidden bg-limestone text-ink" : "overflow-hidden bg-ink text-pearl";
+  const bandClass = isContactMode
+    ? "site-band flex justify-center py-6 md:py-10"
+    : "site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center";
+  const formClass = isContactMode
+    ? "w-full max-w-5xl rounded-xl border border-ink/10 bg-pearl p-4 text-ink shadow-[0_28px_70px_rgba(7,27,38,0.12)] md:p-6"
+    : "rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6";
+  const actionGridBaseClass = "mt-5 grid gap-3 sm:grid-cols-2";
+  const actionGridClass = isContactMode ? actionGridBaseClass : `${actionGridBaseClass} lg:grid-cols-[1.2fr_0.9fr_0.7fr]`;
+
   return (
-    <section id="book" className="overflow-hidden bg-ink text-pearl">
-      <div className="site-band grid gap-10 py-14 md:py-20 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+    <section id="book" className={sectionClass} data-contact-form-page={isContactMode ? "true" : undefined}>
+      <div className={bandClass}>
+        {!isContactMode ? (
         <div className="max-w-xl">
           <p className="text-xs font-bold uppercase tracking-[0.24em] text-sand">
             <LocalizedText id="quick.label">{enText("quick.label")}</LocalizedText>
@@ -880,12 +917,24 @@ export function OneMinuteBooking() {
             ))}
           </div>
         </div>
+        ) : null}
 
         <form
-          className="rounded-lg border border-white/14 bg-pearl p-4 text-ink shadow-[0_30px_80px_rgba(0,0,0,0.22)] md:p-6"
+          className={formClass}
           data-booking-form="true"
           onSubmit={(event) => event.preventDefault()}
         >
+          {isContactMode ? (
+            <div className="mb-5 border-b border-ink/10 pb-5">
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-bronze">
+                <LocalizedText id="quick.label">{enText("quick.label")}</LocalizedText>
+              </p>
+              <h1 className="mt-2 font-serif text-3xl font-medium leading-tight text-ink md:text-5xl">
+                <LocalizedText id="quick.title">{enText("quick.title")}</LocalizedText>
+              </h1>
+              <BrandProofStrip className="mt-4" />
+            </div>
+          ) : null}
           <div className="grid gap-5 lg:grid-cols-[1fr_0.88fr]">
             <div>
               <label className="text-xs font-bold uppercase tracking-[0.18em] text-bronze" htmlFor="quick-tour">
@@ -1191,7 +1240,7 @@ export function OneMinuteBooking() {
             <p className="mt-3 whitespace-pre-line text-sm leading-6 text-ink-soft" data-booking-summary-message="true">{bookingMessage}</p>
           </details>
 
-          <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.7fr]">
+          <div className={actionGridClass}>
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-ink px-5 text-sm font-semibold text-pearl shadow-soft transition hover:bg-navy active:translate-y-px"
               aria-disabled={!bookingLinksReady}
@@ -1220,6 +1269,7 @@ export function OneMinuteBooking() {
               <Mail className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="quick.email">{enText("quick.email")}</LocalizedText>
             </a>
+            {!isContactMode ? (
             <a
               className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-5 text-sm font-semibold text-ink transition hover:border-ink/28 hover:bg-pearl active:translate-y-px"
               data-analytics-event="call_click"
@@ -1228,6 +1278,7 @@ export function OneMinuteBooking() {
               <Phone className="h-4 w-4" aria-hidden strokeWidth={1.75} />
               <LocalizedText id="cta.call">{enText("cta.call")}</LocalizedText>
             </a>
+            ) : null}
           </div>
         </form>
         <InlineRuntimeScript id="static-booking-enhancer" code={staticBookingEnhancerScript} />

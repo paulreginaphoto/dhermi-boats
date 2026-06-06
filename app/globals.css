@@ -27,6 +27,26 @@ body {
   overflow-x: clip;
 }
 
+body:has([data-contact-form-page="true"]) {
+  padding-bottom: 0;
+}
+
+body:has([data-contact-form-page="true"]) footer,
+body:has([data-contact-form-page="true"]) [data-sticky-booking-bar],
+body:has([data-contact-form-page="true"]) [data-floating-whatsapp-cta] {
+  display: none;
+}
+
+[data-booking-action][aria-disabled="true"] {
+  box-shadow: none;
+}
+
+[data-booking-action="whatsapp"][aria-disabled="true"] {
+  border: 1px solid rgba(16, 34, 45, 0.12);
+  background: #fff;
+  color: rgba(16, 34, 45, 0.58);
+}
+
 a,
 button,
 input,
