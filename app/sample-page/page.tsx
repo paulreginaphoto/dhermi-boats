@@ -5,6 +5,7 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Dhermi Boat Home",
   description: "This legacy sample page now points to the Dhermi Boat home page.",
+  robots: { index: false, follow: true },
   alternates: { canonical: canonical("/") }
 };
 

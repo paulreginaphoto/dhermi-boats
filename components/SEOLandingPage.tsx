@@ -109,7 +109,7 @@ export function SEOLandingPage({
       <section className="bg-limestone py-12 md:py-20">
         <div className="site-band">
           <SectionHeading label="Choose the right route" title="Dhermi boat tour options for this search">
-            <p>Start with the route that matches your day. Every button opens the same simple booking form with the tour already selected.</p>
+            <p>Pick the route that matches your date, budget and group. The booking form opens with that tour selected.</p>
           </SectionHeading>
           <div className="mt-8 grid gap-4 lg:grid-cols-3">
             {tours.map((tour) => (
@@ -168,8 +168,8 @@ export function SEOLandingPage({
 
       <section className="bg-pearl py-12 md:py-20">
         <div className="site-band grid gap-10 lg:grid-cols-[0.72fr_1fr]">
-          <SectionHeading label="Fast answers" title="Before you book">
-            <p>Short answers for people comparing boat tours in Dhërmi right now.</p>
+          <SectionHeading label="Route questions" title="Before you book">
+            <p>Answers on routes, prices, children, private tours and availability from Dhërmi.</p>
           </SectionHeading>
           <div className="divide-y divide-ink/10 rounded-md border border-ink/10 bg-limestone/70">
             {faqs.map((faq) => (

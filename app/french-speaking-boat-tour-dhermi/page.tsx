@@ -11,7 +11,7 @@ const heroTour = selectedTours.find((tour) => tour.id === "grama") ?? selectedTo
 const faqs = [
   {
     question: "Does the skipper speak French?",
-    answer: "Yes. Dhermi Boat can help French-speaking guests understand the routes, prices and practical details before booking."
+    answer: "Yes. French-speaking guests can ask about routes, prices and availability before booking."
   },
   {
     question: "Can French families book directly?",
@@ -19,14 +19,14 @@ const faqs = [
   },
   {
     question: "Which route is easiest to understand before booking?",
-    answer: "Gjipe is the simplest short route. Grama is the more complete Karaburun route. Private is best when your group wants custom timing."
+    answer: "Gjipe is the short route. Grama covers more of Karaburun. Private is best when your group wants custom timing."
   }
 ];
 
 export const metadata: Metadata = {
   title: "French-Speaking Boat Tour Dhermi | Dhermi Boat",
   description:
-    "Book a French-speaking Dhermi boat tour with a local skipper. Gjipe, Grama Bay, Blue Cave and private boat routes explained clearly before booking.",
+    "Book a French-speaking Dhermi boat tour with a local skipper. Compare Gjipe, Grama Bay, Blue Cave and private boat routes before booking.",
   alternates: { canonical: canonical(routePath), languages: languageAlternates(routePath) }
 };
 
@@ -53,7 +53,7 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
       <SEOLandingPage
         eyebrow="French-speaking skipper"
         title="French-speaking boat tour Dhermi"
-        summary="French-speaking guests can compare the routes clearly before booking: Gjipe, Grama Bay, Blue Cave and private boat tours from Dhërmi."
+        summary="French-speaking guests can compare Gjipe, Grama Bay, Blue Cave and private boat tours from Dhërmi before booking."
         image={heroTour.image}
         imageAlt={heroTour.imageAlt ?? "French-speaking Dhermi boat tour on the Albanian Riviera"}
         primaryTourId="default"
@@ -62,12 +62,12 @@ export default function FrenchSpeakingBoatTourDhermiPage() {
           { label: "Routes", value: "Gjipe, Grama Bay, Blue Cave, private tours" },
           { label: "Booking", value: "Tour, date and group sent to WhatsApp" }
         ]}
-        introTitle="Clear explanations matter when you book from abroad."
-        intro="The site keeps prices, duration and route choices visible. The form sends the useful booking details first, so French-speaking guests do not need to rewrite the message in WhatsApp."
+        introTitle="Prices, routes and language before you book."
+        intro="The page shows prices, duration and route choices. The form sends tour, date and group size before WhatsApp opens."
         steps={[
           { title: "Compare the routes", text: "Gjipe is shorter, Grama is the complete route, and private gives your group custom timing." },
           { title: "Send the form", text: "Choose the tour, date and group size. The message is prepared automatically." },
-          { title: "Receive the options", text: "We reply with available routes and practical details in French, English or Albanian." }
+          { title: "Receive the options", text: "We reply with available routes, times and prices in French, English or Albanian." }
         ]}
         tours={selectedTours}
         faqs={faqs}

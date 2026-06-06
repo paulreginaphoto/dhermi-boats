@@ -62,17 +62,17 @@ export default function FamilyBoatTourDhermiPage() {
           { label: "Short shared option", value: "Gjipe: 1h30 with swim stop" },
           { label: "Children", value: "Child prices on Gjipe and Grama, ages 5-10" }
         ]}
-        introTitle="The right family tour depends on rhythm, not hype."
-        intro="Families usually need timing, swim stops and enough space for bags, towels and children. The booking form sends those details first."
+        introTitle="Choose by timing, swim stops and group size."
+        intro="Families usually need a shorter route, calmer stops or a private boat. The form sends group size, date and children first."
         steps={[
           { title: "Tell us the group", text: "Adults, children and preferred date are the details that change the recommendation." },
-          { title: "Choose shared or private", text: "Shared tours are clear and affordable. Private tours are better when you want calmer timing and custom stops." },
-          { title: "Confirm before paying", text: "Availability and practical details come before any commitment." }
+          { title: "Choose shared or private", text: "Gjipe keeps the day shorter. Private tours give your family custom timing and swim stops." },
+          { title: "Confirm before paying", text: "Availability, route and price are confirmed before any payment." }
         ]}
         tours={selectedTours}
         faqs={faqs}
-        finalTitle="Make the boat day easy for everyone."
-        finalText="Send one complete request and we will guide you toward the route that fits your family rhythm."
+        finalTitle="Book the family route that fits the day."
+        finalText="Send date, adults, children and preferred route. We reply with the option that fits your group."
       />
     </>
   );
