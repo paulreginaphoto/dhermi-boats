@@ -399,7 +399,7 @@ body[data-gallery-open] {
 
 .gallery-feed-count {
   left: 0.75rem;
-  bottom: 0.75rem;
+  top: 0.75rem;
   border-radius: 999px;
   padding: 0.35rem 0.62rem;
   font-size: 0.72rem;

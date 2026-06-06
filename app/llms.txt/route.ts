@@ -22,6 +22,9 @@ Main pages:
 - ${canonical("/sunset-boat-tour/")}
 - ${canonical("/morning-fishing-tour/")}
 - ${canonical("/destinations/blue-cave/")}
+- ${canonical("/boat-tour-dhermi-today/")}
+- ${canonical("/family-boat-tour-dhermi/")}
+- ${canonical("/french-speaking-boat-tour-dhermi/")}
 - ${canonical("/faq/")}
 - ${canonical("/contact/")}
 `;

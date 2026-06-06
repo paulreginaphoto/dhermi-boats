@@ -17,11 +17,8 @@ const canonicalTourPaths = [
 
 const legacyRedirects = new Map([
   ["/tours/private/", "/private-boat-tour-albania/"],
-  ["/boat-tour-dhermi-today/", "/tours/"],
   ["/blue-cave-boat-tour-dhermi/", "/grama-bay-boat-tour/"],
   ["/dhermi-to-grama-bay-boat/", "/grama-bay-boat-tour/"],
-  ["/family-boat-tour-dhermi/", "/private-boat-tour-albania/"],
-  ["/french-speaking-boat-tour-dhermi/", "/contact/"],
   ["/tours/group/", "/tours/"],
   ["/destinations/gjipe/", "/gjipe-boat-tour/"],
   ["/destinations/grama-bay/", "/grama-bay-boat-tour/"],
@@ -32,6 +29,12 @@ const legacyRedirects = new Map([
   ["/mon-compte/", "/"],
   ["/commander/", "/contact/"]
 ]);
+
+const seoLandingPaths = [
+  "/boat-tour-dhermi-today/",
+  "/family-boat-tour-dhermi/",
+  "/french-speaking-boat-tour-dhermi/"
+];
 
 const legacyAttachmentRedirects = new Map([
   ["/20250721_103929/", "/boat-photos/"]
@@ -225,6 +228,9 @@ function checkPublicLinks() {
   for (const routePath of canonicalTourPaths) {
     assertIncludes("app/sitemap.ts", sitemap, `{ path: "${routePath}"`, `sitemap must include ${routePath}`);
   }
+  for (const routePath of seoLandingPaths) {
+    assertIncludes("app/sitemap.ts", sitemap, `{ path: "${routePath}"`, `sitemap must include SEO landing page ${routePath}`);
+  }
 }
 
 function checkLanguageRouting() {
@@ -312,6 +318,23 @@ function checkExportedHtml() {
       fail(`${routeLabel}: exported page must not expose crawlable language query links`);
     }
     assertNotIncludes(routeLabel, html, "NEXT_REDIRECT", "canonical route must not be a Next redirect shell");
+  }
+
+  for (const routePath of seoLandingPaths) {
+    const file = htmlPathForRoute(routePath);
+    const routeLabel = relative(file);
+    if (!fs.existsSync(file)) {
+      fail(`${routeLabel}: exported SEO landing route is missing`);
+      continue;
+    }
+
+    const html = fs.readFileSync(file, "utf8");
+    assertIncludes(routeLabel, html, `rel="canonical" href="${canonicalUrl(routePath)}"`, "exported SEO landing page must have canonical tag");
+    if (!hasHreflang(html, "x-default", canonicalUrl(routePath))) {
+      fail(`${routeLabel}: exported SEO landing page must have x-default hreflang`);
+    }
+    assertNotIncludes(routeLabel, html, "NEXT_REDIRECT", "SEO landing page must not be a redirect shell");
+    assertNotIncludes(routeLabel, html, "LegacyRedirectPage", "SEO landing page must not render legacy redirect content");
   }
 
   const allLegacyRedirects = new Map([...legacyRedirects, ...legacyAttachmentRedirects]);

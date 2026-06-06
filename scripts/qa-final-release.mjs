@@ -16,6 +16,9 @@ const publicUrls = [
   "/morning-fishing-tour/",
   "/destinations/",
   "/destinations/blue-cave/",
+  "/boat-tour-dhermi-today/",
+  "/family-boat-tour-dhermi/",
+  "/french-speaking-boat-tour-dhermi/",
   "/faq/",
   "/contact/"
 ];
@@ -26,11 +29,8 @@ const sitemapUrls = [
 ].filter((value, index, list) => list.indexOf(value) === index);
 
 const excludedSitemapUrls = [
-  "/boat-tour-dhermi-today/",
   "/blue-cave-boat-tour-dhermi/",
   "/dhermi-to-grama-bay-boat/",
-  "/family-boat-tour-dhermi/",
-  "/french-speaking-boat-tour-dhermi/",
   "/tours/group/",
   "/tours/private/",
   "/destinations/gjipe/",

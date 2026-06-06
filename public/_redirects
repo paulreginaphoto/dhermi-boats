@@ -2,16 +2,10 @@
 # GitHub Pages ignores this file; use Cloudflare redirect rules if production stays on GitHub Pages.
 /tours/private/ /private-boat-tour-albania/ 301
 /tours/private /private-boat-tour-albania/ 301
-/boat-tour-dhermi-today/ /tours/ 301
-/boat-tour-dhermi-today /tours/ 301
 /blue-cave-boat-tour-dhermi/ /grama-bay-boat-tour/ 301
 /blue-cave-boat-tour-dhermi /grama-bay-boat-tour/ 301
 /dhermi-to-grama-bay-boat/ /grama-bay-boat-tour/ 301
 /dhermi-to-grama-bay-boat /grama-bay-boat-tour/ 301
-/family-boat-tour-dhermi/ /private-boat-tour-albania/ 301
-/family-boat-tour-dhermi /private-boat-tour-albania/ 301
-/french-speaking-boat-tour-dhermi/ /contact/ 301
-/french-speaking-boat-tour-dhermi /contact/ 301
 /tours/group/ /tours/ 301
 /tours/group /tours/ 301
 /destinations/gjipe/ /gjipe-boat-tour/ 301

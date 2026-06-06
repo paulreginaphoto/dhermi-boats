@@ -155,6 +155,58 @@ export function tourCollectionSchema() {
   };
 }
 
+export function serviceLandingPageSchema({
+  path,
+  name,
+  description,
+  serviceType,
+  keywords = []
+}: {
+  path: string;
+  name: string;
+  description: string;
+  serviceType: string;
+  keywords?: string[];
+}) {
+  const pageId = `${canonical(path)}#webpage`;
+  const serviceId = `${canonical(path)}#service`;
+
+  return [
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "@id": pageId,
+      url: canonical(path),
+      name,
+      description,
+      isPartOf: { "@id": websiteId },
+      about: { "@id": serviceId },
+      mainEntity: { "@id": serviceId },
+      keywords
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "@id": serviceId,
+      name,
+      description,
+      serviceType,
+      provider: { "@id": businessId },
+      areaServed: ["Dhërmi", "Dhermi", "Gjipe", "Grama Bay", "Blue Cave", "Karaburun", "Albanian Riviera"],
+      availableChannel: {
+        "@type": "ServiceChannel",
+        serviceUrl: canonical("/contact/"),
+        availableLanguage: ["English", "French", "Albanian"]
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Dhermi boat tours",
+        itemListElement: orderedTours.map((tour) => tourOffer(tour))
+      }
+    }
+  ];
+}
+
 export function breadcrumbSchema(items: Array<{ name: string; url: string }>) {
   return {
     "@context": "https://schema.org",

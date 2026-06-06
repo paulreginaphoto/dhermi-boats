@@ -21,6 +21,9 @@ const publicRoutes = [
   "/boat-photos/",
   "/destinations/",
   "/destinations/blue-cave/",
+  "/boat-tour-dhermi-today/",
+  "/family-boat-tour-dhermi/",
+  "/french-speaking-boat-tour-dhermi/",
   "/faq/",
   "/contact/"
 ];
