@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent } from "react";
 import Image from "next/image";
-import { CalendarDays, Mail, MessageCircle, Minus, Plus, ShieldCheck, UserRound } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, Mail, MessageCircle, Minus, Plus, ShieldCheck, UserRound } from "lucide-react";
 import { InlineRuntimeScript } from "@/components/InlineRuntimeScript";
 import { LocalizedText } from "@/components/LocalizedText";
 import { orderedTours } from "@/data/content";
@@ -42,6 +42,28 @@ const dateInputLang: Record<FormLocale, string> = {
   en: "en-GB",
   fr: "fr-FR",
   sq: "sq-AL"
+};
+const dateWeekdayNames: Record<FormLocale, string[]> = {
+  en: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+  fr: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
+  sq: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"]
+};
+const calendarCopy: Record<FormLocale, { previous: string; next: string; choose: string }> = {
+  en: {
+    previous: "Previous month",
+    next: "Next month",
+    choose: "Choose date"
+  },
+  fr: {
+    previous: "Mois précédent",
+    next: "Mois suivant",
+    choose: "Choisir la date"
+  },
+  sq: {
+    previous: "Muaji i kaluar",
+    next: "Muaji tjetër",
+    choose: "Zgjidh datën"
+  }
 };
 const bookingDraftStorageKey = "dhermi-booking-draft-v1";
 const enText = (key: string) => translations.en[key] ?? "";
@@ -237,6 +259,8 @@ const staticBookingEnhancerConfig = {
   dateDisplayFormats,
   dateInputLang,
   dateMonthNames,
+  dateWeekdayNames,
+  calendarCopy,
   messageIntro,
   fieldLabels,
   dateFieldCopy,
@@ -339,6 +363,40 @@ const staticBookingEnhancerScript = String.raw`
     return formatBookingDate(value, locale) || fallbackFormat;
   }
 
+  function parseDateParts(value) {
+    var parts = String(value || "").split("-");
+    if (parts.length !== 3) return null;
+    var year = Number(parts[0]);
+    var month = Number(parts[1]);
+    var day = Number(parts[2]);
+    var dateValue = new Date(Date.UTC(year, month - 1, day));
+    if (
+      dateValue.getUTCFullYear() !== year ||
+      dateValue.getUTCMonth() !== month - 1 ||
+      dateValue.getUTCDate() !== day
+    ) {
+      return null;
+    }
+    return { year: year, month: month, day: day, date: dateValue };
+  }
+
+  function inputValueFromDate(dateValue) {
+    var year = dateValue.getUTCFullYear();
+    var month = String(dateValue.getUTCMonth() + 1).padStart(2, "0");
+    var day = String(dateValue.getUTCDate()).padStart(2, "0");
+    return year + "-" + month + "-" + day;
+  }
+
+  function monthStartFromInput(value, fallbackInput) {
+    var parsed = parseDateParts(value) || parseDateParts(fallbackInput);
+    var base = parsed ? parsed.date : new Date();
+    return new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1));
+  }
+
+  function addUtcMonths(dateValue, delta) {
+    return new Date(Date.UTC(dateValue.getUTCFullYear(), dateValue.getUTCMonth() + delta, 1));
+  }
+
   function cleanValue(value) {
     var clean = String(value || "").trim();
     return clean || "-";
@@ -400,6 +458,12 @@ const staticBookingEnhancerScript = String.raw`
     var dateStatus = root.querySelector("[data-booking-date-status]");
     var dateDisplay = root.querySelector("[data-booking-date-display]");
     var dateHint = root.querySelector("[data-booking-date-short]");
+    var calendarPanel = root.querySelector("[data-booking-calendar-panel]");
+    var calendarTitle = root.querySelector("[data-booking-calendar-title]");
+    var calendarWeekdays = root.querySelector("[data-booking-calendar-weekdays]");
+    var calendarGrid = root.querySelector("[data-booking-calendar-grid]");
+    var calendarPrev = root.querySelector("[data-booking-calendar-prev]");
+    var calendarNext = root.querySelector("[data-booking-calendar-next]");
     var phoneHint = root.querySelector("[data-booking-phone-hint]");
     var whatsappAction = root.querySelector("[data-booking-action='whatsapp']");
     var emailAction = root.querySelector("[data-booking-action='email']");
@@ -407,6 +471,8 @@ const staticBookingEnhancerScript = String.raw`
     if (!dateInput || !nameInput || !timeSelect || !whatsappAction || !emailAction) return;
     var inputLanguages = config.dateInputLang || {};
     dateInput.setAttribute("lang", inputLanguages[locale] || inputLanguages.en || "en-GB");
+    var calendarMonth = monthStartFromInput(dateInput.value, todayInputValue());
+    var calendarOpen = false;
 
     function applyLocale(nextLocale) {
       var normalizedLocale = normalizeLocale(nextLocale);
@@ -419,6 +485,7 @@ const staticBookingEnhancerScript = String.raw`
       prompts = config.requiredFieldPrompts[locale] || config.requiredFieldPrompts.en;
       summaryLabels = config.summaryLabels[locale] || config.summaryLabels.en;
       dateInput.setAttribute("lang", inputLanguages[locale] || inputLanguages.en || "en-GB");
+      renderCalendar();
     }
 
     var minimumDate = todayInputValue();
@@ -436,6 +503,7 @@ const staticBookingEnhancerScript = String.raw`
         if (typeof saved.children === "number") children = saved.children;
       }
     } catch (error) {}
+    calendarMonth = monthStartFromInput(dateInput.value, minimumDate);
 
     function capacity() {
       return config.capacityByTourId[selectedTourId] || 15;
@@ -489,6 +557,70 @@ const staticBookingEnhancerScript = String.raw`
       });
     }
 
+    function setCalendarOpen(open) {
+      calendarOpen = Boolean(open);
+      if (calendarPanel) calendarPanel.classList.toggle("hidden", !calendarOpen);
+      if (calendarPanel) calendarPanel.classList.toggle("block", calendarOpen);
+      if (calendarOpen) renderCalendar();
+    }
+
+    function renderCalendar() {
+      if (!calendarPanel || !calendarTitle || !calendarWeekdays || !calendarGrid) return;
+      var monthNamesByLocale = config.dateMonthNames || {};
+      var monthNames = monthNamesByLocale[locale] || monthNamesByLocale.fr || monthNamesByLocale.en || [];
+      var weekdayNamesByLocale = config.dateWeekdayNames || {};
+      var weekdayNames = weekdayNamesByLocale[locale] || weekdayNamesByLocale.en || [];
+      var copyByLocale = config.calendarCopy || {};
+      var calendarText = copyByLocale[locale] || copyByLocale.en || {};
+      calendarPanel.setAttribute("aria-label", calendarText.choose || "Choose date");
+      calendarTitle.textContent = (monthNames[calendarMonth.getUTCMonth()] || "") + " " + calendarMonth.getUTCFullYear();
+      if (calendarPrev) calendarPrev.setAttribute("aria-label", calendarText.previous || "Previous month");
+      if (calendarNext) calendarNext.setAttribute("aria-label", calendarText.next || "Next month");
+
+      while (calendarWeekdays.firstChild) calendarWeekdays.removeChild(calendarWeekdays.firstChild);
+      weekdayNames.forEach(function (weekday) {
+        var weekdayNode = document.createElement("span");
+        weekdayNode.className = "py-1";
+        weekdayNode.textContent = weekday;
+        calendarWeekdays.appendChild(weekdayNode);
+      });
+
+      while (calendarGrid.firstChild) calendarGrid.removeChild(calendarGrid.firstChild);
+      var monthStart = new Date(Date.UTC(calendarMonth.getUTCFullYear(), calendarMonth.getUTCMonth(), 1));
+      var firstGridDate = new Date(monthStart);
+      firstGridDate.setUTCDate(monthStart.getUTCDate() - monthStart.getUTCDay());
+      for (var index = 0; index < 42; index += 1) {
+        var day = new Date(firstGridDate);
+        day.setUTCDate(firstGridDate.getUTCDate() + index);
+        var dayValue = inputValueFromDate(day);
+        var isSelected = dayValue === dateInput.value;
+        var isOutsideMonth = day.getUTCMonth() !== calendarMonth.getUTCMonth();
+        var isDisabled = Boolean(minimumDate && dayValue < minimumDate);
+        var button = document.createElement("button");
+        button.type = "button";
+        button.className = [
+          "grid h-10 place-items-center rounded-md text-sm font-bold transition",
+          isSelected ? "bg-ink text-pearl" : "text-ink hover:bg-turquoise-soft",
+          isOutsideMonth && !isSelected ? "text-ink-soft/55" : "",
+          isDisabled ? "cursor-not-allowed opacity-30 hover:bg-transparent" : ""
+        ].join(" ");
+        button.textContent = String(day.getUTCDate());
+        button.disabled = isDisabled;
+        button.setAttribute("aria-label", (calendarText.choose || "Choose date") + ": " + formatDateShort(dayValue, locale));
+        button.setAttribute("aria-pressed", isSelected ? "true" : "false");
+        button.setAttribute("data-booking-calendar-day", "true");
+        button.setAttribute("data-date", dayValue);
+        button.addEventListener("click", function () {
+          var selectedDate = this.getAttribute("data-date") || "";
+          dateInput.value = selectedDate;
+          calendarMonth = monthStartFromInput(selectedDate, minimumDate);
+          setCalendarOpen(false);
+          updateLinks();
+        });
+        calendarGrid.appendChild(button);
+      }
+    }
+
     function bookingMessage() {
       var tourLabels = config.tourOptionLabels[locale] || config.tourOptionLabels.en;
       var timeLabels = config.timeOptionLabels[locale] || config.timeOptionLabels.en;
@@ -535,6 +667,7 @@ const staticBookingEnhancerScript = String.raw`
       }
       if (dateHint) dateHint.textContent = dateInput.value ? (dateCopy.selected + ": " + dateDisplayText) : (dateCopy.format || config.dateDisplayFormat);
       if (phoneHint) phoneHint.textContent = messages.phoneHint;
+      renderCalendar();
 
       whatsappAction.setAttribute("href", ready ? whatsappUrl(message) : missingTarget);
       whatsappAction.setAttribute("aria-disabled", ready ? "false" : "true");
@@ -563,9 +696,11 @@ const staticBookingEnhancerScript = String.raw`
       } catch (error) {}
     }
 
-    function requestNativeDatePicker(event) {
-      if (!dateInput) return;
-
+    function openCalendar(event) {
+      var eventTarget = event && event.target;
+      if (calendarPanel && eventTarget && calendarPanel.contains(eventTarget)) return;
+      if (event && event.cancelable) event.preventDefault();
+      calendarMonth = monthStartFromInput(dateInput.value, minimumDate);
       if (typeof dateInput.focus === "function") {
         try {
           dateInput.focus({ preventScroll: true });
@@ -573,23 +708,31 @@ const staticBookingEnhancerScript = String.raw`
           dateInput.focus();
         }
       }
-
-      if (typeof dateInput.showPicker === "function") {
-        try {
-          if (event && event.cancelable) event.preventDefault();
-          dateInput.showPicker();
-        } catch (error) {}
-      }
+      setCalendarOpen(true);
     }
 
     var dateShell = dateInput.parentElement;
     if (dateShell) {
-      dateShell.addEventListener("pointerdown", requestNativeDatePicker);
-      dateShell.addEventListener("touchstart", requestNativeDatePicker);
+      dateShell.addEventListener("pointerdown", openCalendar);
+      dateShell.addEventListener("touchstart", openCalendar);
       dateShell.addEventListener("keydown", function (event) {
         if (event.key === " " || event.key === "Enter" || event.key === "Spacebar") {
-          requestNativeDatePicker(event);
+          openCalendar(event);
         }
+      });
+    }
+    if (calendarPrev) {
+      calendarPrev.addEventListener("click", function (event) {
+        event.preventDefault();
+        calendarMonth = addUtcMonths(calendarMonth, -1);
+        renderCalendar();
+      });
+    }
+    if (calendarNext) {
+      calendarNext.addEventListener("click", function (event) {
+        event.preventDefault();
+        calendarMonth = addUtcMonths(calendarMonth, 1);
+        renderCalendar();
       });
     }
 
@@ -772,6 +915,55 @@ function readStoredBookingDraft(minimumDate: string) {
   }
 }
 
+function parseInputDate(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return null;
+
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const dateValue = new Date(Date.UTC(year, month - 1, day));
+
+  if (
+    dateValue.getUTCFullYear() !== year ||
+    dateValue.getUTCMonth() !== month - 1 ||
+    dateValue.getUTCDate() !== day
+  ) {
+    return null;
+  }
+
+  return { year, month, day, date: dateValue };
+}
+
+function inputValueFromDate(dateValue: Date) {
+  const year = dateValue.getUTCFullYear();
+  const month = String(dateValue.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(dateValue.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
+function addUtcMonths(dateValue: Date, delta: number) {
+  return new Date(Date.UTC(dateValue.getUTCFullYear(), dateValue.getUTCMonth() + delta, 1));
+}
+
+function monthStartFromInput(value: string, fallbackInput: string) {
+  const parsed = parseInputDate(value) ?? parseInputDate(fallbackInput);
+  const base = parsed?.date ?? new Date();
+  return new Date(Date.UTC(base.getUTCFullYear(), base.getUTCMonth(), 1));
+}
+
+function calendarDaysForMonth(monthDate: Date) {
+  const start = new Date(Date.UTC(monthDate.getUTCFullYear(), monthDate.getUTCMonth(), 1));
+  const firstGridDate = new Date(start);
+  firstGridDate.setUTCDate(start.getUTCDate() - start.getUTCDay());
+
+  return Array.from({ length: 42 }, (_, index) => {
+    const day = new Date(firstGridDate);
+    day.setUTCDate(firstGridDate.getUTCDate() + index);
+    return day;
+  });
+}
+
 export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode } = {}) {
   const isContactMode = mode === "contact";
   const [locale, setLocale] = useState<FormLocale>("en");
@@ -787,6 +979,8 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
   const [errors, setErrors] = useState<{ date?: boolean; name?: boolean }>({});
   const [bookingDraftReady, setBookingDraftReady] = useState(false);
   const [dateDisplayEnhanced, setDateDisplayEnhanced] = useState(true);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+  const [calendarMonth, setCalendarMonth] = useState(() => monthStartFromInput("", todayInputValue()));
   const dateInputRef = useRef<HTMLInputElement>(null);
 
   const activeTour = selectableTours.find((tour) => tour.id === tourId) ?? selectableTours[0]!;
@@ -805,6 +999,11 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
   const formattedBookingDate = date ? formatBookingDate(date, locale) : "";
   const shortBookingDate = date ? formatDateShort(date, locale) : "";
   const dateDisplayPlaceholder = dateDisplayFormats[locale] ?? dateDisplayFormat;
+  const monthNames = bookingMonthNamesByLocale[locale];
+  const weekdayNames = dateWeekdayNames[locale];
+  const activeCalendarCopy = calendarCopy[locale];
+  const calendarDays = useMemo(() => calendarDaysForMonth(calendarMonth), [calendarMonth]);
+  const calendarTitle = `${monthNames[calendarMonth.getUTCMonth()]} ${calendarMonth.getUTCFullYear()}`;
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -842,6 +1041,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
       setAdults(bookingDraft.adults);
       setChildren(bookingDraft.children);
       setDate(bookingDraft.date);
+      setCalendarMonth(monthStartFromInput(bookingDraft.date, currentMinimumDate));
       setBookingDraftReady(true);
     }, 0);
 
@@ -931,20 +1131,14 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
 
   function selectDate(nextDate: string) {
     setDate(minimumDate && nextDate && nextDate < minimumDate ? minimumDate : nextDate);
+    setCalendarMonth(monthStartFromInput(nextDate, minimumDate || todayInputValue()));
+    setCalendarOpen(false);
     setErrors((currentErrors) => ({ ...currentErrors, date: false }));
   }
 
   function openDatePicker() {
-    const dateInput = dateInputRef.current;
-    if (!dateInput) return;
-
-    const withPicker = dateInput as HTMLInputElement & { showPicker?: () => void };
-    if (typeof withPicker.showPicker === "function") {
-      withPicker.showPicker();
-      return;
-    }
-
-    dateInput.focus({ preventScroll: true });
+    setCalendarMonth(monthStartFromInput(date, minimumDate || todayInputValue()));
+    setCalendarOpen(true);
   }
 
   const sectionClass = isContactMode ? "relative isolate min-h-[calc(100dvh-5rem)] overflow-hidden bg-ink text-ink" : "overflow-hidden bg-ink text-pearl";
@@ -1084,7 +1278,7 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                   className={
                     dateDisplayEnhanced
                       ? [
-                          "relative min-h-[4.75rem] overflow-hidden rounded-md border bg-white transition focus-within:border-ink focus-within:ring-2 focus-within:ring-turquoise/25",
+                          "relative min-h-[4.75rem] overflow-visible rounded-md border bg-white transition focus-within:border-ink focus-within:ring-2 focus-within:ring-turquoise/25",
                           errors.date ? "border-bronze" : "border-ink/12"
                         ].join(" ")
                       : "relative"
@@ -1127,9 +1321,9 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                     }
                     lang={dateInputLang[locale]}
                     name="Date"
-                    type="date"
-                    min={minimumDate || undefined}
+                    type="text"
                     required
+                    readOnly
                     value={date}
                     onPointerDown={() => {
                       if (dateDisplayEnhanced) {
@@ -1147,10 +1341,76 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
                         openDatePicker();
                       }
                     }}
-                    onInput={(event) => selectDate(event.currentTarget.value)}
-                    onChange={(event) => selectDate(event.target.value)}
-                    onBlur={(event) => selectDate(event.currentTarget.value)}
                   />
+                  {dateDisplayEnhanced ? (
+                    <div
+                      className={[
+                        "absolute left-0 right-0 top-[calc(100%+0.45rem)] z-30 rounded-md border border-ink/14 bg-white p-3 shadow-[0_22px_60px_rgba(16,34,45,0.22)]",
+                        calendarOpen ? "block" : "hidden"
+                      ].join(" ")}
+                      data-booking-calendar-panel="true"
+                      role="dialog"
+                      aria-label={activeCalendarCopy.choose}
+                    >
+                      <div className="mb-3 flex items-center justify-between gap-3">
+                        <button
+                          type="button"
+                          className="grid h-10 w-10 place-items-center rounded-md border border-ink/12 bg-limestone text-ink transition hover:bg-sand/30"
+                          aria-label={activeCalendarCopy.previous}
+                          data-booking-calendar-prev="true"
+                          onClick={() => setCalendarMonth((currentMonth) => addUtcMonths(currentMonth, -1))}
+                        >
+                          <ChevronLeft className="h-5 w-5" aria-hidden />
+                        </button>
+                        <p className="font-serif text-2xl font-medium text-ink" data-booking-calendar-title="true">
+                          {calendarTitle}
+                        </p>
+                        <button
+                          type="button"
+                          className="grid h-10 w-10 place-items-center rounded-md border border-ink/12 bg-limestone text-ink transition hover:bg-sand/30"
+                          aria-label={activeCalendarCopy.next}
+                          data-booking-calendar-next="true"
+                          onClick={() => setCalendarMonth((currentMonth) => addUtcMonths(currentMonth, 1))}
+                        >
+                          <ChevronRight className="h-5 w-5" aria-hidden />
+                        </button>
+                      </div>
+                      <div className="grid grid-cols-7 gap-1 text-center text-xs font-bold uppercase tracking-[0.08em] text-bronze" data-booking-calendar-weekdays="true">
+                        {weekdayNames.map((weekday) => (
+                          <span key={weekday} className="py-1">{weekday}</span>
+                        ))}
+                      </div>
+                      <div className="mt-1 grid grid-cols-7 gap-1" data-booking-calendar-grid="true">
+                        {calendarDays.map((day) => {
+                          const dayValue = inputValueFromDate(day);
+                          const isOutsideMonth = day.getUTCMonth() !== calendarMonth.getUTCMonth();
+                          const isSelected = dayValue === date;
+                          const isDisabled = Boolean(minimumDate && dayValue < minimumDate);
+
+                          return (
+                            <button
+                              key={dayValue}
+                              type="button"
+                              className={[
+                                "grid h-10 place-items-center rounded-md text-sm font-bold transition",
+                                isSelected ? "bg-ink text-pearl" : "text-ink hover:bg-turquoise-soft",
+                                isOutsideMonth && !isSelected ? "text-ink-soft/55" : "",
+                                isDisabled ? "cursor-not-allowed opacity-30 hover:bg-transparent" : ""
+                              ].join(" ")}
+                              aria-label={`${activeCalendarCopy.choose}: ${formatDateShort(dayValue, locale)}`}
+                              aria-pressed={isSelected}
+                              data-booking-calendar-day="true"
+                              data-date={dayValue}
+                              disabled={isDisabled}
+                              onClick={() => selectDate(dayValue)}
+                            >
+                              {day.getUTCDate()}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
                 {errors.date ? (
                   <p id="quick-date-error" className="text-sm font-semibold text-bronze">
