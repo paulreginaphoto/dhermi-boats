@@ -221,7 +221,9 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     } catch (_e) {}
   }
 
-  applyLocaleSwitchers();
+  if (!nextRuntime) {
+    applyLocaleSwitchers();
+  }
 
   function writeAttr(element, name, value) {
     if (!element) return;

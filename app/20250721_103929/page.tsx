@@ -5,7 +5,6 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Dhermi Boat Photos",
   description: "This legacy media attachment URL now points to the boat photos page.",
-  robots: { index: false, follow: true },
   alternates: { canonical: canonical("/boat-photos/") }
 };
 

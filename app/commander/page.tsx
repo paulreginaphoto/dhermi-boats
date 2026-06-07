@@ -5,7 +5,6 @@ import { canonical } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Redirecting to Contact Dhermi Boat",
   description: "This legacy checkout URL now points to the Dhermi Boat contact page.",
-  robots: { index: false, follow: true },
   alternates: { canonical: canonical("/contact/") }
 };
 
