@@ -41,10 +41,13 @@ body:has([data-contact-form-page="true"]) [data-floating-whatsapp-cta] {
   box-shadow: none;
 }
 
-[data-booking-action="whatsapp"][aria-disabled="true"] {
+[data-booking-action="whatsapp"][aria-disabled="true"],
+[data-booking-action="whatsapp"][aria-disabled="true"]:hover,
+[data-booking-action="whatsapp"][aria-disabled="true"]:focus {
   border: 1px solid rgba(16, 34, 45, 0.12);
-  background: #fff;
-  color: rgba(16, 34, 45, 0.58);
+  background: #f7f1e8 !important;
+  color: #10222d !important;
+  cursor: not-allowed;
 }
 
 a,
