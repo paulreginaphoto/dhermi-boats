@@ -163,7 +163,7 @@ async function collectPageMetrics(page) {
         return Boolean(form && visible(form));
       })(),
       homeNextSectionHint: (() => {
-        const nextLabel = document.querySelector('#reviews [data-i18n="v2.social.label"]');
+        const nextLabel = document.querySelector('#tours [data-i18n="v2.tours.label"]');
         if (!nextLabel || !visible(nextLabel)) return null;
         const rect = nextLabel.getBoundingClientRect();
         return {

@@ -277,97 +277,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section data-home-section="social-proof" id="reviews" className="bg-pearl py-8 md:py-16">
-        <div className="site-band">
-          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
-            <div>
-              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-                <LocalizedText id="v2.social.label">{enText("v2.social.label")}</LocalizedText>
-              </p>
-              <h2 className="mt-3 max-w-lg font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
-                <LocalizedText id="v2.social.title">{enText("v2.social.title")}</LocalizedText>
-              </h2>
-              <a className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:bg-limestone" href={googleMapsUrl} rel="noreferrer" target="_blank" data-analytics-event="maps_click">
-                <MapPin className="h-4 w-4 text-turquoise" aria-hidden />
-                <LocalizedText id="minimal.reviews.more">{enText("minimal.reviews.more")}</LocalizedText>
-              </a>
-            </div>
-            <div className="grid gap-4 md:grid-cols-3">
-              {featuredReviews.map((review) => (
-                <article key={review.name} className="rounded-xl bg-limestone p-5 shadow-sm">
-                  <div className="flex gap-1 text-bronze">
-                    {Array.from({ length: review.rating }).map((_, index) => (
-                      <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
-                    ))}
-                  </div>
-                  <blockquote className="mt-4 text-sm leading-7 text-ink">&quot;{review.text}&quot;</blockquote>
-                  <p className="mt-4 text-sm font-semibold text-ink">{review.name}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section data-home-section="skipper" id="skipper" className="bg-limestone py-14 md:py-20">
-        <div className="site-band grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
-          <div className="overflow-hidden rounded-2xl bg-ink p-3 shadow-image">
-            <div className="grid gap-3 sm:grid-cols-2">
-              {skipperActivityImages.map((item) => (
-                <figure key={item.tourId} className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-navy">
-                  <Image
-                    src={item.src}
-                    alt={item.alt}
-                    fill
-                    loading="lazy"
-                    quality={58}
-                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 42vw, 86vw"
-                    className="object-cover transition duration-500 group-hover:scale-[1.035]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy/72 via-navy/8 to-transparent" />
-                  <figcaption className="absolute left-3 top-3 rounded-lg bg-ink/78 px-3 py-2 text-xs font-bold text-pearl backdrop-blur">
-                    <LocalizedText id={`tour.${item.tourId}.shortTitle`}>{tourById.get(item.tourId)?.shortTitle ?? item.tourId}</LocalizedText>
-                  </figcaption>
-                </figure>
-              ))}
-            </div>
-            <div className="px-2 pb-2 pt-5 text-pearl md:px-4 md:pb-4">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-sand">
-                <LocalizedText id="v2.skipper.imageLabel">{enText("v2.skipper.imageLabel")}</LocalizedText>
-              </p>
-              <p className="mt-2 max-w-xl font-serif text-3xl leading-tight">
-                <LocalizedText id="v2.skipper.imageText">{enText("v2.skipper.imageText")}</LocalizedText>
-              </p>
-            </div>
-          </div>
-          <div>
-            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
-              <LocalizedText id="v2.skipper.label">{enText("v2.skipper.label")}</LocalizedText>
-            </p>
-            <h2 className="mt-3 max-w-2xl font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
-              <LocalizedText id="v2.skipper.title">{enText("v2.skipper.title")}</LocalizedText>
-            </h2>
-            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft md:text-lg">
-              <LocalizedText id="v2.skipper.text">{enText("v2.skipper.text")}</LocalizedText>
-            </p>
-            <div className="mt-7 grid gap-3 sm:grid-cols-3">
-              {skipperProof.map((item) => {
-                const Icon = item.icon;
-
-                return (
-                  <div key={item.key} className="rounded-xl bg-pearl p-4 shadow-sm">
-                    <Icon className="h-5 w-5 text-turquoise" aria-hidden />
-                    <p className="mt-3 text-sm font-bold leading-6 text-ink">
-                      <LocalizedText id={item.key}>{enText(item.key)}</LocalizedText>
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section data-home-section="tours" id="tours" className="bg-pearl py-14 md:py-20">
         <div className="site-band">
           <div className="grid gap-5 md:grid-cols-[0.9fr_1.1fr] md:items-end">
@@ -473,6 +382,97 @@ export default function HomePage() {
                 </article>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      <section data-home-section="social-proof" id="reviews" className="bg-pearl py-8 md:py-16">
+        <div className="site-band">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-start">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+                <LocalizedText id="v2.social.label">{enText("v2.social.label")}</LocalizedText>
+              </p>
+              <h2 className="mt-3 max-w-lg font-serif text-4xl font-medium leading-tight text-ink md:text-5xl">
+                <LocalizedText id="v2.social.title">{enText("v2.social.title")}</LocalizedText>
+              </h2>
+              <a className="mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-ink/12 bg-white px-4 text-sm font-semibold text-ink transition hover:bg-limestone" href={googleMapsUrl} rel="noreferrer" target="_blank" data-analytics-event="maps_click">
+                <MapPin className="h-4 w-4 text-turquoise" aria-hidden />
+                <LocalizedText id="minimal.reviews.more">{enText("minimal.reviews.more")}</LocalizedText>
+              </a>
+            </div>
+            <div className="grid gap-4 md:grid-cols-3">
+              {featuredReviews.map((review) => (
+                <article key={review.name} className="rounded-xl bg-limestone p-5 shadow-sm">
+                  <div className="flex gap-1 text-bronze">
+                    {Array.from({ length: review.rating }).map((_, index) => (
+                      <Star key={index} className="h-4 w-4 fill-current" aria-hidden />
+                    ))}
+                  </div>
+                  <blockquote className="mt-4 text-sm leading-7 text-ink">&quot;{review.text}&quot;</blockquote>
+                  <p className="mt-4 text-sm font-semibold text-ink">{review.name}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section data-home-section="skipper" id="skipper" className="bg-limestone py-14 md:py-20">
+        <div className="site-band grid gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:items-center">
+          <div className="overflow-hidden rounded-2xl bg-ink p-3 shadow-image">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {skipperActivityImages.map((item) => (
+                <figure key={item.tourId} className="group relative aspect-[4/3] overflow-hidden rounded-xl bg-navy">
+                  <Image
+                    src={item.src}
+                    alt={item.alt}
+                    fill
+                    loading="lazy"
+                    quality={58}
+                    sizes="(min-width: 1024px) 20vw, (min-width: 640px) 42vw, 86vw"
+                    className="object-cover transition duration-500 group-hover:scale-[1.035]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-navy/72 via-navy/8 to-transparent" />
+                  <figcaption className="absolute left-3 top-3 rounded-lg bg-ink/78 px-3 py-2 text-xs font-bold text-pearl backdrop-blur">
+                    <LocalizedText id={`tour.${item.tourId}.shortTitle`}>{tourById.get(item.tourId)?.shortTitle ?? item.tourId}</LocalizedText>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <div className="px-2 pb-2 pt-5 text-pearl md:px-4 md:pb-4">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-sand">
+                <LocalizedText id="v2.skipper.imageLabel">{enText("v2.skipper.imageLabel")}</LocalizedText>
+              </p>
+              <p className="mt-2 max-w-xl font-serif text-3xl leading-tight">
+                <LocalizedText id="v2.skipper.imageText">{enText("v2.skipper.imageText")}</LocalizedText>
+              </p>
+            </div>
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-bronze">
+              <LocalizedText id="v2.skipper.label">{enText("v2.skipper.label")}</LocalizedText>
+            </p>
+            <h2 className="mt-3 max-w-2xl font-serif text-4xl font-medium leading-tight text-ink md:text-6xl">
+              <LocalizedText id="v2.skipper.title">{enText("v2.skipper.title")}</LocalizedText>
+            </h2>
+            <p className="mt-6 max-w-2xl text-base leading-8 text-ink-soft md:text-lg">
+              <LocalizedText id="v2.skipper.text">{enText("v2.skipper.text")}</LocalizedText>
+            </p>
+            <div className="mt-7 grid gap-3 sm:grid-cols-3">
+              {skipperProof.map((item) => {
+                const Icon = item.icon;
+
+                return (
+                  <div key={item.key} className="rounded-xl bg-pearl p-4 shadow-sm">
+                    <Icon className="h-5 w-5 text-turquoise" aria-hidden />
+                    <p className="mt-3 text-sm font-bold leading-6 text-ink">
+                      <LocalizedText id={item.key}>{enText(item.key)}</LocalizedText>
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
