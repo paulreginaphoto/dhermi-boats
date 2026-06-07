@@ -44,9 +44,9 @@ const dateInputLang: Record<FormLocale, string> = {
   sq: "sq-AL"
 };
 const dateWeekdayNames: Record<FormLocale, string[]> = {
-  en: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-  fr: ["Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa"],
-  sq: ["Di", "Hë", "Ma", "Më", "En", "Pr", "Sh"]
+  en: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+  fr: ["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"],
+  sq: ["Hë", "Ma", "Më", "En", "Pr", "Sh", "Di"]
 };
 const calendarCopy: Record<FormLocale, { previous: string; next: string; choose: string }> = {
   en: {
@@ -374,6 +374,10 @@ const staticBookingEnhancerScript = String.raw`
     return new Date(Date.UTC(dateValue.getUTCFullYear(), dateValue.getUTCMonth() + delta, 1));
   }
 
+  function calendarWeekStartOffset(dateValue) {
+    return (dateValue.getUTCDay() + 6) % 7;
+  }
+
   function cleanValue(value) {
     var clean = String(value || "").trim();
     return clean || "-";
@@ -558,7 +562,7 @@ const staticBookingEnhancerScript = String.raw`
       while (calendarGrid.firstChild) calendarGrid.removeChild(calendarGrid.firstChild);
       var monthStart = new Date(Date.UTC(calendarMonth.getUTCFullYear(), calendarMonth.getUTCMonth(), 1));
       var firstGridDate = new Date(monthStart);
-      firstGridDate.setUTCDate(monthStart.getUTCDate() - monthStart.getUTCDay());
+      firstGridDate.setUTCDate(monthStart.getUTCDate() - calendarWeekStartOffset(monthStart));
       for (var index = 0; index < 42; index += 1) {
         var day = new Date(firstGridDate);
         day.setUTCDate(firstGridDate.getUTCDate() + index);
@@ -909,6 +913,10 @@ function addUtcMonths(dateValue: Date, delta: number) {
   return new Date(Date.UTC(dateValue.getUTCFullYear(), dateValue.getUTCMonth() + delta, 1));
 }
 
+function calendarWeekStartOffset(dateValue: Date) {
+  return (dateValue.getUTCDay() + 6) % 7;
+}
+
 function monthStartFromInput(value: string, fallbackInput: string) {
   const parsed = parseInputDate(value) ?? parseInputDate(fallbackInput);
   const base = parsed?.date ?? new Date();
@@ -918,7 +926,7 @@ function monthStartFromInput(value: string, fallbackInput: string) {
 function calendarDaysForMonth(monthDate: Date) {
   const start = new Date(Date.UTC(monthDate.getUTCFullYear(), monthDate.getUTCMonth(), 1));
   const firstGridDate = new Date(start);
-  firstGridDate.setUTCDate(start.getUTCDate() - start.getUTCDay());
+  firstGridDate.setUTCDate(start.getUTCDate() - calendarWeekStartOffset(start));
 
   return Array.from({ length: 42 }, (_, index) => {
     const day = new Date(firstGridDate);

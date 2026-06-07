@@ -57,6 +57,9 @@ assert.match(bookingSource, /formatBookingDate/);
 assert.match(bookingSource, /formatDateShort/);
 assert.match(bookingSource, /Aucune date sélectionnée/);
 assert.match(bookingSource, /bookingMonthNamesByLocale/);
+assert.match(bookingSource, /en:\s*\["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"\]/);
+assert.match(bookingSource, /fr:\s*\["Lu", "Ma", "Me", "Je", "Ve", "Sa", "Di"\]/);
+assert.match(bookingSource, /calendarWeekStartOffset/);
 assert.doesNotMatch(bookingSource, /DD\/MM\/YYYY|JJ\/MM\/AAAA/);
 assert.doesNotMatch(bookingSource, /\{shortBookingDate\}\s*·\s*\{formattedBookingDate\}/);
 
