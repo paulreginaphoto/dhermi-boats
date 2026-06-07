@@ -70,6 +70,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     document.documentElement.lang = locale;
     window.localStorage.setItem("dhermi-language", locale);
+    window.dispatchEvent(new CustomEvent("dhermi:locale-change", { detail: { locale } }));
   }, [locale]);
 
   useEffect(() => {

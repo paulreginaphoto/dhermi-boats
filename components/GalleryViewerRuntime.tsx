@@ -8,8 +8,6 @@ type GalleryViewerRuntimeProps = {
 
 export function GalleryViewerRuntime({ code }: GalleryViewerRuntimeProps) {
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") return undefined;
-
     const timer = window.setTimeout(() => {
       try {
         new Function(code)();

@@ -147,6 +147,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   var locale = activeLocale();
+  var nextRuntime = hasNextRuntime();
 
   function normalizeUrlLocale() {
     if (!searchParams.has("dlang") && !searchParams.has("lang")) return;
@@ -334,9 +335,11 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
 
   function applyLocaleText() {
     applyLocaleSwitchers();
-    try {
-      window.document.querySelectorAll("[data-i18n]").forEach(setContent);
-    } catch (_e) {}
+    if (!nextRuntime) {
+      try {
+        window.document.querySelectorAll("[data-i18n]").forEach(setContent);
+      } catch (_e) {}
+    }
     applyDocumentMetadata();
     applyWhatsappLinks();
     applyAnalyticsEvents();
@@ -351,6 +354,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   function observeLocaleNodes() {
+    if (nextRuntime) return;
     try {
       if (!window.MutationObserver) return;
       var observer = new window.MutationObserver(scheduleLocaleText);
@@ -365,6 +369,11 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
   }
 
   function updateTranslations() {
+    if (nextRuntime) {
+      applyLocaleText();
+      return;
+    }
+
     if (locale === defaultLocale) {
       applyLocaleText();
       observeLocaleNodes();
@@ -395,6 +404,15 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     updateTranslations();
     applyWhatsappLinks();
     applyAnalyticsEvents();
+    try {
+      window.addEventListener("dhermi:locale-change", function (customEvent) {
+        var payload = customEvent && customEvent.detail;
+        var nextLocale = payload && payload.locale;
+        if (!isLocale(nextLocale)) return;
+        locale = nextLocale;
+        applyLocaleText();
+      });
+    } catch (_e) {}
   }
 
   function hasNextRuntime() {
@@ -405,7 +423,7 @@ function toScript(localeList: string, bootstrapBasePath: string, bootstrapWhatsa
     }
   }
 
-  if (hasNextRuntime()) {
+  if (nextRuntime) {
     window.setTimeout(start, 800);
   } else {
     start();

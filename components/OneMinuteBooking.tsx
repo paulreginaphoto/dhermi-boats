@@ -761,21 +761,21 @@ const staticBookingEnhancerScript = String.raw`
 })();
 `;
 
-function cleanValue(value: string) {
-  return value.trim() || "-";
-}
-
-function requiredValue(value: string, fallback: string) {
-  return value.trim() || fallback;
-}
 
 function todayInputValue() {
   const today = new Date();
   const year = today.getFullYear();
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const day = String(today.getDate()).padStart(2, "0");
-
   return `${year}-${month}-${day}`;
+}
+
+function cleanValue(value: string) {
+  return value.replace(/\s+/g, " ").trim();
+}
+
+function requiredValue(value: string, prompt: string) {
+  return cleanValue(value) || `__ (${prompt})`;
 }
 
 function normalizeLocale(value: string | null | undefined) {
@@ -1550,7 +1550,9 @@ export function OneMinuteBooking({ mode = "default" }: { mode?: BookingFormMode 
             </a>
           </div>
         </form>
-        <InlineRuntimeScript id="static-booking-enhancer" code={staticBookingEnhancerScript} />
+        {process.env.NODE_ENV === "production" ? (
+          <InlineRuntimeScript id="static-booking-enhancer" code={staticBookingEnhancerScript} />
+        ) : null}
       </div>
     </section>
   );

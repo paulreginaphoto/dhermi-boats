@@ -9,6 +9,7 @@ import { StickyBookingBar } from "@/components/StickyBookingBar";
 import { WhatsAppFloatingButton } from "@/components/WhatsAppFloatingButton";
 import { LocaleBootstrap } from "@/components/LocaleBootstrap";
 import { LocalizedText } from "@/components/LocalizedText";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import { assetPath, brandName, canonical, canonicalOrigin, isStagingDeployment, languageAlternates } from "@/lib/site";
 import { translations } from "@/lib/i18n";
 import { localBusinessSchema, websiteSchema } from "@/lib/seo";
@@ -74,19 +75,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className="pb-24 md:pb-0">
-        <a className="skip-link" href="#main-content">
-          <LocalizedText id="a11y.skip">{translations.en["a11y.skip"] ?? "Skip to content"}</LocalizedText>
-        </a>
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <WhatsAppFloatingButton />
-        <StickyBookingBar />
-        <SEOJsonLd data={[localBusinessSchema(), websiteSchema()]} />
-        <Analytics />
-        <LocaleBootstrap />
+        <LanguageProvider>
+          <a className="skip-link" href="#main-content">
+            <LocalizedText id="a11y.skip">{translations.en["a11y.skip"] ?? "Skip to content"}</LocalizedText>
+          </a>
+          <Header />
+          <main id="main-content">{children}</main>
+          <Footer />
+          <WhatsAppFloatingButton />
+          <StickyBookingBar />
+          <SEOJsonLd data={[localBusinessSchema(), websiteSchema()]} />
+          <Analytics />
+          <LocaleBootstrap />
+        </LanguageProvider>
       </body>
     </html>
   );
